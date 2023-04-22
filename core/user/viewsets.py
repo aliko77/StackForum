@@ -4,15 +4,15 @@ from rest_framework.viewsets import ModelViewSet
 
 from .models import User
 from .serializers import UserSerializer
-
+import django_filters.rest_framework
 
 class UserViewSet(ModelViewSet):
     http_method_names = ['get']
     serializer_class = UserSerializer
-    permission_classes = (IsAuthenticated,)
-    filter_backends = [filters.OrderingFilter]
-    ordering_fields = ['updated']
-    ordering = ['-updated']
+    # permission_classes = (IsAuthenticated,)
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    ordering_fields = ['id']
+    ordering = ['-id']
 
     def get_queryset(self):
         if self.request.user.is_superuser:
