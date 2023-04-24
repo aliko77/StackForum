@@ -31,11 +31,11 @@ class RegisterSerializer(UserSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'email', 'password', 'is_active', 'last_login', 'date_joined']
+        fields = ['id', 'email', 'password']
 
     def create(self, validated_data):
         try:
             user = User.objects.get(email=validated_data['email'])
         except ObjectDoesNotExist:
-            user = User.objects.create_user(**validated_data)
+            user = User.objects.create(**validated_data)
         return user

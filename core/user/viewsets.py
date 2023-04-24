@@ -1,16 +1,17 @@
-from rest_framework import filters
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.exceptions import NotFound
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
 from .models import User
 from .serializers import UserSerializer
-import django_filters.rest_framework
+
 
 class UserViewSet(ModelViewSet):
     http_method_names = ['get']
     serializer_class = UserSerializer
-    # permission_classes = (IsAuthenticated,)
-    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    permission_classes = (IsAuthenticated,)
+    filter_backends = [DjangoFilterBackend]
     ordering_fields = ['id']
     ordering = ['-id']
 
@@ -20,6 +21,9 @@ class UserViewSet(ModelViewSet):
 
     def get_object(self):
         lookup_field_value = self.kwargs[self.lookup_field]
-        obj = User.objects.get(lookup_field_value)
+        try:
+            obj = User.objects.get(id=lookup_field_value)
+        except User.DoesNotExist:
+            raise NotFound("User not found.")
         self.check_object_permissions(self.request, obj)
         return obj
