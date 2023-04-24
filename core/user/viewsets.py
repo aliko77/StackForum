@@ -24,6 +24,6 @@ class UserViewSet(ModelViewSet):
         try:
             obj = User.objects.get(id=lookup_field_value)
         except User.DoesNotExist:
-            raise NotFound("User not found.")
+            raise NotFound({'error': 'User not found.'})
         self.check_object_permissions(self.request, obj)
         return obj

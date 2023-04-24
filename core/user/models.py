@@ -3,22 +3,17 @@ from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.utils import timezone
 
-
-# Create your models here.
-
-
 class UserManager(BaseUserManager):
-    def _create_user(self, email, name, password, is_staff, is_superuser, **extra_fields):
+    def _create_user(self, email, password, is_superuser, verified=False, **extra_fields):
         if not email:
             raise ValueError('Users must have an email address')
         now = timezone.now()
         email = self.normalize_email(email)
         user = self.model(
             email=email,
-            name=name,
-            is_staff=is_staff,
+            is_staff=is_superuser,
             is_active=True,
-            is_verified=True,
+            is_verified=verified,
             is_superuser=is_superuser,
             last_login=now,
             date_joined=now,
@@ -28,37 +23,11 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_user(self, email, password=None, **kwargs):
-        if email is None:
-            raise TypeError('Users must have an email.')
+    def create_user(self, email, password, **extra_fields):
+        return self._create_user(email, password, False, **extra_fields)
 
-        now = timezone.now()
-        user = self.model(
-            email=self.normalize_email(email),
-            is_verified=_verified,
-            last_login=now,
-            date_joined=now,
-            **kwargs
-        )
-        user.set_password(password)
-        user.save(using=self._db)
-
-        return user
-
-    def create_superuser(self, email, password, **kwargs):
-        """
-        Create and return a `User` with superuser (admin) permissions.
-        """
-        if password is None:
-            raise TypeError('Superusers must have a password.')
-        if email is None:
-            raise TypeError('Superusers must have an email.')
-
-        user = self.create_user(email, password, **kwargs)
-        user.is_superuser = True
-        user.is_staff = True
-        user.save(using=self._db)
-
+    def create_superuser(self, email, password, **extra_fields):
+        user = self._create_user(email, password, True, verified=True, **extra_fields)
         return user
 
 
