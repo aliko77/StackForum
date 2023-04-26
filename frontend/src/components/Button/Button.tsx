@@ -9,7 +9,7 @@ type ButtonProps = {
 function Button(props: ButtonProps) {
     const {onClick, text, sClass} = props;
 
-    const buttonClass = `${sClass} py-1 px-2 rounded-sm`;
+    const buttonClass = `${sClass} py-1 px-2 rounded-sm dark:text-gray-100`;
 
     return (
         <button className={`${buttonClass}`} onClick={onClick}>

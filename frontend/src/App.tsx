@@ -1,20 +1,20 @@
 import React, {Component} from "react"
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import {BrowserRouter} from "react-router-dom";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 import './App.css';
+import Layout from "./pages/Layout";
+import Home from "./pages/Home";
+import NoPage from "./pages/NoPage";
 
 class App extends Component {
     render() {
         return (
             <BrowserRouter>
-                <Header/>
-                <main className="content">
-                    <div>
-                        Hi
-                    </div>
-                </main>
-                <Footer/>
+                <Routes>
+                    <Route path="/" element={<Layout/>}>
+                        <Route index element={<Home/>}/>
+                        <Route path="*" element={<NoPage/>}/>
+                    </Route>
+                </Routes>
             </BrowserRouter>
         )
     }
