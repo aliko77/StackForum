@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import StackLogo from "../assets/images/ForumLogo.png";
+import StackLogo from "../../assets/images/ForumLogo.png";
 import {Link} from "react-router-dom";
 
 const Logo: FC = () => {
