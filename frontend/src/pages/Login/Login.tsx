@@ -1,11 +1,14 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import Logo from "../../components/Logo";
 import Label from "../../components/Label";
 import TextInput from "../../components/TextInput";
-import { NavLink } from "react-router-dom";
 import Button from "../../components/Button";
+import { NavLink } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import { useNavigate } from "react-router";
 
 const validationSchema = Yup.object({
     email: Yup.string()
@@ -15,6 +18,12 @@ const validationSchema = Yup.object({
 });
 
 const Login: FC = () => {
+
+    const [message, setMessage] = useState();
+    const [loading, setLoading] = useState();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const LoginForm = useFormik({
         initialValues: {
             email: "",
@@ -23,6 +32,7 @@ const Login: FC = () => {
         validationSchema,
         onSubmit: (values) => {
             console.log(values);
+            
         },
     });
 
