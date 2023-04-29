@@ -18,7 +18,6 @@ const validationSchema = Yup.object({
 });
 
 const Login: FC = () => {
-
     const [message, setMessage] = useState();
     const [loading, setLoading] = useState();
     const dispatch = useDispatch();
@@ -32,7 +31,6 @@ const Login: FC = () => {
         validationSchema,
         onSubmit: (values) => {
             console.log(values);
-            
         },
     });
 
