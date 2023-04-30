@@ -7,8 +7,9 @@ import { NavLink } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
-import axios from "axios";
+import axios from "../../api/axios";
 import { useNavigate } from "react-router";
+import authSlice from "../../store/slices/auth";
 
 const validationSchema = Yup.object({
     email: Yup.string()
@@ -18,10 +19,33 @@ const validationSchema = Yup.object({
 });
 
 const Login: FC = () => {
-    const [message, setMessage] = useState();
-    const [loading, setLoading] = useState();
+    const [message, setMessage] = useState("");
+    const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const handleLogin = (email: string, password: string) => {
+        axios
+            .post(`/auth/login/`, {
+                email,
+                password,
+            })
+            .then((res) => {
+                dispatch(
+                    authSlice.actions.setAuthTokens({
+                        accessToken: res.data.access,
+                        refreshToken: res.data.refresh,
+                    })
+                );
+                dispatch(authSlice.actions.setAccount(res.data.user));
+                setLoading(false);
+                navigate("/");
+            })
+            .catch((err) => {
+                console.log(err);
+                setMessage(err.response.data.detail.toString());
+            });
+    };
 
     const LoginForm = useFormik({
         initialValues: {
@@ -30,7 +54,8 @@ const Login: FC = () => {
         },
         validationSchema,
         onSubmit: (values) => {
-            console.log(values);
+            setLoading(true);
+            handleLogin(values.email, values.password);
         },
     });
 
@@ -41,6 +66,9 @@ const Login: FC = () => {
             </div>
             <div className="border rounded p-3 bg-white dark:text-gray-100 dark:bg-night-e dark:border-gray-500">
                 <div>
+                    <div className="text-danger text-center my-2">
+                        {message}
+                    </div>
                     <form onSubmit={LoginForm.handleSubmit}>
                         <div className="mb-3">
                             <Label htmlFor="email" value="Email" />
@@ -77,6 +105,7 @@ const Login: FC = () => {
                                 text={"Giriş yap"}
                                 sClass="w-full bg-rose-500 hover:bg-rose-600 dark:bg-indigo-500 dark:hover:bg-indigo-600"
                                 type="submit"
+                                disabled={loading}
                             />
                         </div>
                     </form>
