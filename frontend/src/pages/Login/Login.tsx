@@ -10,6 +10,9 @@ import { useDispatch } from "react-redux";
 import axios from "../../api/axios";
 import { useNavigate } from "react-router";
 import authSlice from "../../store/slices/auth";
+import { login } from "../../services/auth";
+import Alert from "../../components/Alert";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const validationSchema = Yup.object({
     email: Yup.string()
@@ -24,27 +27,29 @@ const Login: FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleLogin = (email: string, password: string) => {
-        axios
-            .post(`/auth/login/`, {
-                email,
-                password,
-            })
-            .then((res) => {
-                dispatch(
-                    authSlice.actions.setAuthTokens({
-                        accessToken: res.data.access,
-                        refreshToken: res.data.refresh,
-                    })
-                );
-                dispatch(authSlice.actions.setAccount(res.data.user));
-                setLoading(false);
-                navigate("/");
-            })
-            .catch((err) => {
-                console.log(err);
-                setMessage(err.response.data.detail.toString());
-            });
+    const handleLogin = async (email: string, password: string) => {
+        const response = await login(email, password);
+        // axios
+        //     .post(`/auth/login/`, {
+        //         email,
+        //         password,
+        //     })
+        //     .then((res) => {
+        //         dispatch(
+        //             authSlice.actions.setAuthTokens({
+        //                 accessToken: res.data.access,
+        //                 refreshToken: res.data.refresh,
+        //             })
+        //         );
+        //         dispatch(authSlice.actions.setAccount(res.data.user));
+        //         navigate("/");
+        //     })
+        //     .catch((err) => {
+        //         setMessage(err.response.data.detail.toString());
+        //     })
+        //     .finally(() => {
+        //         setLoading(false);
+        //     });
     };
 
     const LoginForm = useFormik({
@@ -66,9 +71,11 @@ const Login: FC = () => {
             </div>
             <div className="border rounded p-3 bg-white dark:text-gray-100 dark:bg-night-e dark:border-gray-500">
                 <div>
-                    <div className="text-danger text-center my-2">
-                        {message}
-                    </div>
+                    {message && (
+                        <div className="flex w-full flex-col gap-2 space-y-1.5 mb-2">
+                            <Alert color="rose">{message}</Alert>
+                        </div>
+                    )}
                     <form onSubmit={LoginForm.handleSubmit}>
                         <div className="mb-3">
                             <Label htmlFor="email" value="Email" />
@@ -90,6 +97,7 @@ const Login: FC = () => {
                                 required={true}
                                 value={LoginForm.values.password}
                                 onChange={LoginForm.handleChange}
+                                autoComplete="true"
                             />
                         </div>
                         <div className="flex justify-end mb-3">

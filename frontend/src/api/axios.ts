@@ -3,16 +3,11 @@ import createAuthRefreshInterceptor from "axios-auth-refresh";
 import store from "../store";
 import authSlice from "../store/slices/auth";
 
-axios.defaults.withCredentials = true;
-axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
-axios.defaults.xsrfCookieName = "csrftoken";
-
 const axiosService = axios.create({
     baseURL: "http://localhost:8000/api",
     headers: {
         "Content-Type": "application/json",
     },
-    withCredentials: true,
 });
 
 axiosService.interceptors.request.use(async (config) => {
@@ -40,12 +35,14 @@ axiosService.interceptors.response.use(
         return Promise.resolve(res);
     },
     (err) => {
-        console.debug(
-            "[Response]",
-            err.config.baseURL + err.config.url,
-            err.response.status,
-            err.response.data
-        );
+        if (err.code !== "ERR_NETWORK") {
+            console.debug(
+                "[Response]",
+                err.config.baseURL + err.config.url,
+                err.response.status,
+                err.response.data
+            );
+        }
         return Promise.reject(err);
     }
 );
