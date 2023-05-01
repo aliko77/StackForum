@@ -2,9 +2,11 @@ import { FC } from 'react';
 import Logo from 'components/logo/Logo';
 import Button from 'components/button/Button';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const Header: FC = () => {
    const navigate: NavigateFunction = useNavigate();
+   const { t } = useTranslation();
    return (
       <header className="static bg-white dark:bg-night-e border-t-4 border-rose-400 shadow py-3 px-2 sm:px-10">
          <div className="flex items-center align-center">
@@ -32,7 +34,7 @@ const Header: FC = () => {
                   <div>
                      <Button
                         sClass="bg-rose-500 hover:bg-rose-600 text-white"
-                        text="Giriş yap"
+                        text={t('signIn')}
                         onClick={(): void => {
                            navigate('/login');
                         }}
@@ -41,7 +43,7 @@ const Header: FC = () => {
                   <div>
                      <Button
                         sClass="bg-indigo-500 hover:bg-indigo-600 text-white"
-                        text="Kayıt ol"
+                        text={t('signUp')}
                         onClick={(): void => {
                            navigate('/register');
                         }}
