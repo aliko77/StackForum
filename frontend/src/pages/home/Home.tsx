@@ -1,4 +1,4 @@
-import Button from 'components/button/Button';
+import Button from 'components/button';
 import useTheme from 'hooks/useTheme';
 import useLanguage from 'hooks/useLanguage';
 import { Theme, Language } from 'store/slices/appSlice';

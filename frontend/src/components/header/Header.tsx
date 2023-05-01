@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import Logo from 'components/logo/Logo';
-import Button from 'components/button/Button';
+import Logo from 'components/logo';
+import Button from 'components/button';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 

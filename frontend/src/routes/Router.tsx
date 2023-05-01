@@ -1,16 +1,16 @@
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
-import PageLoading from 'components/page-loading/PageLoading';
-import Page from 'components/page/Page';
-import Header from 'components/header/Header';
-import Footer from 'components/footer/Footer';
+import PageLoading from 'components/page-loading';
+import Page from 'components/page';
+import Header from 'components/header';
+import Footer from 'components/footer';
 
 import paths from 'routes/paths';
 
-const Home = lazy(() => import('pages/home/Home'));
-const PageNotFound = lazy(() => import('pages/not-found/NotFound'));
-const Login = lazy(() => import('pages/login/Login'));
+const Home = lazy(() => import('pages/home'));
+const PageNotFound = lazy(() => import('pages/not-found'));
+const Login = lazy(() => import('pages/login'));
 
 interface Routes {
    path: string;
