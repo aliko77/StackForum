@@ -11,10 +11,13 @@ const useLanguage = () => {
 
    const { language } = useSelector((state: RootState) => state.app);
 
-   const setCurrentLanguage = useCallback((language: Language) => {
-      i18n.changeLanguage(language);
-      dispatch(setLanguage(language));
-   }, []);
+   const setCurrentLanguage = useCallback(
+      (language: Language) => {
+         dispatch(setLanguage(language));
+         i18n.changeLanguage(language);
+      },
+      [dispatch],
+   );
 
    return { language, setCurrentLanguage };
 };

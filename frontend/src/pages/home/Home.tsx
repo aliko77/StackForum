@@ -2,6 +2,7 @@ import Button from 'components/button';
 import useTheme from 'hooks/useTheme';
 import useLanguage from 'hooks/useLanguage';
 import { Theme, Language } from 'store/slices/appSlice';
+import useAuth from 'hooks/useAuth';
 
 const Home: React.FC = () => {
    const { theme, setCurrentTheme } = useTheme();
@@ -13,7 +14,6 @@ const Home: React.FC = () => {
    const setLanguage = () => {
       setCurrentLanguage(language === Language.EN ? Language.TR : Language.EN);
    };
-
    return (
       <>
          <div className="space-y-2 flex flex-col items-center">

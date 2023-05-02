@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import Logo from 'components/logo';
 import Label from 'components/label';
 import TextInput from 'components/text-input';
@@ -6,28 +6,28 @@ import Button from 'components/button';
 import { NavLink } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import useAuth from 'hooks/useAuth';
 
 const validationSchema = Yup.object({
    email: Yup.string().email('Geçersiz e-mail adresi').required('*Zorunlu alan'),
    password: Yup.string().required('*Zorunlu alan'),
 });
 
-interface LoginProps {
-   email: string;
-   password: string;
-}
-
 const INITIAL_VALUES = {
    email: '',
    password: '',
-} as LoginProps;
+};
 
 const Login: FC = () => {
-   const LoginForm = useFormik({
+   const errRef = useRef<HTMLParagraphElement>(null);
+   const [errMsg, setErrMsg] = useState('');
+   const { signIn } = useAuth();
+
+   const { handleSubmit, handleChange, values, errors } = useFormik({
       initialValues: INITIAL_VALUES,
       validationSchema,
-      onSubmit: (values: LoginProps) => {
-         //
+      onSubmit: (values) => {
+         signIn(values);
       },
    });
 
@@ -37,8 +37,11 @@ const Login: FC = () => {
             <Logo noText />
          </div>
          <div className="border rounded p-3 bg-white dark:text-gray-100 dark:bg-night-e dark:border-gray-500">
+            <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live="assertive">
+               {errMsg}
+            </p>
             <div>
-               <form onSubmit={LoginForm.handleSubmit}>
+               <form onSubmit={handleSubmit}>
                   <div className="mb-3">
                      <Label htmlFor="email" value="Email" />
                      <TextInput
@@ -46,9 +49,10 @@ const Login: FC = () => {
                         type={'email'}
                         placeholder={'name@stack.com'}
                         required={true}
-                        value={LoginForm.values.email}
-                        onChange={LoginForm.handleChange}
+                        onChange={handleChange}
+                        value={values.email}
                      />
+                     {errors.email ?? null}
                   </div>
                   <div className="mb-3">
                      <Label htmlFor="password" value="Şifre" />
@@ -57,9 +61,10 @@ const Login: FC = () => {
                         type={'password'}
                         placeholder={'•••••••••'}
                         required={true}
-                        value={LoginForm.values.password}
-                        onChange={LoginForm.handleChange}
+                        onChange={handleChange}
+                        value={values.password}
                      />
+                     {errors.password ?? null}
                   </div>
                   <div className="flex justify-end mb-3">
                      <NavLink
