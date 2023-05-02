@@ -21,7 +21,7 @@
     "react-i18next": "^12.2.2",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.11.0",
-    "store2": "^2.14.2",
+    "redux-persist": "^6.0.0",
     "yup": "^1.1.1"
   },
   "devDependencies": {

@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import store2 from 'store2';
 
 export enum Theme {
    Light = 'light',
@@ -17,8 +16,8 @@ export interface AppState {
 }
 
 const INITIAL_STATE = {
-   theme: store2.get('theme') || Theme.Dark,
-   language: store2.get('i18nextLng') || Language.TR,
+   theme: Theme.Dark,
+   language: Language.TR,
 } as AppState;
 
 const appSlice = createSlice({

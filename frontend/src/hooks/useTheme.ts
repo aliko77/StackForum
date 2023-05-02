@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { RootState } from 'store';
 import { Theme, setTheme } from 'store/slices/appSlice';
-import store2 from 'store2';
 
 const useTheme = () => {
    const dispatch = useDispatch();
@@ -13,7 +12,6 @@ const useTheme = () => {
    const setCurrentTheme = useCallback(
       (theme: Theme) => {
          dispatch(setTheme(theme));
-         store2.set('theme', theme);
       },
       [dispatch],
    );
