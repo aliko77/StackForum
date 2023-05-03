@@ -6,7 +6,7 @@ import Button from 'components/button';
 import { NavLink } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import useAuth from 'hooks/useAuth';
+import useAuth, { LoginProp } from 'hooks/useAuth';
 
 const validationSchema = Yup.object({
    email: Yup.string().email('Geçersiz e-mail adresi').required('*Zorunlu alan'),
@@ -21,13 +21,21 @@ const INITIAL_VALUES = {
 const Login: FC = () => {
    const errRef = useRef<HTMLParagraphElement>(null);
    const [errMsg, setErrMsg] = useState('');
-   const { signIn } = useAuth();
+   const { login } = useAuth();
+
+   const handleLogin = (values: LoginProp) => {
+      try {
+         login(values);
+      } catch (error) {
+         console.log('hi');
+      }
+   };
 
    const { handleSubmit, handleChange, values, errors } = useFormik({
       initialValues: INITIAL_VALUES,
       validationSchema,
       onSubmit: (values) => {
-         signIn(values);
+         handleLogin(values);
       },
    });
 

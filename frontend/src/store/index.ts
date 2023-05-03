@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import appReducer from 'store/slices/appSlice';
+import authReducer from 'store/slices/authSlice';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { combineReducers } from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage';
@@ -12,6 +13,7 @@ const persistConfig = {
 
 export const rootReducers = combineReducers({
    app: appReducer,
+   auth: authReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducers);

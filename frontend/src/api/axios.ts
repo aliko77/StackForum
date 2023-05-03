@@ -1,4 +1,5 @@
 import axios from 'axios';
+import store from 'store';
 
 const baseURL = 'http://localhost:8000/api';
 
@@ -26,17 +27,12 @@ axiosService.interceptors.request.use(
 
 axiosService.interceptors.response.use(
    (res) => {
-      console.debug(
-         '[Response]',
-         (res.config.baseURL ?? 'baseUrl') + (res.config.url ?? 'url'),
-         res.status,
-         res.data,
-      );
-      return Promise.resolve(res);
+      console.debug('[Response]', res);
+      return res;
    },
    (err) => {
       if (err.code !== 'ERR_NETWORK') {
-         throw new Error(err.response.data.message);
+         console.log(err.response.data.detail);
       }
       return Promise.reject(err);
    },

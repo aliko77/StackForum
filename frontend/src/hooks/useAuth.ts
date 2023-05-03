@@ -1,32 +1,39 @@
 import axiosService from 'api/axios';
-import { useLocalStorage } from './useLocalStorage';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'store';
+import { setLogout, setUser, setAuthTokens } from 'store/slices/authSlice';
 
-interface SignInProp {
+export interface LoginProp {
    email: string;
    password: string;
 }
 
 const useAuth = () => {
-   const [user, setUser] = useLocalStorage('user', null);
+   const dispatch = useDispatch();
 
-   const signIn = async (data: SignInProp) => {
+   const { user, refreshToken, token } = useSelector((state: RootState) => state.auth);
+
+   const login = async (data: LoginProp) => {
       try {
          const authResult = await axiosService.post('/auth/login/', data);
-         const userObj = { ...authResult.data?.user };
-         userObj.token = authResult.data?.access;
-         userObj.refresh = authResult.data?.refresh;
-         setUser(userObj);
-         console.log(userObj);
+         const resultData = authResult.data;
+         dispatch(setUser(resultData.user));
+         dispatch(
+            setAuthTokens({
+               accessToken: resultData.access,
+               refreshToken: resultData.refresh,
+            }),
+         );
       } catch (error) {
          console.log(error);
       }
    };
 
-   const signOut = () => {
-      setUser(null);
+   const logout = () => {
+      dispatch(setLogout());
    };
 
-   return { user, signIn, signOut };
+   return { user, token, refreshToken, login, logout };
 };
 
 export default useAuth;
