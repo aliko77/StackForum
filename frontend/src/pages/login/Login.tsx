@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import Logo from 'components/logo';
 import Label from 'components/label';
 import TextInput from 'components/text-input';
@@ -7,10 +7,11 @@ import { NavLink } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import useAuth, { LoginProp } from 'hooks/useAuth';
+import { t } from 'i18next';
 
 const validationSchema = Yup.object({
-   email: Yup.string().email('Geçersiz e-mail adresi').required('*Zorunlu alan'),
-   password: Yup.string().required('*Zorunlu alan'),
+   email: Yup.string().email('Geçersiz e-mail adresi').required('*'),
+   password: Yup.string().required('*'),
 });
 
 const INITIAL_VALUES = {
@@ -20,22 +21,19 @@ const INITIAL_VALUES = {
 
 const Login: FC = () => {
    const errRef = useRef<HTMLParagraphElement>(null);
-   const [errMsg, setErrMsg] = useState('');
+   const [errMsg, setErrMsg] = useState<string | null>(null);
    const { login } = useAuth();
 
-   const handleLogin = (values: LoginProp) => {
-      try {
-         login(values);
-      } catch (error) {
-         console.log('hi');
-      }
-   };
-
-   const { handleSubmit, handleChange, values, errors } = useFormik({
+   const { handleSubmit, handleChange, values, errors } = useFormik<LoginProp>({
       initialValues: INITIAL_VALUES,
       validationSchema,
-      onSubmit: (values) => {
-         handleLogin(values);
+      onSubmit: async (values: LoginProp) => {
+         try {
+            await login(values);
+         } catch (error: any) {
+            console.log(error);
+            setErrMsg(error);
+         }
       },
    });
 
@@ -45,10 +43,9 @@ const Login: FC = () => {
             <Logo noText />
          </div>
          <div className="border rounded p-3 bg-white dark:text-gray-100 dark:bg-night-e dark:border-gray-500">
-            <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live="assertive">
-               {errMsg}
-            </p>
+            {errMsg && <p ref={errRef}>{errMsg}</p>}
             <div>
+               {}
                <form onSubmit={handleSubmit}>
                   <div className="mb-3">
                      <Label htmlFor="email" value="Email" />
@@ -59,8 +56,9 @@ const Login: FC = () => {
                         required={true}
                         onChange={handleChange}
                         value={values.email}
+                        autoComplete="on"
                      />
-                     {errors.email ?? null}
+                     <span className="text-red-500 text-sm">{errors.email ?? null}</span>
                   </div>
                   <div className="mb-3">
                      <Label htmlFor="password" value="Şifre" />
@@ -72,7 +70,7 @@ const Login: FC = () => {
                         onChange={handleChange}
                         value={values.password}
                      />
-                     {errors.password ?? null}
+                     <span className="text-red-500 text-sm">{errors.password ?? null}</span>
                   </div>
                   <div className="flex justify-end mb-3">
                      <NavLink
