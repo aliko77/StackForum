@@ -8,4 +8,6 @@ export interface AccountResponse {
       is_verified: boolean;
       last_login: Date;
    };
+   accessToken: string;
+   refreshToken: string;
 }

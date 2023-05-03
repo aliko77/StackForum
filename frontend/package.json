@@ -12,6 +12,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
+    "axios-auth-refresh": "^3.3.6",
     "formik": "^2.2.9",
     "i18next": "^22.4.15",
     "i18next-browser-languagedetector": "^7.0.1",

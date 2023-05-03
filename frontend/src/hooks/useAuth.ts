@@ -16,14 +16,15 @@ const useAuth = () => {
    const login = async (data: LoginProp) => {
       try {
          const authResult = await axiosService.post('/auth/login/', data);
+         console.log(authResult);
          const resultData = authResult.data;
-         dispatch(setUser(resultData.user));
          dispatch(
             setAuthTokens({
                accessToken: resultData.access,
                refreshToken: resultData.refresh,
             }),
          );
+         dispatch(setUser(resultData.user));
       } catch (error) {
          console.log(error);
       }

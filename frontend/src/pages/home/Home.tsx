@@ -2,10 +2,12 @@ import Button from 'components/button';
 import useTheme from 'hooks/useTheme';
 import useLanguage from 'hooks/useLanguage';
 import { Theme, Language } from 'store/slices/appSlice';
+import useAuth from 'hooks/useAuth';
 
 const Home: React.FC = () => {
    const { theme, setCurrentTheme } = useTheme();
    const { language, setCurrentLanguage } = useLanguage();
+   const { user } = useAuth();
 
    const setTheme = () => {
       setCurrentTheme(theme === Theme.Light ? Theme.Dark : Theme.Light);
