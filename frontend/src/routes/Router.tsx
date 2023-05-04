@@ -15,6 +15,7 @@ const Login = lazy(() => import('pages/login'));
 interface Routes {
    path: string;
    element: React.ReactNode;
+   onEnter?: () => void;
 }
 
 const getRouteElement = (Component: React.ElementType): React.ReactNode => (
@@ -25,12 +26,15 @@ const getRouteElement = (Component: React.ElementType): React.ReactNode => (
       </Page>
       <Footer />
    </Suspense>
-); 
+);
 
 const routes: Routes[] = [
    { path: paths.HOME, element: getRouteElement(Home) },
    { path: paths.LOGIN, element: getRouteElement(Login) },
-   { path: paths.NOT_FOUND, element: getRouteElement(PageNotFound) },
+   {
+      path: paths.NOT_FOUND,
+      element: getRouteElement(PageNotFound),
+   },
 ];
 
 const Router = createBrowserRouter(routes);
