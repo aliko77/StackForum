@@ -1,12 +1,18 @@
+import Footer from 'components/footer/Footer';
+import Header from 'components/header';
+import Page from 'components/page/Page';
 import { RouterProvider } from 'react-router-dom';
-import Root from 'routes/Root';
 import Router from 'routes/Router';
 
 const App: React.FC = () => {
    return (
-      <Root>
-         <RouterProvider router={Router} />;
-      </Root>
+      <>
+         <Header />
+         <Page>
+            <RouterProvider router={Router} />
+         </Page>
+         <Footer />
+      </>
    );
 };
 

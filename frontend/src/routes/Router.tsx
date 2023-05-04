@@ -1,17 +1,11 @@
-import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom';
-import { lazy } from 'react';
+import Home from 'pages/home';
+import { createBrowserRouter } from 'react-router-dom';
 
-const Home = lazy(() => import('pages/home'));
-const PageNotFound = lazy(() => import('pages/not-found'));
-const Login = lazy(() => import('pages/login'));
-
-const Router = createBrowserRouter(
-   createRoutesFromElements(
-      <Route path="/" element={<Home />}>
-         <Route path="login" element={<Login />} />
-         <Route path="*" element={<PageNotFound />} />,
-      </Route>,
-   ),
-);
+const Router = createBrowserRouter([
+   {
+      path: '/',
+      element: <Home />,
+   },
+]);
 
 export default Router;
