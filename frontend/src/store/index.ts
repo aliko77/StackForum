@@ -1,8 +1,7 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import appReducer from 'store/slices/appSlice';
 import authReducer from 'store/slices/authSlice';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import { combineReducers } from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 

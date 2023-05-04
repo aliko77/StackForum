@@ -1,24 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-export enum Theme {
-   Light = 'light',
-   Dark = 'dark',
-}
-
-export enum Language {
-   EN = 'en',
-   TR = 'tr',
-}
-
-export interface AppState {
-   theme: Theme;
-   language: Language;
-}
+import { AppResponse, Language, Theme } from 'types';
 
 const INITIAL_STATE = {
    theme: Theme.Dark,
    language: Language.TR,
-} as AppState;
+} as AppResponse;
 
 const appSlice = createSlice({
    name: 'app',

@@ -1,16 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AccountResponse } from 'types';
+import { AccountResponse, AuthResponse } from 'types';
 
-export interface AuthState {
-   user: AccountResponse | null;
-   token: string | null;
-   refreshToken: string | null;
-}
-
-const INITIAL_STATE: AuthState = {
-   user: null,
-   token: null,
-   refreshToken: null,
+const INITIAL_STATE: AuthResponse = {
+   isAuth: false,
 };
 
 const authSlice = createSlice({
@@ -18,19 +10,21 @@ const authSlice = createSlice({
    initialState: INITIAL_STATE,
    reducers: {
       setAuthTokens(
-         state: AuthState,
+         state: AuthResponse,
          action: PayloadAction<{ accessToken: string; refreshToken: string }>,
       ) {
+         state.isAuth = true;
          state.refreshToken = action.payload.refreshToken;
          state.token = action.payload.accessToken;
       },
-      setUser(state: AuthState, action: PayloadAction<AccountResponse>) {
+      setUser(state: AuthResponse, action: PayloadAction<AccountResponse>) {
          state.user = action.payload;
       },
-      setLogout(state: AuthState) {
-         state.user = null;
-         state.token = null;
+      setLogout(state: AuthResponse) {
+         state.isAuth = false;
          state.refreshToken = null;
+         state.token = null;
+         state.user = null;
       },
    },
 });

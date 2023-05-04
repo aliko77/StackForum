@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import i18n from 'common/language/i18n';
 
 import { RootState } from 'store';
-import { Language, setLanguage } from 'store/slices/appSlice';
+import { setLanguage } from 'store/slices/appSlice';
+import { Language } from 'types';
 
 const useLanguage = () => {
    const dispatch = useDispatch();
@@ -16,7 +17,8 @@ const useLanguage = () => {
          dispatch(setLanguage(language));
          i18n.changeLanguage(language);
       },
-      [dispatch],
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [],
    );
 
    return { language, setCurrentLanguage };

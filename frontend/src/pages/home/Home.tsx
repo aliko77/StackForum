@@ -1,7 +1,7 @@
 import Button from 'components/button';
 import useTheme from 'hooks/useTheme';
 import useLanguage from 'hooks/useLanguage';
-import { Theme, Language } from 'store/slices/appSlice';
+import { Theme, Language } from 'types';
 import useAuth from 'hooks/useAuth';
 
 const Home: React.FC = () => {

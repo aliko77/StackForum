@@ -1,5 +1,4 @@
 import axiosService from 'api/axios';
-import { t } from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { setLogout, setUser, setAuthTokens } from 'store/slices/authSlice';
@@ -11,7 +10,7 @@ export interface LoginProp {
 
 const useAuth = () => {
    const dispatch = useDispatch();
-   const { refreshToken, token, user } = useSelector((state: RootState) => state.auth);
+   const { refreshToken, token, user, isAuth } = useSelector((state: RootState) => state.auth);
 
    const login = async (data: LoginProp) => {
       try {
@@ -34,7 +33,7 @@ const useAuth = () => {
       dispatch(setLogout());
    };
 
-   return { user, token, refreshToken, login, logout };
+   return { isAuth, user, token, refreshToken, login, logout };
 };
 
 export default useAuth;

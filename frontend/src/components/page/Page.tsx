@@ -1,8 +1,6 @@
-interface PageProps {
-   children: React.ReactNode | React.ReactNode[];
-}
+import { ReactChildrenResponse } from 'types';
 
-const Page = ({ children }: PageProps) => {
+const Page = ({ children }: ReactChildrenResponse) => {
    return <main className="content dark:bg-night">{children}</main>;
 };
 

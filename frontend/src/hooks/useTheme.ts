@@ -2,7 +2,8 @@ import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { RootState } from 'store';
-import { Theme, setTheme } from 'store/slices/appSlice';
+import { setTheme } from 'store/slices/appSlice';
+import { Theme } from 'types';
 
 const useTheme = () => {
    const dispatch = useDispatch();
@@ -13,7 +14,8 @@ const useTheme = () => {
       (theme: Theme) => {
          dispatch(setTheme(theme));
       },
-      [dispatch],
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [],
    );
 
    return { theme, setCurrentTheme };

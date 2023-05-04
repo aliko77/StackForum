@@ -7,7 +7,6 @@ import store from 'store';
 import './index.css';
 import App from 'App';
 import 'common/language/i18n';
-import { AuthProvider } from 'contexts/AuthContext';
 
 const persistor = persistStore(store);
 
@@ -15,9 +14,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
    <React.StrictMode>
       <Provider store={store}>
          <PersistGate persistor={persistor}>
-            <AuthProvider>
-               <App />
-            </AuthProvider>
+            <App />
          </PersistGate>
       </Provider>
    </React.StrictMode>,

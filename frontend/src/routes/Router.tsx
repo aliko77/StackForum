@@ -33,4 +33,6 @@ const routes: Routes[] = [
    { path: paths.NOT_FOUND, element: getRouteElement(PageNotFound) },
 ];
 
-export default createBrowserRouter(routes);
+const Router = createBrowserRouter(routes);
+
+export default Router;
