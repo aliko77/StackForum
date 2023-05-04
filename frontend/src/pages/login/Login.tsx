@@ -6,8 +6,6 @@ import Button from 'components/button';
 import { NavLink } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import useAuth, { LoginProp } from 'hooks/useAuth';
-import { t } from 'i18next';
 
 const validationSchema = Yup.object({
    email: Yup.string().email('Geçersiz e-mail adresi').required('*'),
@@ -22,17 +20,13 @@ const INITIAL_VALUES = {
 const Login: FC = () => {
    const errRef = useRef<HTMLParagraphElement>(null);
    const [errMsg, setErrMsg] = useState<string | null>(null);
-   const { login } = useAuth();
 
-   const { handleSubmit, handleChange, values, errors } = useFormik<LoginProp>({
+   const { handleSubmit, handleChange, values, errors } = useFormik({
       initialValues: INITIAL_VALUES,
       validationSchema,
-      onSubmit: async (values: LoginProp) => {
-         try {
-            await login(values);
-         } catch (error: any) {
-            console.log(error);
-         }
+      onSubmit: async (values) => {
+         console.log(values);
+         setErrMsg(null);
       },
    });
 
