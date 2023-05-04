@@ -7,7 +7,6 @@ import { NavLink } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import useAuth, { LoginProp } from 'hooks/useAuth';
-import { t } from 'i18next';
 
 const validationSchema = Yup.object({
    email: Yup.string().email('Geçersiz e-mail adresi').required('*'),
@@ -32,7 +31,8 @@ const Login: FC = () => {
             await login(values);
          } catch (error: any) {
             console.log(error);
-            setErrMsg(error);
+
+            setErrMsg(error.response.data.detail);
          }
       },
    });

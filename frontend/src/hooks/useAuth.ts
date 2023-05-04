@@ -13,20 +13,15 @@ const useAuth = () => {
    const { refreshToken, token, user, isAuth } = useSelector((state: RootState) => state.auth);
 
    const login = async (data: LoginProp) => {
-      try {
-         const authResult = await axiosService.post('/auth/login/', data);
-         const resultData = authResult.data;
-         dispatch(
-            setAuthTokens({
-               accessToken: resultData.access,
-               refreshToken: resultData.refresh,
-            }),
-         );
-         dispatch(setUser(resultData.user));
-         return { success: true };
-      } catch (error: any) {
-         throw new Error(error);
-      }
+      const authResult = await axiosService.post('/auth/login/', data);
+      const resultData = authResult.data;
+      dispatch(
+         setAuthTokens({
+            accessToken: resultData.access,
+            refreshToken: resultData.refresh,
+         }),
+      );
+      dispatch(setUser(resultData.user));
    };
 
    const logout = () => {

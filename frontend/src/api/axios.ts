@@ -15,6 +15,7 @@ axiosService.interceptors.request.use(
       const { token } = store.getState().auth;
       if (token !== null) {
          config.headers.Authorization = 'Bearer ' + token;
+         config.withCredentials = true;
       }
       console.debug('[Request]', (config.baseURL ?? 'baseUrl') + (config.url ?? 'url'));
       return config;

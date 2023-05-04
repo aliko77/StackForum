@@ -14,12 +14,13 @@ const Home: React.FC = () => {
    const setLanguage = () => {
       setCurrentLanguage(language === Language.EN ? Language.TR : Language.EN);
    };
-   const { user } = useAuth();
+   const { isAuth, user } = useAuth();
    return (
       <>
          <div className="space-y-2 flex flex-col items-center">
             <div>Home</div>
-            <div>Hoşgeldin: {user?.email}</div>
+            <div>Giriş yapmış: {isAuth ? 'Evet' : 'Hayır'}</div>
+            <div>Hoşgeldin: {isAuth}</div>
             <div>Mevcut tema: {theme}</div>
             <div>Mevcut dil: {language}</div>
             <div>

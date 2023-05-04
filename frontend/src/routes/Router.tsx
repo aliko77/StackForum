@@ -25,7 +25,7 @@ const getRouteElement = (Component: React.ElementType): React.ReactNode => (
       </Page>
       <Footer />
    </Suspense>
-);
+); 
 
 const routes: Routes[] = [
    { path: paths.HOME, element: getRouteElement(Home) },
