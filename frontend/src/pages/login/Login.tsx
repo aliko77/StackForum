@@ -32,6 +32,7 @@ const Login: FC = () => {
             await login(values);
          } catch (error: any) {
             console.log(error);
+            // :)
          }
       },
    });
