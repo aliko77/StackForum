@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from 'react';
+import { FC } from 'react';
 import Logo from 'components/logo';
 import Label from 'components/label';
 import TextInput from 'components/text-input';
@@ -18,15 +18,11 @@ const INITIAL_VALUES = {
 };
 
 const Login: FC = () => {
-   const errRef = useRef<HTMLParagraphElement>(null);
-   const [errMsg, setErrMsg] = useState<string | null>(null);
-
    const { handleSubmit, handleChange, values, errors } = useFormik({
       initialValues: INITIAL_VALUES,
       validationSchema,
       onSubmit: async (values) => {
          console.log(values);
-         setErrMsg(null);
       },
    });
 
@@ -36,9 +32,7 @@ const Login: FC = () => {
             <Logo noText />
          </div>
          <div className="border rounded p-3 bg-white dark:text-gray-100 dark:bg-night-e dark:border-gray-500">
-            {errMsg && <p ref={errRef}>{errMsg}</p>}
             <div>
-               {}
                <form onSubmit={handleSubmit}>
                   <div className="mb-3">
                      <Label htmlFor="email" value="Email" />
