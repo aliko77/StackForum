@@ -23,12 +23,10 @@ export const AuthContext = createContext<IAuthContextType>({
       refresh: null,
    },
    loading: false,
-   login: async () => {
-      //
-   },
-   logout: () => {
-      //
-   },
+   // eslint-disable-next-line @typescript-eslint/no-empty-function
+   login: async () => {},
+   // eslint-disable-next-line @typescript-eslint/no-empty-function
+   logout: () => {},
 });
 
 export const AuthProvider = ({ children }: IChildrenProp) => {
@@ -38,11 +36,13 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
    const navigate = useNavigate();
 
    const login = async (data: ILoginProp) => {
-      setLoading(true);
       try {
+         setLoading(true)
          const response = await axiosService.post('/auth/login/', data);
          setUser(response.data);
-         navigate('/profile');
+         console.log(user);
+
+         // navigate('/');
       } catch (error) {
          console.log(error);
       } finally {

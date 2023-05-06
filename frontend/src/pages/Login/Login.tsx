@@ -4,8 +4,7 @@ import Logo from 'components/Logo/Logo';
 import { Formik } from 'formik';
 import { NavLink } from 'react-router-dom';
 import * as Yup from 'yup';
-import { useContext } from 'react';
-import { AuthContext } from 'contexts/AuthContext';
+import { useAuth } from 'hooks/useAuth';
 
 const Login: React.FC = () => {
    interface ILoginFormProp {
@@ -23,7 +22,7 @@ const Login: React.FC = () => {
       password: Yup.string().required('*'),
    });
 
-   const { login, loading } = useContext(AuthContext);
+   const { login, loading } = useAuth();
 
    return (
       <div className="mx-auto w-full max-w-sm p-3 sm:my-20 my-10">
