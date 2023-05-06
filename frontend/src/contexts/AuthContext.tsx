@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import axiosService from 'api/axios';
 import { createContext, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IChildrenProp, ILoginProp } from 'types';
 import { useLocalStorage } from 'usehooks-ts';
-import { useState } from 'react';
 
 interface IAuthContextType {
    user: object | null;
@@ -11,7 +11,6 @@ interface IAuthContextType {
       access: string | null;
       refresh: string | null;
    };
-   loading: boolean;
    login: (data: ILoginProp) => Promise<void>;
    logout: () => void;
 }
@@ -22,32 +21,19 @@ export const AuthContext = createContext<IAuthContextType>({
       access: null,
       refresh: null,
    },
-   loading: false,
-   // eslint-disable-next-line @typescript-eslint/no-empty-function
    login: async () => {},
-   // eslint-disable-next-line @typescript-eslint/no-empty-function
    logout: () => {},
 });
 
 export const AuthProvider = ({ children }: IChildrenProp) => {
-   const [loading, setLoading] = useState(false);
    const [user, setUser] = useLocalStorage('user', null);
    const [tokens, setTokens] = useLocalStorage('tokens', { access: null, refresh: null });
    const navigate = useNavigate();
 
    const login = async (data: ILoginProp) => {
-      try {
-         setLoading(true)
-         const response = await axiosService.post('/auth/login/', data);
-         setUser(response.data);
-         console.log(user);
-
-         // navigate('/');
-      } catch (error) {
-         console.log(error);
-      } finally {
-         // setLoading(false);
-      }
+      const response = await axiosService.post('/auth/login/', data);
+      setUser(response.data);
+      // navigate('/');
    };
 
    const logout = () => {
@@ -60,7 +46,6 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
       () => ({
          user,
          tokens,
-         loading,
          login,
          logout,
       }),
