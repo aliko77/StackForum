@@ -1,8 +1,15 @@
 export interface IChildrenProp {
    children: React.ReactNode | React.ReactNode[];
 }
+export interface ILoginFuncProp {
+   (email: string, password: string): Promise<void>;
+}
 
-export interface ILoginProp {
+export interface IUser {
+   id: number;
    email: string;
-   password: string;
+   is_active: boolean;
+   is_verified: boolean;
+   last_login: Date;
+   date_joined: Date;
 }

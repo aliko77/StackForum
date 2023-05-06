@@ -1,55 +1,72 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import axiosService from 'api/axios';
-import { createContext, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { IChildrenProp, ILoginProp } from 'types';
+import { AxiosError } from 'axios';
+import { createContext, useMemo, useState } from 'react';
+import { IChildrenProp, ILoginFuncProp, IUser } from 'types';
 import { useLocalStorage } from 'usehooks-ts';
 
-interface IAuthContextType {
-   user: object | null;
-   tokens: {
-      access: string | null;
-      refresh: string | null;
-   };
-   login: (data: ILoginProp) => Promise<void>;
+interface IAuthContextProps {
+   isLoggedIn: boolean;
+   user: IUser | null;
+   accessToken: string | null;
+   refreshToken: string | null;
+   login: ILoginFuncProp;
    logout: () => void;
+   error: string | null;
 }
 
-export const AuthContext = createContext<IAuthContextType>({
+export const AuthContext = createContext<IAuthContextProps>({
+   isLoggedIn: false,
    user: null,
-   tokens: {
-      access: null,
-      refresh: null,
-   },
+   accessToken: null,
+   refreshToken: null,
    login: async () => {},
    logout: () => {},
+   error: null,
 });
 
 export const AuthProvider = ({ children }: IChildrenProp) => {
-   const [user, setUser] = useLocalStorage('user', null);
-   const [tokens, setTokens] = useLocalStorage('tokens', { access: null, refresh: null });
-   const navigate = useNavigate();
+   const [user, setUser] = useLocalStorage<IUser | null>('user', null);
+   const [accessToken, setAccessToken] = useLocalStorage<string | null>('accessToken', null);
+   const [refreshToken, setRefreshToken] = useLocalStorage<string | null>('refreshToken', null);
+   const [error, setError] = useState<string | null>(null);
 
-   const login = async (data: ILoginProp) => {
-      const response = await axiosService.post('/auth/login/', data);
-      setUser(response.data);
-      // navigate('/');
+   const login: ILoginFuncProp = async (email, password) => {
+      setError(null);
+      axiosService
+         .post('/auth/login/', {
+            email: email,
+            password: password,
+         })
+         .then(({ data }) => {
+            const { user, accessToken, refreshToken } = data;
+            setUser(user);
+            setAccessToken(accessToken);
+            setRefreshToken(refreshToken);
+         })
+         .catch((error: AxiosError) => {
+            const responseData = error.response?.data as { detail: string };
+            setError(responseData?.detail || 'Bir hata oluştu daha sonra tekrar deneyin.');
+         });
    };
 
    const logout = () => {
       setUser(null);
-      setTokens({ access: null, refresh: null });
-      navigate('/', { replace: true });
+      setAccessToken(null);
+      setRefreshToken(null);
    };
 
-   const value = useMemo(
-      () => ({
+   const value: IAuthContextProps = useMemo(() => {
+      return {
+         isLoggedIn: !!user,
          user,
-         tokens,
+         error,
+         accessToken,
+         refreshToken,
          login,
          logout,
-      }),
-      [user],
-   );
+      };
+   }, [user, accessToken, refreshToken, login, logout]);
+
    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

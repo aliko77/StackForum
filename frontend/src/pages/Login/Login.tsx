@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import { NavLink } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useAuth } from 'hooks/useAuth';
-import { useState } from 'react';
+import Alert, { eColors } from 'components/Alert/Alert';
 
 const Login: React.FC = () => {
    interface ILoginFormProp {
@@ -23,8 +23,7 @@ const Login: React.FC = () => {
       password: Yup.string().required('*'),
    });
 
-   const { login } = useAuth();
-   const [loading, setLoading] = useState(false);
+   const { login, error } = useAuth();
 
    return (
       <div className="mx-auto w-full max-w-sm p-3 sm:my-20 my-10">
@@ -32,22 +31,23 @@ const Login: React.FC = () => {
             <Logo noText />
          </div>
          <div className="border rounded p-3 pt-5 bg-white dark:text-gray-100 dark:bg-night-200 dark:border-gray-500">
+            {error && <Alert text={error} color={eColors.Indigo} />}
             <Formik
                validationSchema={validationSchema}
                initialValues={InitialState}
-               onSubmit={(values) => {
-                  try {
-                     setLoading(true);
-                     login(values);
-                  } catch (error) {
-                     console.log('hi');
-                     console.log(error);
-                  } finally {
-                     setLoading(false);
-                  }
+               onSubmit={async (values) => {
+                  await login(values.email, values.password);
                }}
             >
-               {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
+               {({
+                  values,
+                  errors,
+                  touched,
+                  handleChange,
+                  handleBlur,
+                  handleSubmit,
+                  isSubmitting,
+               }) => (
                   <div>
                      <form noValidate onSubmit={handleSubmit} className="space-y-3">
                         <div>
@@ -86,7 +86,7 @@ const Login: React.FC = () => {
                               Şifreni mi unuttun?
                            </NavLink>
                         </div>
-                        <Button text={'Giriş yap'} type="submit" disabled={loading} />
+                        <Button text={'Giriş yap'} type="submit" disabled={isSubmitting} />
                      </form>
                   </div>
                )}

@@ -16,8 +16,8 @@ class LoginSerializer(TokenObtainPairSerializer):
         refresh = self.get_token(self.user)
 
         data['user'] = UserSerializer(self.user).data
-        data['refresh'] = str(refresh)
-        data['access'] = str(refresh.access_token)
+        data['refreshToken'] = str(refresh)
+        data['accessToken'] = str(refresh.access_token)
 
         if api_settings.UPDATE_LAST_LOGIN:
             update_last_login(None, self.user)
@@ -26,8 +26,10 @@ class LoginSerializer(TokenObtainPairSerializer):
 
 
 class RegisterSerializer(UserSerializer):
-    password = serializers.CharField(max_length=128, min_length=8, write_only=True, required=True)
-    email = serializers.EmailField(required=True, write_only=True, max_length=128)
+    password = serializers.CharField(
+        max_length=128, min_length=8, write_only=True, required=True)
+    email = serializers.EmailField(
+        required=True, write_only=True, max_length=128)
 
     class Meta:
         model = User
