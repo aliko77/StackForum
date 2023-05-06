@@ -4,7 +4,8 @@ import Logo from 'components/Logo/Logo';
 import { Formik } from 'formik';
 import { NavLink } from 'react-router-dom';
 import * as Yup from 'yup';
-import { useState } from 'react';
+import { useContext } from 'react';
+import { AuthContext } from 'contexts/AuthContext';
 
 const Login: React.FC = () => {
    interface ILoginFormProp {
@@ -22,7 +23,7 @@ const Login: React.FC = () => {
       password: Yup.string().required('*'),
    });
 
-   const [loading, setLoading] = useState(false);
+   const { login, loading } = useContext(AuthContext);
 
    return (
       <div className="mx-auto w-full max-w-sm p-3 sm:my-20 my-10">
@@ -34,8 +35,7 @@ const Login: React.FC = () => {
                validationSchema={validationSchema}
                initialValues={InitialState}
                onSubmit={(values) => {
-                  setLoading(true);
-                  console.log(values);
+                  login(values);
                }}
             >
                {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (

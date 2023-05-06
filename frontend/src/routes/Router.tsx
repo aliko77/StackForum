@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import PageLoading from 'components/PageLoading';
 import Layout from 'layouts/Layout';
+import { AuthProvider } from 'contexts/AuthContext';
 
 const Login = lazy(() => import('pages/Login'));
 const Home = lazy(() => import('pages/Home'));
@@ -15,9 +16,11 @@ interface IRoutes {
 
 const getRouteElement = (Component: React.ElementType): React.ReactNode => (
    <Suspense fallback={<PageLoading />}>
-      <Layout>
-         <Component />
-      </Layout>
+      <AuthProvider>
+         <Layout>
+            <Component />
+         </Layout>
+      </AuthProvider>
    </Suspense>
 );
 
