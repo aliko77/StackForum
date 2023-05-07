@@ -1,9 +1,11 @@
 import Logo from 'components/Logo';
 import Button from 'components/Button';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
+import { useAuth } from 'hooks/useAuth';
 
 const Header: React.FC = () => {
    const navigate: NavigateFunction = useNavigate();
+   const { user } = useAuth();
    return (
       <header className="static bg-white dark:bg-night-200 border-t-4 border-rose-400 shadow py-3 px-2 sm:px-10">
          <div className="flex items-center align-center">
@@ -28,23 +30,30 @@ const Header: React.FC = () => {
                         />
                      </svg>
                   </div>
-                  <div>
-                     <Button
-                        text="Giriş yap"
-                        dark="rose"
-                        onClick={(): void => {
-                           navigate('/login');
-                        }}
-                     />
-                  </div>
-                  <div>
-                     <Button
-                        text="Kayıt ol"
-                        onClick={(): void => {
-                           navigate('/register');
-                        }}
-                     />
-                  </div>
+                  {user && <>
+                  
+                  </>}
+                  {!user && (
+                     <>
+                        <div>
+                           <Button
+                              text="Giriş yap"
+                              dark="rose"
+                              onClick={(): void => {
+                                 navigate('/login');
+                              }}
+                           />
+                        </div>
+                        <div>
+                           <Button
+                              text="Kayıt ol"
+                              onClick={(): void => {
+                                 navigate('/register');
+                              }}
+                           />
+                        </div>
+                     </>
+                  )}
                </div>
             </div>
          </div>
