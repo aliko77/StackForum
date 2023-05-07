@@ -2,11 +2,11 @@
 import axiosService from 'api/axios';
 import { AxiosError } from 'axios';
 import { createContext, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { IChildrenProp, ILoginFuncProp, IUser } from 'types';
 import { useLocalStorage } from 'usehooks-ts';
 
 interface IAuthContextProps {
-   isLoggedIn: boolean;
    user: IUser | null;
    accessToken: string | null;
    refreshToken: string | null;
@@ -16,7 +16,6 @@ interface IAuthContextProps {
 }
 
 export const AuthContext = createContext<IAuthContextProps>({
-   isLoggedIn: false,
    user: null,
    accessToken: null,
    refreshToken: null,
@@ -26,6 +25,7 @@ export const AuthContext = createContext<IAuthContextProps>({
 });
 
 export const AuthProvider = ({ children }: IChildrenProp) => {
+   const navigate = useNavigate();
    const [user, setUser] = useLocalStorage<IUser | null>('user', null);
    const [accessToken, setAccessToken] = useLocalStorage<string | null>('accessToken', null);
    const [refreshToken, setRefreshToken] = useLocalStorage<string | null>('refreshToken', null);
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
 
    const login: ILoginFuncProp = async (email, password) => {
       setError(null);
-      axiosService
+      await axiosService
          .post('/auth/login/', {
             email: email,
             password: password,
@@ -43,6 +43,7 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
             setUser(user);
             setAccessToken(accessToken);
             setRefreshToken(refreshToken);
+            navigate('/', { replace: true });
          })
          .catch((error: AxiosError) => {
             const responseData = error.response?.data as { detail: string };
@@ -54,11 +55,11 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
       setUser(null);
       setAccessToken(null);
       setRefreshToken(null);
+      navigate('/');
    };
 
    const value: IAuthContextProps = useMemo(() => {
       return {
-         isLoggedIn: !!user,
          user,
          error,
          accessToken,

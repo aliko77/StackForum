@@ -6,23 +6,23 @@ import { NavLink } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useAuth } from 'hooks/useAuth';
 import Alert, { eColors } from 'components/Alert/Alert';
+import LoadSpinner from 'components/LoadSpinner';
+interface ILoginFormProp {
+   email: string;
+   password: string;
+}
+
+const InitialState: ILoginFormProp = {
+   email: '',
+   password: '',
+};
+
+const validationSchema = Yup.object({
+   email: Yup.string().email('*').required('*'),
+   password: Yup.string().required('*'),
+});
 
 const Login: React.FC = () => {
-   interface ILoginFormProp {
-      email: string;
-      password: string;
-   }
-
-   const InitialState: ILoginFormProp = {
-      email: '',
-      password: '',
-   };
-
-   const validationSchema = Yup.object({
-      email: Yup.string().email('*').required('*'),
-      password: Yup.string().required('*'),
-   });
-
    const { login, error } = useAuth();
 
    return (
@@ -31,7 +31,6 @@ const Login: React.FC = () => {
             <Logo noText />
          </div>
          <div className="border rounded p-3 pt-5 bg-white dark:text-gray-100 dark:bg-night-200 dark:border-gray-500">
-            {error && <Alert text={error} color={eColors.Indigo} />}
             <Formik
                validationSchema={validationSchema}
                initialValues={InitialState}
@@ -49,6 +48,8 @@ const Login: React.FC = () => {
                   isSubmitting,
                }) => (
                   <div>
+                     {error && <Alert text={error} color={eColors.Indigo} />}
+                     {isSubmitting && <LoadSpinner />}
                      <form noValidate onSubmit={handleSubmit} className="space-y-3">
                         <div>
                            <Field
