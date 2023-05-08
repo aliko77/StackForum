@@ -1,7 +1,10 @@
+import uuid
+
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.utils import timezone
+
 
 class UserManager(BaseUserManager):
     def _create_user(self, email, password, is_superuser, verified=False, **extra_fields):
@@ -27,11 +30,18 @@ class UserManager(BaseUserManager):
         return self._create_user(email, password, False, **extra_fields)
 
     def create_superuser(self, email, password, **extra_fields):
-        user = self._create_user(email, password, True, verified=True, **extra_fields)
+        user = self._create_user(
+            email, password, True, verified=True, **extra_fields)
         return user
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    id = models.UUIDField(
+        default=uuid.uuid4,
+        unique=True,
+        primary_key=True,
+        editable=False
+    )
     email = models.EmailField(max_length=255, unique=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
