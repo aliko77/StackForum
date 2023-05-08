@@ -2,11 +2,9 @@ import { useAuth } from 'hooks/useAuth';
 
 export const LogoutButton = () => {
    const { logout } = useAuth();
-   const handleLogout = () => {
-      logout();
-   };
+   
    return (
-      <button onClick={handleLogout} className="flex justify-center items-center">
+      <button onClick={logout} className="flex justify-center items-center">
          <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

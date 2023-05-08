@@ -2,7 +2,7 @@ import { lazy, Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
 import PageLoading from 'components/PageLoading';
-import Layout from 'Layouts/Layout';
+import Layout from 'layouts/Layout';
 import { AuthProvider } from 'contexts/AuthContext';
 import { PrivateRoute, PublicRoute } from 'routes/GuardRoutes';
 

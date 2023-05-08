@@ -31,7 +31,7 @@ const Alert: FC<IAlert> = ({ text, color = eColors.Rose }: IAlert) => {
             ></path>
          </svg>
          <span className="sr-only">Info</span>
-         <div>
+         <div className='mx-2'>
             <span>{text}</span>
          </div>
       </div>

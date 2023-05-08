@@ -2,7 +2,7 @@
 import axiosService from 'api/axios';
 import { AxiosError } from 'axios';
 import { createContext, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { IChildrenProp, ILoginFuncProp, IUser } from 'types';
 import { useLocalStorage } from 'usehooks-ts';
 
@@ -30,6 +30,7 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
    const [accessToken, setAccessToken] = useLocalStorage<string | null>('accessToken', null);
    const [refreshToken, setRefreshToken] = useLocalStorage<string | null>('refreshToken', null);
    const [error, setError] = useState<string | null>(null);
+   const location = useLocation();
 
    const login: ILoginFuncProp = async (email, password) => {
       setError(null);
@@ -43,7 +44,7 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
             setUser(user);
             setAccessToken(accessToken);
             setRefreshToken(refreshToken);
-            navigate('/', { replace: true });
+            navigate(location.state?.from ?? '/', { replace: true });
          })
          .catch((error: AxiosError) => {
             const responseData = error.response?.data as { detail: string };
@@ -67,7 +68,7 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
          login,
          logout,
       };
-   }, [user, accessToken, refreshToken, login, logout]);
+   }, [user, login, logout]);
 
    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

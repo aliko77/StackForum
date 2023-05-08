@@ -1,21 +1,28 @@
-import { IChildrenProp } from 'types';
 import { useAuth } from 'hooks/useAuth';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 
-export const PrivateRoute = ({ children }: { children: JSX.Element }) => {
+type IPrivateRoute = {
+   children: JSX.Element;
+};
+
+export const PrivateRoute = ({ children }: IPrivateRoute) => {
    const { user } = useAuth();
+   const location = useLocation();
+
+   const navState: object = {
+      from: location.pathname,
+   };
+
    if (!user) {
-      return <Navigate to="/login" replace />;
+      return <Navigate to="/login" state={navState} replace />;
    }
    return children;
 };
 
-export const PublicRoute = ({ children }: IChildrenProp) => {
+export const PublicRoute = ({ children }: IPrivateRoute) => {
    const { user } = useAuth();
-
    if (user) {
       return <Navigate to="/" replace />;
    }
-
-   return <>{children}</>;
+   return children;
 };
