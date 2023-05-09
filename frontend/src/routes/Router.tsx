@@ -4,9 +4,10 @@ import {createBrowserRouter} from 'react-router-dom';
 import PageLoading from 'components/PageLoading';
 import Layout from 'layouts/Layout';
 import {AuthProvider} from 'contexts/AuthContext';
-import {PrivateRoute, PublicRoute} from 'routes/GuardRoutes';
+import {PrivateRoute, GuestRoute} from 'routes/GuardRoutes';
 
 const Login = lazy(() => import('pages/Login'));
+const Register = lazy(() => import('pages/Register'));
 const Home = lazy(() => import('pages/Home'));
 const PageNotFound = lazy(() => import('pages/PageNotFound'));
 
@@ -15,7 +16,7 @@ interface IRoutes {
    element: ReactNode;
 }
 
-type TGuard = 'Public' | 'Private';
+type TGuard = 'Guest' | 'Private';
 
 const getRouteElement = (
    Component: ElementType,
@@ -33,9 +34,9 @@ const getRouteElement = (
                         <Component/>
                      </PrivateRoute>
                   ) : (
-                     <PublicRoute>
-                        <Component />
-                     </PublicRoute>
+                     <GuestRoute>
+                        <Component/>
+                     </GuestRoute>
                   )}
                </>
             )}
@@ -45,9 +46,10 @@ const getRouteElement = (
 );
 
 const routes: IRoutes[] = [
-   { path: '/', element: getRouteElement(Home) },
-   { path: 'login', element: getRouteElement(Login) },
-   { path: '*', element: getRouteElement(PageNotFound) },
+   {path: '/', element: getRouteElement(Home)},
+   {path: 'login', element: getRouteElement(Login, 'Guest')},
+   {path: 'register', element: getRouteElement(Register, 'Guest')},
+   {path: '*', element: getRouteElement(PageNotFound)},
 ];
 
 export default createBrowserRouter(routes);

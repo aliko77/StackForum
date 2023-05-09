@@ -19,7 +19,7 @@ export const PrivateRoute = ({ children }: IPrivateRoute) => {
    return children;
 };
 
-export const PublicRoute = ({ children }: IPrivateRoute) => {
+export const GuestRoute = ({ children }: IPrivateRoute) => {
    const { user } = useAuth();
    if (user) {
       return <Navigate to="/" replace />;

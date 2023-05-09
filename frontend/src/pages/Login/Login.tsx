@@ -1,13 +1,13 @@
 import Button from 'components/Button/Button';
 import Field from 'components/Field/Field';
 import Logo from 'components/Logo/Logo';
-import { Formik } from 'formik';
-import { NavLink } from 'react-router-dom';
+import {Formik} from 'formik';
+import {NavLink} from 'react-router-dom';
 import * as Yup from 'yup';
-import { useAuth } from 'hooks/useAuth';
-import Alert, { eColors } from 'components/Alert/Alert';
+import {useAuth} from 'hooks/useAuth';
+import Alert, {eColors} from 'components/Alert/Alert';
 import LoadSpinner from 'components/LoadSpinner';
-import { FC } from 'react';
+import {FC} from 'react';
 
 interface ILoginFormProp {
    email: string;
@@ -25,14 +25,15 @@ const validationSchema = Yup.object({
 });
 
 const Login: FC = () => {
-   const { login, error } = useAuth();
+   const {login, error} = useAuth();
 
    return (
       <div className="mx-auto w-full max-w-sm p-3 sm:my-20 my-10">
          <div className="flex items-center justify-center mb-4">
-            <Logo noText />
+            <Logo noText/>
          </div>
-         <div className="border rounded p-3 pt-5 bg-white dark:text-gray-100 dark:bg-night-200 dark:border-gray-500">
+         <div
+            className="border rounded p-3 pt-5 bg-white dark:text-gray-100 dark:bg-night-200 dark:border-gray-500">
             <Formik
                validationSchema={validationSchema}
                initialValues={InitialState}
@@ -41,17 +42,15 @@ const Login: FC = () => {
                }}
             >
                {({
-                  values,
-                  errors,
-                  touched,
-                  handleChange,
-                  handleBlur,
-                  handleSubmit,
-                  isSubmitting,
-               }) => (
+                    values, errors, touched,
+                    handleChange,
+                    handleBlur,
+                    handleSubmit,
+                    isSubmitting,
+                 }) => (
                   <div>
-                     {error && <Alert text={error} color={eColors.Indigo} />}
-                     {isSubmitting && <LoadSpinner />}
+                     {error && <Alert text={error} color={eColors.Indigo}/>}
+                     {isSubmitting && <LoadSpinner/>}
                      <form noValidate onSubmit={handleSubmit} className="space-y-3">
                         <div>
                            <Field
@@ -89,7 +88,7 @@ const Login: FC = () => {
                               Şifreni mi unuttun?
                            </NavLink>
                         </div>
-                        <Button text={'Giriş yap'} type="submit" disabled={isSubmitting} />
+                        <Button text={'Giriş yap'} type="submit" disabled={isSubmitting}/>
                      </form>
                   </div>
                )}
