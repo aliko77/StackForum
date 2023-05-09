@@ -1,17 +1,13 @@
 import uuid
-
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
-from django.conf import settings
-from django.utils import timezone
 
 
 class UserManager(BaseUserManager):
     def _create_user(self, email, password, is_superuser, verified=False, **extra_fields):
         if not email:
             raise ValueError('Users must have an email address')
-        now = timezone.now()
         email = self.normalize_email(email)
         user = self.model(
             email=email,
@@ -19,8 +15,6 @@ class UserManager(BaseUserManager):
             is_active=True,
             is_verified=verified,
             is_superuser=is_superuser,
-            last_login=now,
-            date_joined=now,
             **extra_fields
         )
         user.set_password(password)
@@ -67,10 +61,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Profile(models.Model):
     user = models.OneToOneField(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+        User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    age = models.PositiveIntegerField()
+    age = models.PositiveIntegerField(null=True, blank=True)
     city = models.CharField(max_length=50)
     about = models.TextField(max_length=500, blank=True)
     profession = models.CharField(max_length=50, blank=True)
