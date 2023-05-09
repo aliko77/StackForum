@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import {ChangeEvent, FC, FocusEvent} from 'react';
 
 interface InputProps {
    id: string;
@@ -8,8 +8,8 @@ interface InputProps {
    required?: boolean;
    value?: string;
    autoComplete?: string;
-   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+   onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
 }
 
 const Field: FC<InputProps> = ({

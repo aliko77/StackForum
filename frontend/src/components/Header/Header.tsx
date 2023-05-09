@@ -1,17 +1,19 @@
 import Logo from 'components/Logo';
 import Button from 'components/Button';
-import { NavigateFunction, useNavigate } from 'react-router-dom';
-import { useAuth } from 'hooks/useAuth';
-import { LogoutButton } from 'components/LogoutButton/LogoutButton';
+import {NavigateFunction, useNavigate} from 'react-router-dom';
+import {useAuth} from 'hooks/useAuth';
+import {LogoutButton} from 'components/LogoutButton';
+import {FC} from "react";
 
-const Header: React.FC = () => {
+const Header: FC = () => {
    const navigate: NavigateFunction = useNavigate();
-   const { user } = useAuth();
+   const {user} = useAuth();
    return (
-      <header className="static bg-white dark:bg-night-200 border-t-4 border-rose-400 shadow py-3 px-2 sm:px-10">
+      <header
+         className="static bg-white dark:bg-night-200 border-t-4 border-rose-400 shadow py-3 px-2 sm:px-10">
          <div className="flex items-center align-center">
             <div>
-               <Logo />
+               <Logo/>
             </div>
             <div className="ml-auto">
                <div className="flex flex-1 space-x-2 items-center">

@@ -1,10 +1,10 @@
-import { lazy, Suspense } from 'react';
-import { createBrowserRouter } from 'react-router-dom';
+import {ElementType, lazy, ReactNode, Suspense} from 'react';
+import {createBrowserRouter} from 'react-router-dom';
 
 import PageLoading from 'components/PageLoading';
 import Layout from 'layouts/Layout';
-import { AuthProvider } from 'contexts/AuthContext';
-import { PrivateRoute, PublicRoute } from 'routes/GuardRoutes';
+import {AuthProvider} from 'contexts/AuthContext';
+import {PrivateRoute, PublicRoute} from 'routes/GuardRoutes';
 
 const Login = lazy(() => import('pages/Login'));
 const Home = lazy(() => import('pages/Home'));
@@ -12,25 +12,25 @@ const PageNotFound = lazy(() => import('pages/PageNotFound'));
 
 interface IRoutes {
    path: string;
-   element: React.ReactNode;
+   element: ReactNode;
 }
 
 type TGuard = 'Public' | 'Private';
 
 const getRouteElement = (
-   Component: React.ElementType,
+   Component: ElementType,
    guard: TGuard | null = null,
-): React.ReactNode => (
-   <Suspense fallback={<PageLoading />}>
+): ReactNode => (
+   <Suspense fallback={<PageLoading/>}>
       <AuthProvider>
          <Layout>
             {guard === null ? (
-               <Component />
+               <Component/>
             ) : (
                <>
                   {guard === 'Private' ? (
                      <PrivateRoute>
-                        <Component />
+                        <Component/>
                      </PrivateRoute>
                   ) : (
                      <PublicRoute>
