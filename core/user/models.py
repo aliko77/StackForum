@@ -3,6 +3,7 @@ import uuid
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
+from django.conf import settings
 from django.utils import timezone
 
 
@@ -61,4 +62,26 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = "User"
         verbose_name_plural = "Users"
-        db_table = "users"
+        db_table = "user"
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    age = models.PositiveIntegerField()
+    city = models.CharField(max_length=50)
+    about = models.TextField(max_length=500, blank=True)
+    profession = models.CharField(max_length=50, blank=True)
+    hobbies = models.TextField(max_length=500, blank=True)
+    twitter_url = models.URLField(max_length=200, blank=True)
+    github_url = models.URLField(max_length=200, blank=True)
+    email_secondary = models.EmailField(max_length=254, blank=True)
+    phone_number = models.CharField(max_length=20, blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = "user_profile"
