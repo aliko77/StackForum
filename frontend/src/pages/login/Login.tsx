@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import {useAuth} from 'hooks/useAuth';
 import Alert, {eColors} from 'components/Alert/Alert';
 import LoadSpinner from 'components/LoadSpinner';
-import React from "react";
+import {FC} from "react";
 
 interface ILoginFormProp {
    email: string;
@@ -24,15 +24,16 @@ const validationSchema = Yup.object({
    password: Yup.string().required('*'),
 });
 
-const Login: React.FC = () => {
-   const { login, error } = useAuth();
+const Login: FC = () => {
+   const {login, error} = useAuth();
 
    return (
       <div className="mx-auto w-full max-w-sm p-3 sm:my-20 my-10">
          <div className="flex items-center justify-center mb-4">
-            <Logo noText />
+            <Logo noText/>
          </div>
-         <div className="border rounded p-3 pt-5 bg-white dark:text-gray-100 dark:bg-night-200 dark:border-gray-500">
+         <div
+            className="border rounded p-3 pt-5 bg-white dark:text-gray-100 dark:bg-night-200 dark:border-gray-500">
             <Formik
                validationSchema={validationSchema}
                initialValues={InitialState}
@@ -41,8 +42,8 @@ const Login: React.FC = () => {
                }}
             >
                {({
-                  values,
-                  errors,
+                    values,
+                    errors,
                   touched,
                   handleChange,
                   handleBlur,
