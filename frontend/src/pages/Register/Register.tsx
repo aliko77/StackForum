@@ -1,9 +1,9 @@
-import {FC} from 'react';
+import { FC } from 'react';
 import Logo from 'components/Logo';
-import {Formik} from 'formik';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
-import Alert, {eColors} from 'components/Alert';
-import {useAuth} from 'hooks/useAuth';
+import Alert, { eColors } from 'components/Alert';
+import { useAuth } from 'hooks/useAuth';
 import LoadSpinner from 'components/LoadSpinner';
 import Field from 'components/Field';
 import Button from 'components/Button';
@@ -12,89 +12,94 @@ interface IRegisterFormProp {
    email: string;
    password: string;
    confirmPassword: string;
-   name: string;
-   surname: string;
+   first_name: string;
+   last_name: string;
 }
 
 const initialValues: IRegisterFormProp = {
    email: '',
    password: '',
    confirmPassword: '',
-   name: '',
-   surname: '',
+   first_name: '',
+   last_name: '',
 };
 
 const validationSchema = Yup.object({
    email: Yup.string().email('*').required('*'),
    confirmPassword: Yup.string().required('*'),
    password: Yup.string().required('*'),
-   name: Yup.string().trim().required('*'),
-   surname: Yup.string().trim().required('*'),
+   first_name: Yup.string().trim().required('*'),
+   last_name: Yup.string().trim().required('*'),
 });
 
 const Register: FC = () => {
-   const {error} = useAuth();
+   const { error, register } = useAuth();
    return (
       <div className="mx-auto w-full max-w-sm p-3 sm:my-20 my-10">
          <div className="flex items-center justify-center mb-4">
-            <Logo noText/>
+            <Logo noText />
          </div>
-         <div
-            className="border rounded p-3 bg-white dark:text-gray-100 dark:bg-night-200 dark:border-gray-500">
+         <div className="border rounded p-3 bg-white dark:text-gray-100 dark:bg-night-200 dark:border-gray-500">
             <div className="flex justify-center mb-3">
                <h1 className="font-semibold font-mono dark:text-gray-100 text-rose-600">
                   Kayıt Ol
                </h1>
             </div>
-            <hr className="mb-3"/>
+            <hr className="mb-3" />
             <Formik
                validationSchema={validationSchema}
                initialValues={initialValues}
                onSubmit={async (values: IRegisterFormProp): Promise<void> => {
-                  console.log(values);
+                  await register(
+                     values.email,
+                     values.password,
+                     values.confirmPassword,
+                     values.first_name,
+                     values.last_name,
+                  );
                }}
             >
                {({
-                    errors,
-                    isSubmitting,
-                    handleSubmit,
-                    handleChange,
-                    values,
-                    handleBlur,
-                    touched,
-                 }) => (
+                  errors,
+                  isSubmitting,
+                  handleSubmit,
+                  handleChange,
+                  values,
+                  handleBlur,
+                  touched,
+               }) => (
                   <div>
-                     {error && <Alert text={error} color={eColors.Indigo}/>}
-                     {isSubmitting && <LoadSpinner/>}
+                     {error && <Alert text={error} color={eColors.Indigo} />}
+                     {isSubmitting && <LoadSpinner />}
                      <form noValidate onSubmit={handleSubmit} className="space-y-3">
                         <div>
                            <div className="flex space-x-3">
                               <div>
                                  <Field
-                                    id="name"
+                                    id="first_name"
                                     type="text"
-                                    name="name"
+                                    name="first_name"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    value={values.name}
+                                    value={values.first_name}
                                     placeholder="İsim"
                                  />
                                  <p className="text-red-500 dark:text-red-400 text-sm ml-1">
-                                    {errors.name && touched.name && errors.name}
+                                    {errors.first_name && touched.first_name && errors.first_name}
                                  </p>
                               </div>
                               <div>
                                  <Field
-                                    id="surname"
+                                    id="last_name"
                                     type="text"
-                                    name="surname"
+                                    name="last_name"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    value={values.surname}
+                                    value={values.last_name}
                                     placeholder="Soyisim"
                                  />
                                  <p className="text-red-500 dark:text-red-400 text-sm ml-1">
-                                    {errors.surname && touched.surname && errors.surname}
+                                    {errors.last_name && touched.last_name && errors.last_name}
                                  </p>
                               </div>
                            </div>
@@ -143,7 +148,7 @@ const Register: FC = () => {
                                  errors.confirmPassword}
                            </p>
                         </div>
-                        <Button text={'Kayıt ol'} type="submit" disabled={isSubmitting}/>
+                        <Button text={'Kayıt ol'} type="submit" disabled={isSubmitting} />
                      </form>
                   </div>
                )}

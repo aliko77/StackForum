@@ -5,6 +5,16 @@ export interface ILoginFuncProp {
    (email: string, password: string): Promise<void>;
 }
 
+export interface IRegisterFuncProp {
+   (
+      email: string,
+      password: string,
+      confirm_password: string,
+      first_name: string,
+      last_name: string,
+   ): Promise<void>;
+}
+
 export interface IUser {
    id: number;
    email: string;

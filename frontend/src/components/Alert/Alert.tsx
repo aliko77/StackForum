@@ -7,7 +7,7 @@ export enum eColors {
 }
 
 interface IAlert {
-   text: string | null;
+   text: string | null | object;
    color: eColors | null | undefined;
 }
 
