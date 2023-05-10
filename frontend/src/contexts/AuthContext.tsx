@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import axiosService from 'api/axios';
 import { AxiosError } from 'axios';
-import { createContext, useMemo, useState } from 'react';
+import { createContext, useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IChildrenProp, ILoginFuncProp, IUser } from 'types';
 import { useLocalStorage } from 'usehooks-ts';
@@ -32,6 +32,10 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
    const [error, setError] = useState<string | null>(null);
    const location = useLocation();
 
+   useEffect(() => {
+      setError(null);
+   }, [location]);
+
    const login: ILoginFuncProp = async (email, password) => {
       setError(null);
       await axiosService
@@ -59,6 +63,10 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
       navigate('/');
    };
 
+   const register = () => {
+      setError(null);
+   };
+
    const value: IAuthContextProps = useMemo(() => {
       return {
          user,
@@ -67,8 +75,9 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
          refreshToken,
          login,
          logout,
+         register,
       };
-   }, [user, login, logout]);
+   }, [user, login, logout, register]);
 
    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

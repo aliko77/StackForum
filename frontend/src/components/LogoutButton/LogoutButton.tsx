@@ -1,8 +1,9 @@
-import {useAuth} from 'hooks/useAuth';
+import { useAuth } from 'hooks/useAuth';
+import { FC } from 'react';
 
-export const LogoutButton = () => {
+export const LogoutButton: FC = () => {
    const { logout } = useAuth();
-   
+
    return (
       <button onClick={logout} className="flex justify-center items-center">
          <svg

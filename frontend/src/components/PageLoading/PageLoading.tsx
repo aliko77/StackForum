@@ -1,5 +1,7 @@
-const PageLoading = () => {
-   let circleCommonClasses = 'h-5 w-5 bg-indigo-600 rounded-full';
+import { FC } from 'react';
+
+const PageLoading: FC = () => {
+   const circleCommonClasses = 'h-5 w-5 bg-indigo-600 rounded-full';
 
    return (
       <div className="dark:bg-night-200">

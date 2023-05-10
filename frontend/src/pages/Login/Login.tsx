@@ -1,11 +1,11 @@
-import Button from 'components/Button/Button';
-import Field from 'components/Field/Field';
-import Logo from 'components/Logo/Logo';
+import Button from 'components/Button';
+import Field from 'components/Field';
+import Logo from 'components/Logo';
 import {Formik} from 'formik';
 import {NavLink} from 'react-router-dom';
 import * as Yup from 'yup';
 import {useAuth} from 'hooks/useAuth';
-import Alert, {eColors} from 'components/Alert/Alert';
+import Alert, {eColors} from 'components/Alert';
 import LoadSpinner from 'components/LoadSpinner';
 import {FC} from 'react';
 
@@ -30,7 +30,7 @@ const Login: FC = () => {
    return (
       <div className="mx-auto w-full max-w-sm p-3 sm:my-20 my-10">
          <div className="flex items-center justify-center mb-4">
-            <Logo noText/>
+            <Logo noText noRedirect/>
          </div>
          <div
             className="border rounded p-3 pt-5 bg-white dark:text-gray-100 dark:bg-night-200 dark:border-gray-500">
@@ -42,7 +42,9 @@ const Login: FC = () => {
                }}
             >
                {({
-                    values, errors, touched,
+                    values,
+                    errors,
+                    touched,
                     handleChange,
                     handleBlur,
                     handleSubmit,

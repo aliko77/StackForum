@@ -1,1 +1,1 @@
-export { default } from './Alert';
+export { default, eColors } from './Alert';

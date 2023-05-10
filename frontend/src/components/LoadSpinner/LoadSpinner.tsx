@@ -1,4 +1,6 @@
-const LoadSpinner = () => {
+import { FC } from "react";
+
+const LoadSpinner: FC = () => {
    return (
       <div role="status" className="flex justify-center mb-2">
          <svg
