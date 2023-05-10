@@ -13,7 +13,7 @@ interface IAuthContextProps {
    login: ILoginFuncProp;
    register: IRegisterFuncProp;
    logout: () => void;
-   error: object | null;
+   message: object | null;
 }
 
 export const AuthContext = createContext<IAuthContextProps>({
@@ -23,7 +23,7 @@ export const AuthContext = createContext<IAuthContextProps>({
    login: async () => {},
    register: async () => {},
    logout: () => {},
-   error: null,
+   message: null,
 });
 
 export const AuthProvider = ({ children }: IChildrenProp) => {
@@ -31,15 +31,15 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
    const [user, setUser] = useLocalStorage<IUser | null>('user', null);
    const [accessToken, setAccessToken] = useLocalStorage<string | null>('accessToken', null);
    const [refreshToken, setRefreshToken] = useLocalStorage<string | null>('refreshToken', null);
-   const [error, setError] = useState<object | null>(null);
+   const [message, setMessage] = useState<object | null>(null);
    const location = useLocation();
 
    useEffect(() => {
-      setError(null);
+      setMessage(null);
    }, [location]);
 
    const login: ILoginFuncProp = async (email, password) => {
-      setError(null);
+      setMessage(null);
       await axiosService
          .post('/auth/login/', {
             email: email,
@@ -52,9 +52,8 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
             setRefreshToken(refreshToken);
          })
          .catch((error: AxiosError) => {
-            console.log(error);
             const responseData = error.response?.data as { detail: string };
-            setError({
+            setMessage({
                error: responseData?.detail || 'Bir hata oluştu daha sonra tekrar deneyin.',
             });
          });
@@ -74,7 +73,7 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
       first_name,
       last_name,
    ) => {
-      setError(null);
+      setMessage(null);
       await axiosService
          .post('/auth/register/', {
             email: email,
@@ -91,14 +90,14 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
             navigate(location.state?.from ?? '/', { replace: true });
          })
          .catch((error: AxiosError) => {
-            setError(error.response?.data || { error: 'Bir hata oluştu.' });
+            setMessage(error.response?.data || { error: 'Bir hata oluştu.' });
          });
    };
 
    const value: IAuthContextProps = useMemo(() => {
       return {
          user,
-         error,
+         message,
          accessToken,
          refreshToken,
          login,
