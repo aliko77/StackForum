@@ -5,9 +5,9 @@ import { Formik } from 'formik';
 import { NavLink } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useAuth } from 'hooks/useAuth';
-import Alert, { eColors } from 'components/Alert';
 import LoadSpinner from 'components/LoadSpinner';
 import { FC } from 'react';
+import FormMessages from 'components/FormMessages';
 
 interface ILoginFormProp {
    email: string;
@@ -25,7 +25,7 @@ const validationSchema = Yup.object({
 });
 
 const Login: FC = () => {
-   const { login, error } = useAuth();
+   const { login, message } = useAuth();
 
    return (
       <div className="mx-auto w-full max-w-sm p-3 sm:my-20 my-10">
@@ -50,7 +50,7 @@ const Login: FC = () => {
                   isSubmitting,
                }) => (
                   <div>
-                     {error && <Alert text={error} color={eColors.Indigo} />}
+                     {message && <FormMessages errors={message} />}
                      {isSubmitting && <LoadSpinner />}
                      <form noValidate onSubmit={handleSubmit} className="space-y-3">
                         <div>

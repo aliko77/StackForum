@@ -3,7 +3,7 @@ import axiosService from 'api/axios';
 import { AxiosError } from 'axios';
 import { createContext, useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { IChildrenProp, ILoginFuncProp, IRegisterFuncProp, IUser } from 'types';
+import { IChildrenProp, ILoginFuncProp, IRegisterErrorType, IRegisterFuncProp, IUser } from 'types';
 import { useLocalStorage } from 'usehooks-ts';
 
 interface IAuthContextProps {
@@ -13,7 +13,9 @@ interface IAuthContextProps {
    login: ILoginFuncProp;
    register: IRegisterFuncProp;
    logout: () => void;
-   message: object | null;
+   message: null | {
+      [key: string]: string[];
+   };
 }
 
 export const AuthContext = createContext<IAuthContextProps>({
@@ -31,7 +33,7 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
    const [user, setUser] = useLocalStorage<IUser | null>('user', null);
    const [accessToken, setAccessToken] = useLocalStorage<string | null>('accessToken', null);
    const [refreshToken, setRefreshToken] = useLocalStorage<string | null>('refreshToken', null);
-   const [message, setMessage] = useState<object | null>(null);
+   const [message, setMessage] = useState<null | { [key: string]: string[] }>(null);
    const location = useLocation();
 
    useEffect(() => {
@@ -53,9 +55,10 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
          })
          .catch((error: AxiosError) => {
             const responseData = error.response?.data as { detail: string };
-            setMessage({
-               error: responseData?.detail || 'Bir hata oluştu daha sonra tekrar deneyin.',
-            });
+            const resMessages = {
+               detail: [responseData?.detail || 'Bir hata oluştu daha sonra tekrar deneyin.'],
+            };
+            setMessage(resMessages);
          });
    };
 
@@ -82,15 +85,15 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
             first_name: first_name,
             last_name: last_name,
          })
-         .then(({ data }) => {
-            const { user, accessToken, refreshToken } = data;
-            setUser(user);
-            setAccessToken(accessToken);
-            setRefreshToken(refreshToken);
-            navigate(location.state?.from ?? '/', { replace: true });
+         .then(() => {
+            const resMessages = {
+               success: ['Başarıyla kayıt oldunuz. Lütfen mail adresinizi doğrulayınız.'],
+            };
+            setMessage(resMessages);
          })
          .catch((error: AxiosError) => {
-            setMessage(error.response?.data || { error: 'Bir hata oluştu.' });
+            const resMessages = error.response?.data as IRegisterErrorType;
+            setMessage(resMessages);
          });
    };
 

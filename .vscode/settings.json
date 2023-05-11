@@ -1,6 +1,7 @@
 {
   "python.linting.enabled": false,
   "editor.rulers": [120],
+  "editor.tabSize": 3,
   "[python]": {
     "editor.tabSize": 4,
     "editor.indentSize": "tabSize"

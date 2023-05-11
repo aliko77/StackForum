@@ -2,11 +2,11 @@ import { FC } from 'react';
 import Logo from 'components/Logo';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import Alert, { eColors } from 'components/Alert';
 import { useAuth } from 'hooks/useAuth';
 import LoadSpinner from 'components/LoadSpinner';
 import Field from 'components/Field';
 import Button from 'components/Button';
+import FormMessages from 'components/FormMessages';
 
 interface IRegisterFormProp {
    email: string;
@@ -33,7 +33,8 @@ const validationSchema = Yup.object({
 });
 
 const Register: FC = () => {
-   const { error, register } = useAuth();
+   const { register, message } = useAuth();
+
    return (
       <div className="mx-auto w-full max-w-sm p-3 sm:my-20 my-10">
          <div className="flex items-center justify-center mb-4">
@@ -69,7 +70,7 @@ const Register: FC = () => {
                   touched,
                }) => (
                   <div>
-                     {error && <Alert text={error} color={eColors.Indigo} />}
+                     {message && <FormMessages errors={message} />}
                      {isSubmitting && <LoadSpinner />}
                      <form noValidate onSubmit={handleSubmit} className="space-y-3">
                         <div>

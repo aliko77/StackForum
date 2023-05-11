@@ -1,5 +1,7 @@
+import { ReactNode } from 'react';
+
 export interface IChildrenProp {
-   children: React.ReactNode | React.ReactNode[];
+   children: ReactNode | ReactNode[];
 }
 export interface ILoginFuncProp {
    (email: string, password: string): Promise<void>;
@@ -22,4 +24,8 @@ export interface IUser {
    is_verified: boolean;
    last_login: Date;
    date_joined: Date;
+}
+
+export interface IRegisterErrorType {
+   [key: string]: string[];
 }
