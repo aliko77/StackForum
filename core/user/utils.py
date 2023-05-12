@@ -1,5 +1,4 @@
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
@@ -11,18 +10,19 @@ class TokenGenerator(PasswordResetTokenGenerator):
         return (
             str(user.pk) + user.password + str(timestamp)
         )
+    
+account_activate_token = TokenGenerator()
 
 
-def SendVerificationEmail(request, user):
+def SendVerificationEmail(user):
     if user.is_verified:
         return False
-    current_site = get_current_site(request)
     mail_subject = "Hesap Aktivasyon Maili"
-    message = render_to_string("account/activate_account.html", {
+    message = render_to_string("email/verification.html", {
         "user": user,
-        "domain": current_site.domain,
+        "domain": "localhost:5173",
         "uid": urlsafe_base64_encode(force_bytes(user.pk)),
-        "token": TokenGenerator.make_token(user)}
+        "token": account_activate_token.make_token(user)}
     )
     to_email = user.email
     email = EmailMessage(
