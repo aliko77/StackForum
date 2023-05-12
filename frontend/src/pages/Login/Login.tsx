@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import { useAuth } from 'hooks/useAuth';
 import LoadSpinner from 'components/LoadSpinner';
 import { FC } from 'react';
-import FormMessages from 'components/FormMessages';
+import Alert from 'components/Alert/Alert';
 
 interface ILoginFormProp {
    email: string;
@@ -42,7 +42,7 @@ const Login: FC = () => {
             >
                {({
                   values,
-                  errors,
+                  errors: formikErrors,
                   touched,
                   handleChange,
                   handleBlur,
@@ -50,7 +50,7 @@ const Login: FC = () => {
                   isSubmitting,
                }) => (
                   <div>
-                     {message && <FormMessages errors={message} />}
+                     {message && <Alert text={message} />}
                      {isSubmitting && <LoadSpinner />}
                      <form noValidate onSubmit={handleSubmit} className="space-y-3">
                         <div>
@@ -64,7 +64,7 @@ const Login: FC = () => {
                               placeholder="Email"
                            />
                            <p className="text-red-500 dark:text-red-400 text-sm ml-1">
-                              {errors.email && touched.email && errors.email}
+                              {formikErrors.email && touched.email && formikErrors.email}
                            </p>
                         </div>
                         <div>
@@ -78,7 +78,7 @@ const Login: FC = () => {
                               placeholder="Şifre"
                            />
                            <p className="text-red-500 dark:text-red-400 text-sm ml-1">
-                              {errors.password && touched.password && errors.password}
+                              {formikErrors.password && touched.password && formikErrors.password}
                            </p>
                         </div>
                         <div className="flex justify-end">

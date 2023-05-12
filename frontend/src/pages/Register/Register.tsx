@@ -6,7 +6,8 @@ import { useAuth } from 'hooks/useAuth';
 import LoadSpinner from 'components/LoadSpinner';
 import Field from 'components/Field';
 import Button from 'components/Button';
-import FormMessages from 'components/FormMessages';
+import FormErrors from 'components/FormErrors';
+import Alert, { eColors } from 'components/Alert';
 
 interface IRegisterFormProp {
    email: string;
@@ -33,7 +34,7 @@ const validationSchema = Yup.object({
 });
 
 const Register: FC = () => {
-   const { register, message } = useAuth();
+   const { register, errors, message } = useAuth();
 
    return (
       <div className="mx-auto w-full max-w-sm p-3 sm:my-20 my-10">
@@ -61,7 +62,7 @@ const Register: FC = () => {
                }}
             >
                {({
-                  errors,
+                  errors: formikErrors,
                   isSubmitting,
                   handleSubmit,
                   handleChange,
@@ -70,7 +71,8 @@ const Register: FC = () => {
                   touched,
                }) => (
                   <div>
-                     {message && <FormMessages errors={message} />}
+                     {message && <Alert color={eColors.Green} text={message} />}
+                     {errors && <FormErrors errors={errors} />}
                      {isSubmitting && <LoadSpinner />}
                      <form noValidate onSubmit={handleSubmit} className="space-y-3">
                         <div>
@@ -86,7 +88,9 @@ const Register: FC = () => {
                                     placeholder="İsim"
                                  />
                                  <p className="text-red-500 dark:text-red-400 text-sm ml-1">
-                                    {errors.first_name && touched.first_name && errors.first_name}
+                                    {formikErrors.first_name &&
+                                       touched.first_name &&
+                                       formikErrors.first_name}
                                  </p>
                               </div>
                               <div>
@@ -100,7 +104,9 @@ const Register: FC = () => {
                                     placeholder="Soyisim"
                                  />
                                  <p className="text-red-500 dark:text-red-400 text-sm ml-1">
-                                    {errors.last_name && touched.last_name && errors.last_name}
+                                    {formikErrors.last_name &&
+                                       touched.last_name &&
+                                       formikErrors.last_name}
                                  </p>
                               </div>
                            </div>
@@ -116,7 +122,7 @@ const Register: FC = () => {
                               placeholder="Email"
                            />
                            <p className="text-red-500 dark:text-red-400 text-sm ml-1">
-                              {errors.email && touched.email && errors.email}
+                              {formikErrors.email && touched.email && formikErrors.email}
                            </p>
                         </div>
                         <div>
@@ -130,7 +136,7 @@ const Register: FC = () => {
                               placeholder="Şifre"
                            />
                            <p className="text-red-500 dark:text-red-400 text-sm ml-1">
-                              {errors.password && touched.password && errors.password}
+                              {formikErrors.password && touched.password && formikErrors.password}
                            </p>
                         </div>
                         <div>
@@ -144,9 +150,9 @@ const Register: FC = () => {
                               placeholder="Şifreyi onayla"
                            />
                            <p className="text-red-500 dark:text-red-400 text-sm ml-1">
-                              {errors.confirmPassword &&
+                              {formikErrors.confirmPassword &&
                                  touched.confirmPassword &&
-                                 errors.confirmPassword}
+                                 formikErrors.confirmPassword}
                            </p>
                         </div>
                         <Button text={'Kayıt ol'} type="submit" disabled={isSubmitting} />

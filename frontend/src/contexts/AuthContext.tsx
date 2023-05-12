@@ -13,19 +13,22 @@ interface IAuthContextProps {
    login: ILoginFuncProp;
    register: IRegisterFuncProp;
    logout: () => void;
-   message: null | {
-      [key: string]: string[];
-   };
 }
 
-export const AuthContext = createContext<IAuthContextProps>({
+interface IExtraProps {
+   message: string | null;
+   errors: { [key: string]: string[] } | null;
+}
+
+export const AuthContext = createContext<IAuthContextProps & IExtraProps>({
    user: null,
    accessToken: null,
    refreshToken: null,
    login: async () => {},
-   register: async () => {},
    logout: () => {},
+   register: async () => {},
    message: null,
+   errors: null,
 });
 
 export const AuthProvider = ({ children }: IChildrenProp) => {
@@ -33,15 +36,18 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
    const [user, setUser] = useLocalStorage<IUser | null>('user', null);
    const [accessToken, setAccessToken] = useLocalStorage<string | null>('accessToken', null);
    const [refreshToken, setRefreshToken] = useLocalStorage<string | null>('refreshToken', null);
-   const [message, setMessage] = useState<null | { [key: string]: string[] }>(null);
+   const [message, setMessage] = useState<null | string>(null);
+   const [errors, setErrors] = useState<null | { [key: string]: string[] }>(null);
    const location = useLocation();
 
    useEffect(() => {
       setMessage(null);
+      setErrors(null);
    }, [location]);
 
    const login: ILoginFuncProp = async (email, password) => {
       setMessage(null);
+      setErrors(null);
       await axiosService
          .post('/auth/login/', {
             email: email,
@@ -55,10 +61,10 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
          })
          .catch((error: AxiosError) => {
             const responseData = error.response?.data as { detail: string };
-            const resMessages = {
-               detail: [responseData?.detail || 'Bir hata oluştu daha sonra tekrar deneyin.'],
-            };
-            setMessage(resMessages);
+            const resMessage = responseData?.detail
+               ? 'Email veya şifre yanlış.'
+               : 'Bir hata oluştu daha sonra tekrar deneyin.';
+            setMessage(resMessage);
          });
    };
 
@@ -77,6 +83,7 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
       last_name,
    ) => {
       setMessage(null);
+      setErrors(null);
       await axiosService
          .post('/auth/register/', {
             email: email,
@@ -86,21 +93,19 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
             last_name: last_name,
          })
          .then(() => {
-            const resMessages = {
-               success: ['Başarıyla kayıt oldunuz. Lütfen mail adresinizi doğrulayınız.'],
-            };
-            setMessage(resMessages);
+            setMessage('Başarıyla kayıt oldunuz. Lütfen mail adresinizi doğrulayınız.');
          })
          .catch((error: AxiosError) => {
             const resMessages = error.response?.data as IRegisterErrorType;
-            setMessage(resMessages);
+            setErrors(resMessages);
          });
    };
 
-   const value: IAuthContextProps = useMemo(() => {
+   const value = useMemo(() => {
       return {
          user,
          message,
+         errors,
          accessToken,
          refreshToken,
          login,

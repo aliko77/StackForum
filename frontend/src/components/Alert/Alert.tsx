@@ -1,17 +1,18 @@
-import { FC, ReactNode } from 'react';
+import { FC } from 'react';
 
 export enum eColors {
    Rose = 'text-rose-900 dark:text-rose-400',
    Indigo = 'text-indigo-700 dark:text-indigo-400',
+   Green = 'text-green-700 dark:text-green-500',
    None = '',
 }
 
 interface IAlert {
-   children: ReactNode;
-   color: eColors | null | undefined;
+   text: string;
+   color?: eColors | null | undefined;
 }
 
-const Alert: FC<IAlert> = ({ children, color = eColors.Rose }) => {
+const Alert: FC<IAlert> = ({ text, color = eColors.Rose }) => {
    return (
       <div
          className={`flex p-4 mb-4 text-center text-sm ${color} rounded-lg bg-blue-100 dark:bg-gray-800`}
@@ -31,7 +32,7 @@ const Alert: FC<IAlert> = ({ children, color = eColors.Rose }) => {
             ></path>
          </svg>
          <span className="sr-only">Info</span>
-         <div className="mx-2">{children}</div>
+         <div className="mx-2">{text}</div>
       </div>
    );
 };
