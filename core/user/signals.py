@@ -6,12 +6,14 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
+from .utils import TokenGenerator
 
 
 @receiver(post_save, sender=User)
 def create_user_profile(_, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
+    instance.profile.save()
 
 
 @receiver(post_save, sender=User)
@@ -22,7 +24,7 @@ def send_verification_mail(_, instance, created, **kwargs):
         from_email = settings.EMAIL_HOST_USER
         recipient_list = [instance.email]
         uid = urlsafe_base64_encode(force_bytes(instance.pk))
-        token = account_activation_token.make_token(instance)
+        token = TokenGenerator.make_token(instance)
         activation_link = f"{settings.BASE_URL}/activate/{uid}/{token}/"
         html_message = render_to_string('verification_email.html', {
                                         'activation_link': activation_link})
