@@ -61,10 +61,10 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
          })
          .catch((error: AxiosError) => {
             const responseData = error.response?.data as { detail: string };
-            const resMessage = responseData?.detail
+            const resErrors = responseData?.detail
                ? 'Email veya şifre yanlış.'
-               : 'Bir hata oluştu daha sonra tekrar deneyin.';
-            setMessage(resMessage);
+               : 'Bir hata oluştu, lütfen daha sonra tekrar deneyin.';
+            setMessage(resErrors);
          });
    };
 
@@ -93,11 +93,11 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
             last_name: last_name,
          })
          .then(() => {
-            setMessage('Başarıyla kayıt oldunuz. Lütfen mail adresinizi doğrulayınız.');
+            setMessage('Başarıyla kayıt oldunuz. Lütfen mail adresinizi doğrulayın.');
          })
          .catch((error: AxiosError) => {
-            const resMessages = error.response?.data as IRegisterErrorType;
-            setErrors(resMessages);
+            const resErrors = error.response?.data as IRegisterErrorType;
+            setErrors(resErrors);
          });
    };
 

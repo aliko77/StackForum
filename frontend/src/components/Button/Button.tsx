@@ -15,6 +15,7 @@ interface IcolorVariants {
 
 const colorVariants: IcolorVariants = {
    rose: 'bg-rose-500 hover:bg-rose-600 disabled:bg-rose-600',
+   indigo: 'bg-indigo-500 hover:bg-indigo-600 disabled:bg-indigo-600',
 };
 
 const darkColorVariants: IcolorVariants = {
