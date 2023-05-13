@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import Logo from 'components/Logo';
 import { Formik } from 'formik';
-import * as Yup from 'yup';
+import { object, string, ref } from 'yup';
 import { useAuth } from 'hooks/useAuth';
 import LoadSpinner from 'components/LoadSpinner';
 import Field from 'components/Field';
@@ -25,17 +25,17 @@ const initialValues: IRegisterFormProp = {
    last_name: '',
 };
 
-const validationSchema = Yup.object({
-   email: Yup.string().email('*').required('*'),
-   password: Yup.string()
+const validationSchema = object({
+   email: string().email('*').required('*'),
+   password: string()
       .required('*')
       .min(8, 'Şifreniz en az 8 karakter olmalıdır.')
       .max(128, 'En fazla 128 karakter.'),
-   confirmPassword: Yup.string()
+   confirmPassword: string()
       .required('*')
-      .oneOf([Yup.ref('password')], 'Şifreler eşleşmiyor.'),
-   first_name: Yup.string().trim().required('*'),
-   last_name: Yup.string().trim().required('*'),
+      .oneOf([ref('password')], 'Şifreler eşleşmiyor.'),
+   first_name: string().trim().required('*'),
+   last_name: string().trim().required('*'),
 });
 
 const Register: FC = () => {

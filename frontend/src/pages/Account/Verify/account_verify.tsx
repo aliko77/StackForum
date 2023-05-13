@@ -1,18 +1,20 @@
 import Button from 'components/Button';
 import Logo from 'components/Logo';
 import OtpInput from 'components/OtpInput';
-import { Formik } from 'formik';
 import { useAuth } from 'hooks/useAuth';
-import { FC, useState } from 'react';
-import * as Yup from 'yup';
+import { FC, useState, FormEvent } from 'react';
 
 const account_verify: FC = () => {
    const { user } = useAuth();
    const email = user?.email;
-   const [otp, setOtp] = useState('');
+   const [otp, setOtp] = useState<string>('');
+   const [issubmitting, setIssubmitting] = useState<boolean>(false);
 
-   const InitialState: { vcode: string } = {
-      vcode: '',
+   const handleSubmit = async (e: FormEvent) => {
+      e.preventDefault();
+      if (otp.length < 6) return;
+      setIssubmitting(true);
+      console.log(otp);
    };
 
    return (
@@ -20,7 +22,7 @@ const account_verify: FC = () => {
          <div className="container mx-auto">
             <div className="max-w-sm mx-auto md:max-w-lg">
                <div className="w-full">
-                  <div className="text-gray-800 dark:text-gray-100 border dark:bg-night-200 py-8 rounded text-center flex flex-col justify-center">
+                  <div className="text-gray-800 dark:text-gray-100 border dark:border-gray-600 dark:bg-night-200 py-8 rounded text-center flex flex-col justify-center">
                      <div className="m-auto mb-4">
                         <Logo noRedirect noText />
                      </div>
@@ -34,26 +36,17 @@ const account_verify: FC = () => {
                         </span>
                      </div>
                      <div className="flex justify-center items-center">
-                        <Formik
-                           initialValues={InitialState}
-                           onSubmit={async (values) => {
-                              console.log(values);
-                           }}
-                        >
-                           {({ handleSubmit }) => (
-                              <form onSubmit={handleSubmit}>
-                                 <OtpInput
-                                    value={otp}
-                                    onChange={(val) => {
-                                       setOtp(val);
-                                    }}
-                                 />
-                                 <div className="mt-4">
-                                    <Button text={'Doğrula'} type="submit" />
-                                 </div>
-                              </form>
-                           )}
-                        </Formik>
+                        <form onSubmit={handleSubmit}>
+                           <OtpInput
+                              value={otp}
+                              onChange={(value) => {
+                                 setOtp(value);
+                              }}
+                           />
+                           <div className="mt-4 mx-2">
+                              <Button text={'Doğrula'} type="submit" disabled={issubmitting} />
+                           </div>
+                        </form>
                      </div>
                   </div>
                </div>

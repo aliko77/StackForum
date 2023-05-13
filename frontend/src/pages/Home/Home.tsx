@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 const Home: FC = () => {
    const { user, isVerified } = useAuth();
    const _isVerified = isVerified();
+
    return (
       <div className="m-auto text-center">
          <div className="text-xl dark:text-gray-100">Hoşgeldin: {user?.email || 'Misafir'}</div>

@@ -3,7 +3,7 @@ import Field from 'components/Field';
 import Logo from 'components/Logo';
 import { Formik } from 'formik';
 import { NavLink } from 'react-router-dom';
-import * as Yup from 'yup';
+import { object, string } from 'yup';
 import { useAuth } from 'hooks/useAuth';
 import LoadSpinner from 'components/LoadSpinner';
 import { FC } from 'react';
@@ -19,9 +19,9 @@ const InitialState: ILoginFormProp = {
    password: '',
 };
 
-const validationSchema = Yup.object({
-   email: Yup.string().email('*').required('*'),
-   password: Yup.string().required('*'),
+const validationSchema = object({
+   email: string().email('*').required('*'),
+   password: string().required('*'),
 });
 
 const Login: FC = () => {
