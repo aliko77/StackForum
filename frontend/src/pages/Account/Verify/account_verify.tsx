@@ -14,7 +14,6 @@ const account_verify: FC = () => {
       e.preventDefault();
       if (otp.length < 6) return;
       setIssubmitting(true);
-      console.log(otp);
    };
 
    return (
