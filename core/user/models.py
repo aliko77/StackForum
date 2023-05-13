@@ -79,3 +79,16 @@ class Profile(models.Model):
 
     class Meta:
         db_table = "user_profile"
+
+
+class AccountActivation(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    activation_code = models.CharField(max_length=50)
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_used = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.user.email} - {self.activation_code}"
+
+    class Meta:
+        db_table = "user_activation_code"

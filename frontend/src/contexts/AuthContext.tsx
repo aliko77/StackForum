@@ -94,12 +94,16 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
             first_name: first_name,
             last_name: last_name,
          })
-         .then(() => {
-            setMessage('Başarıyla kayıt oldunuz. Lütfen mail adresinizi doğrulayın.');
+         .then(({ data }) => {
+            const { user, accessToken, refreshToken } = data;
+            setUser(user);
+            setAccessToken(accessToken);
+            setRefreshToken(refreshToken);
+            navigate('/auth/verify');
          })
          .catch((error: AxiosError) => {
             const resErrors = error.response?.data as string[];
-            setErrors(resErrors);
+            setErrors(resErrors ?? ['Bir hata oluştu. Lütfen tekrar deneyiniz.']);
          });
    };
 

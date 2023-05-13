@@ -5,12 +5,7 @@ from .utils import SendVerificationEmail
 
 
 @receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
+def after_create_user(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
-
-
-@receiver(post_save, sender=User)
-def send_verification_mail(sender, instance, created, **kwargs):
-    if created:
-        SendVerificationEmail(instance)
+        # SendVerificationEmail(instance)

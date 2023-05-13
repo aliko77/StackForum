@@ -4,11 +4,12 @@ import { createBrowserRouter } from 'react-router-dom';
 import PageLoading from 'components/PageLoading';
 import Layout from 'layouts/Layout';
 import { AuthProvider } from 'contexts/AuthContext';
-import { GuestRoute } from 'routes/GuardRoutes';
+import { GuestRoute, PrivateRoute } from 'routes/GuardRoutes';
 
 const Login = lazy(() => import('pages/Login'));
 const Register = lazy(() => import('pages/Register'));
 const Home = lazy(() => import('pages/Home'));
+const AccountVerify = lazy(() => import('pages/Account/Verify'));
 const PageNotFound = lazy(() => import('pages/PageNotFound'));
 
 interface IRoutes {
@@ -30,6 +31,10 @@ const routes: IRoutes[] = [
    { path: '/', element: getRouteElement(Home) },
    { path: 'login', element: getRouteElement(() => <GuestRoute>{<Login />}</GuestRoute>) },
    { path: 'register', element: getRouteElement(() => <GuestRoute>{<Register />}</GuestRoute>) },
+   {
+      path: 'auth/verify',
+      element: getRouteElement(() => <PrivateRoute>{<AccountVerify />}</PrivateRoute>),
+   },
    { path: '*', element: getRouteElement(PageNotFound) },
 ];
 
