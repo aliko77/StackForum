@@ -3,7 +3,7 @@ import axiosService from 'api/axios';
 import { AxiosError } from 'axios';
 import { createContext, useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { IChildrenProp, ILoginFuncProp, IRegisterErrorType, IRegisterFuncProp, IUser } from 'types';
+import { IChildrenProp, ILoginFuncProp, IRegisterFuncProp, IUser } from 'types';
 import { useLocalStorage } from 'usehooks-ts';
 
 interface IAuthContextProps {
@@ -17,7 +17,7 @@ interface IAuthContextProps {
 
 interface IExtraProps {
    message: string | null;
-   errors: { [key: string]: string[] } | null;
+   errors: string[] | null;
 }
 
 export const AuthContext = createContext<IAuthContextProps & IExtraProps>({
@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
    const [accessToken, setAccessToken] = useLocalStorage<string | null>('accessToken', null);
    const [refreshToken, setRefreshToken] = useLocalStorage<string | null>('refreshToken', null);
    const [message, setMessage] = useState<null | string>(null);
-   const [errors, setErrors] = useState<null | { [key: string]: string[] }>(null);
+   const [errors, setErrors] = useState<null | string[]>(null);
    const location = useLocation();
 
    useEffect(() => {
@@ -96,7 +96,7 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
             setMessage('Başarıyla kayıt oldunuz. Lütfen mail adresinizi doğrulayın.');
          })
          .catch((error: AxiosError) => {
-            const resErrors = error.response?.data as IRegisterErrorType;
+            const resErrors = error.response?.data as string[];
             setErrors(resErrors);
          });
    };

@@ -42,14 +42,13 @@ class RegisterSerializer(UserSerializer):
 
     def validate(self, attrs):
         if attrs['password'] != attrs['confirm_password']:
-            raise serializers.ValidationError('Şifreler eşleşmiyor.')
+            raise serializers.ValidationError(['Şifreler eşleşmiyor.'])
         return attrs
 
     def create(self, validated_data):
         try:
             User.objects.get(email=validated_data['email'])
-            raise serializers.ValidationError(
-                {'email': ['Bu email zaten kullanılıyor.']})
+            raise serializers.ValidationError(['Bu email zaten kullanılıyor.'])
         except ObjectDoesNotExist:
             user_data = {
                 'email': validated_data['email'],

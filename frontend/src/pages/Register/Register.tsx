@@ -27,8 +27,10 @@ const initialValues: IRegisterFormProp = {
 
 const validationSchema = Yup.object({
    email: Yup.string().email('*').required('*'),
-   confirmPassword: Yup.string().required('*'),
-   password: Yup.string().required('*'),
+   password: Yup.string().required('*').min(8, 'Şifreniz en az 8 karakter olmalıdır.').max(128, "En fazla 128 karakter."),
+   confirmPassword: Yup.string()
+      .required('*')
+      .oneOf([Yup.ref('password')], 'Şifreler eşleşmiyor.'),
    first_name: Yup.string().trim().required('*'),
    last_name: Yup.string().trim().required('*'),
 });

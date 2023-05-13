@@ -1,17 +1,15 @@
 import { FC } from 'react';
 
 interface IFormErrors {
-   errors: {
-      [key: string]: string[];
-   };
+   errors: string[];
 }
 
 const FormErrors: FC<IFormErrors> = ({ errors }) => {
    return (
       <>
-         {Object.keys(errors).map((key) => {
+         {Object.values(errors).map((value) => {
             return (
-               <div key={key}>
+               <div key={value}>
                   <div
                      className={`flex p-4 mb-2 text-center text-sm text-rose-700 dark:text-rose-400 rounded-lg bg-blue-100 dark:bg-gray-800`}
                      role="alert"
@@ -32,11 +30,7 @@ const FormErrors: FC<IFormErrors> = ({ errors }) => {
                      <span className="sr-only">Info</span>
                      <div className="flex flex-col mx-2">
                         <div>
-                           {errors[key].map((error) => (
-                              <span key={error}>
-                                 {error} {key != 'success' && `[${key}]`}
-                              </span>
-                           ))}
+                           <span>{value}</span>
                         </div>
                      </div>
                   </div>
