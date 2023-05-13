@@ -9,6 +9,7 @@ import ThemeSwitcher from 'components/ThemeSwitcher/ThemeSwitcher';
 const Header: FC = () => {
    const navigate: NavigateFunction = useNavigate();
    const { user } = useAuth();
+
    return (
       <header className="static bg-white dark:bg-night-200 border-t-4 border-rose-400 shadow py-3 px-3">
          <div className="flex items-center align-center">
@@ -16,11 +17,11 @@ const Header: FC = () => {
                <Logo />
             </div>
             <div className="ml-auto">
-               <div className="flex flex-1 space-x-2 items-center">
-                  <div className="p-2 bg-white dark:bg-night-100 shadow rounded-full">
+               <div className="flex flex-1 space-x-1 sm:space-x-2 items-center">
+                  <div className="p-1.5 bg-white dark:bg-night-100 shadow rounded-full">
                      <ThemeSwitcher />
                   </div>
-                  <div className="p-2 bg-white dark:bg-night-100 shadow rounded-full">
+                  <div className="p-1.5 bg-white dark:bg-night-100 shadow rounded-full">
                      <div className="text-zinc-600 dark:text-gray-300">
                         <svg
                            xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +42,7 @@ const Header: FC = () => {
                   {user && (
                      <>
                         <div>
-                           <div className="mx-4">
+                           <div className="mx-1.5 sm:mx-4">
                               <svg
                                  xmlns="http://www.w3.org/2000/svg"
                                  fill="none"
@@ -59,15 +60,15 @@ const Header: FC = () => {
                            </div>
                         </div>
                         <div>
-                           <div className="flex flex-col mx-4">
+                           <div className="flex flex-col mx-1.5 sm:mx-4">
                               <p className="text-xs text-gray-600 dark:text-gray-400">
                                  Hoş geldin,
                               </p>
-                              <p className="dark:text-gray-100">{user.email}</p>
+                              <p className="dark:text-gray-100">{user.profile.first_name}</p>
                            </div>
                         </div>
                         <div>
-                           <div className="ml-4">
+                           <div className="ml-1.5 sm:ml-4">
                               <LogoutButton />
                            </div>
                         </div>
@@ -87,7 +88,7 @@ const Header: FC = () => {
                         <div>
                            <Button
                               text="Kayıt ol"
-                              color='indigo'
+                              color="indigo"
                               onClick={(): void => {
                                  navigate('/register');
                               }}

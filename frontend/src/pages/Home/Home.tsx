@@ -1,13 +1,21 @@
+import Button from 'components/Button/Button';
 import { useAuth } from 'hooks/useAuth';
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
 
 const Home: FC = () => {
    const { user, isVerified } = useAuth();
    const _isVerified = isVerified();
    return (
-      <div className="text-2xl m-auto text-center">
-         <div>Hoşgeldin: {user?.email || 'Misafir'}</div>
-         {user && !_isVerified && <div>Lütfen email adresinizi doğrulayınız.</div>}
+      <div className="m-auto text-center">
+         <div className="text-xl dark:text-gray-100">Hoşgeldin: {user?.email || 'Misafir'}</div>
+         {user && !_isVerified && (
+            <div className="mt-4">
+               <Link to={'/account/verify'}>
+                  <Button text="Lütfen email adresinizi doğrulayınız." />
+               </Link>
+            </div>
+         )}
       </div>
    );
 };

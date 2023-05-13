@@ -32,7 +32,7 @@ const routes: IRoutes[] = [
    { path: 'login', element: getRouteElement(() => <GuestRoute>{<Login />}</GuestRoute>) },
    { path: 'register', element: getRouteElement(() => <GuestRoute>{<Register />}</GuestRoute>) },
    {
-      path: 'auth/verify',
+      path: 'account/verify',
       element: getRouteElement(() => <PrivateRoute>{<AccountVerify />}</PrivateRoute>),
    },
    { path: '*', element: getRouteElement(PageNotFound) },

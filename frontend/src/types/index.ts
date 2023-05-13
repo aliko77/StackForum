@@ -24,6 +24,7 @@ export interface IUser {
    is_verified: boolean;
    last_login: Date;
    date_joined: Date;
+   profile: { [key: string]: string };
 }
 
 export interface IRegisterErrorType {

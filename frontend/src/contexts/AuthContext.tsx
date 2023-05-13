@@ -99,7 +99,7 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
             setUser(user);
             setAccessToken(accessToken);
             setRefreshToken(refreshToken);
-            navigate('/auth/verify');
+            navigate('/account/verify');
          })
          .catch((error: AxiosError) => {
             const resErrors = error.response?.data as string[];

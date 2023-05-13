@@ -1,13 +1,19 @@
 import Button from 'components/Button';
 import Logo from 'components/Logo';
 import OtpInput from 'components/OtpInput';
+import { Formik } from 'formik';
 import { useAuth } from 'hooks/useAuth';
 import { FC, useState } from 'react';
+import * as Yup from 'yup';
 
 const account_verify: FC = () => {
    const { user } = useAuth();
    const email = user?.email;
    const [otp, setOtp] = useState('');
+
+   const InitialState: { vcode: string } = {
+      vcode: '',
+   };
 
    return (
       <div className="py-20 px-4">
@@ -28,22 +34,26 @@ const account_verify: FC = () => {
                         </span>
                      </div>
                      <div className="flex justify-center items-center">
-                        <form
-                           onSubmit={async (e) => {
-                              e.preventDefault();
-                              console.log(e);
+                        <Formik
+                           initialValues={InitialState}
+                           onSubmit={async (values) => {
+                              console.log(values);
                            }}
                         >
-                           <OtpInput
-                              value={otp}
-                              onChange={(val) => {
-                                 setOtp(val);
-                              }}
-                           />
-                           <div className="mt-4">
-                              <Button text={'Doğrula'} type="submit" />
-                           </div>
-                        </form>
+                           {({ handleSubmit }) => (
+                              <form onSubmit={handleSubmit}>
+                                 <OtpInput
+                                    value={otp}
+                                    onChange={(val) => {
+                                       setOtp(val);
+                                    }}
+                                 />
+                                 <div className="mt-4">
+                                    <Button text={'Doğrula'} type="submit" />
+                                 </div>
+                              </form>
+                           )}
+                        </Formik>
                      </div>
                   </div>
                </div>

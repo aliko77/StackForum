@@ -8,7 +8,9 @@ type LogoProps = {
 };
 
 const Logo: FC<LogoProps> = ({ noText, noRedirect }) => {
-   const classList = `font-mono space-x-0.5 text-xl dark:text-gray-100 ${noText ? 'sr-only' : ''}`;
+   const classList = `hidden sm:block font-mono space-x-0.5 text-xl dark:text-gray-100 ${
+      noText ? 'sr-only' : ''
+   }`;
    if (noRedirect) {
       return (
          <div className="flex">

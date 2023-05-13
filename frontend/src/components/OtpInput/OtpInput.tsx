@@ -62,7 +62,7 @@ const OtpInput = (props: Props) => {
                   inputMode="numeric"
                   autoComplete="one-time-code"
                   pattern={validationPattern.source}
-                  maxLength={1}
+                  maxLength={6}
                   value={value.at(index) ?? ''}
                   onChange={(e) => handleInputChange(e, index)}
                   onKeyUp={handleKeyUp}
