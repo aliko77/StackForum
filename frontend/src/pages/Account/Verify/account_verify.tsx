@@ -2,6 +2,7 @@ import Button from 'components/Button';
 import Logo from 'components/Logo';
 import OtpInput from 'components/OtpInput';
 import { useAuth } from 'hooks/useAuth';
+import { useVerificationHook } from 'hooks/useVerificationHook';
 import { FC, useState, FormEvent } from 'react';
 
 const account_verify: FC = () => {

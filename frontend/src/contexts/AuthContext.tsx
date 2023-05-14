@@ -19,6 +19,7 @@ interface IExtraProps {
    message: string | null;
    errors: string[] | null;
    isVerified: () => boolean;
+   setVerified: (value: boolean) => void;
 }
 
 export const AuthContext = createContext<IAuthContextProps & IExtraProps>({
@@ -31,6 +32,7 @@ export const AuthContext = createContext<IAuthContextProps & IExtraProps>({
    message: null,
    errors: null,
    isVerified: () => false,
+   setVerified: () => {},
 });
 
 export const AuthProvider = ({ children }: IChildrenProp) => {
@@ -110,6 +112,10 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
    const isVerified = () => {
       return user?.is_verified || false;
    };
+   const setVerified = (value: boolean) => {
+      const updatedUser = { ...user, is_verified: value };
+      setUser(updatedUser && null);
+   };
 
    const value = useMemo(() => {
       return {
@@ -122,8 +128,9 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
          logout,
          register,
          isVerified,
+         setVerified,
       };
-   }, [user, login, logout, register, isVerified]);
+   }, [user, login, logout, register, setVerified]);
 
    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
