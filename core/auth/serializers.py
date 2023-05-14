@@ -12,9 +12,11 @@ class LoginSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
         refresh = self.get_token(self.user)
-        data['user'] = UserSerializer(self.user).data
-        data['refreshToken'] = str(refresh)
-        data['accessToken'] = str(refresh.access_token)
+        data = {
+            'user' : UserSerializer(self.user).data,
+            'refreshToken':str(refresh),
+            'accessToken':str(refresh.access_token)
+        }
 
         if api_settings.UPDATE_LAST_LOGIN:
             update_last_login(None, user=self.user)
@@ -37,8 +39,8 @@ class RegisterSerializer(UserSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'email', 'password',
-                  'confirm_password', 'first_name', 'last_name']
+        fields = ['email', 'password', 'confirm_password', 'first_name', 'last_name']
+
 
     def validate(self, attrs):
         if attrs['password'] != attrs['confirm_password']:
@@ -61,4 +63,4 @@ class RegisterSerializer(UserSerializer):
                 'last_name': validated_data.get('last_name'),
             }
             Profile.objects.filter(user=user).update(**profile_data)
-        return user
+            return user

@@ -64,7 +64,7 @@ const Header: FC = () => {
                               <p className="text-xs text-gray-600 dark:text-gray-400">
                                  Hoş geldin,
                               </p>
-                              <p className="dark:text-gray-100">{user.profile.first_name}</p>
+                              <p className="dark:text-gray-100">{user.profile?.first_name}</p>
                            </div>
                         </div>
                         <div>

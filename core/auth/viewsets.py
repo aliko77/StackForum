@@ -6,7 +6,7 @@ from rest_framework_simplejwt.exceptions import TokenError, InvalidToken
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from core.auth.serializers import LoginSerializer, RegisterSerializer
+from .serializers import LoginSerializer, RegisterSerializer
 
 
 class LoginViewSet(ModelViewSet, TokenObtainPairView):
@@ -20,7 +20,6 @@ class LoginViewSet(ModelViewSet, TokenObtainPairView):
             serializer.is_valid(raise_exception=True)
         except TokenError as e:
             raise InvalidToken(e.args[0])
-
         return Response(serializer.validated_data, status=status.HTTP_200_OK)
 
 
@@ -39,11 +38,10 @@ class RegistrationViewSet(ModelViewSet, TokenObtainPairView):
             "refresh": str(refresh),
             "access": str(refresh.access_token),
         }
-
         return Response({
             "user": serializer.data,
-            "refresh": _response["refresh"],
-            "token": _response["access"]
+            "refreshToken": _response["refresh"],
+            "accessToken": _response["access"]
         }, status=status.HTTP_201_CREATED)
 
 

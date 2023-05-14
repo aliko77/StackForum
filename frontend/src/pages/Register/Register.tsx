@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import Logo from 'components/Logo';
 import { Formik } from 'formik';
 import { object, string, ref } from 'yup';
@@ -7,7 +7,7 @@ import LoadSpinner from 'components/LoadSpinner';
 import Field from 'components/Field';
 import Button from 'components/Button';
 import FormErrors from 'components/FormErrors';
-import Alert, { eColors } from 'components/Alert';
+import { AxiosError } from 'axios';
 
 interface IRegisterFormProp {
    email: string;
@@ -39,7 +39,8 @@ const validationSchema = object({
 });
 
 const Register: FC = () => {
-   const { register, errors, message } = useAuth();
+   const { register } = useAuth();
+   const [errors, setErrors] = useState<null | string[]>(null);
 
    return (
       <div className="mx-auto w-full max-w-sm p-3 sm:my-20 my-10">
@@ -57,13 +58,17 @@ const Register: FC = () => {
                validationSchema={validationSchema}
                initialValues={initialValues}
                onSubmit={async (values: IRegisterFormProp): Promise<void> => {
+                  setErrors(null);
                   await register(
                      values.email,
                      values.password,
                      values.confirmPassword,
                      values.first_name,
                      values.last_name,
-                  );
+                  ).catch((error: AxiosError) => {
+                     const responseErrors = error.response?.data as string[];
+                     setErrors(responseErrors ?? ['Bir hata oluştu. Lütfen tekrar deneyiniz.']);
+                  });
                }}
             >
                {({
@@ -76,7 +81,6 @@ const Register: FC = () => {
                   touched,
                }) => (
                   <div>
-                     {message && <Alert color={eColors.Green} text={message} />}
                      {errors && <FormErrors errors={errors} />}
                      {isSubmitting && <LoadSpinner />}
                      <form noValidate onSubmit={handleSubmit} className="space-y-3">

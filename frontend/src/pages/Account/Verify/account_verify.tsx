@@ -2,7 +2,6 @@ import Button from 'components/Button';
 import Logo from 'components/Logo';
 import OtpInput from 'components/OtpInput';
 import { useAuth } from 'hooks/useAuth';
-import { useVerificationHook } from 'hooks/useVerificationHook';
 import { FC, useState, FormEvent } from 'react';
 
 const account_verify: FC = () => {
@@ -28,6 +27,9 @@ const account_verify: FC = () => {
                      </div>
                      <h1 className="text-2xl font-semibold">Email Doğrulama</h1>
                      <div className="flex flex-col mb-4">
+                        <span className="text-sm font-semibold uppercase ">
+                           Aramıza Hoş geldin. Hesabını doğrulamak için
+                        </span>
                         <span className="font-bold text-indigo-500 dark:text-indigo-400 my-2">
                            {email}
                         </span>

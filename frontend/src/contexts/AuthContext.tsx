@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import axiosService from 'api/axios';
-import { AxiosError } from 'axios';
-import { createContext, useEffect, useMemo, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { createContext, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { IChildrenProp, ILoginFuncProp, IRegisterFuncProp, IUser } from 'types';
 import { useLocalStorage } from 'usehooks-ts';
 
@@ -15,24 +14,13 @@ interface IAuthContextProps {
    logout: () => void;
 }
 
-interface IExtraProps {
-   message: string | null;
-   errors: string[] | null;
-   isVerified: () => boolean;
-   setVerified: (value: boolean) => void;
-}
-
-export const AuthContext = createContext<IAuthContextProps & IExtraProps>({
+export const AuthContext = createContext<IAuthContextProps>({
    user: null,
    accessToken: null,
    refreshToken: null,
    login: async () => {},
    logout: () => {},
    register: async () => {},
-   message: null,
-   errors: null,
-   isVerified: () => false,
-   setVerified: () => {},
 });
 
 export const AuthProvider = ({ children }: IChildrenProp) => {
@@ -40,18 +28,8 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
    const [user, setUser] = useLocalStorage<IUser | null>('user', null);
    const [accessToken, setAccessToken] = useLocalStorage<string | null>('accessToken', null);
    const [refreshToken, setRefreshToken] = useLocalStorage<string | null>('refreshToken', null);
-   const [message, setMessage] = useState<null | string>(null);
-   const [errors, setErrors] = useState<null | string[]>(null);
-   const location = useLocation();
-
-   useEffect(() => {
-      setMessage(null);
-      setErrors(null);
-   }, [location]);
 
    const login: ILoginFuncProp = async (email, password) => {
-      setMessage(null);
-      setErrors(null);
       await axiosService
          .post('/auth/login/', {
             email: email,
@@ -62,13 +40,6 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
             setUser(user);
             setAccessToken(accessToken);
             setRefreshToken(refreshToken);
-         })
-         .catch((error: AxiosError) => {
-            const responseData = error.response?.data as { detail: string };
-            const resErrors = responseData?.detail
-               ? 'Email veya şifre yanlış.'
-               : 'Bir hata oluştu, lütfen daha sonra tekrar deneyin.';
-            setMessage(resErrors);
          });
    };
 
@@ -86,8 +57,6 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
       first_name,
       last_name,
    ) => {
-      setMessage(null);
-      setErrors(null);
       await axiosService
          .post('/auth/register/', {
             email: email,
@@ -97,40 +66,30 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
             last_name: last_name,
          })
          .then(({ data }) => {
+            console.log(data);
             const { user, accessToken, refreshToken } = data;
             setUser(user);
             setAccessToken(accessToken);
             setRefreshToken(refreshToken);
-            navigate('/account/verify');
-         })
-         .catch((error: AxiosError) => {
-            const resErrors = error.response?.data as string[];
-            setErrors(resErrors ?? ['Bir hata oluştu. Lütfen tekrar deneyiniz.']);
+            // navigate('/account/verify');
          });
    };
 
    const isVerified = () => {
       return user?.is_verified || false;
    };
-   const setVerified = (value: boolean) => {
-      const updatedUser = { ...user, is_verified: value };
-      setUser(updatedUser && null);
-   };
 
    const value = useMemo(() => {
       return {
          user,
-         message,
-         errors,
          accessToken,
          refreshToken,
          login,
          logout,
          register,
          isVerified,
-         setVerified,
       };
-   }, [user, login, logout, register, setVerified]);
+   }, [user, login, logout, register]);
 
    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

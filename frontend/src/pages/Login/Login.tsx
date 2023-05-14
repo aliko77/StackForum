@@ -6,8 +6,9 @@ import { NavLink } from 'react-router-dom';
 import { object, string } from 'yup';
 import { useAuth } from 'hooks/useAuth';
 import LoadSpinner from 'components/LoadSpinner';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import Alert from 'components/Alert/Alert';
+import { AxiosError } from 'axios';
 
 interface ILoginFormProp {
    email: string;
@@ -25,7 +26,8 @@ const validationSchema = object({
 });
 
 const Login: FC = () => {
-   const { login, message } = useAuth();
+   const { login } = useAuth();
+   const [message, setMessage] = useState<null | string>(null);
 
    return (
       <div className="mx-auto w-full max-w-sm p-3 sm:my-20 my-10">
@@ -37,7 +39,14 @@ const Login: FC = () => {
                validationSchema={validationSchema}
                initialValues={InitialState}
                onSubmit={async (values) => {
-                  await login(values.email, values.password);
+                  setMessage(null);
+                  await login(values.email, values.password).catch((error: AxiosError) => {
+                     const responseData = error.response?.data as { detail: string };
+                     const responseMessage = responseData?.detail
+                        ? 'Email veya şifre yanlış.'
+                        : 'Bir hata oluştu, lütfen daha sonra tekrar deneyin.';
+                     setMessage(responseMessage);
+                  });
                }}
             >
                {({
