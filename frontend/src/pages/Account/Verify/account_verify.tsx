@@ -1,19 +1,35 @@
+import { AxiosError } from 'axios';
+import Alert from 'components/Alert';
+import { eColors } from 'components/Alert';
 import Button from 'components/Button';
+import FormErrors from 'components/FormErrors';
+import LoadSpinner from 'components/LoadSpinner';
 import Logo from 'components/Logo';
 import OtpInput from 'components/OtpInput';
 import { useAuth } from 'hooks/useAuth';
 import { FC, useState, FormEvent } from 'react';
 
 const account_verify: FC = () => {
-   const { user } = useAuth();
+   const { user, verify } = useAuth();
    const email = user?.email;
-   const [otp, setOtp] = useState<string>('');
-   const [issubmitting, setIssubmitting] = useState<boolean>(false);
+   const [vcode, setVcode] = useState<string>('');
+   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+   const [errors, setErrors] = useState<null | string[]>(null);
+   const [message, setMessage] = useState<null | string>(null);
 
    const handleSubmit = async (e: FormEvent) => {
       e.preventDefault();
-      if (otp.length < 6) return;
-      setIssubmitting(true);
+      if (vcode.length < 6) return;
+      setIsSubmitting(true);
+      await verify(vcode, user?.email)
+         .then(() => {
+            setMessage('Başarıyla doğrulandı.');
+         })
+         .catch((error: AxiosError) => {
+            const responseErrors = error.response?.data as string[];
+            setErrors(responseErrors ?? { errors: ['Bir hata oluştu. Lütfen tekrar deneyiniz.'] });
+            setIsSubmitting(false);
+         })
    };
 
    return (
@@ -25,10 +41,15 @@ const account_verify: FC = () => {
                      <div className="m-auto mb-4">
                         <Logo noRedirect noText />
                      </div>
-                     <h1 className="text-2xl font-semibold">Email Doğrulama</h1>
-                     <div className="flex flex-col mb-4">
-                        <span className="text-sm font-semibold uppercase ">
-                           Aramıza Hoş geldin. Hesabını doğrulamak için
+                     <h1 className="text-2xl font-semibold">Hesap Doğrulama</h1>
+                     <div className="flex flex-col my-2">
+                        <span className="text-sm font-semibold uppercase">
+                           <div>
+                              <span>Hoşgeldin.</span>
+                           </div>
+                           <div>
+                              <span>Doğrulamak için</span>
+                           </div>
                         </span>
                         <span className="font-bold text-indigo-500 dark:text-indigo-400 my-2">
                            {email}
@@ -37,16 +58,24 @@ const account_verify: FC = () => {
                            adresine gönderilen kodu giriniz.
                         </span>
                      </div>
+                     <div className="my-4">
+                        <hr />
+                     </div>
+                     <div className="mx-4">
+                        {errors && <FormErrors errors={errors} />}
+                        {message && <Alert color={eColors.Green} text={message} />}
+                        {isSubmitting && <LoadSpinner />}
+                     </div>
                      <div className="flex justify-center items-center">
                         <form onSubmit={handleSubmit}>
                            <OtpInput
-                              value={otp}
+                              value={vcode}
                               onChange={(value) => {
-                                 setOtp(value);
+                                 setVcode(value);
                               }}
                            />
                            <div className="mt-4 mx-2">
-                              <Button text={'Doğrula'} type="submit" disabled={issubmitting} />
+                              <Button text={'Doğrula'} type="submit" disabled={isSubmitting} />
                            </div>
                         </form>
                      </div>

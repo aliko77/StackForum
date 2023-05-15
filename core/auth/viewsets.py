@@ -7,6 +7,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from .serializers import LoginSerializer, RegisterSerializer
+from core.user.serializers import UserSerializer
 
 
 class LoginViewSet(ModelViewSet, TokenObtainPairView):
@@ -39,7 +40,7 @@ class RegistrationViewSet(ModelViewSet, TokenObtainPairView):
             "access": str(refresh.access_token),
         }
         return Response({
-            "user": serializer.data,
+            "user": UserSerializer(user).data,
             "refreshToken": _response["refresh"],
             "accessToken": _response["access"]
         }, status=status.HTTP_201_CREATED)

@@ -67,7 +67,9 @@ const Register: FC = () => {
                      values.last_name,
                   ).catch((error: AxiosError) => {
                      const responseErrors = error.response?.data as string[];
-                     setErrors(responseErrors ?? ['Bir hata oluştu. Lütfen tekrar deneyiniz.']);
+                     setErrors(
+                        responseErrors ?? { errors: ['Bir hata oluştu. Lütfen tekrar deneyiniz.'] },
+                     );
                   });
                }}
             >

@@ -38,6 +38,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         editable=False
     )
     email = models.EmailField(max_length=255, unique=True)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -62,8 +64,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 class Profile(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
     age = models.PositiveIntegerField(null=True, blank=True)
     city = models.CharField(max_length=50)
     about = models.TextField(max_length=500, blank=True)

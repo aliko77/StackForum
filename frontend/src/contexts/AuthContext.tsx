@@ -2,7 +2,7 @@
 import axiosService from 'api/axios';
 import { createContext, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IChildrenProp, ILoginFuncProp, IRegisterFuncProp, IUser } from 'types';
+import { IChildrenProp, ILoginFuncProp, IRegisterFuncProp, IUser, IVerifyFuncProp } from 'types';
 import { useLocalStorage } from 'usehooks-ts';
 
 interface IAuthContextProps {
@@ -12,6 +12,7 @@ interface IAuthContextProps {
    login: ILoginFuncProp;
    register: IRegisterFuncProp;
    logout: () => void;
+   verify: IVerifyFuncProp;
 }
 
 export const AuthContext = createContext<IAuthContextProps>({
@@ -21,6 +22,7 @@ export const AuthContext = createContext<IAuthContextProps>({
    login: async () => {},
    logout: () => {},
    register: async () => {},
+   verify: async () => {},
 });
 
 export const AuthProvider = ({ children }: IChildrenProp) => {
@@ -66,17 +68,27 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
             last_name: last_name,
          })
          .then(({ data }) => {
-            console.log(data);
             const { user, accessToken, refreshToken } = data;
             setUser(user);
             setAccessToken(accessToken);
             setRefreshToken(refreshToken);
-            // navigate('/account/verify');
+            navigate('/account/verify');
          });
    };
 
-   const isVerified = () => {
-      return user?.is_verified || false;
+   const verify: IVerifyFuncProp = async (vcode, email) => {
+      await axiosService
+         .post('/account/verify/', {
+            vcode: vcode,
+            email: email,
+         })
+         .then(({ data }) => {
+            const { status } = data;
+            if (status) {
+               const _user = { ...user, is_verified: true };
+               setUser(_user);
+            }
+         });
    };
 
    const value = useMemo(() => {
@@ -87,7 +99,7 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
          login,
          logout,
          register,
-         isVerified,
+         verify,
       };
    }, [user, login, logout, register]);
 

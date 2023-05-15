@@ -52,12 +52,12 @@ const OtpInput = (props: Props) => {
    };
 
    return (
-      <div className="flex gap-2">
+      <div>
          {arr.map((_, index) => {
             return (
                <input
                   key={index}
-                  className={`m-2 border dark:border-rose-400 border-indigo-400 h-10 w-10 text-center form-control rounded text-black dark:text-gray-100 dark:bg-night-100 outline-none`}
+                  className={`m-2 border dark:border-rose-400 border-indigo-400 h-10 w-10 text-center rounded text-black dark:text-gray-100 dark:bg-night-100 outline-none`}
                   type="text"
                   inputMode="numeric"
                   autoComplete="one-time-code"
