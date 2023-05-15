@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import User, Profile, AccountActivation
 from django.core.exceptions import ObjectDoesNotExist
+from .utils import SendVerificationEmail
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -55,6 +56,28 @@ class VerifySerializer(serializers.ModelSerializer):
                             'errors': ['Bilinmeyen kod.']
                         }
                     )
+        except ObjectDoesNotExist:
+            raise serializers.ValidationError(
+                {
+                    'errors': ['Bilinmeyen veri.']
+                }
+            )
+        
+class VerifyResendSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(
+        required=True, write_only=True, max_length=128)
+
+    class Meta:
+        model = AccountActivation
+        fields = [
+            "email"
+        ]
+
+    def create(self, validated_data):
+        try:
+            user = User.objects.get(email=validated_data['email'])
+            response = SendVerificationEmail(user)
+            return {"status": response}
         except ObjectDoesNotExist:
             raise serializers.ValidationError(
                 {

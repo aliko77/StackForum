@@ -1,3 +1,4 @@
+import axiosService from 'api/axios';
 import { AxiosError } from 'axios';
 import Alert from 'components/Alert';
 import { eColors } from 'components/Alert';
@@ -7,7 +8,8 @@ import LoadSpinner from 'components/LoadSpinner';
 import Logo from 'components/Logo';
 import OtpInput from 'components/OtpInput';
 import { useAuth } from 'hooks/useAuth';
-import { FC, useState, FormEvent } from 'react';
+import { FC, useState, FormEvent, MouseEventHandler } from 'react';
+import { Navigate } from 'react-router-dom';
 
 const account_verify: FC = () => {
    const { user, verify } = useAuth();
@@ -16,20 +18,48 @@ const account_verify: FC = () => {
    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
    const [errors, setErrors] = useState<null | string[]>(null);
    const [message, setMessage] = useState<null | string>(null);
+   const [nr, setNr] = useState<boolean>(false);
+
+   if (!nr && user?.is_verified) {
+      return <Navigate to={'/'} />;
+   }
 
    const handleSubmit = async (e: FormEvent) => {
       e.preventDefault();
-      if (vcode.length < 6) return;
       setIsSubmitting(true);
       await verify(vcode, user?.email)
          .then(() => {
+            setNr(true);
             setMessage('Başarıyla doğrulandı.');
          })
          .catch((error: AxiosError) => {
             const responseErrors = error.response?.data as string[];
-            setErrors(responseErrors ?? { errors: ['Bir hata oluştu. Lütfen tekrar deneyiniz.'] });
-            setIsSubmitting(false);
+            setErrors(
+               responseErrors ?? {
+                  errors: ['Bir hata oluştu. Lütfen tekrar deneyiniz.'],
+               },
+            );
          })
+         .finally(() => {
+            setIsSubmitting(false);
+         });
+   };
+
+   const handleResend: MouseEventHandler<HTMLButtonElement> = async () => {
+      await axiosService
+         .post('/account/verify/resend/', {
+            email: email,
+         })
+         .then(({ data }) => {
+            if (!data.status) {
+               setErrors(() => [...[], 'Bir hata oluştu. Lütfen tekrar deneyiniz.']);
+            } else {
+               setMessage('Kod tekrar gönderildi.');
+            }
+         })
+         .catch(() => {
+            setErrors(() => [...[], 'Bir hata oluştu. Lütfen tekrar deneyiniz.']);
+         });
    };
 
    return (
@@ -79,6 +109,14 @@ const account_verify: FC = () => {
                            </div>
                         </form>
                      </div>
+                  </div>
+                  <div className="text-right">
+                     <button
+                        className="underline text-sm text-indigo-500 hover:text-indigo-600"
+                        onClick={handleResend}
+                     >
+                        {'> '}Maili tekrar gönder. {'<'}
+                     </button>
                   </div>
                </div>
             </div>
