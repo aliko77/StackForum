@@ -6,6 +6,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from .models import User
 from .serializers import UserSerializer, VerifySerializer, VerifyResendSerializer
+from .utils import SendVerificationEmail
 
 
 class UserViewSet(ModelViewSet):
@@ -40,14 +41,14 @@ class VerifyViewSet(ModelViewSet):
 
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
+        return Response({"status":serializer.data}, status=status.HTTP_200_OK)
+    
 class VerifyResendViewSet(ModelViewSet):
     serializer_class = VerifyResendSerializer
     permission_classes = (AllowAny,)
     http_method_names = ['post']
 
     def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        user = User.objects.get(email=request.data["email"])
+        response = SendVerificationEmail(user)
+        return Response({"status":response}, status=status.HTTP_200_OK)

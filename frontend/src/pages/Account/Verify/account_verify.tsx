@@ -46,8 +46,9 @@ const account_verify: FC = () => {
    };
 
    const handleResend: MouseEventHandler<HTMLButtonElement> = async () => {
+      setIsSubmitting(true);
       await axiosService
-         .post('/account/verify/resend/', {
+         .post('/account/verify-resend/', {
             email: email,
          })
          .then(({ data }) => {
@@ -59,6 +60,9 @@ const account_verify: FC = () => {
          })
          .catch(() => {
             setErrors(() => [...[], 'Bir hata oluştu. Lütfen tekrar deneyiniz.']);
+         })
+         .finally(() => {
+            setIsSubmitting(false);
          });
    };
 
@@ -114,8 +118,9 @@ const account_verify: FC = () => {
                      <button
                         className="underline text-sm text-indigo-500 hover:text-indigo-600"
                         onClick={handleResend}
+                        disabled={isSubmitting}
                      >
-                        {'> '}Maili tekrar gönder. {'<'}
+                        Maili tekrar gönder.
                      </button>
                   </div>
                </div>

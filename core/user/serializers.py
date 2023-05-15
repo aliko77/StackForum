@@ -49,7 +49,7 @@ class VerifySerializer(serializers.ModelSerializer):
                     vcode.delete()
                     user.is_verified = True
                     user.save()
-                    return {"status": True}
+                    return True
                 except ObjectDoesNotExist:
                     raise serializers.ValidationError(
                         {
@@ -72,15 +72,3 @@ class VerifyResendSerializer(serializers.ModelSerializer):
         fields = [
             "email"
         ]
-
-    def create(self, validated_data):
-        try:
-            user = User.objects.get(email=validated_data['email'])
-            response = SendVerificationEmail(user)
-            return {"status": response}
-        except ObjectDoesNotExist:
-            raise serializers.ValidationError(
-                {
-                    'errors': ['Bilinmeyen veri.']
-                }
-            )
