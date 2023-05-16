@@ -44,7 +44,7 @@ const Login: FC = () => {
                      const responseData = error.response?.data as { detail: string };
                      const responseMessage = responseData?.detail
                         ? 'Email veya şifre yanlış.'
-                        : 'Bir hata oluştu, lütfen daha sonra tekrar deneyin.';
+                        : 'Bir hata oluştu. Lütfen tekrar deneyin.';
                      setMessage(responseMessage);
                   });
                }}

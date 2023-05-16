@@ -1,40 +1,88 @@
-import axiosService from 'api/axios';
+import Alert from 'components/Alert/Alert';
 import Button from 'components/Button/Button';
 import Field from 'components/Field';
+import FormErrors from 'components/FormErrors/FormErrors';
+import LoadSpinner from 'components/LoadSpinner/LoadSpinner';
+import { Formik } from 'formik';
 import { useAuth } from 'hooks/useAuth';
-import { FC, FormEvent, useState } from 'react';
+import { FC, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { object, string } from 'yup';
 
 const ResetPassword: FC = () => {
-   const [isSubmitting, setIsSubmitting] = useState(false);
+   const [errors, setErrors] = useState<string[] | null>(null);
+   const [message, setMessage] = useState<string | null>(null);
+   const { resetPassword } = useAuth();
 
-   const handleSubmit = async (e: FormEvent) => {
-      e.preventDefault();
-      setIsSubmitting(true);
-      await axiosService.post('/password/reset', { email: '' });
-   };
+   const validationSchema = object({
+      email: string().email('*').required('*'),
+   });
 
    return (
       <div className="m-auto p-4">
          <div className="p-8 flex w-full border dark:border-night-200 max-w-lg items-center justify-center space-y-4 antialiased bg-white dark:bg-night-200 rounded dark:text-gray-200">
-            <div className="space-y-6">
-               <h1 className="mb-6 text-3xl font-bold text-center">Endişelenmeyin</h1>
-               <p className="text-center mx-12 hidden sm:block">
-                  Parolanızı kurtarmanıza yardımcı olmak için buradayız. Kayıt olduğunuz da
-                  kullandığınız mail adresini girin, size şifrenizi sıfırlamanız için talimatlar
-                  gönderelim.
-               </p>
-               <p className="sm:hidden text-center break-words">
-                  <span>Kayıt olduğunuz da kullandığınız mail adresini girin,</span>
-                  <span>size şifrenizi sıfırlamanız için talimatlar gönderelim.</span>
-               </p>
-               <form className="space-y-6 w-full" onSubmit={handleSubmit}>
-                  <Field id="email" type="email" name="email" placeholder="Email adresi" />
-                  <div>
-                     <Button text="Gönder" type="submit" disabled={isSubmitting} />
-                  </div>
-               </form>
-               <div className="text-sm text-gray-600 items-center flex justify-between">
+            <div>
+               <div className='mb-4'>
+                  <h1 className="mb-6 text-3xl font-bold text-center">Endişelenmeyin</h1>
+                  <p className="text-center mx-12 hidden sm:block">
+                     Parolanızı kurtarmanıza yardımcı olmak için buradayız. Kayıt olduğunuz da
+                     kullandığınız mail adresini girin, size şifrenizi sıfırlamanız için talimatlar
+                     gönderelim.
+                  </p>
+                  <p className="sm:hidden text-center break-words">
+                     <span>Kayıt olduğunuz da kullandığınız mail adresini girin,</span>
+                     <span>size şifrenizi sıfırlamanız için talimatlar gönderelim.</span>
+                  </p>
+               </div>
+               <Formik
+                  initialValues={{ email: '' }}
+                  validationSchema={validationSchema}
+                  onSubmit={async (values) => {
+                     setMessage(null);
+                     setErrors(null);
+                     await resetPassword(values.email)
+                        .then(() => {
+                           setMessage('Sıfırlama maili gönderildi.');
+                        })
+                        .catch(() => {
+                           setErrors(['Bir hata oluştu. Lütfen tekrar deneyiniz']);
+                        });
+                  }}
+               >
+                  {({
+                     values,
+                     errors: formikErrors,
+                     touched,
+                     handleChange,
+                     handleBlur,
+                     handleSubmit,
+                     isSubmitting,
+                  }) => (
+                     <div>
+                        {errors && <FormErrors errors={errors} />}
+                        {message && <Alert text={message} />}
+                        {isSubmitting && <LoadSpinner />}
+                        <form noValidate className="w-full" onSubmit={handleSubmit}>
+                           <Field
+                              id="email"
+                              type="email"
+                              name="email"
+                              placeholder="Email adresi"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.email}
+                           />
+                           <p className="text-red-500 dak:text-red-400 text-sm ml-1">
+                              {formikErrors.email && touched.email && formikErrors.email}
+                           </p>
+                           <div className="mt-4">
+                              <Button text="Gönder" type="submit" disabled={isSubmitting} />
+                           </div>
+                        </form>
+                     </div>
+                  )}
+               </Formik>
+               <div className="mt-4 text-sm text-gray-600 items-center flex justify-between">
                   <NavLink to={'/login'}>
                      <p className="text-gray-800 dark:text-gray-200 cursor-pointer hover:text-indigo-500 dark:hover:text-indigo-500 inline-flex items-center">
                         <svg

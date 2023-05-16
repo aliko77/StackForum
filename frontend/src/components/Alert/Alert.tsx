@@ -12,7 +12,7 @@ interface IAlert {
    color?: eColors | null | undefined;
 }
 
-const Alert: FC<IAlert> = ({ text, color = eColors.Rose }) => {
+const Alert: FC<IAlert> = ({ text, color = eColors.Green }) => {
    return (
       <div
          className={`flex p-4 mb-4 text-center text-sm ${color} rounded-lg bg-blue-100 dark:bg-gray-800`}

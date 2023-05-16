@@ -1,7 +1,7 @@
 from rest_framework.routers import SimpleRouter
 
 from .auth.viewsets import LoginViewSet, RegistrationViewSet, RefreshViewSet
-from .user.viewsets import UserViewSet, VerifyViewSet, VerifyResendViewSet
+from .user.viewsets import UserViewSet, VerifyViewSet, VerifyResendViewSet, PasswordResetViewSet
 
 routes = SimpleRouter()
 
@@ -11,7 +11,10 @@ routes.register(r'auth/register', RegistrationViewSet,
                 basename='auth-register')
 routes.register(r'auth/refresh', RefreshViewSet, basename='auth-refresh')
 routes.register(r'account/verify', VerifyViewSet, basename='account-verify')
-routes.register(r'account/verify-resend', VerifyResendViewSet, basename='verify-resend')
+routes.register(r'account/verify-resend',
+                VerifyResendViewSet, basename='verify-resend')
+routes.register(r'account/reset-password',
+                PasswordResetViewSet, basename='password-reset')
 
 # USER
 routes.register(r'user', UserViewSet, basename='user')

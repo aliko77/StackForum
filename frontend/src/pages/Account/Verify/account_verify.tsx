@@ -98,7 +98,7 @@ const account_verify: FC = () => {
                      </div>
                      <div className="mx-4">
                         {errors && <FormErrors errors={errors} />}
-                        {message && <Alert color={eColors.Green} text={message} />}
+                        {message && <Alert text={message} />}
                         {isSubmitting && <LoadSpinner />}
                      </div>
                      <div className="flex justify-center items-center">

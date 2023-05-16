@@ -56,3 +56,11 @@ class VerifyResendViewSet(ModelViewSet):
             return Response({"status": response}, status=status.HTTP_200_OK)
         except:
             return Response({"errors": ["Email zorunlu."]}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class PasswordResetViewSet(ModelViewSet):
+    permission_classes = (AllowAny,)
+    http_method_names = ['post']
+
+    def create(self, request, *args, **kwargs):
+        return Response({"status": True}, status=status.HTTP_200_OK)

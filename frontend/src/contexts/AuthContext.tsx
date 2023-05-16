@@ -13,6 +13,7 @@ interface IAuthContextProps {
    register: IRegisterFuncProp;
    logout: () => void;
    verify: IVerifyFuncProp;
+   resetPassword: (email: string) => Promise<void>;
 }
 
 export const AuthContext = createContext<IAuthContextProps>({
@@ -23,6 +24,7 @@ export const AuthContext = createContext<IAuthContextProps>({
    logout: () => {},
    register: async () => {},
    verify: async () => {},
+   resetPassword: async () => {},
 });
 
 export const AuthProvider = ({ children }: IChildrenProp) => {
@@ -45,7 +47,7 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
          });
    };
 
-   const logout = () => {
+   const logout = (): void => {
       setUser(null);
       setAccessToken(null);
       setRefreshToken(null);
@@ -96,6 +98,12 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
          });
    };
 
+   const resetPassword = async (email: string): Promise<void> => {
+      await axiosService.post('/account/reset-password/', {
+         email: email,
+      });
+   };
+
    const value = useMemo(() => {
       return {
          user,
@@ -105,6 +113,7 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
          logout,
          register,
          verify,
+         resetPassword,
       };
    }, [user, login, logout, register]);
 
