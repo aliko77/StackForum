@@ -1,8 +1,8 @@
 from rest_framework import serializers
 from .models import User, Profile, AccountActivation
 from django.core.exceptions import ObjectDoesNotExist
-from .utils import SendVerificationEmail
-
+from django.contrib.auth.forms import PasswordResetForm
+from django.core.exceptions import ValidationError
 
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -72,3 +72,13 @@ class VerifyResendSerializer(serializers.ModelSerializer):
         fields = [
             "email"
         ]
+
+class PasswordResetSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+    def validate_email(self, value):
+        try:
+            PasswordResetForm({'email': value})
+        except ValidationError:
+            raise serializers.ValidationError("Bilinmeyen email")
+        return value
