@@ -47,6 +47,7 @@ const account_verify: FC = () => {
 
    const handleResend: MouseEventHandler<HTMLButtonElement> = async () => {
       setIsSubmitting(true);
+      if (user?.is_verified) return;
       await axiosService
          .post('/account/verify-resend/', {
             email: email,

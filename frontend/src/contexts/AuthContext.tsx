@@ -85,8 +85,13 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
          .then(({ data }) => {
             const { status } = data;
             if (status) {
-               const _user = { ...user, is_verified: true };
-               setUser(_user);
+               setUser((prevUser) => {
+                  if (!prevUser) return null;
+                  return {
+                     ...prevUser,
+                     is_verified: true,
+                  };
+               });
             }
          });
    };

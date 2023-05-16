@@ -10,6 +10,7 @@ const Login = lazy(() => import('pages/Login'));
 const Register = lazy(() => import('pages/Register'));
 const Home = lazy(() => import('pages/Home'));
 const AccountVerify = lazy(() => import('pages/Account/Verify'));
+const ResetPassword = lazy(() => import('pages/Account/Password/Reset'));
 const PageNotFound = lazy(() => import('pages/PageNotFound'));
 
 interface IRoutes {
@@ -31,6 +32,10 @@ const routes: IRoutes[] = [
    { path: '/', element: getRouteElement(Home) },
    { path: 'login', element: getRouteElement(() => <GuestRoute>{<Login />}</GuestRoute>) },
    { path: 'register', element: getRouteElement(() => <GuestRoute>{<Register />}</GuestRoute>) },
+   {
+      path: 'account/password/reset',
+      element: getRouteElement(() => <GuestRoute>{<ResetPassword />}</GuestRoute>),
+   },
    {
       path: 'account/verify',
       element: getRouteElement(() => <PrivateRoute>{<AccountVerify />}</PrivateRoute>),

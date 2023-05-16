@@ -41,14 +41,18 @@ class VerifyViewSet(ModelViewSet):
 
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response({"status":serializer.data}, status=status.HTTP_200_OK)
-    
+        return Response({"status": serializer.data}, status=status.HTTP_200_OK)
+
+
 class VerifyResendViewSet(ModelViewSet):
     serializer_class = VerifyResendSerializer
     permission_classes = (AllowAny,)
     http_method_names = ['post']
 
     def create(self, request, *args, **kwargs):
-        user = User.objects.get(email=request.data["email"])
-        response = SendVerificationEmail(user)
-        return Response({"status":response}, status=status.HTTP_200_OK)
+        try:
+            user = User.objects.get(email=request.data["email"])
+            response = SendVerificationEmail(user)
+            return Response({"status": response}, status=status.HTTP_200_OK)
+        except:
+            return Response({"errors": ["Email zorunlu."]}, status=status.HTTP_400_BAD_REQUEST)
