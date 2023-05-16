@@ -1,9 +1,19 @@
+import axiosService from 'api/axios';
 import Button from 'components/Button/Button';
 import Field from 'components/Field';
-import { FC } from 'react';
+import { useAuth } from 'hooks/useAuth';
+import { FC, FormEvent, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 const ResetPassword: FC = () => {
+   const [isSubmitting, setIsSubmitting] = useState(false);
+
+   const handleSubmit = async (e: FormEvent) => {
+      e.preventDefault();
+      setIsSubmitting(true);
+      await axiosService.post('/password/reset', { email: '' });
+   };
+
    return (
       <div className="m-auto p-4">
          <div className="p-8 flex w-full border dark:border-night-200 max-w-lg items-center justify-center space-y-4 antialiased bg-white dark:bg-night-200 rounded dark:text-gray-200">
@@ -18,10 +28,10 @@ const ResetPassword: FC = () => {
                   <span>Kayıt olduğunuz da kullandığınız mail adresini girin,</span>
                   <span>size şifrenizi sıfırlamanız için talimatlar gönderelim.</span>
                </p>
-               <form className="space-y-6 w-full">
+               <form className="space-y-6 w-full" onSubmit={handleSubmit}>
                   <Field id="email" type="email" name="email" placeholder="Email adresi" />
                   <div>
-                     <Button text="Gönder" type="submit"></Button>
+                     <Button text="Gönder" type="submit" disabled={isSubmitting} />
                   </div>
                </form>
                <div className="text-sm text-gray-600 items-center flex justify-between">
