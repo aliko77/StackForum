@@ -85,6 +85,7 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
             email: email,
          })
          .then(({ data }) => {
+            console.log(data);
             const { status } = data;
             if (status) {
                setUser((prevUser) => {

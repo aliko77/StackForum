@@ -66,8 +66,6 @@ const Register: FC = () => {
                      values.first_name,
                      values.last_name,
                   ).catch((error: AxiosError) => {
-                     console.log(error);
-                     
                      const responseErrors = error.response?.data as string[];
                      setErrors(
                         responseErrors ?? { errors: ['Bir hata oluştu. Lütfen tekrar deneyiniz.'] },

@@ -12,7 +12,6 @@ import { Navigate } from 'react-router-dom';
 
 const account_verify: FC = () => {
    const { user, verify } = useAuth();
-   const email = user?.email;
    const [vcode, setVcode] = useState<string>('');
    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
    const [errors, setErrors] = useState<null | string[]>(null);
@@ -51,7 +50,7 @@ const account_verify: FC = () => {
       if (user?.is_verified) return;
       await axiosService
          .post('/account/verify-resend/', {
-            email: email,
+            email: user?.email,
          })
          .then(({ data }) => {
             if (data.status) {
@@ -88,7 +87,7 @@ const account_verify: FC = () => {
                            </div>
                         </span>
                         <span className="font-bold text-indigo-500 dark:text-indigo-400 my-2">
-                           {email}
+                           {user?.email}
                         </span>
                         <span className="text-sm font-semibold uppercase ">
                            adresine gönderilen kodu giriniz.
