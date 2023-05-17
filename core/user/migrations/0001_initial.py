@@ -62,7 +62,7 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='AccountActivation',
+            name='AuthActivation',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('activation_code', models.CharField(max_length=50)),

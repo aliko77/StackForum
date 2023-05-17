@@ -4,9 +4,9 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.settings import api_settings
 from rest_framework.serializers import ModelSerializer, CharField, EmailField, ValidationError
 
-from core.user.models import User, AccountActivation
+from core.user.models import User, AuthActivation
 from core.user.serializers import UserSerializer
-
+from core.user.utils import SendVerificationEmail
 
 class LoginSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
@@ -77,7 +77,7 @@ class VerifySerializer(ModelSerializer):
         required=True, write_only=True, max_length=128)
 
     class Meta:
-        model = AccountActivation
+        model = AuthActivation
         fields = [
             "email", "activation_code",
         ]
@@ -97,7 +97,7 @@ class VerifySerializer(ModelSerializer):
             raise ValidationError("Zaten doğrulanmış.")
 
         try:
-            activation = AccountActivation.objects.get(
+            activation = AuthActivation.objects.get(
                 activation_code=activation_code, user__email=email)
         except ObjectDoesNotExist:
             raise ValidationError(
@@ -118,3 +118,36 @@ class VerifySerializer(ModelSerializer):
         user.is_verified = True
         user.save()
         return user
+
+class VerifyResendSerializer(ModelSerializer):
+    email = EmailField(
+        required=True, write_only=True, max_length=128)
+
+    class Meta:
+        model = AuthActivation
+        fields = ["email"]
+
+    def validate(self, attrs):
+        email = attrs.get("email")
+
+        try:
+            user = User.objects.get(email=email)
+        except ObjectDoesNotExist:
+            raise ValidationError(
+                'Geçersiz email.'
+            )
+
+        if user.is_verified:
+            raise ValidationError("Zaten doğrulanmış.")
+        
+        AuthActivation.objects.filter(
+            user__email=email).delete()
+        
+        attrs['user'] = user
+        return attrs
+        
+
+    def create(self, validated_data):
+        user = validated_data['user']
+        is_send = SendVerificationEmail(user)
+        return is_send

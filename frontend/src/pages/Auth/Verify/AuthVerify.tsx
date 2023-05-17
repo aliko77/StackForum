@@ -10,15 +10,15 @@ import { useAuth } from 'hooks/useAuth';
 import { FC, useState, FormEvent, MouseEventHandler } from 'react';
 import { Navigate } from 'react-router-dom';
 
-const account_verify: FC = () => {
+const AuthVerify: FC = () => {
    const { user, verify } = useAuth();
    const [vcode, setVcode] = useState<string>('');
    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
    const [errors, setErrors] = useState<null | string[]>(null);
    const [message, setMessage] = useState<null | string>(null);
-   const [nr, setNr] = useState<boolean>(false);
+   const [noRedirect, setNoRedirect] = useState<boolean>(false);
 
-   if (!nr && user?.is_verified) {
+   if (!noRedirect && user?.is_verified) {
       return <Navigate to={'/'} />;
    }
 
@@ -28,10 +28,11 @@ const account_verify: FC = () => {
       setMessage(null);
       setIsSubmitting(true);
       try {
-         const data = await verify(vcode, user?.email);
-         const { status } = data;
+         const response = await verify(vcode, user?.email);
+         const { status } = response;
+
          if (status === true) {
-            setNr(true);
+            setNoRedirect(true);
             setMessage('Başarıyla doğrulandı.');
          } else {
             setErrors(['Bir hata oluştu']);
@@ -47,25 +48,27 @@ const account_verify: FC = () => {
    const handleResend: MouseEventHandler<HTMLButtonElement> = async () => {
       setErrors(null);
       setMessage(null);
+      if (user?.is_verified) {
+         setErrors(() => [...[], 'Zaten doğrulanmış.']);
+         return;
+      }
       setIsSubmitting(true);
-      if (user?.is_verified) return;
-      await axiosService
-         .post('/auth/verify-resend/', {
+      try {
+         const response = await axiosService.post('/auth/verify/resend/', {
             email: user?.email,
-         })
-         .then(({ data }) => {
-            if (data.status) {
-               setMessage('Kod tekrar gönderildi.');
-            } else {
-               setErrors(() => [...[], 'Bir hata oluştu. Lütfen tekrar deneyiniz.']);
-            }
-         })
-         .catch(() => {
-            setErrors(() => [...[], 'Bir hata oluştu. Lütfen tekrar deneyiniz.']);
-         })
-         .finally(() => {
-            setIsSubmitting(false);
          });
+         const { data } = response;
+
+         if (data.status) {
+            setMessage('Kod tekrar gönderildi.');
+         } else {
+            throw new Error();
+         }
+      } catch (error) {
+         setErrors(() => [...[], 'Bir hata oluştu. Lütfen tekrar deneyiniz.']);
+      } finally {
+         setIsSubmitting(false);
+      }
    };
 
    return (
@@ -132,4 +135,4 @@ const account_verify: FC = () => {
    );
 };
 
-export default account_verify;
+export default AuthVerify;

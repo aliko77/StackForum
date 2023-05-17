@@ -2,7 +2,7 @@ from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 import random
 import string
-from .models import AccountActivation
+from .models import AuthActivation
 
 
 def SendVerificationEmail(user):
@@ -11,7 +11,7 @@ def SendVerificationEmail(user):
 
     activation_code = ''.join(random.choices(string.digits, k=6))
 
-    AccountActivation.objects.update_or_create(
+    AuthActivation.objects.update_or_create(
         user=user, defaults={'user': user, 'activation_code': activation_code})
 
     mail_subject = "Hesap Aktivasyon Maili"

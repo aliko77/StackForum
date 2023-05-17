@@ -7,8 +7,12 @@ export interface ILoginFuncProp {
    (email: string, password: string): Promise<void>;
 }
 
+export interface KeyValueProp {
+   [key: string]: unknown;
+}
+
 export interface IVerifyFuncProp {
-   (vcode: string, email: string | undefined): Promise<{ [key: string]: unknown }>;
+   (vcode: string, email: string | undefined): Promise<KeyValueProp>;
 }
 
 export interface IRegisterFuncProp {

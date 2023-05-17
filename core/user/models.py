@@ -82,7 +82,7 @@ class Profile(models.Model):
         db_table = "user_profile"
 
 
-class AccountActivation(models.Model):
+class AuthActivation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     activation_code = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)

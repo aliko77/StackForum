@@ -79,6 +79,7 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
             navigate('/auth/verify');
          });
    };
+
    const verify: IVerifyFuncProp = async (vcode, email) => {
       const response = await axiosService.post('/auth/verify/', {
          activation_code: vcode,
@@ -105,7 +106,7 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
          setAccessToken(null);
          setRefreshToken(null);
       }
-      await axiosService.post('/account/reset-password/', {
+      await axiosService.post('/auth/reset-password/', {
          email: email,
       });
    };

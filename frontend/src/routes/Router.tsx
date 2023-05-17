@@ -33,7 +33,7 @@ const routes: IRoutes[] = [
    { path: 'login', element: getRouteElement(() => <GuestRoute>{<Login />}</GuestRoute>) },
    { path: 'register', element: getRouteElement(() => <GuestRoute>{<Register />}</GuestRoute>) },
    {
-      path: 'account/password/reset',
+      path: 'auth/password/reset',
       element: getRouteElement(() => <GuestRoute>{<PasswordReset />}</GuestRoute>),
    },
    {
