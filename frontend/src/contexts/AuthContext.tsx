@@ -99,6 +99,11 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
    };
 
    const resetPassword = async (email: string): Promise<void> => {
+      if (user) {
+         setUser(null);
+         setAccessToken(null);
+         setRefreshToken(null);
+      }
       await axiosService.post('/account/reset-password/', {
          email: email,
       });

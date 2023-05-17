@@ -1,10 +1,15 @@
 from rest_framework import serializers
 from .models import User, Profile, AccountActivation
 from django.core.exceptions import ObjectDoesNotExist
+<<<<<<< HEAD
 from datetime import timedelta
 from django.utils import timezone
 from .utils import SendVerificationEmail
 
+=======
+from django.contrib.auth.forms import PasswordResetForm
+from django.core.exceptions import ValidationError
+>>>>>>> 7702a99ad83019d98d966d4fb7030c42412b14c4
 
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -45,6 +50,7 @@ class VerifyResendSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AccountActivation
+<<<<<<< HEAD
         fields = ["email"]
 
     def create(self, validated_data):
@@ -55,3 +61,18 @@ class VerifyResendSerializer(serializers.ModelSerializer):
             "status": True
         }
         return response
+=======
+        fields = [
+            "email"
+        ]
+
+class PasswordResetSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+    def validate_email(self, value):
+        try:
+            PasswordResetForm({'email': value})
+        except ValidationError:
+            raise serializers.ValidationError("Bilinmeyen email")
+        return value
+>>>>>>> 7702a99ad83019d98d966d4fb7030c42412b14c4
