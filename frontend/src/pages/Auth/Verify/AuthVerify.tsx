@@ -27,20 +27,21 @@ const account_verify: FC = () => {
       setErrors(null);
       setMessage(null);
       setIsSubmitting(true);
-      await verify(vcode, user?.email)
-         .then(() => {
+      try {
+         const data = await verify(vcode, user?.email);
+         const { status } = data;
+         if (status === true) {
             setNr(true);
             setMessage('Başarıyla doğrulandı.');
-         })
-         .catch((error: AxiosError) => {
-            const responseErrors = error.response?.data as string[];
-            setErrors(
-               responseErrors ? responseErrors : ['Bir hata oluştu. Lütfen tekrar deneyiniz.'],
-            );
-         })
-         .finally(() => {
-            setIsSubmitting(false);
-         });
+         } else {
+            setErrors(['Bir hata oluştu']);
+         }
+      } catch (error: unknown) {
+         if (error instanceof AxiosError) {
+            setErrors(error.response?.data);
+         }
+      }
+      setIsSubmitting(false);
    };
 
    const handleResend: MouseEventHandler<HTMLButtonElement> = async () => {
@@ -49,7 +50,7 @@ const account_verify: FC = () => {
       setIsSubmitting(true);
       if (user?.is_verified) return;
       await axiosService
-         .post('/account/verify-resend/', {
+         .post('/auth/verify-resend/', {
             email: user?.email,
          })
          .then(({ data }) => {

@@ -5,7 +5,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework import status
 from rest_framework.response import Response
 from .models import User
-from .serializers import UserSerializer, VerifySerializer, VerifyResendSerializer
+from .serializers import UserSerializer, VerifyResendSerializer
 
 
 class UserViewSet(ModelViewSet):
@@ -28,19 +28,6 @@ class UserViewSet(ModelViewSet):
             raise NotFound({'error': 'User not found.'})
         self.check_object_permissions(self.request, obj)
         return obj
-
-
-class VerifyViewSet(ModelViewSet):
-    serializer_class = VerifySerializer
-    permission_classes = (AllowAny,)
-    http_method_names = ['post']
-
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        print(serializer.data)
-        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class VerifyResendViewSet(ModelViewSet):

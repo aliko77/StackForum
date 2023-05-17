@@ -8,7 +8,7 @@ export interface ILoginFuncProp {
 }
 
 export interface IVerifyFuncProp {
-   (vcode: string, email: string | undefined): Promise<void>;
+   (vcode: string, email: string | undefined): Promise<{ [key: string]: unknown }>;
 }
 
 export interface IRegisterFuncProp {

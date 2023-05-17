@@ -11,7 +11,7 @@ const Home: FC = () => {
          <div className="text-xl dark:text-gray-100">Hoşgeldin: {user?.email || 'Misafir'}</div>
          {user && !user.is_verified && (
             <div className="mt-4">
-               <Link to={'/account/verify'}>
+               <Link to={'/auth/verify'}>
                   <Button text="Lütfen email adresinizi doğrulayınız." />
                </Link>
             </div>

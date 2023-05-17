@@ -8,6 +8,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from .serializers import LoginSerializer, RegisterSerializer
 from core.user.serializers import UserSerializer
+from .serializers import VerifySerializer
 
 
 class LoginViewSet(ModelViewSet, TokenObtainPairView):
@@ -59,3 +60,16 @@ class RefreshViewSet(ViewSet, TokenRefreshView):
             raise InvalidToken(e.args[0])
 
         return Response(serializer.validated_data, status=status.HTTP_200_OK)
+
+
+class VerifyViewSet(ModelViewSet):
+    serializer_class = VerifySerializer
+    permission_classes = (AllowAny,)
+    http_method_names = ['post']
+
+    def create(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        is_verified = user.is_verified
+        return Response({'status': is_verified}, status=status.HTTP_200_OK)

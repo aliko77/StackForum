@@ -1,10 +1,10 @@
 from django.contrib.auth.models import update_last_login
 from django.core.exceptions import ObjectDoesNotExist
-from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.settings import api_settings
+from rest_framework.serializers import ModelSerializer, CharField, EmailField, ValidationError
 
-from core.user.models import User
+from core.user.models import User, AccountActivation
 from core.user.serializers import UserSerializer
 
 
@@ -25,15 +25,15 @@ class LoginSerializer(TokenObtainPairSerializer):
 
 
 class RegisterSerializer(UserSerializer):
-    password = serializers.CharField(
+    password = CharField(
         max_length=128, min_length=8, write_only=True, required=True)
-    confirm_password = serializers.CharField(write_only=True, required=True)
-    email = serializers.EmailField(
+    confirm_password = CharField(write_only=True, required=True)
+    email = EmailField(
         required=True, write_only=True, max_length=128)
-    first_name = serializers.CharField(
+    first_name = CharField(
         write_only=True, required=True
     )
-    last_name = serializers.CharField(
+    last_name = CharField(
         write_only=True, required=True
     )
 
@@ -44,7 +44,7 @@ class RegisterSerializer(UserSerializer):
 
     def validate(self, attrs):
         if attrs['password'] != attrs['confirm_password']:
-            raise serializers.ValidationError(
+            raise ValidationError(
                 {
                     'errors': ['Şifreler eşleşmiyor.']
                 }
@@ -54,7 +54,7 @@ class RegisterSerializer(UserSerializer):
     def create(self, validated_data):
         try:
             User.objects.get(email=validated_data['email'])
-            raise serializers.ValidationError(
+            raise ValidationError(
                 {
                     'errors': ['Bu email zaten kullanılıyor.']
                 }
@@ -68,3 +68,53 @@ class RegisterSerializer(UserSerializer):
             }
             user = User.objects.create_user(**user_data)
             return user
+
+
+class VerifySerializer(ModelSerializer):
+    activation_code = CharField(
+        max_length=128, min_length=6, write_only=True, required=True)
+    email = EmailField(
+        required=True, write_only=True, max_length=128)
+
+    class Meta:
+        model = AccountActivation
+        fields = [
+            "email", "activation_code",
+        ]
+
+    def validate(self, attrs):
+        activation_code = attrs.get('activation_code')
+        email = attrs.get('email')
+
+        try:
+            user = User.objects.get(email=email)
+        except ObjectDoesNotExist:
+            raise ValidationError(
+                'Geçersiz email.'
+            )
+
+        if user.is_verified:
+            raise ValidationError("Zaten doğrulanmış.")
+
+        try:
+            activation = AccountActivation.objects.get(
+                activation_code=activation_code, user__email=email)
+        except ObjectDoesNotExist:
+            raise ValidationError(
+                'Geçersiz doğrulama kodu.'
+            )
+
+        if activation.is_expired():
+            raise ValidationError('Doğrulama kodunun süresi doldu.')
+
+        attrs['activation'] = activation
+        attrs['user'] = user
+        return attrs
+
+    def create(self, validated_data):
+        activation = validated_data['activation']
+        activation.delete()
+        user = validated_data['user']
+        user.is_verified = True
+        user.save()
+        return user

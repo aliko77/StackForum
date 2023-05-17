@@ -9,8 +9,8 @@ import { GuestRoute, PrivateRoute } from 'routes/GuardRoutes';
 const Login = lazy(() => import('pages/Login'));
 const Register = lazy(() => import('pages/Register'));
 const Home = lazy(() => import('pages/Home'));
-const AccountVerify = lazy(() => import('pages/Account/Verify'));
-const ResetPassword = lazy(() => import('pages/Account/Password/Reset'));
+const AuthVerify = lazy(() => import('pages/Auth/Verify'));
+const PasswordReset = lazy(() => import('pages/Auth/Password/Reset'));
 const PageNotFound = lazy(() => import('pages/PageNotFound'));
 
 interface IRoutes {
@@ -34,11 +34,11 @@ const routes: IRoutes[] = [
    { path: 'register', element: getRouteElement(() => <GuestRoute>{<Register />}</GuestRoute>) },
    {
       path: 'account/password/reset',
-      element: getRouteElement(() => <GuestRoute>{<ResetPassword />}</GuestRoute>),
+      element: getRouteElement(() => <GuestRoute>{<PasswordReset />}</GuestRoute>),
    },
    {
-      path: 'account/verify',
-      element: getRouteElement(() => <PrivateRoute>{<AccountVerify />}</PrivateRoute>),
+      path: 'auth/verify',
+      element: getRouteElement(() => <PrivateRoute>{<AuthVerify />}</PrivateRoute>),
    },
    { path: '*', element: getRouteElement(PageNotFound) },
 ];

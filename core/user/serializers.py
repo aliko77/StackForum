@@ -1,15 +1,14 @@
-from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer, EmailField, Serializer
 from .models import User, Profile, AccountActivation
-from django.core.exceptions import ValidationError
 
 
-class ProfileSerializer(serializers.ModelSerializer):
+class ProfileSerializer(ModelSerializer):
     class Meta:
         model = Profile
         exclude = ['id', 'created_at', 'user', 'updated_at']
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(ModelSerializer):
     profile = ProfileSerializer()
 
     class Meta:
@@ -19,25 +18,8 @@ class UserSerializer(serializers.ModelSerializer):
         read_only_field = ['date_joined', 'last_login']
 
 
-class VerifySerializer(serializers.ModelSerializer):
-    vcode = serializers.CharField(
-        max_length=128, min_length=6, write_only=True, required=True)
-    email = serializers.EmailField(
-        required=True, write_only=True, max_length=128)
-
-    class Meta:
-        model = AccountActivation
-        fields = [
-            "email", "vcode",
-        ]
-
-    def create(self, validated_data):
-        user = User.objects.get(email=validated_data["email"])
-        return user
-
-
-class VerifyResendSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(
+class VerifyResendSerializer(ModelSerializer):
+    email = EmailField(
         required=True, write_only=True, max_length=128)
 
     class Meta:
@@ -54,5 +36,5 @@ class VerifyResendSerializer(serializers.ModelSerializer):
         return response
 
 
-class PasswordResetSerializer(serializers.Serializer):
+class PasswordResetSerializer(Serializer):
     pass

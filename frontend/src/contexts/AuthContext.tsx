@@ -23,7 +23,9 @@ export const AuthContext = createContext<IAuthContextProps>({
    login: async () => {},
    logout: () => {},
    register: async () => {},
-   verify: async () => {},
+   verify: async () => {
+      return {};
+   },
    resetPassword: async () => {},
 });
 
@@ -74,29 +76,27 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
             setUser(user);
             setAccessToken(accessToken);
             setRefreshToken(refreshToken);
-            navigate('/account/verify');
+            navigate('/auth/verify');
          });
    };
-
    const verify: IVerifyFuncProp = async (vcode, email) => {
-      await axiosService
-         .post('/account/verify/', {
-            vcode: vcode,
-            email: email,
-         })
-         .then(({ data }) => {
-            console.log(data);
-            const { status } = data;
-            if (status) {
-               setUser((prevUser) => {
-                  if (!prevUser) return null;
-                  return {
-                     ...prevUser,
-                     is_verified: false,
-                  };
-               });
-            }
+      const response = await axiosService.post('/auth/verify/', {
+         activation_code: vcode,
+         email: email,
+      });
+      const { data } = response;
+      const { status } = data;
+
+      if (typeof status === 'boolean') {
+         setUser((prevUser) => {
+            if (!prevUser) return null;
+            return {
+               ...prevUser,
+               is_verified: status,
+            };
          });
+      }
+      return data;
    };
 
    const resetPassword = async (email: string): Promise<void> => {
