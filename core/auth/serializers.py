@@ -151,3 +151,14 @@ class VerifyResendSerializer(ModelSerializer):
         user = validated_data['user']
         is_send = SendVerificationEmail(user)
         return is_send
+    
+class PasswordResetSerializer(ModelSerializer):
+    email = EmailField(
+        required=True, write_only=True, max_length=128)
+    
+    class Meta:
+        model = AuthActivation
+        fields = ["email"]
+
+    def create(self, validated_data):
+        return True

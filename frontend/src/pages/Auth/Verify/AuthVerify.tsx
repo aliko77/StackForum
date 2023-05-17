@@ -35,7 +35,7 @@ const AuthVerify: FC = () => {
             setNoRedirect(true);
             setMessage('Başarıyla doğrulandı.');
          } else {
-            setErrors(['Bir hata oluştu']);
+            setErrors(['Bir hata oluştu.']);
          }
       } catch (error: unknown) {
          if (error instanceof AxiosError) {

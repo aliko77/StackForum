@@ -1,10 +1,11 @@
+import axiosService from 'api/axios';
+import { AxiosError } from 'axios';
 import Alert from 'components/Alert/Alert';
 import Button from 'components/Button/Button';
 import Field from 'components/Field';
 import FormErrors from 'components/FormErrors/FormErrors';
 import LoadSpinner from 'components/LoadSpinner/LoadSpinner';
 import { Formik } from 'formik';
-import { useAuth } from 'hooks/useAuth';
 import { FC, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { object, string } from 'yup';
@@ -12,7 +13,6 @@ import { object, string } from 'yup';
 const ResetPassword: FC = () => {
    const [errors, setErrors] = useState<string[] | null>(null);
    const [message, setMessage] = useState<string | null>(null);
-   const { resetPassword } = useAuth();
 
    const validationSchema = object({
       email: string().email('*').required('*'),
@@ -40,13 +40,25 @@ const ResetPassword: FC = () => {
                   onSubmit={async (values) => {
                      setMessage(null);
                      setErrors(null);
-                     await resetPassword(values.email)
-                        .then(() => {
-                           setMessage('Sıfırlama maili gönderildi.');
-                        })
-                        .catch(() => {
-                           setErrors(['Bir hata oluştu. Lütfen tekrar deneyiniz.']);
+                     try {
+                        const response = await axiosService.post('/auth/password/reset/', {
+                           email: values.email,
                         });
+                        const { data } = response;
+                        const { status } = data;
+
+                        if (status === true) {
+                           setMessage(
+                              'Sıfırlama isteği gönderildi. Lütfen mailinizi kontrol edin.',
+                           );
+                        } else {
+                           setErrors(['Bir hata oluştu.']);
+                        }
+                     } catch (error: unknown) {
+                        if (error instanceof AxiosError) {
+                           setErrors(error.response?.data);
+                        }
+                     }
                   }}
                >
                   {({
