@@ -9,11 +9,15 @@ const axiosService = axios.create({
    },
 });
 
+const getToken = () => localStorage.getItem('accessToken')?.replace(/"/g, '');
+
 axiosService.interceptors.request.use(
    async (config) => {
+      // TODO
       const token = null;
-      if (token !== null) {
-         config.headers.Authorization = 'Bearer ' + token;
+
+      if (token) {
+         config.headers.Authorization = `Bearer ${token}`;
       }
       console.debug('[Request]', (config.baseURL ?? 'baseUrl') + (config.url ?? 'url'));
       return config;

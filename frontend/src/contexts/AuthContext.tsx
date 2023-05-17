@@ -91,7 +91,7 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
                   if (!prevUser) return null;
                   return {
                      ...prevUser,
-                     is_verified: true,
+                     is_verified: false,
                   };
                });
             }

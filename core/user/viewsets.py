@@ -6,7 +6,6 @@ from rest_framework import status
 from rest_framework.response import Response
 from .models import User
 from .serializers import UserSerializer, VerifySerializer, VerifyResendSerializer
-from .utils import SendVerificationEmail
 
 
 class UserViewSet(ModelViewSet):
@@ -38,10 +37,10 @@ class VerifyViewSet(ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response({"status": serializer.data}, status=status.HTTP_200_OK)
+        print(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class VerifyResendViewSet(ModelViewSet):
@@ -50,12 +49,10 @@ class VerifyResendViewSet(ModelViewSet):
     http_method_names = ['post']
 
     def create(self, request, *args, **kwargs):
-        try:
-            user = User.objects.get(email=request.data["email"])
-            response = SendVerificationEmail(user)
-            return Response({"status": response}, status=status.HTTP_200_OK)
-        except:
-            return Response({"errors": ["Email zorunlu."]}, status=status.HTTP_400_BAD_REQUEST)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class PasswordResetViewSet(ModelViewSet):
@@ -63,4 +60,7 @@ class PasswordResetViewSet(ModelViewSet):
     http_method_names = ['post']
 
     def create(self, request, *args, **kwargs):
-        return Response({"status": True}, status=status.HTTP_200_OK)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)

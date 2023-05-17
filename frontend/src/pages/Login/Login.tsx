@@ -7,7 +7,7 @@ import { object, string } from 'yup';
 import { useAuth } from 'hooks/useAuth';
 import LoadSpinner from 'components/LoadSpinner';
 import { FC, useState } from 'react';
-import Alert from 'components/Alert/Alert';
+import Alert, { eColors } from 'components/Alert/Alert';
 import { AxiosError } from 'axios';
 
 interface ILoginFormProp {
@@ -59,7 +59,7 @@ const Login: FC = () => {
                   isSubmitting,
                }) => (
                   <div>
-                     {message && <Alert text={message} />}
+                     {message && <Alert color={eColors.Rose} text={message} />}
                      {isSubmitting && <LoadSpinner />}
                      <form noValidate onSubmit={handleSubmit} className="space-y-3">
                         <div>

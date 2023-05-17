@@ -1,7 +1,6 @@
 import axiosService from 'api/axios';
 import { AxiosError } from 'axios';
 import Alert from 'components/Alert';
-import { eColors } from 'components/Alert';
 import Button from 'components/Button';
 import FormErrors from 'components/FormErrors';
 import LoadSpinner from 'components/LoadSpinner';
@@ -26,6 +25,8 @@ const account_verify: FC = () => {
 
    const handleSubmit = async (e: FormEvent) => {
       e.preventDefault();
+      setErrors(null);
+      setMessage(null);
       setIsSubmitting(true);
       await verify(vcode, user?.email)
          .then(() => {
@@ -35,9 +36,7 @@ const account_verify: FC = () => {
          .catch((error: AxiosError) => {
             const responseErrors = error.response?.data as string[];
             setErrors(
-               responseErrors ?? {
-                  errors: ['Bir hata oluştu. Lütfen tekrar deneyiniz.'],
-               },
+               responseErrors ? responseErrors : ['Bir hata oluştu. Lütfen tekrar deneyiniz.'],
             );
          })
          .finally(() => {
@@ -46,6 +45,8 @@ const account_verify: FC = () => {
    };
 
    const handleResend: MouseEventHandler<HTMLButtonElement> = async () => {
+      setErrors(null);
+      setMessage(null);
       setIsSubmitting(true);
       if (user?.is_verified) return;
       await axiosService
@@ -53,10 +54,10 @@ const account_verify: FC = () => {
             email: email,
          })
          .then(({ data }) => {
-            if (!data.status) {
-               setErrors(() => [...[], 'Bir hata oluştu. Lütfen tekrar deneyiniz.']);
-            } else {
+            if (data.status) {
                setMessage('Kod tekrar gönderildi.');
+            } else {
+               setErrors(() => [...[], 'Bir hata oluştu. Lütfen tekrar deneyiniz.']);
             }
          })
          .catch(() => {

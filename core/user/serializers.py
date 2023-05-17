@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from .models import User, Profile, AccountActivation
 from django.core.exceptions import ObjectDoesNotExist
+from datetime import timedelta
+from django.utils import timezone
 from .utils import SendVerificationEmail
 
 
@@ -29,46 +31,27 @@ class VerifySerializer(serializers.ModelSerializer):
     class Meta:
         model = AccountActivation
         fields = [
-            "email", 'vcode'
+            "email", "vcode",
         ]
 
     def create(self, validated_data):
-        try:
-            user = User.objects.get(email=validated_data['email'])
-            if user.is_verified:
-                raise serializers.ValidationError(
-                    {
-                        'errors': ['Zaten doğrulanmış.']
-                    }
-                )
-            else:
-                try:
-                    vcode = AccountActivation.objects.get(
-                        activation_code=validated_data['vcode'],
-                        user=user)
-                    vcode.delete()
-                    user.is_verified = True
-                    user.save()
-                    return True
-                except ObjectDoesNotExist:
-                    raise serializers.ValidationError(
-                        {
-                            'errors': ['Bilinmeyen kod.']
-                        }
-                    )
-        except ObjectDoesNotExist:
-            raise serializers.ValidationError(
-                {
-                    'errors': ['Bilinmeyen veri.']
-                }
-            )
-        
+        user = User.objects.get(email=validated_data["email"])
+        return user
+
+
 class VerifyResendSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         required=True, write_only=True, max_length=128)
 
     class Meta:
         model = AccountActivation
-        fields = [
-            "email"
-        ]
+        fields = ["email"]
+
+    def create(self, validated_data):
+        user = User.objects.get(email=validated_data["email"])
+        print(user.email)
+        # vEmail = SendVerificationEmail(user)
+        response = {
+            "status": True
+        }
+        return response
