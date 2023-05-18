@@ -2,7 +2,6 @@ import Logo from 'components/Logo';
 import Button from 'components/Button';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { useAuth } from 'hooks/useAuth';
-import { LogoutButton } from 'components/LogoutButton';
 import { FC } from 'react';
 import ThemeSwitcher from 'components/ThemeSwitcher/ThemeSwitcher';
 import HeaderPopOver from 'components/Header/HeaderPopover';
@@ -24,12 +23,12 @@ const Header: FC = () => {
                </h1>
             </div>
             <div className="ml-auto">
-               <div className="flex space-x-2 sm:space-x-4 items-center">
-                  <div className="p-1.5 bg-white dark:bg-night-100 shadow rounded-full">
+               <div className="flex items-center">
+                  <div className="p-1.5 mx-2 bg-white dark:bg-night-100 shadow rounded-full">
                      <ThemeSwitcher />
                   </div>
-                  <div className="p-1.5 bg-white dark:bg-night-100 shadow rounded-full">
-                     <div className="text-zinc-600 dark:text-gray-300">
+                  <div className="p-1.5 mx-2 bg-white dark:bg-night-100 shadow rounded-full">
+                     <div className="text-zinc-500 hover:text-rose-500 dark:text-zinc-400 dark:hover:text-indigo-500">
                         <svg
                            xmlns="http://www.w3.org/2000/svg"
                            fill="none"
@@ -48,15 +47,15 @@ const Header: FC = () => {
                   </div>
                   {user && (
                      <>
-                        <div className="p-1.5 bg-white dark:bg-night-100 shadow rounded-full">
-                           <div>
+                        <div className="p-1.5 mx-2 bg-white dark:bg-night-100 shadow rounded-full">
+                           <div className="text-zinc-500 hover:text-rose-500 dark:text-zinc-400 dark:hover:text-indigo-500">
                               <svg
                                  xmlns="http://www.w3.org/2000/svg"
                                  fill="none"
                                  viewBox="0 0 24 24"
                                  strokeWidth="1.5"
                                  stroke="currentColor"
-                                 className="w-6 h-6 text-zinc-600 dark:text-gray-400"
+                                 className="w-6 h-6"
                               >
                                  <path
                                     strokeLinecap="round"
@@ -66,7 +65,7 @@ const Header: FC = () => {
                               </svg>
                            </div>
                         </div>
-                        <div className="hidden sm:block">
+                        <div className="hidden sm:block mx-4">
                            <div className="flex flex-col">
                               <p className="text-xs text-gray-600 dark:text-gray-300">
                                  Hoş geldin,
@@ -74,7 +73,7 @@ const Header: FC = () => {
                               <p className="dark:text-gray-100">{user?.first_name}</p>
                            </div>
                         </div>
-                        <div className="p-1.5 bg-white dark:bg-night-100 shadow rounded">
+                        <div className="mx-2">
                            <HeaderPopOver />
                         </div>
                      </>

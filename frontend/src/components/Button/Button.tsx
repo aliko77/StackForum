@@ -14,13 +14,14 @@ interface IcolorVariants {
 }
 
 const colorVariants: IcolorVariants = {
-   rose: 'bg-rose-500 hover:bg-rose-600 disabled:bg-rose-600',
-   indigo: 'bg-indigo-500 hover:bg-indigo-600 disabled:bg-indigo-600',
+   rose: 'bg-rose-500 focus:ring-rose-600 hover:bg-rose-600 disabled:bg-rose-600',
+   indigo: 'bg-indigo-500 focus:ring-indigo-600 hover:bg-indigo-600 disabled:bg-indigo-600',
 };
 
 const darkColorVariants: IcolorVariants = {
-   rose: 'dark:bg-rose-500 dark:hover:bg-rose-600 dark:disabled:bg-rose-600',
-   indigo: 'dark:bg-indigo-500 dark:hover:bg-indigo-600 dark:disabled:bg-indigo-600',
+   rose: 'dark:bg-rose-500 dark:hover:bg-rose-600 dark:focus:ring-rose-600 dark:disabled:bg-rose-600',
+   indigo:
+      'dark:bg-indigo-500 dark:focus:ring-indigo-600 dark:hover:bg-indigo-600 dark:disabled:bg-indigo-600',
 };
 
 const Button: FC<IButtonProps> = ({
@@ -31,7 +32,7 @@ const Button: FC<IButtonProps> = ({
    type = 'button',
    ...props
 }) => {
-   const buttonClass = `w-full ${colorVariants[color]} py-1.5 px-2 rounded-sm dark:text-gray-100 ${darkColorVariants[dark]}`;
+   const buttonClass = `w-full ${colorVariants[color]} focus:outline-none focus:ring py-1.5 px-2 rounded-sm dark:text-gray-100 ${darkColorVariants[dark]}`;
 
    return (
       <button className={`${buttonClass}`} onClick={onClick} type={type} {...props}>

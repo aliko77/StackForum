@@ -229,5 +229,5 @@ class PasswordChangeSerializer(ModelSerializer):
         user = validated_data['user']
         password = validated_data['password']
         user.set_password(password)
-        user.save
+        user.save()
         return user

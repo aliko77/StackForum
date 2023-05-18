@@ -4,21 +4,22 @@
 
 html,
 body {
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
+   height: 100%;
+   width: 100%;
+   margin: 0;
+   padding: 0;
 }
 
 body > div#root {
-    display: flex;
-    flex-direction: column;
-    flex: auto;
-    min-height: 100vh;
+   display: flex;
+   flex-direction: column;
+   flex: auto;
+   min-height: 100vh;
 }
 
 div#root > main.content {
-    flex: 1 1 auto;
-    display: flex;
-    flex-direction: column;
+   flex: 1 1 auto;
+   display: flex;
+   flex-direction: column;
+   margin-top: 56px;
 }

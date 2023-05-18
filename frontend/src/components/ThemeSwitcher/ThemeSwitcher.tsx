@@ -8,7 +8,7 @@ const ThemeSwitcher: FC = () => {
    return (
       <>
          <button
-            className="hidden hs-dark-mode dark:flex items-center text-gray-300 hover:text-indigo-500"
+            className="hidden dark:flex items-center dark:text-zinc-400 dark:hover:text-indigo-500"
             onClick={handleClick}
          >
             <svg
@@ -23,7 +23,7 @@ const ThemeSwitcher: FC = () => {
             </svg>
          </button>
          <button
-            className="dark:hidden flex items-center text-zinc-600 hover:text-rose-500"
+            className="dark:hidden flex items-center text-zinc-500 hover:text-rose-500"
             onClick={handleClick}
          >
             <svg

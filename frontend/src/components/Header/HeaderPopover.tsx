@@ -3,14 +3,14 @@ import { Popover } from '@headlessui/react';
 const HeaderPopOver = () => {
    return (
       <Popover>
-         <Popover.Button>
+         <Popover.Button className="p-1.5 bg-white dark:bg-night-100 shadow rounded focus:outline-none focus:ring-1 focus:ring-gray-400">
             <svg
                xmlns="http://www.w3.org/2000/svg"
                fill="none"
                viewBox="0 0 24 24"
                strokeWidth="1.5"
                stroke="currentColor"
-               className="w-6 h-6 text-zinc-600 hover:text-rose-500 dark:text-gray-400 hover:dark:text-gray-300"
+               className="w-6 h-6 text-zinc-500 hover:text-rose-500 dark:text-gray-400 hover:dark:text-indigo-400"
             >
                <path
                   strokeLinecap="round"
@@ -20,15 +20,15 @@ const HeaderPopOver = () => {
             </svg>
          </Popover.Button>
 
-         <Popover.Panel className="absolute z-10">
+         <Popover.Panel className="absolute z-[999] bg-night-100 shadow border border-gray-700 rounded-sm top-14">
+            <div></div>
+            <hr className="border-zinc-500 border-1" />
             <div className="grid grid-cols-2">
                <a href="/analytics">Analytics</a>
                <a href="/engagement">Engagement</a>
                <a href="/security">Security</a>
                <a href="/integrations">Integrations</a>
             </div>
-
-            <img src="/solutions.jpg" alt="" />
          </Popover.Panel>
       </Popover>
    );

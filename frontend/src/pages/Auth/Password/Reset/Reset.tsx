@@ -95,8 +95,8 @@ const ResetPassword: FC = () => {
                   )}
                </Formik>
                <div className="mt-4 text-sm text-gray-600 items-center flex justify-between">
-                  <NavLink to={'/login'}>
-                     <p className="text-gray-800 dark:text-gray-200 cursor-pointer hover:text-indigo-500 dark:hover:text-indigo-500 inline-flex items-center">
+                  <NavLink to={'/login'} className="flex items-center">
+                     <div className="text-gray-800 dark:text-gray-200 cursor-pointer hover:text-indigo-500 dark:hover:text-indigo-500 inline-flex items-center">
                         <svg
                            xmlns="http://www.w3.org/2000/svg"
                            className="h-5 w-5 mr-2"
@@ -110,7 +110,7 @@ const ResetPassword: FC = () => {
                            />
                         </svg>
                         Geri
-                     </p>
+                     </div>
                   </NavLink>
                   <p className="dark:text-gray-200 dark:hover:text-indigo-500 hover:text-indigo-500 cursor-pointer">
                      Bir sorun mu var?
