@@ -5,19 +5,26 @@ import { useAuth } from 'hooks/useAuth';
 import { LogoutButton } from 'components/LogoutButton';
 import { FC } from 'react';
 import ThemeSwitcher from 'components/ThemeSwitcher/ThemeSwitcher';
+import HeaderPopOver from 'components/Header/HeaderPopover';
 
 const Header: FC = () => {
    const navigate: NavigateFunction = useNavigate();
    const { user } = useAuth();
 
    return (
-      <header className="static bg-white dark:bg-night-200 border-t-4 border-rose-400 shadow py-3 px-3">
-         <div className="flex items-center align-center">
+      <header className="fixed flex z-50 w-full h-14 bg-white dark:bg-night-200 border-t-4 border-t-rose-400 border-b border-b-gray-300 dark:border-b-night-200">
+         <div className="w-full sm:w-4/6 max-w-full h-full flex items-center m-[0_auto] px-2 sm:p-0">
             <div>
                <Logo />
             </div>
+            <div className="sm:hidden ml-2">
+               <h1 className="font-mono space-x-0.5 text-sm dark:text-gray-100">
+                  <span>Stack</span>
+                  <span className="font-semibold">Forum</span>
+               </h1>
+            </div>
             <div className="ml-auto">
-               <div className="flex flex-1 space-x-1 sm:space-x-2 items-center">
+               <div className="flex space-x-2 sm:space-x-4 items-center">
                   <div className="p-1.5 bg-white dark:bg-night-100 shadow rounded-full">
                      <ThemeSwitcher />
                   </div>
@@ -29,7 +36,7 @@ const Header: FC = () => {
                            viewBox="0 0 24 24"
                            strokeWidth="1.5"
                            stroke="currentColor"
-                           className="w-5 h-5"
+                           className="w-6 h-6"
                         >
                            <path
                               strokeLinecap="round"
@@ -41,15 +48,15 @@ const Header: FC = () => {
                   </div>
                   {user && (
                      <>
-                        <div>
-                           <div className="mx-1.5 sm:mx-4">
+                        <div className="p-1.5 bg-white dark:bg-night-100 shadow rounded-full">
+                           <div>
                               <svg
                                  xmlns="http://www.w3.org/2000/svg"
                                  fill="none"
                                  viewBox="0 0 24 24"
                                  strokeWidth="1.5"
                                  stroke="currentColor"
-                                 className="w-6 h-6 stroke-zinc-600 dark:stroke-gray-300"
+                                 className="w-6 h-6 text-zinc-600 dark:text-gray-400"
                               >
                                  <path
                                     strokeLinecap="round"
@@ -59,18 +66,16 @@ const Header: FC = () => {
                               </svg>
                            </div>
                         </div>
-                        <div>
-                           <div className="flex flex-col mx-1.5 sm:mx-4">
-                              <p className="text-xs text-gray-600 dark:text-gray-400">
+                        <div className="hidden sm:block">
+                           <div className="flex flex-col">
+                              <p className="text-xs text-gray-600 dark:text-gray-300">
                                  Hoş geldin,
                               </p>
                               <p className="dark:text-gray-100">{user?.first_name}</p>
                            </div>
                         </div>
-                        <div>
-                           <div className="ml-1.5 sm:ml-4">
-                              <LogoutButton />
-                           </div>
+                        <div className="p-1.5 bg-white dark:bg-night-100 shadow rounded">
+                           <HeaderPopOver />
                         </div>
                      </>
                   )}
