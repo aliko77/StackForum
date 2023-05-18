@@ -11,6 +11,7 @@ const Register = lazy(() => import('pages/Register'));
 const Home = lazy(() => import('pages/Home'));
 const AuthVerify = lazy(() => import('pages/Auth/Verify'));
 const PasswordReset = lazy(() => import('pages/Auth/Password/Reset'));
+const PasswordChange = lazy(() => import('pages/Auth/Password/Change'));
 const PageNotFound = lazy(() => import('pages/PageNotFound'));
 
 interface IRoutes {
@@ -22,7 +23,7 @@ const getRouteElement = (Component: ElementType): ReactElement => (
    <Suspense fallback={<PageLoading />}>
       <AuthProvider>
          <Layout>
-            <Component />
+            <Component />  
          </Layout>
       </AuthProvider>
    </Suspense>
@@ -35,6 +36,10 @@ const routes: IRoutes[] = [
    {
       path: 'auth/password/reset',
       element: getRouteElement(() => <GuestRoute>{<PasswordReset />}</GuestRoute>),
+   },
+   {
+      path: '/auth/password/change/:uid/:token',
+      element: getRouteElement(() => <GuestRoute>{<PasswordChange />}</GuestRoute>),
    },
    {
       path: 'auth/verify',

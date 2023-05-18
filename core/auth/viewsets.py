@@ -6,7 +6,7 @@ from rest_framework_simplejwt.exceptions import TokenError, InvalidToken
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from .serializers import LoginSerializer, RegisterSerializer, VerifyResendSerializer, VerifySerializer,PasswordResetSerializer
+from .serializers import LoginSerializer, RegisterSerializer, VerifyResendSerializer, VerifySerializer, PasswordResetSerializer, PasswordChangeSerializer
 from core.user.serializers import UserSerializer
 from rest_framework.decorators import action
 
@@ -73,21 +73,29 @@ class VerifyViewSet(ModelViewSet):
         user = serializer.save()
         is_verified = user.is_verified
         return Response({'status': is_verified}, status=status.HTTP_200_OK)
-    
+
     @action(detail=False, methods=['post'])
     def resend(self, request):
         serializer = VerifyResendSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         is_send = serializer.save()
         return Response({'status': is_send}, status=status.HTTP_200_OK)
-    
+
+
 class PasswordViewSet(ModelViewSet):
     permission_classes = (AllowAny,)
     http_method_names = ['post']
 
     @action(detail=False, methods=['post'])
-    def reset(self,request):
+    def reset(self, request):
         serializer = PasswordResetSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        is_send = serializer.save()
-        return Response({'status': is_send}, status=status.HTTP_200_OK)
+        is_sended = serializer.save()
+        return Response({'status': is_sended}, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=['post'])
+    def change(self, request):
+        serializer = PasswordChangeSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'status': True}, status=status.HTTP_200_OK)

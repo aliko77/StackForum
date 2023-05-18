@@ -1,12 +1,16 @@
 from django.contrib.auth.models import update_last_login
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.settings import api_settings
 from rest_framework.serializers import ModelSerializer, CharField, EmailField, ValidationError
-
-from core.user.models import User, AuthActivation
+from .utils import SendVerificationEmail, SendPasswordResetEmail, token_generator
+from core.user.models import AuthActivation
 from core.user.serializers import UserSerializer
-from core.user.utils import SendVerificationEmail
+from django.utils.http import urlsafe_base64_decode
+
+User = get_user_model()
+
 
 class LoginSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
@@ -45,9 +49,7 @@ class RegisterSerializer(UserSerializer):
     def validate(self, attrs):
         if attrs['password'] != attrs['confirm_password']:
             raise ValidationError(
-                {
-                    'errors': ['Şifreler eşleşmiyor.']
-                }
+                'Şifreler eşleşmiyor.'
             )
         return attrs
 
@@ -55,9 +57,7 @@ class RegisterSerializer(UserSerializer):
         try:
             User.objects.get(email=validated_data['email'])
             raise ValidationError(
-                {
-                    'errors': ['Bu email zaten kullanılıyor.']
-                }
+                'Bu email zaten kullanılıyor.'
             )
         except ObjectDoesNotExist:
             user_data = {
@@ -94,7 +94,9 @@ class VerifySerializer(ModelSerializer):
             )
 
         if user.is_verified:
-            raise ValidationError("Zaten doğrulanmış.")
+            raise ValidationError(
+                "Zaten doğrulanmış."
+            )
 
         try:
             activation = AuthActivation.objects.get(
@@ -105,7 +107,9 @@ class VerifySerializer(ModelSerializer):
             )
 
         if activation.is_expired():
-            raise ValidationError('Doğrulama kodunun süresi doldu.')
+            raise ValidationError(
+                'Doğrulama kodunun süresi doldu.'
+            )
 
         attrs['activation'] = activation
         attrs['user'] = user
@@ -118,6 +122,7 @@ class VerifySerializer(ModelSerializer):
         user.is_verified = True
         user.save()
         return user
+
 
 class VerifyResendSerializer(ModelSerializer):
     email = EmailField(
@@ -138,27 +143,91 @@ class VerifyResendSerializer(ModelSerializer):
             )
 
         if user.is_verified:
-            raise ValidationError("Zaten doğrulanmış.")
-        
+            raise ValidationError(
+                "Zaten doğrulanmış."
+            )
+
         AuthActivation.objects.filter(
             user__email=email).delete()
-        
+
         attrs['user'] = user
         return attrs
-        
 
     def create(self, validated_data):
         user = validated_data['user']
         is_send = SendVerificationEmail(user)
         return is_send
-    
+
+
 class PasswordResetSerializer(ModelSerializer):
     email = EmailField(
         required=True, write_only=True, max_length=128)
-    
+
     class Meta:
-        model = AuthActivation
+        model = User
         fields = ["email"]
 
+    def validate(self, attrs):
+        email = attrs.get("email")
+
+        try:
+            user = User.objects.get(email=email)
+        except ObjectDoesNotExist:
+            raise ValidationError(
+                'Geçersiz email.'
+            )
+
+        attrs['user'] = user
+        return attrs
+
     def create(self, validated_data):
-        return True
+        user = validated_data['user']
+        is_send = SendPasswordResetEmail(user)
+        return is_send
+
+
+class PasswordChangeSerializer(ModelSerializer):
+    uid = CharField(
+        required=True, write_only=True)
+    token = CharField(
+        required=True, write_only=True)
+    password = CharField(
+        max_length=128, min_length=8, write_only=True, required=True)
+    confirmPassword = CharField(write_only=True, required=True)
+
+    class Meta:
+        model = User
+        fields = ["uid", "token", "password", "confirmPassword"]
+
+    def validate(self, attrs):
+        uid = urlsafe_base64_decode(attrs.get("uid")).decode()
+        token = attrs.get("token")
+        password = attrs.get("password")
+        confirmPassword = attrs.get("confirmPassword")
+
+        try:
+            user = User.objects.get(pk=uid)
+        except ObjectDoesNotExist:
+            raise ValidationError(
+                'Geçersiz token.'
+            )
+
+        if not token_generator.check_token(user, token):
+            raise ValidationError(
+                'Geçersiz token.'
+            )
+
+        if password != confirmPassword:
+            raise ValidationError(
+                'Şifreler eşleşmiyor.'
+            )
+
+        attrs['user'] = user
+        return attrs
+
+    def create(self, validated_data):
+        user = validated_data['user']
+        password = validated_data['password']
+        user.set_password(password)
+        user.save
+        return user

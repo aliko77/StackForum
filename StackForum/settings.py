@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -132,3 +133,7 @@ EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
 EMAIL_HOST_USER = '562a52fa2435f9'
 EMAIL_HOST_PASSWORD = '068c5e92d1826d'
 EMAIL_PORT = '2525'
+
+REACT_APP_URL = os.getenv('REACT_APP_URL', 'http://localhost:5173')
+
+PASSWORD_RESET_TIMEOUT = 1800

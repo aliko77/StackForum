@@ -45,7 +45,7 @@ const Register: FC = () => {
    return (
       <div className="mx-auto w-full max-w-sm p-3 sm:my-20 my-10">
          <div className="flex items-center justify-center mb-4">
-            <Logo noText />
+            <Logo />
          </div>
          <div className="border rounded p-3 bg-white dark:text-gray-100 dark:bg-night-200 dark:border-gray-500">
             <div className="flex justify-center mb-3">

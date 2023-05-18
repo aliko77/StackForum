@@ -64,8 +64,10 @@ const AuthVerify: FC = () => {
          } else {
             throw new Error();
          }
-      } catch (error) {
-         setErrors(() => [...[], 'Bir hata oluştu. Lütfen tekrar deneyiniz.']);
+      } catch (error: unknown) {
+         if (error instanceof AxiosError) {
+            setErrors(error.response?.data);
+         }
       } finally {
          setIsSubmitting(false);
       }
@@ -78,7 +80,7 @@ const AuthVerify: FC = () => {
                <div className="w-full">
                   <div className="text-gray-800 dark:text-gray-100 border dark:border-gray-600 dark:bg-night-200 py-8 rounded text-center flex flex-col justify-center">
                      <div className="m-auto mb-4">
-                        <Logo noRedirect noText />
+                        <Logo noRedirect />
                      </div>
                      <h1 className="text-2xl font-semibold">Hesap Doğrulama</h1>
                      <div className="flex flex-col my-2">

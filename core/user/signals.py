@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .models import Profile, User
-from .utils import SendVerificationEmail
+from core.auth.utils import SendVerificationEmail
 
 
 @receiver(post_save, sender=User)
