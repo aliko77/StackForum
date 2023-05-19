@@ -40,17 +40,17 @@ const Login: FC = () => {
                initialValues={InitialState}
                onSubmit={async (values) => {
                   setMessage(null);
-                  await login(values.email, values.password).catch((error: AxiosError) => {
-                     const responseData = error.response as {
-                        data: { detail: string };
-                        status: number;
-                     };
-                     const responseMessage =
-                        responseData.data.detail && responseData.status == 401
+                  try {
+                     await login(values.email, values.password);
+                  } catch (error: unknown) {
+                     if (error instanceof AxiosError) {
+                        const responseData = error.response?.data;
+                        const responseMessage = responseData?.detail
                            ? 'Email veya şifre yanlış.'
                            : 'Bir hata oluştu. Lütfen tekrar deneyin.';
-                     setMessage(responseMessage);
-                  });
+                        setMessage(responseMessage);
+                     }
+                  }
                }}
             >
                {({

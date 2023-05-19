@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import axiosService from 'api/axios';
-import { createContext, useMemo } from 'react';
+import { createContext, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IChildrenProp, ILoginFuncProp, IRegisterFuncProp, IUser, IVerifyFuncProp } from 'types';
-import { useLocalStorage } from 'usehooks-ts';
+import Cookies, { CookieSetOptions } from 'universal-cookie';
 
 interface IAuthContextProps {
    user: IUser | null;
@@ -14,6 +14,11 @@ interface IAuthContextProps {
    logout: () => void;
    verify: IVerifyFuncProp;
 }
+
+const AuthCookieConfig: CookieSetOptions = {
+   secure: true,
+   // httpOnly: true, // Only Production
+};
 
 export const AuthContext = createContext<IAuthContextProps>({
    user: null,
@@ -28,10 +33,29 @@ export const AuthContext = createContext<IAuthContextProps>({
 });
 
 export const AuthProvider = ({ children }: IChildrenProp) => {
+   const cookies = new Cookies();
    const navigate = useNavigate();
-   const [user, setUser] = useLocalStorage<IUser | null>('user', null);
-   const [accessToken, setAccessToken] = useLocalStorage<string | null>('accessToken', null);
-   const [refreshToken, setRefreshToken] = useLocalStorage<string | null>('refreshToken', null);
+
+   const [user, setUser] = useState(() => {
+      const storedUser = cookies.get<IUser | null>('user');
+      return storedUser ?? null;
+   });
+
+   const [accessToken, setAccessToken] = useState(() => {
+      const storedAT = cookies.get<string | null>('accessToken');
+      return storedAT ?? null;
+   });
+
+   const [refreshToken, setRefreshToken] = useState(() => {
+      const storedRT = cookies.get<string | null>('refreshToken');
+      return storedRT ?? null;
+   });
+
+   useEffect(() => {
+      cookies.set('user', user, AuthCookieConfig);
+      cookies.set('accessToken', accessToken, AuthCookieConfig);
+      cookies.set('refreshToken', refreshToken, AuthCookieConfig);
+   }, [user, accessToken, refreshToken]);
 
    const login: ILoginFuncProp = async (email, password) => {
       await axiosService

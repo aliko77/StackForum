@@ -6,6 +6,8 @@ import axiosService from 'api/axios';
 
 const Home: FC = () => {
    const { user } = useAuth();
+   console.log(typeof user, user);
+
    const handleClick = async () => {
       try {
          const response = await axiosService.get('user/');

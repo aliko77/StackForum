@@ -12,7 +12,7 @@ const axiosService = axios.create({
 
 axiosService.interceptors.request.use(
    async (config) => {
-      const token = TokenService.getLocalAccessToken();
+      const token = TokenService.getCookieAccessToken();
 
       if (token) {
          config.headers.Authorization = `Bearer ${token}`;
@@ -32,7 +32,7 @@ axiosService.interceptors.response.use(
    },
    async (err) => {
       const originalRequest = err.config;
-      const refreshToken = TokenService.getLocalRefreshToken();
+      const refreshToken = TokenService.getCookieRefreshToken();
       if (
          err.response.status === 401 &&
          err.response.data.code === 'token_not_valid' &&

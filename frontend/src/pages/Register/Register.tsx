@@ -59,18 +59,20 @@ const Register: FC = () => {
                initialValues={initialValues}
                onSubmit={async (values: IRegisterFormProp): Promise<void> => {
                   setErrors(null);
-                  await register(
-                     values.email,
-                     values.password,
-                     values.confirmPassword,
-                     values.first_name,
-                     values.last_name,
-                  ).catch((error: AxiosError) => {
-                     const responseErrors = error.response?.data as string[];
-                     setErrors(
-                        responseErrors ?? { errors: ['Bir hata oluştu. Lütfen tekrar deneyiniz.'] },
+                  try {
+                     await register(
+                        values.email,
+                        values.password,
+                        values.confirmPassword,
+                        values.first_name,
+                        values.last_name,
                      );
-                  });
+                  } catch (error: unknown) {
+                     if (error instanceof AxiosError) {
+                        const responseErrors = error.response?.data as string[];
+                        setErrors(responseErrors ?? ['Bir hata oluştu. Lütfen tekrar deneyiniz.']);
+                     }
+                  }
                }}
             >
                {({

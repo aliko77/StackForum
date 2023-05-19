@@ -1,12 +1,16 @@
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
+
 class TokenService {
-   getLocalRefreshToken() {
-      const refreshToken = localStorage.getItem('refreshToken');
-      return refreshToken ? JSON.parse(refreshToken) : null;
+   getCookieRefreshToken() {
+      const refreshToken = cookies.get<string>('refreshToken');
+      return refreshToken;
    }
 
-   getLocalAccessToken() {
-      const accessToken = localStorage.getItem('accessToken');
-      return accessToken ? JSON.parse(accessToken) : null;
+   getCookieAccessToken() {
+      const accessToken = cookies.get<string>('accessToken');
+      return accessToken;
    }
 }
 
