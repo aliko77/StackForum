@@ -16,12 +16,6 @@ export const Header: FC = () => {
             <div>
                <Logo />
             </div>
-            <div className="sm:hidden ml-2">
-               <h1 className="font-mono space-x-0.5 text-sm dark:text-gray-100">
-                  <span>Stack</span>
-                  <span className="font-semibold">Forum</span>
-               </h1>
-            </div>
             <div className="ml-auto">
                <div className="flex items-center">
                   <div className="p-1.5 mx-2 bg-white dark:bg-night-100 shadow rounded-full">

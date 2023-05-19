@@ -5,6 +5,7 @@ import { PageLoading } from 'components/PageLoading';
 import Layout from 'layouts/Layout';
 import { AuthProvider } from 'contexts/AuthContext';
 import { GuestRoute, PrivateRoute } from 'routes/GuardRoutes';
+import { CookiesProvider } from 'react-cookie';
 
 const Login = lazy(() => import('pages/Login'));
 const Register = lazy(() => import('pages/Register'));
@@ -21,11 +22,13 @@ interface IRoutes {
 
 const getRouteElement = (Component: ElementType): ReactElement => (
    <Suspense fallback={<PageLoading />}>
-      <AuthProvider>
-         <Layout>
-            <Component />
-         </Layout>
-      </AuthProvider>
+      <CookiesProvider>
+         <AuthProvider>
+            <Layout>
+               <Component />
+            </Layout>
+         </AuthProvider>
+      </CookiesProvider>
    </Suspense>
 );
 

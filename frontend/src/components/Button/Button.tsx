@@ -36,7 +36,7 @@ export const Button: FC<IButtonProps> = ({
 
    return (
       <button className={`${buttonClass}`} onClick={onClick} type={type} {...props}>
-         <span className="text-white uppercase text-sm">{text}</span>
+         <span className="text-white uppercase text-sm whitespace-nowrap">{text}</span>
       </button>
    );
 };

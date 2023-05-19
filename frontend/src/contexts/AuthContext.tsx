@@ -3,7 +3,7 @@ import axiosService from 'api/axios';
 import { createContext, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IChildrenProp, ILoginFuncProp, IRegisterFuncProp, IUser, IVerifyFuncProp } from 'types';
-import Cookies, { CookieSetOptions } from 'universal-cookie';
+import { useCookies } from 'react-cookie';
 
 interface IAuthContextProps {
    user: IUser | null;
@@ -15,7 +15,7 @@ interface IAuthContextProps {
    verify: IVerifyFuncProp;
 }
 
-const AuthCookieConfig: CookieSetOptions = {
+const AuthCookieConfig: { secure: boolean } = {
    secure: true,
    // httpOnly: true, // Only Production
 };
@@ -33,28 +33,31 @@ export const AuthContext = createContext<IAuthContextProps>({
 });
 
 export const AuthProvider = ({ children }: IChildrenProp) => {
-   const cookies = new Cookies();
+   const [cookies, setCookies, removeCookie] = useCookies();
    const navigate = useNavigate();
 
    const [user, setUser] = useState(() => {
-      const storedUser = cookies.get<IUser | null>('user');
-      return storedUser ?? null;
+      const storedUser = cookies.user ?? null;
+      return storedUser;
    });
 
    const [accessToken, setAccessToken] = useState(() => {
-      const storedAT = cookies.get<string | null>('accessToken');
+      const storedAT = cookies.accessToken ?? null;
       return storedAT ?? null;
    });
 
    const [refreshToken, setRefreshToken] = useState(() => {
-      const storedRT = cookies.get<string | null>('refreshToken');
+      const storedRT = cookies.refreshToken ?? null;
       return storedRT ?? null;
    });
 
    useEffect(() => {
-      cookies.set('user', user, AuthCookieConfig);
-      cookies.set('accessToken', accessToken, AuthCookieConfig);
-      cookies.set('refreshToken', refreshToken, AuthCookieConfig);
+      if (user) setCookies('user', user, AuthCookieConfig);
+      else removeCookie('user');
+      if (accessToken) setCookies('accessToken', accessToken, AuthCookieConfig);
+      else removeCookie('accessToken');
+      if (refreshToken) setCookies('refreshToken', refreshToken, AuthCookieConfig);
+      else removeCookie('refreshToken');
    }, [user, accessToken, refreshToken]);
 
    const login: ILoginFuncProp = async (email, password) => {
@@ -111,7 +114,7 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
       const { status } = data;
 
       if (typeof status === 'boolean') {
-         setUser((prevUser) => {
+         setUser((prevUser: unknown) => {
             if (!prevUser) return null;
             return {
                ...prevUser,
