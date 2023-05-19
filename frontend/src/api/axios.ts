@@ -1,10 +1,11 @@
 import axios from 'axios';
 import TokenService from 'services/TokenService';
 
-const baseURL = 'http://localhost:8000/api/v1';
+const REACT_APP_BACKEND_URL = 'http://localhost:8000/api/v1';
 const axiosService = axios.create({
-   baseURL,
+   baseURL: REACT_APP_BACKEND_URL,
    headers: {
+      Accept: 'application/json',
       'Content-Type': 'application/json',
    },
 });
@@ -29,7 +30,23 @@ axiosService.interceptors.response.use(
       console.debug('[Response]', res);
       return res;
    },
-   (err) => {
+   async (err) => {
+      const originalRequest = err.config;
+      const refreshToken = TokenService.getLocalRefreshToken();
+      if (
+         err.response.status === 401 &&
+         err.response.data.code === 'token_not_valid' &&
+         refreshToken &&
+         !originalRequest._retry
+      ) {
+         originalRequest._retry = true;
+         const response = await axiosService.post('/auth/refresh/', {
+            refresh: refreshToken,
+         });
+         const newAccessToken = response.data.access;
+         localStorage.setItem('accessToken', JSON.stringify(newAccessToken));
+         return await axiosService(originalRequest);
+      }
       return Promise.reject(err);
    },
 );
