@@ -1,4 +1,5 @@
 import axios from 'axios';
+import TokenService from 'services/TokenService';
 
 const baseURL = 'http://localhost:8000/api/v1';
 const axiosService = axios.create({
@@ -10,10 +11,10 @@ const axiosService = axios.create({
 
 axiosService.interceptors.request.use(
    async (config) => {
-      const token = localStorage.getItem('accessToken');
+      const token = TokenService.getLocalAccessToken();
 
       if (token) {
-         config.headers.Authorization = `Bearer ${JSON.parse(token)}`;
+         config.headers.Authorization = `Bearer ${token}`;
       }
       console.debug('[Request]', (config.baseURL ?? 'baseUrl') + (config.url ?? 'url'));
       return config;
