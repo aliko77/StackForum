@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-interface IButtonProps {
+interface IButton {
    onClick?: () => void;
    text: string;
    color?: string;
@@ -24,7 +24,7 @@ const darkColorVariants: IcolorVariants = {
       'dark:bg-indigo-500 dark:focus:ring-indigo-600 dark:hover:bg-indigo-600 dark:disabled:bg-indigo-600',
 };
 
-export const Button: FC<IButtonProps> = ({
+export const Button: FC<IButton> = ({
    onClick,
    text,
    color = 'rose',

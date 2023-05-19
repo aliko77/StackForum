@@ -9,7 +9,7 @@ import { LoadSpinner } from 'components/LoadSpinner';
 import { Button } from 'components/Button';
 import { Field } from 'components/Field';
 
-interface IRegisterFormProp {
+interface RegisterFormProp {
    email: string;
    password: string;
    confirmPassword: string;
@@ -17,7 +17,7 @@ interface IRegisterFormProp {
    last_name: string;
 }
 
-const initialValues: IRegisterFormProp = {
+const initialValues: RegisterFormProp = {
    email: '',
    password: '',
    confirmPassword: '',
@@ -57,7 +57,7 @@ const Register: FC = () => {
             <Formik
                validationSchema={validationSchema}
                initialValues={initialValues}
-               onSubmit={async (values: IRegisterFormProp): Promise<void> => {
+               onSubmit={async (values: RegisterFormProp): Promise<void> => {
                   setErrors(null);
                   try {
                      await register(

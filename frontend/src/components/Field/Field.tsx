@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, FocusEvent } from 'react';
 
-interface InputProps {
+interface IInput {
    id: string;
    type: string;
    name: string;
@@ -12,7 +12,7 @@ interface InputProps {
    onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
 }
 
-export const Field: FC<InputProps> = ({
+export const Field: FC<IInput> = ({
    id,
    type,
    name,

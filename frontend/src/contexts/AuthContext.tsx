@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import axiosService from 'api/axios';
 import { createContext, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IChildrenProp, ILoginFuncProp, IRegisterFuncProp, IUser, IVerifyFuncProp } from 'types';
 import { useCookies } from 'react-cookie';
+import axiosService from 'api/axios';
+import { IReactChildren, ILoginFunc, IRegisterFunc, IUser, IVerifyFunc } from 'types';
 
-interface IAuthContextProps {
+interface IAuthContext {
    user: IUser | null;
    accessToken: string | null;
    refreshToken: string | null;
-   login: ILoginFuncProp;
-   register: IRegisterFuncProp;
+   login: ILoginFunc;
+   register: IRegisterFunc;
    logout: () => void;
-   verify: IVerifyFuncProp;
+   verify: IVerifyFunc;
 }
 
 const AuthCookieConfig: { secure: boolean } = {
@@ -20,7 +20,7 @@ const AuthCookieConfig: { secure: boolean } = {
    // httpOnly: true, // Only Production
 };
 
-export const AuthContext = createContext<IAuthContextProps>({
+export const AuthContext = createContext<IAuthContext>({
    user: null,
    accessToken: null,
    refreshToken: null,
@@ -32,7 +32,7 @@ export const AuthContext = createContext<IAuthContextProps>({
    },
 });
 
-export const AuthProvider = ({ children }: IChildrenProp) => {
+export const AuthProvider = ({ children }: IReactChildren) => {
    const [cookies, setCookies, removeCookie] = useCookies();
    const navigate = useNavigate();
 
@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
       else removeCookie('refreshToken');
    }, [user, accessToken, refreshToken]);
 
-   const login: ILoginFuncProp = async (email, password) => {
+   const login: ILoginFunc = async (email, password) => {
       await axiosService
          .post('/auth/login/', {
             email: email,
@@ -81,7 +81,7 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
       navigate('/');
    };
 
-   const register: IRegisterFuncProp = async (
+   const register: IRegisterFunc = async (
       email,
       password,
       confirm_password,
@@ -105,7 +105,7 @@ export const AuthProvider = ({ children }: IChildrenProp) => {
          });
    };
 
-   const verify: IVerifyFuncProp = async (vcode, email) => {
+   const verify: IVerifyFunc = async (vcode, email) => {
       const response = await axiosService.post('/auth/verify/', {
          activation_code: vcode,
          email: email,

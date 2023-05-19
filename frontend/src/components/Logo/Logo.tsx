@@ -2,12 +2,12 @@ import StackLogo from 'assets/images/ForumLogo.png';
 import { Link } from 'react-router-dom';
 import { FC } from 'react';
 
-type LogoProps = {
+interface ILogo {
    noText?: boolean;
    noRedirect?: boolean;
-};
+}
 
-export const Logo: FC<LogoProps> = ({ noText, noRedirect }) => {
+export const Logo: FC<ILogo> = ({ noText, noRedirect }) => {
    const classList = `hidden sm:block font-mono space-x-0.5 text-xl dark:text-gray-100 ${
       noText ? 'sr-only' : ''
    }`;

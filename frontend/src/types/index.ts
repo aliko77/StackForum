@@ -1,21 +1,21 @@
 import { ReactNode } from 'react';
 
-export interface IChildrenProp {
+export interface IReactChildren {
    children: ReactNode | ReactNode[];
 }
-export interface ILoginFuncProp {
+export interface ILoginFunc {
    (email: string, password: string): Promise<void>;
 }
 
-export interface KeyValueProp {
+export interface KeyValue {
    [key: string]: unknown;
 }
 
-export interface IVerifyFuncProp {
-   (vcode: string, email: string | undefined): Promise<KeyValueProp>;
+export interface IVerifyFunc {
+   (vcode: string, email: string | undefined): Promise<KeyValue>;
 }
 
-export interface IRegisterFuncProp {
+export interface IRegisterFunc {
    (
       email: string,
       password: string,

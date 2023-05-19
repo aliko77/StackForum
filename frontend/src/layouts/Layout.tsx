@@ -1,8 +1,8 @@
 import { Footer } from 'components/Footer';
 import { Header } from 'components/Header';
-import { IChildrenProp } from 'types';
+import { IReactChildren } from 'types';
 
-const Layout = ({ children }: IChildrenProp) => {
+const Layout = ({ children }: IReactChildren) => {
    return (
       <>
          <Header />
