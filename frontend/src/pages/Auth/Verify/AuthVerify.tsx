@@ -10,7 +10,7 @@ import { useAuth } from 'hooks/useAuth';
 import { FC, useState, FormEvent, MouseEventHandler } from 'react';
 import { Navigate } from 'react-router-dom';
 
-export const AuthVerify: FC = () => {
+const AuthVerify: FC = () => {
    const { user, verify } = useAuth();
    const [vcode, setVcode] = useState<string>('');
    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -136,3 +136,5 @@ export const AuthVerify: FC = () => {
       </div>
    );
 };
+
+export default AuthVerify;
