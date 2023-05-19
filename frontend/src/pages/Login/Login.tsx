@@ -1,14 +1,13 @@
-import Button from 'components/Button';
-import Field from 'components/Field';
-import Logo from 'components/Logo';
-import { Formik } from 'formik';
+import { Field, Formik } from 'formik';
 import { NavLink } from 'react-router-dom';
 import { object, string } from 'yup';
 import { useAuth } from 'hooks/useAuth';
-import LoadSpinner from 'components/LoadSpinner';
 import { FC, useState } from 'react';
-import Alert, { eColors } from 'components/Alert/Alert';
 import { AxiosError } from 'axios';
+import { Logo } from 'components/Logo';
+import { Alert, eColors } from 'components/Alert';
+import { LoadSpinner } from 'components/LoadSpinner';
+import { Button } from 'components/Button';
 
 interface ILoginFormProp {
    email: string;
@@ -41,10 +40,14 @@ const Login: FC = () => {
                onSubmit={async (values) => {
                   setMessage(null);
                   await login(values.email, values.password).catch((error: AxiosError) => {
-                     const responseData = error.response?.data as { detail: string };
-                     const responseMessage = responseData?.detail
-                        ? 'Email veya şifre yanlış.'
-                        : 'Bir hata oluştu. Lütfen tekrar deneyin.';
+                     const responseData = error.response as {
+                        data: { detail: string };
+                        status: number;
+                     };
+                     const responseMessage =
+                        responseData.data.detail && responseData.status == 401
+                           ? 'Email veya şifre yanlış.'
+                           : 'Bir hata oluştu. Lütfen tekrar deneyin.';
                      setMessage(responseMessage);
                   });
                }}

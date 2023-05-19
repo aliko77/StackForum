@@ -1,7 +1,7 @@
 import { ElementType, lazy, ReactNode, Suspense, ReactElement } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
-import PageLoading from 'components/PageLoading';
+import { PageLoading } from 'components/PageLoading';
 import Layout from 'layouts/Layout';
 import { AuthProvider } from 'contexts/AuthContext';
 import { GuestRoute, PrivateRoute } from 'routes/GuardRoutes';
@@ -23,7 +23,7 @@ const getRouteElement = (Component: ElementType): ReactElement => (
    <Suspense fallback={<PageLoading />}>
       <AuthProvider>
          <Layout>
-            <Component />  
+            <Component />
          </Layout>
       </AuthProvider>
    </Suspense>

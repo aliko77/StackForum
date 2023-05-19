@@ -12,7 +12,7 @@ interface InputProps {
    onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
 }
 
-const Field: FC<InputProps> = ({
+export const Field: FC<InputProps> = ({
    id,
    type,
    name,
@@ -36,5 +36,3 @@ const Field: FC<InputProps> = ({
       </>
    );
 };
-
-export default Field;

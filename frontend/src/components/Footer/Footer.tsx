@@ -1,7 +1,7 @@
-import Logo from 'components/Logo';
+import { Logo } from 'components/Logo';
 import { FC } from 'react';
 
-const Footer: FC = () => {
+export const Footer: FC = () => {
    return (
       <footer className="bg-white dark:bg-night-200 border-t border-t-rose-400">
          <div className="w-full p-4">
@@ -16,5 +16,3 @@ const Footer: FC = () => {
       </footer>
    );
 };
-
-export default Footer;

@@ -1,5 +1,5 @@
-import Footer from 'components/Footer';
-import Header from 'components/Header';
+import { Footer } from 'components/Footer';
+import { Header } from 'components/Header';
 import { IChildrenProp } from 'types';
 
 const Layout = ({ children }: IChildrenProp) => {

@@ -1,5 +1,7 @@
 from pathlib import Path
 import os
+from datetime import timedelta
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework_simplejwt.token_blacklist',
     'django_filters',
     'corsheaders',
     'core',
@@ -108,15 +111,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Şifre sıfırlama bağlantısının geçerlilik süresi
+PASSWORD_RESET_TIMEOUT = 1800
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'tr-TR'
+LANGUAGE_CODE = 'tr'
 
 TIME_ZONE = 'Europe/Istanbul'
 
 USE_I18N = True
-
+USE_L10N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
@@ -129,11 +135,13 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Email sunucu ayarları
+
 EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
 EMAIL_HOST_USER = '562a52fa2435f9'
 EMAIL_HOST_PASSWORD = '068c5e92d1826d'
 EMAIL_PORT = '2525'
 
-REACT_APP_URL = os.getenv('REACT_APP_URL', 'http://localhost:5173')
+# React App
 
-PASSWORD_RESET_TIMEOUT = 1800
+REACT_APP_URL = os.getenv('REACT_APP_URL', 'http://localhost:5173')

@@ -1,13 +1,12 @@
 import { FC, useState } from 'react';
-import Logo from 'components/Logo';
-import { Formik } from 'formik';
+import { Field, Formik } from 'formik';
 import { object, string, ref } from 'yup';
 import { useAuth } from 'hooks/useAuth';
-import LoadSpinner from 'components/LoadSpinner';
-import Field from 'components/Field';
-import Button from 'components/Button';
-import FormErrors from 'components/FormErrors';
 import { AxiosError } from 'axios';
+import { Logo } from 'components/Logo';
+import { FormErrors } from 'components/FormErrors';
+import { LoadSpinner } from 'components/LoadSpinner';
+import { Button } from 'components/Button';
 
 interface IRegisterFormProp {
    email: string;

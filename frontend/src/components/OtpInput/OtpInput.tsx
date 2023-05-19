@@ -8,7 +8,7 @@ type Props = {
    validationPattern?: RegExp;
 } & PartialInputProps;
 
-const OtpInput = (props: Props) => {
+export const OtpInput = (props: Props) => {
    const { size = 6, validationPattern = /[0-9]{1}/, value, onChange, ...restProps } = props;
    const arr = new Array(size).fill('-');
 
@@ -75,4 +75,3 @@ const OtpInput = (props: Props) => {
       </div>
    );
 };
-export default OtpInput;

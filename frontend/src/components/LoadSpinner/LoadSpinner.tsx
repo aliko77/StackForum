@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-const LoadSpinner: FC = () => {
+export const LoadSpinner: FC = () => {
    return (
       <div role="status" className="flex justify-center mb-4">
          <svg
@@ -23,5 +23,3 @@ const LoadSpinner: FC = () => {
       </div>
    );
 };
-
-export default LoadSpinner;

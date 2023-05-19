@@ -1,17 +1,17 @@
-import Logo from 'components/Logo';
-import Button from 'components/Button';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { useAuth } from 'hooks/useAuth';
 import { FC } from 'react';
-import ThemeSwitcher from 'components/ThemeSwitcher/ThemeSwitcher';
-import HeaderPopOver from 'components/Header/HeaderPopover';
+import { ThemeSwitcher } from 'components/ThemeSwitcher';
+import { HeaderPopOver } from 'components/Header/HeaderPopover';
+import { Logo } from 'components/Logo';
+import { Button } from 'components/Button';
 
-const Header: FC = () => {
+export const Header: FC = () => {
    const navigate: NavigateFunction = useNavigate();
    const { user } = useAuth();
 
    return (
-      <header className="fixed flex z-50 w-full h-14 bg-white dark:bg-night-200 border-t-4 border-t-rose-400 border-b border-b-gray-300 dark:border-b-night-200">
+      <header className="fixed flex z-50 w-full h-16 bg-white dark:bg-night-200 border-t-4 border-t-rose-400 border-b border-b-gray-300 dark:border-b-night-200">
          <div className="w-full sm:w-4/6 max-w-full h-full flex items-center m-[0_auto] px-2 sm:p-0">
             <div>
                <Logo />
@@ -66,10 +66,10 @@ const Header: FC = () => {
                            </div>
                         </div>
                         <div className="hidden sm:block mx-4">
-                           <div className="flex flex-col">
-                              <p className="text-xs text-gray-600 dark:text-gray-300">
-                                 Hoş geldin,
-                              </p>
+                           <div className="flex flex-col whitespace-nowrap">
+                              <span className="text-xs text-gray-600 dark:text-gray-300">
+                                 {'Hoş geldin'}
+                              </span>
                               <p className="dark:text-gray-100">{user?.first_name}</p>
                            </div>
                         </div>
@@ -80,7 +80,7 @@ const Header: FC = () => {
                   )}
                   {!user && (
                      <>
-                        <div>
+                        <div className="mx-2">
                            <Button
                               text="Giriş yap"
                               dark="rose"
@@ -89,7 +89,7 @@ const Header: FC = () => {
                               }}
                            />
                         </div>
-                        <div>
+                        <div className="mr-2">
                            <Button
                               text="Kayıt ol"
                               color="indigo"
@@ -106,5 +106,3 @@ const Header: FC = () => {
       </header>
    );
 };
-
-export default Header;

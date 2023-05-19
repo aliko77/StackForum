@@ -4,7 +4,7 @@ interface IFormErrors {
    errors: string[];
 }
 
-const FormErrors: FC<IFormErrors> = ({ errors }) => {
+export const FormErrors: FC<IFormErrors> = ({ errors }) => {
    return (
       <>
          {Object.values(errors).map((value) => {
@@ -40,5 +40,3 @@ const FormErrors: FC<IFormErrors> = ({ errors }) => {
       </>
    );
 };
-
-export default FormErrors;

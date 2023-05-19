@@ -1,1 +1,1 @@
-export { default } from './FormErrors';
+export { FormErrors } from './FormErrors';

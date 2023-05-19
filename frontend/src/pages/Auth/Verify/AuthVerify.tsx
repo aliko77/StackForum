@@ -1,16 +1,16 @@
 import axiosService from 'api/axios';
 import { AxiosError } from 'axios';
-import Alert from 'components/Alert';
-import Button from 'components/Button';
-import FormErrors from 'components/FormErrors';
-import LoadSpinner from 'components/LoadSpinner';
-import Logo from 'components/Logo';
-import OtpInput from 'components/OtpInput';
+import { Alert } from 'components/Alert';
+import { Button } from 'components/Button';
+import { FormErrors } from 'components/FormErrors';
+import { LoadSpinner } from 'components/LoadSpinner';
+import { Logo } from 'components/Logo';
+import { OtpInput } from 'components/OtpInput';
 import { useAuth } from 'hooks/useAuth';
 import { FC, useState, FormEvent, MouseEventHandler } from 'react';
 import { Navigate } from 'react-router-dom';
 
-const AuthVerify: FC = () => {
+export const AuthVerify: FC = () => {
    const { user, verify } = useAuth();
    const [vcode, setVcode] = useState<string>('');
    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -136,5 +136,3 @@ const AuthVerify: FC = () => {
       </div>
    );
 };
-
-export default AuthVerify;

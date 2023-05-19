@@ -1,4 +1,6 @@
-export default function PageNotFound(): JSX.Element {
+import { FC } from 'react';
+
+const PageNotFound: FC = () => {
    return (
       <div className="flex justify-center items-center mt-[10vh]">
          <div className="px-4">
@@ -16,4 +18,6 @@ export default function PageNotFound(): JSX.Element {
          </div>
       </div>
    );
-}
+};
+
+export default PageNotFound;

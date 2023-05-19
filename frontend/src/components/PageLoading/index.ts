@@ -1,1 +1,1 @@
-export {default} from './PageLoading';
+export { PageLoading } from './PageLoading';

@@ -1,1 +1,1 @@
-export { default } from './LoadSpinner';
+export { LoadSpinner } from './LoadSpinner';

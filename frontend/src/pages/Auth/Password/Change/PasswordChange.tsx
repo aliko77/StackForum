@@ -1,12 +1,11 @@
 import axiosService from 'api/axios';
 import { AxiosError } from 'axios';
-import Alert from 'components/Alert/Alert';
-import Button from 'components/Button/Button';
-import Field from 'components/Field';
-import FormErrors from 'components/FormErrors/FormErrors';
-import LoadSpinner from 'components/LoadSpinner/LoadSpinner';
-import Logo from 'components/Logo/Logo';
-import { Formik } from 'formik';
+import { Alert } from 'components/Alert';
+import { Button } from 'components/Button';
+import { FormErrors } from 'components/FormErrors';
+import { LoadSpinner } from 'components/LoadSpinner';
+import { Logo } from 'components/Logo';
+import { Field, Formik } from 'formik';
 import { FC, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { object, string, ref } from 'yup';

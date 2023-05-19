@@ -1,0 +1,2 @@
+msgid "No active account found with the given credentials"
+msgstr "Verilen kimlik bilgileriyle eşleşen aktif bir hesap bulunamadı"

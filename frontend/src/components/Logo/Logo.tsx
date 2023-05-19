@@ -7,7 +7,7 @@ type LogoProps = {
    noRedirect?: boolean;
 };
 
-const Logo: FC<LogoProps> = ({ noText, noRedirect }) => {
+export const Logo: FC<LogoProps> = ({ noText, noRedirect }) => {
    const classList = `hidden sm:block font-mono space-x-0.5 text-xl dark:text-gray-100 ${
       noText ? 'sr-only' : ''
    }`;
@@ -42,5 +42,3 @@ const Logo: FC<LogoProps> = ({ noText, noRedirect }) => {
       </div>
    );
 };
-
-export default Logo;

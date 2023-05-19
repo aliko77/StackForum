@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-const ThemeSwitcher: FC = () => {
+export const ThemeSwitcher: FC = () => {
    const handleClick = () => {
       document.documentElement.classList.toggle('dark');
    };
@@ -40,5 +40,3 @@ const ThemeSwitcher: FC = () => {
       </>
    );
 };
-
-export default ThemeSwitcher;

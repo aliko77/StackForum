@@ -1,1 +1,1 @@
-export { default } from './AuthVerify';
+export { AuthVerify } from './AuthVerify';

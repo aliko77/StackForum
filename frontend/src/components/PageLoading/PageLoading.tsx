@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-const PageLoading: FC = () => {
+export const PageLoading: FC = () => {
    const circleCommonClasses = 'h-5 w-5 bg-indigo-600 rounded-full';
 
    return (
@@ -13,5 +13,3 @@ const PageLoading: FC = () => {
       </div>
    );
 };
-
-export default PageLoading;

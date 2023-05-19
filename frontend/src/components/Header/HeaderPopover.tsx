@@ -1,6 +1,7 @@
 import { Popover } from '@headlessui/react';
+import { LogoutButton } from 'components/LogoutButton';
 
-const HeaderPopOver = () => {
+export const HeaderPopOver = () => {
    return (
       <Popover>
          <Popover.Button className="p-1.5 bg-white dark:bg-night-100 shadow rounded focus:outline-none focus:ring-1 focus:ring-gray-400">
@@ -24,14 +25,9 @@ const HeaderPopOver = () => {
             <div></div>
             <hr className="border-zinc-500 border-1" />
             <div className="grid grid-cols-2">
-               <a href="/analytics">Analytics</a>
-               <a href="/engagement">Engagement</a>
-               <a href="/security">Security</a>
-               <a href="/integrations">Integrations</a>
+               <LogoutButton />
             </div>
          </Popover.Panel>
       </Popover>
    );
 };
-
-export default HeaderPopOver;
