@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { Field, Formik } from 'formik';
+import { Formik } from 'formik';
 import { object, string, ref } from 'yup';
 import { useAuth } from 'hooks/useAuth';
 import { AxiosError } from 'axios';
@@ -7,6 +7,7 @@ import { Logo } from 'components/Logo';
 import { FormErrors } from 'components/FormErrors';
 import { LoadSpinner } from 'components/LoadSpinner';
 import { Button } from 'components/Button';
+import { Field } from 'components/Field';
 
 interface IRegisterFormProp {
    email: string;

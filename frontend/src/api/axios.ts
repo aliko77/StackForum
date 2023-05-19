@@ -10,11 +10,10 @@ const axiosService = axios.create({
 
 axiosService.interceptors.request.use(
    async (config) => {
-      // TODO
       const token = localStorage.getItem('accessToken');
 
       if (token) {
-         config.headers.Authorization = `Bearer ${token}`;
+         config.headers.Authorization = `Bearer ${JSON.parse(token)}`;
       }
       console.debug('[Request]', (config.baseURL ?? 'baseUrl') + (config.url ?? 'url'));
       return config;

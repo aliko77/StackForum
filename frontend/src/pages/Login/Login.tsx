@@ -1,4 +1,4 @@
-import { Field, Formik } from 'formik';
+import { Formik } from 'formik';
 import { NavLink } from 'react-router-dom';
 import { object, string } from 'yup';
 import { useAuth } from 'hooks/useAuth';
@@ -8,6 +8,7 @@ import { Logo } from 'components/Logo';
 import { Alert, eColors } from 'components/Alert';
 import { LoadSpinner } from 'components/LoadSpinner';
 import { Button } from 'components/Button';
+import { Field } from 'components/Field';
 
 interface ILoginFormProp {
    email: string;

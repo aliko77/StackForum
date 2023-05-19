@@ -7,6 +7,8 @@ interface UseAxiosResponse<T> {
    loading: boolean;
 }
 
+axios.defaults.baseURL = 'http://localhost:8000/api/v1';
+
 export const useAxios = <T>(axiosParams: AxiosRequestConfig): UseAxiosResponse<T> => {
    const [response, setResponse] = useState<T | null>(null);
    const [error, setError] = useState<AxiosError | null>(null);

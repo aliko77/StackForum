@@ -1,14 +1,14 @@
-import axiosService from 'api/axios';
-import { Button } from 'components/Button';
 import { useAuth } from 'hooks/useAuth';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
+import { Button } from 'components/Button';
+import axiosService from 'api/axios';
 
 const Home: FC = () => {
    const { user } = useAuth();
    const handleClick = async () => {
       try {
-         const response = await axiosService.post('/user');
+         const response = await axiosService.get('user/');
          console.log(response);
       } catch (error) {
          console.log(error);
