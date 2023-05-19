@@ -1,15 +1,12 @@
-import Cookies from 'universal-cookie';
-
-const cookies = new Cookies();
-
+// TODO
 class TokenService {
    getCookieRefreshToken() {
-      const refreshToken = cookies.get<string>('refreshToken');
+      const refreshToken = '';
       return refreshToken;
    }
 
    getCookieAccessToken() {
-      const accessToken = cookies.get<string>('accessToken');
+      const accessToken = '';
       return accessToken;
    }
 }
