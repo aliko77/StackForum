@@ -1,12 +1,12 @@
 // TODO
 class TokenService {
    getCookieRefreshToken() {
-      const refreshToken = '';
+      const refreshToken = '1';
       return refreshToken;
    }
 
    getCookieAccessToken() {
-      const accessToken = '';
+      const accessToken = '1';
       return accessToken;
    }
 }

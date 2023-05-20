@@ -19,9 +19,6 @@ export const Header: FC = () => {
             <div className="ml-auto">
                <div className="flex items-center">
                   <div className="p-1.5 mx-2 bg-white dark:bg-night-100 shadow rounded-full">
-                     <ThemeSwitcher />
-                  </div>
-                  <div className="p-1.5 mx-2 bg-white dark:bg-night-100 shadow rounded-full">
                      <div className="text-zinc-500 hover:text-rose-500 dark:text-zinc-400 dark:hover:text-indigo-500">
                         <svg
                            xmlns="http://www.w3.org/2000/svg"
@@ -41,6 +38,9 @@ export const Header: FC = () => {
                   </div>
                   {user && (
                      <>
+                        <div className="p-1.5 mx-2 bg-white dark:bg-night-100 shadow rounded-full">
+                           <ThemeSwitcher />
+                        </div>
                         <div className="p-1.5 mx-2 bg-white dark:bg-night-100 shadow rounded-full">
                            <div className="text-zinc-500 hover:text-rose-500 dark:text-zinc-400 dark:hover:text-indigo-500">
                               <svg

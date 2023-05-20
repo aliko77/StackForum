@@ -70,8 +70,8 @@ const Register: FC = () => {
                   } catch (error: unknown) {
                      if (error instanceof AxiosError) {
                         const responseErrors = error.response?.data as string[];
-                        setErrors(responseErrors ?? ['Bir hata oluştu. Lütfen tekrar deneyiniz.']);
-                     }
+                        setErrors(responseErrors);
+                     } else setErrors(['Bir hata oluştu. Lütfen tekrar deneyiniz.']);
                   }
                }}
             >

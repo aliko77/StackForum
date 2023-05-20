@@ -31,22 +31,6 @@ axiosService.interceptors.response.use(
       return res;
    },
    async (err) => {
-      const originalRequest = err.config;
-      const refreshToken = TokenService.getCookieRefreshToken();
-      if (
-         err.response.status === 401 &&
-         err.response.data.code === 'token_not_valid' &&
-         refreshToken &&
-         !originalRequest._retry
-      ) {
-         originalRequest._retry = true;
-         const response = await axiosService.post('/auth/refresh/', {
-            refresh: refreshToken,
-         });
-         const newAccessToken = response.data.access;
-         localStorage.setItem('accessToken', JSON.stringify(newAccessToken));
-         return await axiosService(originalRequest);
-      }
       return Promise.reject(err);
    },
 );

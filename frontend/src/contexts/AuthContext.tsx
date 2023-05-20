@@ -33,7 +33,7 @@ export const AuthContext = createContext<IAuthContext>({
 });
 
 export const AuthProvider = ({ children }: IReactChildren) => {
-   const [cookies, setCookies, removeCookie] = useCookies();
+   const [cookies, setCookies] = useCookies();
    const navigate = useNavigate();
 
    const [user, setUser] = useState(() => {
@@ -53,25 +53,23 @@ export const AuthProvider = ({ children }: IReactChildren) => {
 
    useEffect(() => {
       if (user) setCookies('user', user, AuthCookieConfig);
-      else removeCookie('user');
+      else setCookies('user', '');
       if (accessToken) setCookies('accessToken', accessToken, AuthCookieConfig);
-      else removeCookie('accessToken');
+      else setCookies('accessToken', '');
       if (refreshToken) setCookies('refreshToken', refreshToken, AuthCookieConfig);
-      else removeCookie('refreshToken');
+      else setCookies('refreshToken', '');
    }, [user, accessToken, refreshToken]);
 
    const login: ILoginFunc = async (email, password) => {
-      await axiosService
-         .post('/auth/login/', {
-            email: email,
-            password: password,
-         })
-         .then(({ data }) => {
-            const { user, accessToken, refreshToken } = data;
-            setUser(user);
-            setAccessToken(accessToken);
-            setRefreshToken(refreshToken);
-         });
+      const response = await axiosService.post('/auth/login/', {
+         email: email,
+         password: password,
+      });
+      const { data } = response;
+      const { user, accessToken, refreshToken } = data;
+      setUser(user);
+      setAccessToken(accessToken);
+      setRefreshToken(refreshToken);
    };
 
    const logout = (): void => {
@@ -88,21 +86,19 @@ export const AuthProvider = ({ children }: IReactChildren) => {
       first_name,
       last_name,
    ) => {
-      await axiosService
-         .post('/auth/register/', {
-            email: email,
-            password: password,
-            confirm_password: confirm_password,
-            first_name: first_name,
-            last_name: last_name,
-         })
-         .then(({ data }) => {
-            const { user, accessToken, refreshToken } = data;
-            setUser(user);
-            setAccessToken(accessToken);
-            setRefreshToken(refreshToken);
-            navigate('/auth/verify');
-         });
+      const response = await axiosService.post('/auth/register/', {
+         email: email,
+         password: password,
+         confirm_password: confirm_password,
+         first_name: first_name,
+         last_name: last_name,
+      });
+      const { data } = response;
+      const { user, accessToken, refreshToken } = data;
+      setUser(user);
+      setAccessToken(accessToken);
+      setRefreshToken(refreshToken);
+      navigate('/auth/verify');
    };
 
    const verify: IVerifyFunc = async (vcode, email) => {

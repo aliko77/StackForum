@@ -49,7 +49,7 @@ const Login: FC = () => {
                            ? 'Email veya şifre yanlış.'
                            : 'Bir hata oluştu. Lütfen tekrar deneyin.';
                         setMessage(responseMessage);
-                     }
+                     } else setMessage('Bir hata oluştu. Lütfen tekrar deneyin.');
                   }
                }}
             >
