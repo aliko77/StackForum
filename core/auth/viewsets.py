@@ -47,6 +47,19 @@ class RegistrationViewSet(ModelViewSet, TokenObtainPairView):
         }, status=status.HTTP_201_CREATED)
 
 
+class LogoutViewSet(ViewSet):
+    permission_classes = (IsAuthenticated,)
+    http_method_names = ['post']
+
+    def create(self, request):
+        try:
+            refresh_token = request.data.get('refreshToken')
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response(status=status.HTTP_205_RESET_CONTENT)
+        except TokenError:
+            raise InvalidToken("Bilinmeyen token.")
+
 class RefreshViewSet(ViewSet, TokenRefreshView):
     permission_classes = (AllowAny,)
     http_method_names = ['post']

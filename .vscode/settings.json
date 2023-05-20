@@ -4,6 +4,8 @@
   "editor.tabSize": 3,
   "[python]": {
     "editor.tabSize": 4,
-    "editor.indentSize": "tabSize"
-  }
+   "editor.indentSize": "tabSize",
+   "editor.defaultFormatter": "ms-python.python"
+},
+"python.formatting.provider": "none"
 }

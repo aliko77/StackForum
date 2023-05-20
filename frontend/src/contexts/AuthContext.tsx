@@ -72,11 +72,17 @@ export const AuthProvider = ({ children }: IReactChildren) => {
       setRefreshToken(refreshToken);
    };
 
-   const logout = (): void => {
-      setUser(null);
-      setAccessToken(null);
-      setRefreshToken(null);
-      navigate('/');
+   const logout = async (): Promise<void> => {
+      try {
+         await axiosService.post('/auth/logout/', {
+            refreshToken: refreshToken,
+         });
+      } finally {
+         setUser(null);
+         setAccessToken(null);
+         setRefreshToken(null);
+         navigate('/');
+      }
    };
 
    const register: IRegisterFunc = async (
