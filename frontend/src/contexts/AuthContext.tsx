@@ -15,22 +15,12 @@ interface IAuthContext {
    verify: IVerifyFunc;
 }
 
+export const AuthContext = createContext<IAuthContext>({} as IAuthContext);
+
 const AuthCookieConfig: { secure: boolean } = {
    secure: true,
    // httpOnly: true, // Only Production
 };
-
-export const AuthContext = createContext<IAuthContext>({
-   user: null,
-   accessToken: null,
-   refreshToken: null,
-   login: async () => {},
-   logout: () => {},
-   register: async () => {},
-   verify: async () => {
-      return {};
-   },
-});
 
 export const AuthProvider = ({ children }: IReactChildren) => {
    const [cookies, setCookies] = useCookies();
