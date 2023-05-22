@@ -1,4 +1,4 @@
-import axiosService from 'api/axios';
+import { axiosService } from 'api/axios';;
 import { AxiosError } from 'axios';
 import { Alert } from 'components/Alert';
 import { Button } from 'components/Button';
@@ -28,8 +28,7 @@ const AuthVerify: FC = () => {
       setMessage(null);
       setIsSubmitting(true);
       try {
-         const response = await verify(vcode, user?.email);
-         const { status } = response;
+         const { status } = await verify(vcode, user?.email);
 
          if (status === true) {
             setNoRedirect(true);
@@ -54,10 +53,9 @@ const AuthVerify: FC = () => {
       }
       setIsSubmitting(true);
       try {
-         const response = await axiosService.post('/auth/verify/resend/', {
+         const { data } = await axiosService.post('/auth/verify/resend/', {
             email: user?.email,
          });
-         const { data } = response;
 
          if (data.status) {
             setMessage('Kod tekrar gönderildi.');

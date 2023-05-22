@@ -7,26 +7,23 @@ type IPrivateRoute = {
 };
 
 export const PrivateRoute = ({ children, verify }: IPrivateRoute) => {
-   const { user } = useAuth();
+   const { accessToken } = useAuth();
    const location = useLocation();
-   const navState: object = {
+
+   const nav_state: object = {
       from: location.pathname,
    };
 
-   if (!user) {
-      return <Navigate to="/login" state={navState} replace />;
+   if (!accessToken) {
+      return <Navigate to="/login" state={nav_state} replace />;
    } else if (verify && location.pathname != '/auth/verify') {
-      return <Navigate to="/auth/verify" state={navState} replace />;
+      return <Navigate to="/auth/verify" state={nav_state} replace />;
    }
-
    return children;
 };
 
 export const GuestRoute = ({ children }: IPrivateRoute) => {
-   const { user } = useAuth();
-   if (user) {
-      return <Navigate to="/" replace />;
-   }
+   const { accessToken } = useAuth();
 
-   return children;
+   return accessToken ? <Navigate to="/" replace /> : children;
 };

@@ -1,4 +1,4 @@
-import axiosService from 'api/axios';
+import { axiosService } from 'api/axios';;
 import { AxiosError } from 'axios';
 import { Alert } from 'components/Alert';
 import { Button } from 'components/Button';
@@ -41,10 +41,9 @@ const Reset: FC = () => {
                      setMessage(null);
                      setErrors(null);
                      try {
-                        const response = await axiosService.post('/auth/password/reset/', {
+                        const { data } = await axiosService.post('/auth/password/reset/', {
                            email: values.email,
                         });
-                        const { data } = response;
                         const { status } = data;
 
                         if (status === true) {

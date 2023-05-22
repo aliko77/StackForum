@@ -1,14 +1,18 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-import { createContext, useEffect, useMemo, useState } from 'react';
+import { Dispatch, SetStateAction, createContext, useMemo, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
-import axiosService from 'api/axios';
+import { axiosService } from 'api/axios/axios';
 import { IReactChildren, ILoginFunc, IRegisterFunc, IUser, IVerifyFunc } from 'types';
+import { AxiosError } from 'axios';
 
 interface IAuthContext {
-   user: IUser | null;
-   accessToken: string | null;
-   refreshToken: string | null;
+   user?: IUser;
+   setUser: Dispatch<SetStateAction<IUser | undefined>>;
+   accessToken?: string;
+   setAccessToken: Dispatch<SetStateAction<string | undefined>>;
+   refreshToken?: string;
+   setRefreshToken: Dispatch<SetStateAction<string | undefined>>;
+   csrfToken?: string;
+   setCsrfToken: Dispatch<SetStateAction<string | undefined>>;
    login: ILoginFunc;
    register: IRegisterFunc;
    logout: () => void;
@@ -17,61 +21,50 @@ interface IAuthContext {
 
 export const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
-const AuthCookieConfig: { secure: boolean } = {
-   secure: true,
-   // httpOnly: true, // Only Production
-};
-
 export const AuthProvider = ({ children }: IReactChildren) => {
-   const [cookies, setCookies] = useCookies();
    const navigate = useNavigate();
 
-   const [user, setUser] = useState(() => {
-      const storedUser = cookies.user ?? null;
-      return storedUser;
-   });
-
-   const [accessToken, setAccessToken] = useState(() => {
-      const storedAT = cookies.accessToken ?? null;
-      return storedAT ?? null;
-   });
-
-   const [refreshToken, setRefreshToken] = useState(() => {
-      const storedRT = cookies.refreshToken ?? null;
-      return storedRT ?? null;
-   });
+   const [user, setUser] = useState<IUser>();
+   const [accessToken, setAccessToken] = useState<string>();
+   const [refreshToken, setRefreshToken] = useState<string>();
+   const [csrfToken, setCsrfToken] = useState<string>();
 
    useEffect(() => {
-      if (user) setCookies('user', user, AuthCookieConfig);
-      else setCookies('user', '');
-      if (accessToken) setCookies('accessToken', accessToken, AuthCookieConfig);
-      else setCookies('accessToken', '');
-      if (refreshToken) setCookies('refreshToken', refreshToken, AuthCookieConfig);
-      else setCookies('refreshToken', '');
-   }, [user, accessToken, refreshToken]);
+      accessToken && console.log('accessToken:', accessToken);
+      refreshToken && console.log('refreshToken:', refreshToken);
+      csrfToken && console.log('csrfToken:', csrfToken);
+   }, [accessToken, refreshToken, csrfToken]);
 
    const login: ILoginFunc = async (email, password) => {
-      const response = await axiosService.post('/auth/login/', {
+      const { data, headers } = await axiosService.post('/auth/login/', {
          email: email,
          password: password,
       });
-      const { data } = response;
-      const { user, accessToken, refreshToken } = data;
-      setUser(user);
-      setAccessToken(accessToken);
-      setRefreshToken(refreshToken);
+      const { access_token, refresh_token } = data;
+      setAccessToken(access_token);
+      setRefreshToken(refresh_token);
+      setCsrfToken(headers['X-CSRFToken']);
+      navigate('/');
    };
 
    const logout = async (): Promise<void> => {
       try {
-         await axiosService.post('/auth/logout/', {
-            refreshToken: refreshToken,
-         });
+         await axiosService.post(
+            '/auth/logout/',
+            {},
+            {
+               headers: {
+                  Authorization: `Bearer ${accessToken}`,
+               },
+            },
+         );
+      } catch (error: AxiosError | unknown) {
+         error instanceof AxiosError && console.log(error?.response?.data);
       } finally {
-         setUser(null);
-         setAccessToken(null);
-         setRefreshToken(null);
-         navigate('/');
+         setAccessToken(undefined);
+         setRefreshToken(undefined);
+         setCsrfToken(undefined);
+         setUser(undefined);
       }
    };
 
@@ -82,21 +75,20 @@ export const AuthProvider = ({ children }: IReactChildren) => {
       first_name,
       last_name,
    ) => {
-      const response = await axiosService.post('/auth/register/', {
+      const { data, headers } = await axiosService.post('/auth/register/', {
          email: email,
          password: password,
          confirm_password: confirm_password,
          first_name: first_name,
          last_name: last_name,
       });
-      const { data } = response;
-      const { user, accessToken, refreshToken } = data;
-      setUser(user);
-      setAccessToken(accessToken);
-      setRefreshToken(refreshToken);
+      const { access_token } = data;
+      setAccessToken(access_token);
+      setCsrfToken(headers['X-CSRFToken']);
       navigate('/auth/verify');
    };
 
+   //TODO
    const verify: IVerifyFunc = async (vcode, email) => {
       const response = await axiosService.post('/auth/verify/', {
          activation_code: vcode,
@@ -107,7 +99,7 @@ export const AuthProvider = ({ children }: IReactChildren) => {
 
       if (typeof status === 'boolean') {
          setUser((prevUser: unknown) => {
-            if (!prevUser) return null;
+            if (!prevUser) return undefined;
             return {
                ...prevUser,
                is_verified: status,
@@ -120,14 +112,19 @@ export const AuthProvider = ({ children }: IReactChildren) => {
    const value = useMemo(() => {
       return {
          user,
+         setUser,
          accessToken,
+         setAccessToken,
          refreshToken,
+         setRefreshToken,
+         csrfToken,
+         setCsrfToken,
          login,
          logout,
          register,
          verify,
       };
-   }, [user, login, logout, register]);
+   }, [user, accessToken, refreshToken, csrfToken]);
 
    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

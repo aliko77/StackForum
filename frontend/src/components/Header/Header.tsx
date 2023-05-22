@@ -8,7 +8,7 @@ import { Button } from 'components/Button';
 
 export const Header: FC = () => {
    const navigate: NavigateFunction = useNavigate();
-   const { user } = useAuth();
+   const { accessToken, user } = useAuth();
 
    return (
       <header className="fixed flex z-50 w-full h-16 bg-white dark:bg-night-200 border-t-4 border-t-rose-400 border-b border-b-gray-300 dark:border-b-night-200">
@@ -36,7 +36,7 @@ export const Header: FC = () => {
                         </svg>
                      </div>
                   </div>
-                  {user && (
+                  {accessToken && (
                      <>
                         <div className="p-1.5 mx-2 bg-white dark:bg-night-100 shadow rounded-full">
                            <ThemeSwitcher />
@@ -72,7 +72,7 @@ export const Header: FC = () => {
                         </div>
                      </>
                   )}
-                  {!user && (
+                  {!accessToken && (
                      <>
                         <div className="mx-2">
                            <Button

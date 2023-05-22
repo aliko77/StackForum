@@ -1,8 +1,7 @@
-from django.contrib.auth.models import update_last_login
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework_simplejwt.settings import api_settings
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
+from rest_framework_simplejwt.exceptions import InvalidToken
 from rest_framework.serializers import ModelSerializer, CharField, EmailField, ValidationError
 from .utils import SendVerificationEmail, SendPasswordResetEmail, token_generator
 from core.user.models import AuthActivation
@@ -15,15 +14,12 @@ User = get_user_model()
 class LoginSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
+
         refresh = self.get_token(self.user)
         data = {
-            'user': UserSerializer(self.user).data,
-            'refreshToken': str(refresh),
-            'accessToken': str(refresh.access_token)
+            'refresh_token': str(refresh),
+            'access_token': str(refresh.access_token),
         }
-
-        if api_settings.UPDATE_LAST_LOGIN:
-            update_last_login(None, user=self.user)
 
         return data
 
@@ -68,6 +64,18 @@ class RegisterSerializer(UserSerializer):
             }
             user = User.objects.create_user(**user_data)
             return user
+
+
+class CookieTokenRefreshSerializer(TokenRefreshSerializer):
+    refresh = None
+
+    def validate(self, attrs):
+        attrs['refresh'] = self.context['request'].COOKIES.get('refresh')
+        if attrs['refresh']:
+            return super().validate(attrs)
+        else:
+            raise InvalidToken(
+                'Cookie değeri bulunamadı: \'refresh\'')
 
 
 class VerifySerializer(ModelSerializer):

@@ -4,8 +4,8 @@ import { createBrowserRouter } from 'react-router-dom';
 import { PageLoading } from 'components/PageLoading';
 import Layout from 'layouts/Layout';
 import { AuthProvider } from 'contexts/AuthContext';
+import { PersistLogin } from 'components/PersistLogin';
 import { GuestRoute, PrivateRoute } from 'routes/GuardRoutes';
-import { CookiesProvider } from 'react-cookie';
 
 const Login = lazy(() => import('pages/Login'));
 const Register = lazy(() => import('pages/Register'));
@@ -22,13 +22,13 @@ interface IRoutes {
 
 const getRouteElement = (Component: ElementType): ReactElement => (
    <Suspense fallback={<PageLoading />}>
-      <CookiesProvider>
-         <AuthProvider>
+      <AuthProvider>
+         <PersistLogin>
             <Layout>
                <Component />
             </Layout>
-         </AuthProvider>
-      </CookiesProvider>
+         </PersistLogin>
+      </AuthProvider>
    </Suspense>
 );
 
@@ -41,7 +41,7 @@ const routes: IRoutes[] = [
       element: getRouteElement(() => <GuestRoute>{<PasswordReset />}</GuestRoute>),
    },
    {
-      path: '/auth/password/change/:uid/:token',
+      path: 'auth/password/change/:uid/:token',
       element: getRouteElement(() => <GuestRoute>{<PasswordChange />}</GuestRoute>),
    },
    {

@@ -1,4 +1,4 @@
-import axiosService from 'api/axios';
+import { axiosService } from 'api/axios';
 import { AxiosError } from 'axios';
 import { Alert } from 'components/Alert';
 import { Button } from 'components/Button';
@@ -45,13 +45,12 @@ const PasswordChange: FC = () => {
                      setMessage(null);
                      setErrors(null);
                      try {
-                        const response = await axiosService.post('auth/password/change/', {
+                        const { data } = await axiosService.post('auth/password/change/', {
                            uid: uid,
                            token: token,
                            password: values.password,
                            confirmPassword: values.confirmPassword,
                         });
-                        const { data } = response;
                         if (data.status) {
                            setMessage('Şifreniz değiştirildi.');
                         } else {
