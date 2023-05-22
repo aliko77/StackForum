@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { axiosService } from 'api/axios/axios';
 import { IReactChildren, ILoginFunc, IRegisterFunc, IUser, IVerifyFunc } from 'types';
 import { AxiosError } from 'axios';
+import { Cookies } from 'react-cookie';
 
 interface IAuthContext {
    user?: IUser;
@@ -28,22 +29,26 @@ export const AuthProvider = ({ children }: IReactChildren) => {
    const [accessToken, setAccessToken] = useState<string>();
    const [refreshToken, setRefreshToken] = useState<string>();
    const [csrfToken, setCsrfToken] = useState<string>();
+   const cookies = new Cookies();
 
    useEffect(() => {
       accessToken && console.log('accessToken:', accessToken);
       refreshToken && console.log('refreshToken:', refreshToken);
       csrfToken && console.log('csrfToken:', csrfToken);
-   }, [accessToken, refreshToken, csrfToken]);
+      user && console.log('user:', user);
+      console.log(cookies.getAll());
+   }, [accessToken, refreshToken, csrfToken, user]);
 
    const login: ILoginFunc = async (email, password) => {
       const { data, headers } = await axiosService.post('/auth/login/', {
          email: email,
          password: password,
       });
-      const { access_token, refresh_token } = data;
+      const { access_token, refresh_token, user } = data;
       setAccessToken(access_token);
       setRefreshToken(refresh_token);
       setCsrfToken(headers['X-CSRFToken']);
+      setUser(user);
       navigate('/');
    };
 
@@ -82,13 +87,14 @@ export const AuthProvider = ({ children }: IReactChildren) => {
          first_name: first_name,
          last_name: last_name,
       });
-      const { access_token } = data;
+      const { access_token, refresh_token, user } = data;
       setAccessToken(access_token);
+      setRefreshToken(refresh_token);
       setCsrfToken(headers['X-CSRFToken']);
+      setUser(user);
       navigate('/auth/verify');
    };
 
-   //TODO
    const verify: IVerifyFunc = async (vcode, email) => {
       const response = await axiosService.post('/auth/verify/', {
          activation_code: vcode,

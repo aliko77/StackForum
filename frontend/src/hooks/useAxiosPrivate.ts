@@ -4,8 +4,8 @@ import { useRefreshToken } from 'hooks/useRefreshToken';
 import { axiosPrivate } from 'api/axios/axios';
 
 export const useAxiosPrivate = () => {
-   const { user, accessToken, setAccessToken, csrfToken } = useAuth();
    const refresh = useRefreshToken();
+   const { user, accessToken, setAccessToken, csrfToken } = useAuth();
 
    useEffect(() => {
       const requestIntercept = axiosPrivate.interceptors.request.use(

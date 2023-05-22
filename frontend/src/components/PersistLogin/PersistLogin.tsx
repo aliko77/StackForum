@@ -25,7 +25,7 @@ export const PersistLogin = ({ children }: IReactChildren) => {
          }
       }
 
-      !accessToken ? verifyUser() : setLoading(false);
+      !accessToken && refreshToken ? verifyUser() : setLoading(false);
 
       return () => {
          isMounted = false;

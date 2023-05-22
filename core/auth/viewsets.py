@@ -10,6 +10,7 @@ from django.conf import settings
 from django.middleware import csrf
 from .serializers import LoginSerializer, RegisterSerializer, VerifyResendSerializer, VerifySerializer, PasswordResetSerializer, PasswordChangeSerializer, CookieTokenRefreshSerializer
 from rest_framework.decorators import action
+from core.user.serializers import UserSerializer
 
 
 class LoginViewSet(ModelViewSet, TokenObtainPairView):
@@ -65,6 +66,7 @@ class RegistrationViewSet(ModelViewSet, TokenObtainPairView):
         access_token = str(refresh.access_token)
 
         return Response({
+            "user": UserSerializer(user).data,
             "refresh_token": refresh_token,
             "access_token": access_token
         }, status=status.HTTP_201_CREATED)
