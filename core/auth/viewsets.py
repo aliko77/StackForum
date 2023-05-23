@@ -1,5 +1,5 @@
 from rest_framework import status
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, ViewSet
 from rest_framework_simplejwt.exceptions import TokenError, InvalidToken
@@ -15,7 +15,6 @@ from core.user.serializers import UserSerializer
 
 class LoginViewSet(ModelViewSet, TokenObtainPairView):
     serializer_class = LoginSerializer
-    permission_classes = (AllowAny,)
     http_method_names = ['post']
 
     def create(self, request, *args, **kwargs):
@@ -44,7 +43,7 @@ class LoginViewSet(ModelViewSet, TokenObtainPairView):
             httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
             samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
         )
-        response.data = serializer.validated_data
+        response.data = tokens
         response['X-CSRFToken'] = csrf.get_token(request)
 
         return response
@@ -52,7 +51,6 @@ class LoginViewSet(ModelViewSet, TokenObtainPairView):
 
 class RegistrationViewSet(ModelViewSet, TokenObtainPairView):
     serializer_class = RegisterSerializer
-    permission_classes = (AllowAny,)
     http_method_names = ['post']
 
     def create(self, request, *args, **kwargs):
@@ -87,7 +85,6 @@ class LogoutViewSet(ViewSet):
             response = Response(status=status.HTTP_200_OK)
             response.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE'])
             response.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'])
-            response.delete_cookie("X-CSRFToken")
             response.delete_cookie("csrftoken")
             response["X-CSRFToken"]=None
 
@@ -98,7 +95,6 @@ class LogoutViewSet(ViewSet):
 
 class CookieTokenRefreshViewSet(ViewSet, TokenRefreshView):
     serializer_class = CookieTokenRefreshSerializer
-    permission_classes = (AllowAny,)
     http_method_names = ['post']
 
     def create(self, request):
@@ -123,7 +119,6 @@ class CookieTokenRefreshViewSet(ViewSet, TokenRefreshView):
 
 class VerifyViewSet(ModelViewSet):
     serializer_class = VerifySerializer
-    permission_classes = (AllowAny,)
     http_method_names = ['post']
 
     def create(self, request):
@@ -142,7 +137,6 @@ class VerifyViewSet(ModelViewSet):
 
 
 class PasswordViewSet(ModelViewSet):
-    permission_classes = (AllowAny,)
     http_method_names = ['post']
 
     @action(detail=False, methods=['post'])

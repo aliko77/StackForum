@@ -1,21 +1,15 @@
-import { axiosService } from '../api/axios/axios';
+import { axiosService } from 'api/axios/axios';
 import { useAuth } from 'hooks/useAuth';
 
 export const useRefreshToken = () => {
    const { setAccessToken, setCsrfToken } = useAuth();
 
    const refresh = async () => {
-      const response = await axiosService.post(
-         'auth/refresh-token/',
-         {},
-         {
-            withCredentials: true,
-         },
-      );
-      setAccessToken(response.data.access);
-      setCsrfToken(response.headers['X-CSRFToken']);
+      const { data, headers } = await axiosService.post('auth/refresh-token/');
+      setAccessToken(data.access);
+      setCsrfToken(headers['x-csrftoken']);
 
-      return { accessToken: response.data.access, csrfToken: response.headers['X-CSRFToken'] };
+      return { accessToken: data.access, csrfToken: headers['x-csrftoken'] };
    };
 
    return refresh;

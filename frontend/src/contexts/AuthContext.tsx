@@ -1,17 +1,14 @@
-import { Dispatch, SetStateAction, createContext, useMemo, useState, useEffect } from 'react';
+import { Dispatch, SetStateAction, createContext, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { axiosService } from 'api/axios/axios';
 import { IReactChildren, ILoginFunc, IRegisterFunc, IUser, IVerifyFunc } from 'types';
 import { AxiosError } from 'axios';
-import { Cookies } from 'react-cookie';
-
+import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
 interface IAuthContext {
    user?: IUser;
    setUser: Dispatch<SetStateAction<IUser | undefined>>;
    accessToken?: string;
    setAccessToken: Dispatch<SetStateAction<string | undefined>>;
-   refreshToken?: string;
-   setRefreshToken: Dispatch<SetStateAction<string | undefined>>;
    csrfToken?: string;
    setCsrfToken: Dispatch<SetStateAction<string | undefined>>;
    login: ILoginFunc;
@@ -24,52 +21,32 @@ export const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
 export const AuthProvider = ({ children }: IReactChildren) => {
    const navigate = useNavigate();
+   const axiosPrivateI = useAxiosPrivate();
 
    const [user, setUser] = useState<IUser>();
    const [accessToken, setAccessToken] = useState<string>();
-   const [refreshToken, setRefreshToken] = useState<string>();
    const [csrfToken, setCsrfToken] = useState<string>();
-   const cookies = new Cookies();
-
-   useEffect(() => {
-      accessToken && console.log('accessToken:', accessToken);
-      refreshToken && console.log('refreshToken:', refreshToken);
-      csrfToken && console.log('csrfToken:', csrfToken);
-      user && console.log('user:', user);
-      console.log(cookies.getAll());
-   }, [accessToken, refreshToken, csrfToken, user]);
 
    const login: ILoginFunc = async (email, password) => {
       const { data, headers } = await axiosService.post('/auth/login/', {
          email: email,
          password: password,
       });
-      const { access_token, refresh_token, user } = data;
+      const { access_token, user } = data;
       setAccessToken(access_token);
-      setRefreshToken(refresh_token);
-      setCsrfToken(headers['X-CSRFToken']);
+      setCsrfToken(headers['x-csrftoken']);
       setUser(user);
       navigate('/');
    };
 
    const logout = async (): Promise<void> => {
       try {
-         await axiosService.post(
-            '/auth/logout/',
-            {},
-            {
-               headers: {
-                  Authorization: `Bearer ${accessToken}`,
-               },
-            },
-         );
-      } catch (error: AxiosError | unknown) {
-         error instanceof AxiosError && console.log(error?.response?.data);
-      } finally {
+         await axiosPrivateI.post('/auth/logout/');
          setAccessToken(undefined);
-         setRefreshToken(undefined);
          setCsrfToken(undefined);
          setUser(undefined);
+      } catch (error: unknown) {
+         error instanceof AxiosError && console.debug('[Error]', error.response?.data);
       }
    };
 
@@ -87,10 +64,9 @@ export const AuthProvider = ({ children }: IReactChildren) => {
          first_name: first_name,
          last_name: last_name,
       });
-      const { access_token, refresh_token, user } = data;
+      const { access_token, user } = data;
       setAccessToken(access_token);
-      setRefreshToken(refresh_token);
-      setCsrfToken(headers['X-CSRFToken']);
+      setCsrfToken(headers['x-csrftoken']);
       setUser(user);
       navigate('/auth/verify');
    };
@@ -121,8 +97,6 @@ export const AuthProvider = ({ children }: IReactChildren) => {
          setUser,
          accessToken,
          setAccessToken,
-         refreshToken,
-         setRefreshToken,
          csrfToken,
          setCsrfToken,
          login,
@@ -130,7 +104,7 @@ export const AuthProvider = ({ children }: IReactChildren) => {
          register,
          verify,
       };
-   }, [user, accessToken, refreshToken, csrfToken]);
+   }, [user, setUser, accessToken, setAccessToken, csrfToken, setCsrfToken]);
 
    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

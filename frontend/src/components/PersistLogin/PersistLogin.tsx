@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react';
 import { useRefreshToken } from 'hooks/useRefreshToken';
 import { useAuth } from 'hooks/useAuth';
 import { IReactChildren } from 'types';
-import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
+import useUser from 'hooks/useUser';
 
 export const PersistLogin = ({ children }: IReactChildren) => {
    const refresh = useRefreshToken();
-   const { accessToken, setUser, refreshToken } = useAuth();
+   const { accessToken } = useAuth();
    const [loading, setLoading] = useState(true);
-   const axiosPrivate = useAxiosPrivate();
+   const getUser = useUser();
 
    useEffect(() => {
       let isMounted = true;
@@ -16,16 +16,15 @@ export const PersistLogin = ({ children }: IReactChildren) => {
       async function verifyUser() {
          try {
             await refresh();
-            const { data } = await axiosPrivate.get('/user/');
-            setUser(data);
+            getUser();
          } catch {
-            console.log('Bir hata oluştu.');
+            console.debug('Bir hata oluştu.');
          } finally {
             isMounted && setLoading(false);
          }
       }
 
-      !accessToken && refreshToken ? verifyUser() : setLoading(false);
+      !accessToken ? verifyUser() : setLoading(false);
 
       return () => {
          isMounted = false;

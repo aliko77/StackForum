@@ -2,14 +2,12 @@ import { useAuth } from 'hooks/useAuth';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'components/Button';
-import { axiosPrivate } from 'api/axios';
 
 const Home: FC = () => {
    const { accessToken, user } = useAuth();
 
    const handleClick = async () => {
-      const response = await axiosPrivate.get('/user/');
-      console.log(response);
+      console.log('Merhaba');
    };
 
    return (
