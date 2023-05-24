@@ -14,7 +14,9 @@ const Home: FC = () => {
 
    return (
       <div className="m-auto text-center">
-         <div className="text-xl dark:text-gray-100">Hoşgeldin: {user?.email || 'Misafir'}</div>
+         <div className="text-xl dark:text-gray-100">
+            Hoşgeldin: {user?.first_name || 'Misafir'}
+         </div>
          <Button text="Test" onClick={handleClick} />
          {accessToken && !user?.is_verified && (
             <div className="mt-4">

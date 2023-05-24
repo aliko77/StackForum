@@ -8,13 +8,6 @@ export const useAxiosPrivate = () => {
    const refresh = useRefreshToken();
 
    useEffect(() => {
-      const requestIntercept = axiosPrivate.interceptors.request.use(
-         (config) => {
-            return config;
-         },
-         (error) => Promise.reject(error),
-      );
-
       const responseIntercept = axiosPrivate.interceptors.response.use(
          (response) => response,
          async (error) => {
@@ -35,7 +28,6 @@ export const useAxiosPrivate = () => {
       );
 
       return () => {
-         axiosPrivate.interceptors.request.eject(requestIntercept);
          axiosPrivate.interceptors.response.eject(responseIntercept);
       };
    }, [accessToken, csrfToken, refresh, user]);
