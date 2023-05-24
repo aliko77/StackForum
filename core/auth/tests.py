@@ -1,3 +1,4 @@
-from django.test import TestCase
+from django.core.cache import cache
 
-# Create your tests here.
+cache.clear()
+

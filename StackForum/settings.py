@@ -131,36 +131,23 @@ EMAIL_PORT = '2525'
 
 REACT_APP_URL = os.getenv('REACT_APP_URL', 'http://localhost:5173')
 
-
-#corsheaders
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173"
+    'http://localhost:5173',  # React uygulamasının yerel adresi
 ]
-CORS_ALLOW_CREDENTIALS = True
-# If this is set true, https only
-CSRF_COOKIE_SECURE = False
-CSRF_COOKIE_HTTPONLY = True
+CORS_ALLOW_CREDENTIALS = True  # CORS isteklerinde kullanıcı kimlik bilgileri gönderilmesine izin verir
+CSRF_COOKIE_HTTPONLY = True  # CSRF cookie'sine JavaScript tarafından erişimi devre dışı bırakır
+CSRF_COOKIE_SECURE = False  # CSRF cookie'sini sadece HTTPS üzerinden iletilmesini sağlar
+SESSION_COOKIE_SECURE = False  # Oturum cookie'sini sadece HTTPS üzerinden iletilmesini sağlar
+CSRF_COOKIE_SAMESITE = 'None'  # CSRF cookie'sini yalnızca aynı site üzerindeki isteklere gönderir
+SESSION_COOKIE_SAMESITE = 'None'  # Oturum cookie'sini yalnızca aynı site üzerindeki isteklere gönderir
 CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:5173"
+    'http://localhost:5173',  # React uygulamasının yerel adresi
 ]
-CORS_EXPOSE_HEADERS = ["Content-Type", "X-CSRFToken"]
-# If this is set true, https only
-SESSION_COOKIE_SECURE = False
-CSRF_COOKIE_SAMESITE = "Lax"
-SESSION_COOKIE_SAMESITE = "Lax"
-
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'core.auth.backend.authenticate.CustomAuthentication'
-    ],
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer'
-    ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny'
-    ]
-}
+CORS_EXPOSE_HEADERS = [
+    'Content-Type',
+    'Authorization',  # İsteğe bağlı olarak, kullanıcının yetkilendirme bilgilerini alabilirsiniz
+    'X-CSRFToken', # csrftoken
+]
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
@@ -195,15 +182,23 @@ SIMPLE_JWT = {
 
     # custom
     'AUTH_COOKIE': 'access',
-    # Cookie name. Enables cookies if value is set.
     'AUTH_COOKIE_REFRESH': 'refresh',
-    # A string like "example.com", or None for standard domain cookie.
     'AUTH_COOKIE_DOMAIN': None,
-    # Whether the auth cookies should be secure (https:// only).
-    'AUTH_COOKIE_SECURE': False, 
-    # Http only cookie flag.It's not fetch by javascript.
+    'AUTH_COOKIE_SECURE': False,
     'AUTH_COOKIE_HTTP_ONLY': True,
-    'AUTH_COOKIE_PATH': '/',        # The path of the auth cookie.
-    # Whether to set the flag restricting cookie leaks on cross-site requests. This can be 'Lax', 'Strict', or None to disable the flag.
-    'AUTH_COOKIE_SAMESITE': "Lax",
+    'AUTH_COOKIE_PATH': '/',
+    'AUTH_COOKIE_SAMESITE': "None",
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'core.auth.backend.authenticate.CustomAuthentication'
+    ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer'
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny'
+    ]
 }

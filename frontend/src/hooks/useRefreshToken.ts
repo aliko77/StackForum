@@ -10,8 +10,8 @@ export const useRefreshToken = () => {
          return data;
       }
       setAccessToken(data.access);
-      setCsrfToken(headers['x-csrftoken']);
-      return { accessToken: data.access, csrfToken: headers['x-csrftoken'] };
+      setCsrfToken(headers['X-CSRFToken']);
+      return { accessToken: data.access, csrfToken: headers['X-CSRFToken'] };
    };
 
    return refresh;

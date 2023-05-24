@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }: IReactChildren) => {
       });
       const { access_token, user } = data;
       setAccessToken(access_token);
-      setCsrfToken(headers['x-csrftoken']);
+      setCsrfToken(headers['X-CSRFToken']);
       setUser(user);
       navigate('/');
    };
@@ -42,11 +42,12 @@ export const AuthProvider = ({ children }: IReactChildren) => {
    const logout = async (): Promise<void> => {
       try {
          await axiosPrivateI.post('/auth/logout/');
+      } catch (error: unknown) {
+         error instanceof AxiosError && console.debug('[Error]', error.response?.data);
+      } finally {
          setAccessToken(undefined);
          setCsrfToken(undefined);
          setUser(undefined);
-      } catch (error: unknown) {
-         error instanceof AxiosError && console.debug('[Error]', error.response?.data);
       }
    };
 
@@ -66,7 +67,7 @@ export const AuthProvider = ({ children }: IReactChildren) => {
       });
       const { access_token, user } = data;
       setAccessToken(access_token);
-      setCsrfToken(headers['x-csrftoken']);
+      setCsrfToken(headers['X-CSRFToken']);
       setUser(user);
       navigate('/auth/verify');
    };

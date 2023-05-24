@@ -45,7 +45,6 @@ class LoginViewSet(ModelViewSet, TokenObtainPairView):
         )
         response.data = tokens
         response['X-CSRFToken'] = csrf.get_token(request)
-
         return response
 
 

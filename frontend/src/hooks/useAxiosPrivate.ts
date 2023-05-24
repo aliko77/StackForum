@@ -12,7 +12,7 @@ export const useAxiosPrivate = () => {
          (config) => {
             if (!config.headers.Authorization) {
                config.headers['Authorization'] = `Bearer ${accessToken}`;
-               config.headers['x-csrftoken'] = csrfToken;
+               config.headers['X-CSRFToken'] = csrfToken;
             }
             return config;
          },
@@ -31,7 +31,7 @@ export const useAxiosPrivate = () => {
                const { csrfToken: newCSRFToken, accessToken: newAccessToken } = await refresh();
                setAccessToken(newAccessToken);
                prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
-               prevRequest.headers['x-csrftoken'] = newCSRFToken;
+               prevRequest.headers['X-CSRFToken'] = newCSRFToken;
                return axiosPrivate(prevRequest);
             }
             return Promise.reject(error);
