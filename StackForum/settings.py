@@ -136,17 +136,17 @@ CORS_ALLOWED_ORIGINS = [
 ]
 CORS_ALLOW_CREDENTIALS = True  # CORS isteklerinde kullanıcı kimlik bilgileri gönderilmesine izin verir
 CSRF_COOKIE_HTTPONLY = True  # CSRF cookie'sine JavaScript tarafından erişimi devre dışı bırakır
-CSRF_COOKIE_SECURE = False  # CSRF cookie'sini sadece HTTPS üzerinden iletilmesini sağlar
-SESSION_COOKIE_SECURE = False  # Oturum cookie'sini sadece HTTPS üzerinden iletilmesini sağlar
-CSRF_COOKIE_SAMESITE = 'None'  # CSRF cookie'sini yalnızca aynı site üzerindeki isteklere gönderir
-SESSION_COOKIE_SAMESITE = 'None'  # Oturum cookie'sini yalnızca aynı site üzerindeki isteklere gönderir
+CSRF_COOKIE_SECURE = True  # CSRF cookie'sini sadece HTTPS üzerinden iletilmesini sağlar
+SESSION_COOKIE_SECURE = True  # Oturum cookie'sini sadece HTTPS üzerinden iletilmesini sağlar
+CSRF_COOKIE_SAMESITE = 'Lax'  # CSRF cookie'sini yalnızca aynı site üzerindeki isteklere gönderir
+SESSION_COOKIE_SAMESITE = 'Lax'  # Oturum cookie'sini yalnızca aynı site üzerindeki isteklere gönderir
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:5173',  # React uygulamasının yerel adresi
 ]
 CORS_EXPOSE_HEADERS = [
     'Content-Type',
     'Authorization',  # İsteğe bağlı olarak, kullanıcının yetkilendirme bilgilerini alabilirsiniz
-    'X-CSRFToken', # csrftoken
+    'x-csrftoken', # csrftoken
 ]
 
 SIMPLE_JWT = {
@@ -184,15 +184,14 @@ SIMPLE_JWT = {
     'AUTH_COOKIE': 'access',
     'AUTH_COOKIE_REFRESH': 'refresh',
     'AUTH_COOKIE_DOMAIN': None,
-    'AUTH_COOKIE_SECURE': False,
+    'AUTH_COOKIE_SECURE': True,
     'AUTH_COOKIE_HTTP_ONLY': True,
     'AUTH_COOKIE_PATH': '/',
-    'AUTH_COOKIE_SAMESITE': "None",
+    'AUTH_COOKIE_SAMESITE': "Lax",
 }
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
         'core.auth.backend.authenticate.CustomAuthentication'
     ],
     'DEFAULT_RENDERER_CLASSES': [

@@ -1,5 +1,6 @@
 import { axiosService } from 'api/axios/axios';
 import { useAuth } from 'hooks/useAuth';
+import { setAxiosPrivateHeaders } from './useAxiosPrivate';
 
 export const useRefreshToken = () => {
    const { setAccessToken, setCsrfToken } = useAuth();
@@ -9,9 +10,11 @@ export const useRefreshToken = () => {
       if (data.code && data.code === 'token_not_valid') {
          return data;
       }
+      const xcsrf = headers['x-csrftoken'];
+      setAxiosPrivateHeaders(data.access, xcsrf);
       setAccessToken(data.access);
-      setCsrfToken(headers['X-CSRFToken']);
-      return { accessToken: data.access, csrfToken: headers['X-CSRFToken'] };
+      setCsrfToken(xcsrf);
+      return { accessToken: data.access, csrfToken: xcsrf };
    };
 
    return refresh;

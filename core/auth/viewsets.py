@@ -44,7 +44,7 @@ class LoginViewSet(ModelViewSet, TokenObtainPairView):
             samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
         )
         response.data = tokens
-        response['X-CSRFToken'] = csrf.get_token(request)
+        response['x-csrftoken'] = csrf.get_token(request)
         return response
 
 
@@ -85,7 +85,7 @@ class LogoutViewSet(ViewSet):
             response.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE'])
             response.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'])
             response.delete_cookie("csrftoken")
-            response["X-CSRFToken"]=None
+            response["x-csrftoken"]=None
 
             return response
         except TokenError:
@@ -111,7 +111,7 @@ class CookieTokenRefreshViewSet(ViewSet, TokenRefreshView):
                 httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
                 samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
             )
-        response["X-CSRFToken"] = request.COOKIES.get("csrftoken")
+        response["x-csrftoken"] = request.COOKIES.get("csrftoken")
         return super().finalize_response(request, response, *args, **kwargs)
 
 

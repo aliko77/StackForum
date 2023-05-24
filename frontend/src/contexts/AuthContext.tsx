@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { axiosService } from 'api/axios/axios';
 import { IReactChildren, ILoginFunc, IRegisterFunc, IUser, IVerifyFunc } from 'types';
 import { AxiosError } from 'axios';
-import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
+import { setAxiosPrivateHeaders, useAxiosPrivate } from 'hooks/useAxiosPrivate';
 interface IAuthContext {
    user?: IUser;
    setUser: Dispatch<SetStateAction<IUser | undefined>>;
@@ -33,8 +33,10 @@ export const AuthProvider = ({ children }: IReactChildren) => {
          password: password,
       });
       const { access_token, user } = data;
+      const xcsrfToken = headers['x-csrftoken'];
+      setAxiosPrivateHeaders(access_token, xcsrfToken);
       setAccessToken(access_token);
-      setCsrfToken(headers['X-CSRFToken']);
+      setCsrfToken(xcsrfToken);
       setUser(user);
       navigate('/');
    };
@@ -42,12 +44,12 @@ export const AuthProvider = ({ children }: IReactChildren) => {
    const logout = async (): Promise<void> => {
       try {
          await axiosPrivateI.post('/auth/logout/');
-      } catch (error: unknown) {
-         error instanceof AxiosError && console.debug('[Error]', error.response?.data);
-      } finally {
+         setAxiosPrivateHeaders(undefined, undefined);
          setAccessToken(undefined);
          setCsrfToken(undefined);
          setUser(undefined);
+      } catch (error: unknown) {
+         error instanceof AxiosError && console.debug('[Error]', error.response?.data);
       }
    };
 
@@ -66,8 +68,10 @@ export const AuthProvider = ({ children }: IReactChildren) => {
          last_name: last_name,
       });
       const { access_token, user } = data;
+      const xcsrfToken = headers['x-csrftoken'];
+      setAxiosPrivateHeaders(access_token, xcsrfToken);
       setAccessToken(access_token);
-      setCsrfToken(headers['X-CSRFToken']);
+      setCsrfToken(xcsrfToken);
       setUser(user);
       navigate('/auth/verify');
    };

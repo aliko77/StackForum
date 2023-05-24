@@ -2,12 +2,14 @@ import { useAuth } from 'hooks/useAuth';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'components/Button';
+import useUser from 'hooks/useUser';
 
 const Home: FC = () => {
    const { accessToken, user } = useAuth();
+   const getUser = useUser();
 
    const handleClick = async () => {
-      console.log('Merhaba');
+      getUser();
    };
 
    return (
