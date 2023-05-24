@@ -44,8 +44,15 @@ export const useAxiosPrivate = () => {
 };
 
 export const setAxiosPrivateHeaders = (access: string | undefined, xcsrf: string | undefined) => {
-   if (access) axiosPrivate.defaults.headers['Authorization'] = `Bearer ${access}`;
-   else delete axiosPrivate.defaults.headers['Authorization'];
-   if (xcsrf) axiosPrivate.defaults.headers['x-csrftoken'] = xcsrf;
-   else delete axiosPrivate.defaults.headers['x-csrftoken'];
+   const { common } = axiosPrivate.defaults.headers;
+   if (access) {
+      common['Authorization'] = `Bearer ${access}`;
+   } else {
+      delete common['Authorization'];
+   }
+   if (xcsrf) {
+      common['x-csrftoken'] = xcsrf;
+   } else {
+      delete common['x-csrftoken'];
+   }
 };
