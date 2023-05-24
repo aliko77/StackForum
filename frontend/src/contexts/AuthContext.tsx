@@ -104,7 +104,7 @@ export const AuthProvider = ({ children }: IReactChildren) => {
          register,
          verify,
       };
-   }, [user, setUser, accessToken, setAccessToken, csrfToken, setCsrfToken]);
+   }, [user, accessToken, csrfToken]);
 
    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

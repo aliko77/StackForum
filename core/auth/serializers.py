@@ -77,9 +77,10 @@ class CookieTokenRefreshSerializer(TokenRefreshSerializer):
         if attrs['refresh']:
             return super().validate(attrs)
         else:
-            raise InvalidToken(
-                'Cookie değeri bulunamadı: \'refresh\'')
-
+            del attrs['refresh']
+            attrs['code'] = 'token_not_valid'
+            attrs['detail'] = 'Cookie değeri bulunamadı: \'refresh\''
+            return attrs
 
 class VerifySerializer(ModelSerializer):
     activation_code = CharField(

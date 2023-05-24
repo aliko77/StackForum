@@ -5,7 +5,5 @@ import { RouterProvider } from 'react-router-dom';
 import Router from 'routes/Router';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-   <StrictMode>
-      <RouterProvider router={Router} />
-   </StrictMode>,
+   <RouterProvider router={Router} />,
 );
