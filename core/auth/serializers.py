@@ -1,13 +1,12 @@
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
-from rest_framework_simplejwt.exceptions import InvalidToken
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer,\
+    TokenVerifySerializer
 from rest_framework.serializers import ModelSerializer, CharField, EmailField, ValidationError
 from .utils import SendVerificationEmail, SendPasswordResetEmail, token_generator
 from core.user.models import AuthActivation
 from core.user.serializers import UserSerializer
 from django.utils.http import urlsafe_base64_decode
-from django.forms.models import model_to_dict
 
 User = get_user_model()
 
@@ -79,6 +78,18 @@ class CookieTokenRefreshSerializer(TokenRefreshSerializer):
         else:
             attrs['code'] = 'token_not_valid'
             attrs['detail'] = 'Cookie değeri bulunamadı: \'refresh\''
+            return attrs
+
+class CookieTokenVerifySerializer(TokenVerifySerializer):
+    token = None
+
+    def validate(self, attrs):
+        attrs['token'] = self.context['request'].COOKIES.get('access')
+        if attrs['token']:
+            return super().validate(attrs)
+        else:
+            attrs['code'] = 'token_not_valid'
+            attrs['detail'] = 'Cookie değeri bulunamadı: \'access\''
             return attrs
 
 class VerifySerializer(ModelSerializer):

@@ -8,7 +8,9 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from django.conf import settings
 from django.middleware import csrf
-from .serializers import LoginSerializer, RegisterSerializer, VerifyResendSerializer, VerifySerializer, PasswordResetSerializer, PasswordChangeSerializer, CookieTokenRefreshSerializer
+from .serializers import LoginSerializer, RegisterSerializer,\
+    VerifyResendSerializer, VerifySerializer, PasswordResetSerializer,\
+    PasswordChangeSerializer, CookieTokenRefreshSerializer
 from rest_framework.decorators import action
 from core.user.serializers import UserSerializer
 
@@ -116,8 +118,7 @@ class CookieTokenRefreshViewSet(ViewSet, TokenRefreshView):
         response["x-csrftoken"] = request.COOKIES.get("csrftoken")
         return super().finalize_response(request, response, *args, **kwargs)
 
-
-class VerifyViewSet(ModelViewSet):
+class AccountVerifyViewSet(ModelViewSet):
     serializer_class = VerifySerializer
     http_method_names = ['post']
 
