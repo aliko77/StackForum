@@ -32,10 +32,12 @@ export const PersistLogin = ({ children }: IReactChildren) => {
    }, []);
 
    useEffect(() => {
-      if (accessToken && !userLoaded) {
-         getUser();
+      async function _getUser() {
+         await getUser();
          setUserLoaded(true);
       }
+
+      accessToken && !userLoaded && _getUser();
    }, [accessToken]);
 
    return <>{userLoaded && !loading ? children : <PageLoading />}</>;

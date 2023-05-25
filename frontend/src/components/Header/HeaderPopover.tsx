@@ -1,12 +1,13 @@
 import { Popover } from '@headlessui/react';
 import { LogoutButton } from 'components/LogoutButton';
 import { useAuth } from 'hooks/useAuth';
+import { parseDateTimeToString } from 'utils';
 
 export const HeaderPopOver = () => {
    const { user } = useAuth();
-   const _lastlogin = "test"
+   const s_lastlogin = user?.last_login ? parseDateTimeToString(user.last_login) : 'Bilinmiyor.';
    return (
-      <Popover>
+      <Popover className="relative">
          <Popover.Button className="p-1.5 bg-white dark:bg-night-100 shadow rounded focus:outline-none focus:ring-1 focus:ring-gray-400">
             <svg
                xmlns="http://www.w3.org/2000/svg"
@@ -24,21 +25,25 @@ export const HeaderPopOver = () => {
             </svg>
          </Popover.Button>
 
-         <Popover.Panel className="absolute z-[999] bg-night-100 shadow rounded-b-sm top-14">
-            <hr className="border-zinc-500 border-1" />
+         <Popover.Panel className="absolute left-[-250px] w-96 z-[999] border dark:border-gray-700 bg-gray-100 dark:bg-night-100 shadow rounded-b-sm top-14">
+            <hr className="hidden dark:block border-zinc-500 border-1" />
             <div className="p-2">
-               <div className="grid grid-cols-3">
-                  <div>{/* Avatar */}</div>
-                  <div>
-                     <div>
-                        <span>{user?.first_name}</span>
+               <div className="">
+                  <div className="grid grid-cols-3">
+                     <div></div>
+                     <div className="text-sm dark:text-gray-100">
+                        <div>
+                           <span>{user?.first_name}</span>
+                        </div>
+                        <div className="whitespace-nowrap">
+                           <span>{s_lastlogin}</span>
+                        </div>
                      </div>
                      <div>
-                        <span>{_lastlogin}</span>
+                        <div className="p-1.5 bg-white dark:bg-gray-600 hover:dark:bg-gray-500 rounded focus:outline-none focus:ring-1 focus:ring-gray-400">
+                           <LogoutButton />
+                        </div>
                      </div>
-                  </div>
-                  <div className="p-1.5 bg-white dark:bg-gray-600 hover:dark:bg-gray-500 rounded focus:outline-none focus:ring-1 focus:ring-gray-400">
-                     <LogoutButton />
                   </div>
                </div>
             </div>

@@ -32,8 +32,8 @@ export interface IUser {
    last_name?: string;
    is_active?: boolean;
    is_verified?: boolean;
-   last_login?: Date;
-   date_joined?: Date;
+   last_login?: string;
+   date_joined?: string;
    profile?: { [key: string]: string };
 }
 

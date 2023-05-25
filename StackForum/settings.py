@@ -156,6 +156,7 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
     'AUTH_HEADER_TYPES': ('Bearer', ),
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken', ),
+    "UPDATE_LAST_LOGIN": True,
 
     # custom
     'AUTH_COOKIE': 'access',

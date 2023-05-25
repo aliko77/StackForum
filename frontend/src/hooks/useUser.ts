@@ -10,6 +10,7 @@ export default function useUser() {
       try {
          const { data } = await axiosPrivate.get('/user/');
          setUser(data);
+         return data;
       } catch (error: unknown) {
          error instanceof AxiosError && console.debug('[Request]', error?.response);
       }
