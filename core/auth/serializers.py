@@ -77,7 +77,6 @@ class CookieTokenRefreshSerializer(TokenRefreshSerializer):
         if attrs['refresh']:
             return super().validate(attrs)
         else:
-            del attrs['refresh']
             attrs['code'] = 'token_not_valid'
             attrs['detail'] = 'Cookie değeri bulunamadı: \'refresh\''
             return attrs

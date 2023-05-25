@@ -18,7 +18,9 @@ export const PersistLogin = ({ children }: IReactChildren) => {
       async function verifyRefreshToken() {
          try {
             const data = await refresh();
-            data.code && data.code === 'token_not_valid' && setUserLoaded(true);
+            data.code &&
+               (data.code === 'token_not_valid' || data.code === 'ERR_NETWORK') &&
+               setUserLoaded(true);
          } finally {
             isMounted && setLoading(false);
          }

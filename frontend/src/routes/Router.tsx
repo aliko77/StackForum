@@ -1,10 +1,10 @@
-import { ElementType, lazy, ReactNode, Suspense, ReactElement } from 'react';
+import { ElementType, lazy, ReactNode, Suspense, ReactElement, StrictMode } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
 import { PageLoading } from 'components/PageLoading';
 import Layout from 'layouts/Layout';
 import { AuthProvider } from 'contexts/AuthContext';
-import { PersistLogin } from 'components/PersistLogin';
+import { PersistLogin } from 'routes/PersistLogin';
 import { GuestRoute, PrivateRoute } from 'routes/GuardRoutes';
 
 const Login = lazy(() => import('pages/Login'));
@@ -24,9 +24,11 @@ const getRouteElement = (Component: ElementType): ReactElement => (
    <Suspense fallback={<PageLoading />}>
       <AuthProvider>
          <PersistLogin>
-            <Layout>
-               <Component />
-            </Layout>
+            <StrictMode>
+               <Layout>
+                  <Component />
+               </Layout>
+            </StrictMode>
          </PersistLogin>
       </AuthProvider>
    </Suspense>

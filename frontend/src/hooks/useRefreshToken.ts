@@ -1,20 +1,27 @@
 import { axiosService } from 'api/axios/axios';
 import { useAuth } from 'hooks/useAuth';
 import { setAxiosPrivateHeaders } from './useAxiosPrivate';
+import { AxiosError } from 'axios';
 
 export const useRefreshToken = () => {
    const { setAccessToken, setCsrfToken } = useAuth();
 
    const refresh = async () => {
-      const { data, headers } = await axiosService.post('auth/refresh-token/');
-      if (data.code && data.code === 'token_not_valid') {
-         return data;
+      try {
+         const { data, headers } = await axiosService.post('auth/refresh-token/');
+         if (data.code && data.code === 'token_not_valid') {
+            return data;
+         }
+         const xcsrf = headers['x-csrftoken'];
+         setAxiosPrivateHeaders(data.access, xcsrf);
+         setAccessToken(data.access);
+         setCsrfToken(xcsrf);
+         return { accessToken: data.access, csrfToken: xcsrf };
+      } catch (error: unknown) {
+         const data = error instanceof AxiosError && error.code;
+         console.debug('[Error]', data);
+         return { code: data };
       }
-      const xcsrf = headers['x-csrftoken'];
-      setAxiosPrivateHeaders(data.access, xcsrf);
-      setAccessToken(data.access);
-      setCsrfToken(xcsrf);
-      return { accessToken: data.access, csrfToken: xcsrf };
    };
 
    return refresh;
