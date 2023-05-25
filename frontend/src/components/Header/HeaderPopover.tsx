@@ -1,7 +1,10 @@
 import { Popover } from '@headlessui/react';
 import { LogoutButton } from 'components/LogoutButton';
+import { useAuth } from 'hooks/useAuth';
 
 export const HeaderPopOver = () => {
+   const { user } = useAuth();
+   const _lastlogin = "test"
    return (
       <Popover>
          <Popover.Button className="p-1.5 bg-white dark:bg-night-100 shadow rounded focus:outline-none focus:ring-1 focus:ring-gray-400">
@@ -21,11 +24,23 @@ export const HeaderPopOver = () => {
             </svg>
          </Popover.Button>
 
-         <Popover.Panel className="absolute z-[999] bg-night-100 shadow border border-gray-700 rounded-sm top-14">
-            <div></div>
+         <Popover.Panel className="absolute z-[999] bg-night-100 shadow rounded-b-sm top-14">
             <hr className="border-zinc-500 border-1" />
-            <div className="grid grid-cols-2">
-               <LogoutButton />
+            <div className="p-2">
+               <div className="grid grid-cols-3">
+                  <div>{/* Avatar */}</div>
+                  <div>
+                     <div>
+                        <span>{user?.first_name}</span>
+                     </div>
+                     <div>
+                        <span>{_lastlogin}</span>
+                     </div>
+                  </div>
+                  <div className="p-1.5 bg-white dark:bg-gray-600 hover:dark:bg-gray-500 rounded focus:outline-none focus:ring-1 focus:ring-gray-400">
+                     <LogoutButton />
+                  </div>
+               </div>
             </div>
          </Popover.Panel>
       </Popover>

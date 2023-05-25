@@ -5,14 +5,14 @@ export const LogoutButton: FC = () => {
    const { logout } = useAuth();
 
    return (
-      <button onClick={logout} className="flex justify-center items-center">
+      <button onClick={logout} className="flex justify-center items-center" title="Çıkış yap">
          <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="w-6 h-6 stroke-zinc-600 dark:stroke-gray-500 dark:hover:stroke-gray-300"
+            className="w-6 h-6 stroke-zinc-600 dark:stroke-gray-300 dark:hover:stroke-gray-200"
          >
             <path
                strokeLinecap="round"
