@@ -7,6 +7,7 @@ from .utils import SendVerificationEmail, SendPasswordResetEmail, token_generato
 from core.user.models import AuthActivation
 from core.user.serializers import UserSerializer
 from django.utils.http import urlsafe_base64_decode
+from django.contrib.auth.signals import user_logged_in
 
 User = get_user_model()
 
@@ -14,14 +15,13 @@ User = get_user_model()
 class LoginSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
-        refresh = self.get_token(self.user)
         user_data = UserSerializer(self.user).data
-
         data = {
             'user': user_data,
-            'refresh_token': str(refresh),
-            'access_token': str(refresh.access_token),
+            'refresh_token': data['refresh'],
+            'access_token': data['access'],
         }
+        user_logged_in.send(sender=self.user.__class__, request=self.context['request'], user=self.user)
 
         return data
 

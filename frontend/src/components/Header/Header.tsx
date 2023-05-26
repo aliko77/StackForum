@@ -5,6 +5,7 @@ import { ThemeSwitcher } from 'components/ThemeSwitcher';
 import { HeaderPopOver } from 'components/Header/HeaderPopover';
 import { Logo } from 'components/Logo';
 import { Button } from 'components/Button';
+import StatusIcon from 'components/Profile/StatusIcon';
 
 export const Header: FC = () => {
    const navigate: NavigateFunction = useNavigate();
@@ -60,13 +61,23 @@ export const Header: FC = () => {
                            </div>
                         </div>
                         <div className="hidden sm:block mx-4">
-                           <div className="flex flex-col whitespace-nowrap">
-                              <span className="text-xs text-gray-600 dark:text-gray-300">
-                                 {'Hoş geldin'}
-                              </span>
-                              <p className="text-gray-900 dark:text-gray-100 font-semibold text-base">
-                                 {user?.first_name + ' ' + user?.last_name}
-                              </p>
+                           <div className="flex items-center justify-center whitespace-nowrap">
+                              <div className="mr-4">
+                                 <img
+                                    className="w-9 h-9 border-solid border-2 border-white rounded-full"
+                                    src="src/assets/images/profile_pictures/53571.jpg"
+                                    alt="profile picture"
+                                 />
+                                 <StatusIcon status="ONLINE" transitions="top-1/2 -translate-x-1" />
+                              </div>
+                              <div>
+                                 <span className="text-xs text-gray-600 dark:text-gray-300">
+                                    {'Hoş geldin'}
+                                 </span>
+                                 <p className="text-gray-900 dark:text-gray-100 font-semibold text-base">
+                                    {user?.first_name + ' ' + user?.last_name}
+                                 </p>
+                              </div>
                            </div>
                         </div>
                         <div className="mx-2">

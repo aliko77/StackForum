@@ -13,6 +13,7 @@ from .serializers import LoginSerializer, RegisterSerializer,\
     PasswordChangeSerializer, CookieTokenRefreshSerializer
 from rest_framework.decorators import action
 from core.user.serializers import UserSerializer
+from django.contrib.auth.signals import user_logged_out
 
 
 class LoginViewSet(ModelViewSet, TokenObtainPairView):
@@ -88,7 +89,7 @@ class LogoutViewSet(ViewSet):
             response.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'])
             response.delete_cookie("csrftoken")
             response["x-csrftoken"]=None
-
+            user_logged_out.send(sender=request.user.__class__, request=request, user=request.user)
             return response
         except TokenError:
             raise InvalidToken("Bilinmeyen token.")

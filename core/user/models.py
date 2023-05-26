@@ -62,6 +62,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         db_table = "user"
 
 
+PROFILE_STATUS_CHOICES = (
+    ('ONLINE', 'Çevrimiçi'),
+    ('OFFLINE', 'Çevrimdışı'),
+)
 class Profile(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE)
@@ -74,7 +78,7 @@ class Profile(models.Model):
     github_url = models.URLField(max_length=200, blank=True)
     email_secondary = models.EmailField(max_length=254, blank=True)
     phone_number = models.CharField(max_length=20, blank=True)
-
+    status = models.CharField(max_length=20, choices=PROFILE_STATUS_CHOICES, default='OFFLINE')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
