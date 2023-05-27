@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { useVerifyToken } from 'hooks/useVerifyToken';
 import { useAuth } from 'hooks/useAuth';
 import { IReactChildren } from 'types';
 import useUser from 'hooks/useUser';
 import { PageLoading } from 'components/PageLoading';
+import { useRefreshToken } from 'hooks/useRefreshToken';
 
 export const PersistLogin = ({ children }: IReactChildren) => {
-   const verify = useVerifyToken();
+   const refresh = useRefreshToken();
    const { accessToken } = useAuth();
    const [loading, setLoading] = useState(true);
    const [userLoaded, setUserLoaded] = useState(false);
@@ -15,16 +15,16 @@ export const PersistLogin = ({ children }: IReactChildren) => {
    useEffect(() => {
       let isMounted = true;
 
-      async function tokenVerify() {
+      async function TokenCheck() {
          try {
-            const data = await verify();
-            !data && setUserLoaded(true);
+            const data = await refresh();
+            data?.code && data?.code === 'refresh_token_not_found' && setUserLoaded(true);
          } finally {
             isMounted && setLoading(false);
          }
       }
 
-      !accessToken ? tokenVerify() : setLoading(false);
+      !accessToken ? TokenCheck() : setLoading(false);
 
       return () => {
          isMounted = false;

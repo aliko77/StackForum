@@ -18,9 +18,9 @@ export const useAxiosPrivate = () => {
                !prevRequest?.sent
             ) {
                prevRequest.sent = true;
-               const { csrfToken: newCSRFToken, accessToken: newAccessToken } = await refresh();
-               prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
-               prevRequest.headers['x-csrftoken'] = newCSRFToken;
+               const response = await refresh();
+               prevRequest.headers['Authorization'] = `Bearer ${response?.access_token}`;
+               prevRequest.headers['x-csrftoken'] = response?.csrf_token;
                return axiosPrivate(prevRequest);
             }
             return Promise.reject(error);

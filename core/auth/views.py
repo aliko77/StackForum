@@ -16,31 +16,29 @@ class CustomTokenObtainPairView(TokenObtainPairView):
         serializer = self.get_serializer(data=request.data)
         try:
             serializer.is_valid(raise_exception=True)
+            tokens = serializer.validated_data
+            response = Response()
+            response.data = tokens
+            response.set_cookie(
+                key=settings.SIMPLE_JWT['AUTH_COOKIE'],
+                value=tokens["access_token"],
+                expires=settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
+                secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
+                httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
+                samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
+            )
+            response.set_cookie(
+                key=settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'],
+                value=tokens["refresh_token"],
+                expires=settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'],
+                secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
+                httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
+                samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
+            )
+            response['x-csrftoken'] = csrf.get_token(request)
+            return response
         except TokenError:
             raise InvalidToken()
-
-        tokens = serializer.validated_data
-
-        response = Response()
-        response.set_cookie(
-            key=settings.SIMPLE_JWT['AUTH_COOKIE'],
-            value=tokens["access_token"],
-            expires=settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
-            secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
-            httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
-            samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
-        )
-        response.set_cookie(
-            key=settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'],
-            value=tokens["refresh_token"],
-            expires=settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'],
-            secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
-            httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
-            samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
-        )
-        response.data = tokens
-        response['x-csrftoken'] = csrf.get_token(request)
-        return response
 
 
 class CustomTokenRefreshView(TokenRefreshView):
@@ -48,6 +46,10 @@ class CustomTokenRefreshView(TokenRefreshView):
         serializer = self.get_serializer(data=request.data)
         try:
             serializer.is_valid(raise_exception=True)
+            tokens = serializer.validated_data
+            response = Response()
+            response.data = tokens
+            return response
         except TokenError:
             response = Response(status=status.HTTP_401_UNAUTHORIZED)
             response.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'])
@@ -59,7 +61,29 @@ class CustomTokenRefreshView(TokenRefreshView):
                 'detail': InvalidToken.default_detail
             }
             return response
-        return super().post(request)
+    
+    def finalize_response(self, request, response, *args, **kwargs):
+        if response.data.get("refresh"):
+            response.set_cookie(
+                key=settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'],
+                value=response.data['refresh'],
+                expires=settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'],
+                secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
+                httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
+                samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
+            )
+            del response.data["refresh"]
+        if response.data.get("access"):
+            response.set_cookie(
+                key=settings.SIMPLE_JWT['AUTH_COOKIE'],
+                value=response.data['access'],
+                expires=settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'],
+                secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
+                httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
+                samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
+            )
+        response["X-CSRFToken"] = request.COOKIES.get("csrftoken")
+        return super().finalize_response(request, response, *args, **kwargs)
 
 
 class CustomTokenVerifyView(TokenVerifyView):
@@ -67,6 +91,10 @@ class CustomTokenVerifyView(TokenVerifyView):
         serializer = self.get_serializer(data=request.data)
         try:
             serializer.is_valid(raise_exception=True)
+            v_data = serializer.validated_data
+            response = Response()
+            response.data = v_data
+            return response
         except TokenError:
             response = Response(status=status.HTTP_401_UNAUTHORIZED)
             response.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE'])
@@ -75,8 +103,7 @@ class CustomTokenVerifyView(TokenVerifyView):
                 'detail': InvalidToken.default_detail
             }
             return response
-        return super().post(request)
-
+    
 
 @method_decorator(csrf_protect, name='dispatch')
 class LogoutView(APIView):
