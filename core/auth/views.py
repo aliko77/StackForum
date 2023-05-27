@@ -1,8 +1,7 @@
-from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 from django.views.decorators.csrf import csrf_protect
 from django.utils.decorators import method_decorator
 from rest_framework.response import Response
-from .serializers import CustomTokenObtainPairSerializer
 from django.conf import settings
 from rest_framework_simplejwt.exceptions import TokenError, InvalidToken 
 from django.middleware import csrf
@@ -10,16 +9,15 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.signals import user_logged_out
+from rest_framework import status
 
 class CustomTokenObtainPairView(TokenObtainPairView):
-    serializer_class = CustomTokenObtainPairSerializer
-
     def post(self, request):
         serializer = self.get_serializer(data=request.data)
         try:
             serializer.is_valid(raise_exception=True)
-        except TokenError as e:
-            raise InvalidToken(e.args[0])
+        except TokenError:
+            raise InvalidToken()
 
         tokens = serializer.validated_data
 
@@ -43,8 +41,44 @@ class CustomTokenObtainPairView(TokenObtainPairView):
         response.data = tokens
         response['x-csrftoken'] = csrf.get_token(request)
         return response
-    
-@method_decorator(csrf_protect, name='dispatch')    
+
+
+class CustomTokenRefreshView(TokenRefreshView):
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        try:
+            serializer.is_valid(raise_exception=True)
+        except TokenError:
+            response = Response(status=status.HTTP_401_UNAUTHORIZED)
+            response.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'])
+            response.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE'])
+            response.delete_cookie("csrftoken")
+            response["x-csrftoken"] = None
+            response.data = {
+                'code': InvalidToken.default_code,
+                'detail': InvalidToken.default_detail
+            }
+            return response
+        return super().post(request)
+
+
+class CustomTokenVerifyView(TokenVerifyView):
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        try:
+            serializer.is_valid(raise_exception=True)
+        except TokenError:
+            response = Response(status=status.HTTP_401_UNAUTHORIZED)
+            response.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE'])
+            response.data = {
+                'code': InvalidToken.default_code,
+                'detail': InvalidToken.default_detail
+            }
+            return response
+        return super().post(request)
+
+
+@method_decorator(csrf_protect, name='dispatch')
 class LogoutView(APIView):
     permission_classes = [IsAuthenticated]
     http_method_names = ['post']

@@ -8,9 +8,9 @@ export const useRefreshToken = () => {
 
    const refresh = async () => {
       try {
-         const { data, headers } = await axiosService.post('auth/refresh-token/');
-         if (data.code && data.code === 'token_not_valid') {
-            return data;
+         const { data, headers } = await axiosService.post('auth/token/refresh/');
+         if (data.code && data.code === 'refresh_token_not_found') {
+            return { code: data.code };
          }
          const xcsrf = headers['x-csrftoken'];
          setAxiosPrivateHeaders(data.access, xcsrf);
@@ -18,9 +18,11 @@ export const useRefreshToken = () => {
          setCsrfToken(xcsrf);
          return { accessToken: data.access, csrfToken: xcsrf };
       } catch (error: unknown) {
-         const data = error instanceof AxiosError && error.code;
-         console.debug('[Error]', data);
-         return { code: data };
+         if (error instanceof AxiosError) {
+            const { detail, code } = error?.response?.data ?? undefined;
+            console.debug('[Error]', detail);
+            return { code: code };
+         }
       }
    };
 

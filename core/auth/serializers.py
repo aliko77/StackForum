@@ -8,6 +8,7 @@ from core.user.models import AuthActivation
 from core.user.serializers import UserSerializer
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.signals import user_logged_in
+from django.conf import settings
 
 User = get_user_model()
 
@@ -29,11 +30,12 @@ class CustomTokenRefreshSerializer(TokenRefreshSerializer):
     refresh = None
 
     def validate(self, attrs):
-        attrs['refresh'] = self.context['request'].COOKIES.get('refresh')
+        attrs['refresh'] = self.context['request'].COOKIES.get(settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'])
         if attrs['refresh']:
             return super().validate(attrs)
         else:
-            attrs['code'] = 'token_not_valid'
+            del attrs['refresh']
+            attrs['code'] = 'refresh_token_not_found'
             attrs['detail'] = 'Cookie değeri bulunamadı: \'refresh\''
             return attrs
 
@@ -42,11 +44,12 @@ class CustomTokenVerifySerializer(TokenVerifySerializer):
     token = None
 
     def validate(self, attrs):
-        attrs['token'] = self.context['request'].COOKIES.get('access')
+        attrs['token'] = self.context['request'].COOKIES.get(settings.SIMPLE_JWT['AUTH_COOKIE'])
         if attrs['token']:
             return super().validate(attrs)
         else:
-            attrs['code'] = 'token_not_valid'
+            del attrs['token']
+            attrs['code'] = 'acces_token_not_found'
             attrs['detail'] = 'Cookie değeri bulunamadı: \'access\''
             return attrs
 
@@ -74,23 +77,24 @@ class RegisterSerializer(UserSerializer):
             raise ValidationError(
                 'Şifreler eşleşmiyor.'
             )
-        return attrs
-
-    def create(self, validated_data):
         try:
-            User.objects.get(email=validated_data['email'])
+            User.objects.get(email=attrs['email'])
             raise ValidationError(
                 'Bu email zaten kullanılıyor.'
             )
         except ObjectDoesNotExist:
-            user_data = {
-                'email': validated_data['email'],
-                'password': validated_data['password'],
-                'first_name': validated_data['first_name'],
-                'last_name': validated_data['last_name'],
-            }
-            user = User.objects.create_user(**user_data)
-            return user
+            pass
+        return attrs
+
+    def create(self, validated_data):
+        user_data = {
+            'email': validated_data['email'],
+            'password': validated_data['password'],
+            'first_name': validated_data['first_name'],
+            'last_name': validated_data['last_name'],
+        }
+        user = User.objects.create_user(**user_data)
+        return user
 
 
 class VerifySerializer(ModelSerializer):

@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }: IReactChildren) => {
    const [csrfToken, setCsrfToken] = useState<string>();
 
    const login: ILoginFunc = async (email, password) => {
-      const { data, headers } = await axiosService.post('/auth/login/', {
+      const { data, headers } = await axiosService.post('/auth/token/', {
          email: email,
          password: password,
       });
