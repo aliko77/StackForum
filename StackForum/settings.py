@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'django_filters',
     'corsheaders',
@@ -103,6 +104,10 @@ PASSWORD_RESET_TIMEOUT = 1800
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'tr'
+LANGUAGES = [
+    ('tr', 'Türkçe'),
+    ('en', 'English'),
+]
 
 TIME_ZONE = 'Europe/Istanbul'
 
@@ -172,7 +177,7 @@ SIMPLE_JWT = {
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'core.auth.backend.authenticate.CustomAuthentication'
+        'core.auth.backend.authentication.CustomAuthentication'
     ],
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer'
