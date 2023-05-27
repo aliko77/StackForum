@@ -11,19 +11,44 @@ from django.contrib.auth.signals import user_logged_in
 
 User = get_user_model()
 
-
-class LoginSerializer(TokenObtainPairSerializer):
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
         user_data = UserSerializer(self.user).data
         data = {
-            'user': user_data,
-            'refresh_token': data['refresh'],
             'access_token': data['access'],
+            'refresh_token': data['refresh'],
+            'user': user_data,
         }
         user_logged_in.send(sender=self.user.__class__, request=self.context['request'], user=self.user)
 
         return data
+
+
+class CustomTokenRefreshSerializer(TokenRefreshSerializer):
+    refresh = None
+
+    def validate(self, attrs):
+        attrs['refresh'] = self.context['request'].COOKIES.get('refresh')
+        if attrs['refresh']:
+            return super().validate(attrs)
+        else:
+            attrs['code'] = 'token_not_valid'
+            attrs['detail'] = 'Cookie değeri bulunamadı: \'refresh\''
+            return attrs
+
+
+class CustomTokenVerifySerializer(TokenVerifySerializer):
+    token = None
+
+    def validate(self, attrs):
+        attrs['token'] = self.context['request'].COOKIES.get('access')
+        if attrs['token']:
+            return super().validate(attrs)
+        else:
+            attrs['code'] = 'token_not_valid'
+            attrs['detail'] = 'Cookie değeri bulunamadı: \'access\''
+            return attrs
 
 
 class RegisterSerializer(UserSerializer):
@@ -67,30 +92,6 @@ class RegisterSerializer(UserSerializer):
             user = User.objects.create_user(**user_data)
             return user
 
-
-class CookieTokenRefreshSerializer(TokenRefreshSerializer):
-    refresh = None
-
-    def validate(self, attrs):
-        attrs['refresh'] = self.context['request'].COOKIES.get('refresh')
-        if attrs['refresh']:
-            return super().validate(attrs)
-        else:
-            attrs['code'] = 'token_not_valid'
-            attrs['detail'] = 'Cookie değeri bulunamadı: \'refresh\''
-            return attrs
-
-class CookieTokenVerifySerializer(TokenVerifySerializer):
-    token = None
-
-    def validate(self, attrs):
-        attrs['token'] = self.context['request'].COOKIES.get('access')
-        if attrs['token']:
-            return super().validate(attrs)
-        else:
-            attrs['code'] = 'token_not_valid'
-            attrs['detail'] = 'Cookie değeri bulunamadı: \'access\''
-            return attrs
 
 class VerifySerializer(ModelSerializer):
     activation_code = CharField(

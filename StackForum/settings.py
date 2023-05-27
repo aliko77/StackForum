@@ -165,6 +165,10 @@ SIMPLE_JWT = {
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken', ),
     "UPDATE_LAST_LOGIN": True,
 
+    "TOKEN_OBTAIN_SERIALIZER": "core.auth.serializers.CustomTokenObtainPairSerializer",
+    "TOKEN_REFRESH_SERIALIZER": "core.auth.serializers.CustomTokenRefreshSerializer",
+    "TOKEN_VERIFY_SERIALIZER": "core.auth.serializers.CustomTokenVerifySerializer",
+
     # custom
     'AUTH_COOKIE': 'access',
     'AUTH_COOKIE_REFRESH': 'refresh',
@@ -177,7 +181,7 @@ SIMPLE_JWT = {
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'core.auth.backend.authentication.CustomAuthentication'
+        'core.auth.authentication.CustomAuthentication'
     ],
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer'
