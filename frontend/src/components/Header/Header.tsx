@@ -2,10 +2,10 @@ import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { useAuth } from 'hooks/useAuth';
 import { FC } from 'react';
 import { ThemeSwitcher } from 'components/ThemeSwitcher';
-import { HeaderPopOver } from 'components/Header/HeaderPopover';
+import { HeaderPopOver } from 'components/Header';
 import { Logo } from 'components/Logo';
 import { Button } from 'components/Button';
-import StatusIcon from 'components/Profile/StatusIcon';
+import { StatusIcon } from 'components/Profile';
 
 export const Header: FC = () => {
    const navigate: NavigateFunction = useNavigate();

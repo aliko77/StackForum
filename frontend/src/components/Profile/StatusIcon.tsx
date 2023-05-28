@@ -5,7 +5,7 @@ interface StatusIconProps {
    transitions?: string;
 }
 
-const StatusIcon: FC<StatusIconProps> = ({ status, transitions }) => {
+export const StatusIcon: FC<StatusIconProps> = ({ status, transitions }) => {
    const iconColor = status === 'ONLINE' ? 'bg-green-400' : 'bg-red-400';
 
    return (
@@ -14,5 +14,3 @@ const StatusIcon: FC<StatusIconProps> = ({ status, transitions }) => {
       ></span>
    );
 };
-
-export default StatusIcon;

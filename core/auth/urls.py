@@ -1,6 +1,5 @@
 from django.urls import path
 from rest_framework.routers import SimpleRouter
-from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
 from .viewsets import RegisterViewSet, AccountVerifyViewSet, PasswordViewSet
 from .views import CustomTokenObtainPairView, CustomTokenVerifyView, CustomTokenRefreshView, \
     LogoutView

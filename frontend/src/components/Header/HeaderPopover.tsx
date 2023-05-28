@@ -1,7 +1,7 @@
 import { Popover, Transition } from '@headlessui/react';
 import { Button } from 'components/Button';
 import { LogoutButton } from 'components/LogoutButton';
-import StatusIcon from 'components/Profile/StatusIcon/StatusIcon';
+import { StatusIcon } from 'components/Profile';
 import { useAuth } from 'hooks/useAuth';
 import { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
@@ -33,13 +33,13 @@ export const HeaderPopOver = () => {
          <Transition
             as={Fragment}
             enter="transition ease-out duration-200"
-            enterFrom="opacity-0 0 translate-x-4 sm:-translate-y-4 sm:translate-x-0"
+            enterFrom="opacity-0 0 translate-x-3 sm:-translate-y-4 sm:translate-x-0"
             enterTo="opacity-100 translate-x-0 sm:translate-y-0 sm:translate-x-0"
             leave="transition ease-in duration-150"
             leaveFrom="opacity-100 translate-x-0 sm:translate-y-0"
-            leaveTo="opacity-0 translate-x-4 sm:-translate-y-4 sm:translate-x-0"
+            leaveTo="opacity-0 translate-x-3 sm:-translate-y-4 sm:translate-x-0"
          >
-            <Popover.Panel className="z-10 absolute w-screen -right-4 mt-4 sm:w-[380px] sm:rounded-t shadow bg-white dark:bg-night-200 border border-gray-300 dark:border-gray-600 whitespace-nowrap">
+            <Popover.Panel className="z-10 absolute w-screen -right-4 mt-3 sm:mt-4 sm:w-[380px] sm:rounded-t shadow bg-white dark:bg-night-200 border border-gray-300 dark:border-gray-600 whitespace-nowrap">
                <div className="overflow-hidden">
                   <div className="relative flex flex-row flex-wrap h-full w-full m-0 float-none">
                      <div className="flex items-center w-full leading-4 p-2">

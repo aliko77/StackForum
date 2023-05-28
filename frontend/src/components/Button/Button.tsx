@@ -20,9 +20,9 @@ const colorVariants: IcolorVariants = {
 };
 
 const darkColorVariants: IcolorVariants = {
-   rose: 'dark:bg-rose-500 dark:hover:bg-rose-600 dark:focus:ring-rose-600 dark:disabled:bg-rose-600',
+   rose: 'dark:bg-rose-500 dark:hover:bg-rose-600 dark:focus:ring-rose-500 dark:disabled:bg-rose-600',
    indigo:
-      'dark:bg-indigo-500 dark:focus:ring-indigo-600 dark:hover:bg-indigo-600 dark:disabled:bg-indigo-600',
+      'dark:bg-indigo-500 dark:hover:bg-indigo-600 dark:focus:ring-indigo-500 dark:disabled:bg-indigo-600',
 };
 
 export const Button: FC<IButton> = ({
@@ -34,7 +34,7 @@ export const Button: FC<IButton> = ({
    type = 'button',
    ...props
 }) => {
-   const buttonClass = `w-full ${colorVariants[color]} focus:outline-none focus:ring py-1.5 px-2 rounded-sm dark:text-gray-100 ${darkColorVariants[dark]}`;
+   const buttonClass = `w-full ${colorVariants[color]} focus:outline-none focus:ring-1 py-1.5 px-2 rounded-sm dark:text-gray-100 ${darkColorVariants[dark]}`;
 
    return (
       <button className={`${buttonClass}`} onClick={onClick} type={type} {...props}>
