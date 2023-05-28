@@ -1,6 +1,7 @@
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 
 interface IButton {
+   children?: ReactNode;
    onClick?: () => void;
    text: string;
    color?: string;
@@ -25,6 +26,7 @@ const darkColorVariants: IcolorVariants = {
 };
 
 export const Button: FC<IButton> = ({
+   children,
    onClick,
    text,
    color = 'rose',
@@ -37,6 +39,7 @@ export const Button: FC<IButton> = ({
    return (
       <button className={`${buttonClass}`} onClick={onClick} type={type} {...props}>
          <span className="text-white uppercase text-sm whitespace-nowrap">{text}</span>
+         {children}
       </button>
    );
 };

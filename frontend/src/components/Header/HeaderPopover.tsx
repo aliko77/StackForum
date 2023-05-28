@@ -1,8 +1,10 @@
 import { Popover, Transition } from '@headlessui/react';
+import { Button } from 'components/Button';
 import { LogoutButton } from 'components/LogoutButton';
 import StatusIcon from 'components/Profile/StatusIcon/StatusIcon';
 import { useAuth } from 'hooks/useAuth';
 import { Fragment } from 'react';
+import { NavLink } from 'react-router-dom';
 import { parseDateTimeToString } from 'utils';
 
 export const HeaderPopOver = () => {
@@ -31,13 +33,13 @@ export const HeaderPopOver = () => {
          <Transition
             as={Fragment}
             enter="transition ease-out duration-200"
-            enterFrom="opacity-0 0 translate-x-4 sm:-translate-y-3 sm:translate-x-0"
+            enterFrom="opacity-0 0 translate-x-4 sm:-translate-y-4 sm:translate-x-0"
             enterTo="opacity-100 translate-x-0 sm:translate-y-0 sm:translate-x-0"
             leave="transition ease-in duration-150"
             leaveFrom="opacity-100 translate-x-0 sm:translate-y-0"
-            leaveTo="opacity-0 translate-x-4 sm:-translate-y-3 sm:translate-x-0"
+            leaveTo="opacity-0 translate-x-4 sm:-translate-y-4 sm:translate-x-0"
          >
-            <Popover.Panel className="z-10 absolute w-screen -right-4 mt-3 sm:w-[380px] sm:rounded-t shadow bg-white dark:bg-night-200 border border-gray-300 dark:border-gray-600 whitespace-nowrap">
+            <Popover.Panel className="z-10 absolute w-screen -right-4 mt-4 sm:w-[380px] sm:rounded-t shadow bg-white dark:bg-night-200 border border-gray-300 dark:border-gray-600 whitespace-nowrap">
                <div className="overflow-hidden">
                   <div className="relative flex flex-row flex-wrap h-full w-full m-0 float-none">
                      <div className="flex items-center w-full leading-4 p-2">
@@ -81,16 +83,22 @@ export const HeaderPopOver = () => {
                            </div>
                         </div>
                      </div>
-                     <div className="w-full self-end border-y h-10 leading-10">
-                        <span className="w-1/2 text-center text-gray-900 dark:text-gray-100 float-left border-r">
-                           Profil
-                        </span>
-                        <span className="w-1/2 text-center text-gray-900 dark:text-gray-100 float-left">
-                           Ayarlar
-                        </span>
+                     <div className="w-full flex border-y border-gray-300 h-10 leading-10">
+                        <NavLink
+                           to="/profil"
+                           className="w-1/2 text-center border-r font-semibold float-left text-gray-900 hover:bg-gray-100 hover:text-rose-500 dark:text-gray-100 dark:hover:text-indigo-400 dark:hover:bg-gray-800"
+                        >
+                           Profilim
+                        </NavLink>
+                        <NavLink
+                           to="/kontrol-paneli"
+                           className="w-1/2 text-center font-semibold float-left text-gray-900 hover:bg-gray-100 hover:text-rose-500 dark:text-gray-100 dark:hover:text-indigo-400 dark:hover:bg-gray-800"
+                        >
+                           Panelim
+                        </NavLink>
                      </div>
-                     <div className="w-full bg-white dark:bg-night-100">
-                        <div className="p-3 flex border-b border-gray-300 dark:border-gray-600 items-center space-x-3 text-gray-900 dark:text-gray-200 text-sm">
+                     <div className="w-full bg-white dark:bg-night-100 text-gray-900 dark:text-gray-200 text-sm">
+                        <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600">
                            <div className="text-gray-900 dark:text-gray-400">
                               <svg
                                  xmlns="http://www.w3.org/2000/svg"
@@ -111,7 +119,7 @@ export const HeaderPopOver = () => {
                               <span> E-posta veya Şifre Değiştir</span>
                            </div>
                         </div>
-                        <div className="p-3 flex items-center space-x-3 text-gray-900 dark:text-gray-200 text-sm">
+                        <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600">
                            <div className="text-gray-900 dark:text-gray-400">
                               <svg
                                  xmlns="http://www.w3.org/2000/svg"
@@ -137,11 +145,35 @@ export const HeaderPopOver = () => {
                               <span>Profil Resmini Değiştir</span>
                            </div>
                         </div>
+                        <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600">
+                           <div className="text-gray-900 dark:text-gray-400">
+                              <svg
+                                 xmlns="http://www.w3.org/2000/svg"
+                                 fill="none"
+                                 viewBox="0 0 24 24"
+                                 strokeWidth="1.5"
+                                 stroke="currentColor"
+                                 className="w-5 h-4"
+                              >
+                                 <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
+                                 />
+                              </svg>
+                           </div>
+                           <div>
+                              <span>İmzanı Değiştir</span>
+                           </div>
+                        </div>
                      </div>
                      <div className="w-full">
-                        <div className="py-1 px-2">
-                           <div className="text-sm text-center text-gray-900 dark:text-gray-100">
-                              <span>TODO</span>
+                        <div className="py-2 px-1 flex justify-evenly">
+                           <div>
+                              <Button text="Abonelikler" />
+                           </div>
+                           <div>
+                              <Button text="Davetiyeler" />
                            </div>
                         </div>
                      </div>
