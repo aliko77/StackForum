@@ -92,7 +92,7 @@ export const Header: FC = () => {
                               text="Giriş yap"
                               dark="rose"
                               onClick={(): void => {
-                                 navigate('/login');
+                                 navigate('/login/');
                               }}
                            />
                         </div>
@@ -101,7 +101,7 @@ export const Header: FC = () => {
                               text="Kayıt ol"
                               color="indigo"
                               onClick={(): void => {
-                                 navigate('/register');
+                                 navigate('/register/');
                               }}
                            />
                         </div>

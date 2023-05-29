@@ -85,13 +85,13 @@ export const HeaderPopOver = () => {
                      </div>
                      <div className="w-full flex border-y border-gray-300 h-10 leading-10">
                         <NavLink
-                           to="/profil"
+                           to="/profil/"
                            className="w-1/2 text-center border-r font-semibold float-left text-gray-900 hover:bg-gray-100 hover:text-rose-500 dark:text-gray-100 dark:hover:text-indigo-400 dark:hover:bg-gray-800"
                         >
                            Profilim
                         </NavLink>
                         <NavLink
-                           to="/kontrol-paneli"
+                           to="/kontrol-paneli/"
                            className="w-1/2 text-center font-semibold float-left text-gray-900 hover:bg-gray-100 hover:text-rose-500 dark:text-gray-100 dark:hover:text-indigo-400 dark:hover:bg-gray-800"
                         >
                            Panelim
