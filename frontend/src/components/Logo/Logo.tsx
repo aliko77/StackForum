@@ -13,7 +13,7 @@ export const Logo: FC<ILogo> = ({ noText, noRedirect }) => {
    }`;
    if (noRedirect) {
       return (
-         <div className="flex">
+         <div className="flex justify-center">
             <div>
                <div className="flex space-x-2 items-center outline-0">
                   <img width="36px" src={StackLogo} alt="Logo" />

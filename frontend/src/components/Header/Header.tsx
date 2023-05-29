@@ -65,7 +65,7 @@ export const Header: FC = () => {
                               <div className="mr-4">
                                  <img
                                     className="w-9 h-9 border-solid border-2 border-white rounded-full"
-                                    src="src/assets/images/profile_pictures/53571.jpg"
+                                    src="/images/profile_pictures/53571.jpg"
                                     alt="profile picture"
                                  />
                                  <StatusIcon status="ONLINE" transitions="top-1/2 -translate-x-1" />
