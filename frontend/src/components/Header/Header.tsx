@@ -5,11 +5,11 @@ import { ThemeSwitcher } from 'components/ThemeSwitcher';
 import { HeaderPopOver } from 'components/Header';
 import { Logo } from 'components/Logo';
 import { Button } from 'components/Button';
-import { StatusIcon } from 'components/Profile';
+import { Avatar, StatusIcon } from 'components/Profile';
 
 export const Header: FC = () => {
    const navigate: NavigateFunction = useNavigate();
-   const { accessToken, user } = useAuth();
+   const { user } = useAuth();
 
    return (
       <header className="fixed flex z-50 w-full h-16 bg-white dark:bg-night-200 border-t-4 border-t-rose-400 border-b border-b-gray-300 dark:border-b-night-200">
@@ -25,7 +25,7 @@ export const Header: FC = () => {
                            xmlns="http://www.w3.org/2000/svg"
                            fill="none"
                            viewBox="0 0 24 24"
-                           strokeWidth="1.5"
+                           strokeWidth={1.5}
                            stroke="currentColor"
                            className="w-6 h-6"
                         >
@@ -37,7 +37,7 @@ export const Header: FC = () => {
                         </svg>
                      </div>
                   </div>
-                  {accessToken && (
+                  {user && (
                      <>
                         <div className="p-1.5 mx-2 bg-white dark:bg-night-100 shadow rounded-full">
                            <ThemeSwitcher />
@@ -48,7 +48,7 @@ export const Header: FC = () => {
                                  xmlns="http://www.w3.org/2000/svg"
                                  fill="none"
                                  viewBox="0 0 24 24"
-                                 strokeWidth="1.5"
+                                 strokeWidth={1.5}
                                  stroke="currentColor"
                                  className="w-6 h-6"
                               >
@@ -63,11 +63,7 @@ export const Header: FC = () => {
                         <div className="hidden sm:block mx-4">
                            <div className="flex items-center justify-center whitespace-nowrap">
                               <div className="mr-4">
-                                 <img
-                                    className="w-9 h-9 border-solid border-2 border-white rounded-full"
-                                    src="/images/profile_pictures/53571.jpg"
-                                    alt="profile picture"
-                                 />
+                                 <Avatar path="53571.jpg" width="2.5rem" height="2.5rem" />
                                  <StatusIcon status="ONLINE" transitions="top-1/2 -translate-x-1" />
                               </div>
                               <div>
@@ -85,7 +81,7 @@ export const Header: FC = () => {
                         </div>
                      </>
                   )}
-                  {!accessToken && (
+                  {!user && (
                      <>
                         <div className="mx-2">
                            <Button

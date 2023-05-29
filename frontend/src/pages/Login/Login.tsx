@@ -34,7 +34,7 @@ const Login: FC = () => {
          <div className="flex items-center justify-center mb-4">
             <Logo noRedirect />
          </div>
-         <div className="border rounded p-3 pt-5 bg-white dark:text-gray-100 dark:bg-night-200 dark:border-gray-500">
+         <div className="border rounded px-3 pt-5 bg-white dark:text-gray-100 dark:bg-night-200 dark:border-gray-500">
             <Formik
                validationSchema={validationSchema}
                initialValues={InitialState}
@@ -107,6 +107,15 @@ const Login: FC = () => {
                   </div>
                )}
             </Formik>
+            <p className="text-end text-sm text-gray-500 dark:text-gray-400 my-2">
+               Hesabın yok mu ?
+               <NavLink
+                  to="/register"
+                  className="ml-1 font-medium text-rose-500 hover:underline dark:text-indigo-400"
+               >
+                  Kayıt ol
+               </NavLink>
+            </p>
          </div>
       </div>
    );

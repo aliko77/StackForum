@@ -44,12 +44,13 @@ export const AuthProvider = ({ children }: IReactChildren) => {
    const logout = async (): Promise<void> => {
       try {
          await axiosPrivateI.post('/auth/logout/');
+      } catch (error: unknown) {
+         error instanceof AxiosError && console.debug('[Error]', error.response?.data);
+      } finally {
          setAxiosPrivateHeaders(undefined, undefined);
          setAccessToken(undefined);
          setCsrfToken(undefined);
          setUser(undefined);
-      } catch (error: unknown) {
-         error instanceof AxiosError && console.debug('[Error]', error.response?.data);
       }
    };
 

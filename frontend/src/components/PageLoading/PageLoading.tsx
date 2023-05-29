@@ -14,7 +14,7 @@ export const PageLoading: FC<IProp> = ({ message }) => {
             <div>
                <Logo noRedirect />
                <div>
-                  <h1 className='text-xl dark:text-gray-100 font-mono text-center sm:hidden'>
+                  <h1 className="text-xl dark:text-gray-100 font-mono text-center sm:hidden">
                      <span>Stack</span>
                      <span className="font-semibold">Forum</span>
                   </h1>

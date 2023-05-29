@@ -1,7 +1,7 @@
 import { Popover, Transition } from '@headlessui/react';
 import { Button } from 'components/Button';
 import { LogoutButton } from 'components/LogoutButton';
-import { StatusIcon } from 'components/Profile';
+import { Avatar, StatusIcon } from 'components/Profile';
 import { useAuth } from 'hooks/useAuth';
 import { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
@@ -18,7 +18,7 @@ export const HeaderPopOver = () => {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  strokeWidth="1.5"
+                  strokeWidth={1.5}
                   stroke="currentColor"
                   className="w-6 h-6"
                >
@@ -33,7 +33,7 @@ export const HeaderPopOver = () => {
          <Transition
             as={Fragment}
             enter="transition ease-out duration-200"
-            enterFrom="opacity-0 0 translate-x-3 sm:-translate-y-4 sm:translate-x-0"
+            enterFrom="opacity-0 translate-x-3 sm:-translate-y-4 sm:translate-x-0"
             enterTo="opacity-100 translate-x-0 sm:translate-y-0 sm:translate-x-0"
             leave="transition ease-in duration-150"
             leaveFrom="opacity-100 translate-x-0 sm:translate-y-0"
@@ -44,11 +44,7 @@ export const HeaderPopOver = () => {
                   <div className="relative flex flex-row flex-wrap h-full w-full m-0 float-none">
                      <div className="flex items-center w-full leading-4 p-2">
                         <div className="mr-4">
-                           <img
-                              className="w-16 h-16 border-solid border-2 border-white rounded-full"
-                              src="src/assets/images/profile_pictures/53571.jpg"
-                              alt="profile picture"
-                           />
+                           <Avatar path="53571.jpg" width="4rem" height="4rem" />
                            <StatusIcon status="ONLINE" transitions="top-12" />
                         </div>
                         <div>
@@ -61,7 +57,7 @@ export const HeaderPopOver = () => {
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
                                     viewBox="0 0 24 24"
-                                    strokeWidth="1.5"
+                                    strokeWidth={1.5}
                                     stroke="currentColor"
                                     className="w-4 h-4"
                                  >
@@ -104,7 +100,7 @@ export const HeaderPopOver = () => {
                                  xmlns="http://www.w3.org/2000/svg"
                                  fill="none"
                                  viewBox="0 0 24 24"
-                                 strokeWidth="1.5"
+                                 strokeWidth={1.5}
                                  stroke="currentColor"
                                  className="w-5 h-5"
                               >
@@ -125,7 +121,7 @@ export const HeaderPopOver = () => {
                                  xmlns="http://www.w3.org/2000/svg"
                                  fill="none"
                                  viewBox="0 0 24 24"
-                                 strokeWidth="1.5"
+                                 strokeWidth={1.5}
                                  stroke="currentColor"
                                  className="w-5 h-5"
                               >
@@ -151,7 +147,7 @@ export const HeaderPopOver = () => {
                                  xmlns="http://www.w3.org/2000/svg"
                                  fill="none"
                                  viewBox="0 0 24 24"
-                                 strokeWidth="1.5"
+                                 strokeWidth={1.5}
                                  stroke="currentColor"
                                  className="w-5 h-4"
                               >

@@ -8,6 +8,7 @@ import { FormErrors } from 'components/FormErrors';
 import { LoadSpinner } from 'components/LoadSpinner';
 import { Button } from 'components/Button';
 import { Field } from 'components/Field';
+import { NavLink } from 'react-router-dom';
 
 interface RegisterFormProp {
    email: string;
@@ -47,7 +48,7 @@ const Register: FC = () => {
          <div className="flex items-center justify-center mb-4">
             <Logo />
          </div>
-         <div className="border rounded p-3 bg-white dark:text-gray-100 dark:bg-night-200 dark:border-gray-500">
+         <div className="border rounded px-3 pt-3 bg-white dark:text-gray-100 dark:bg-night-200 dark:border-gray-500">
             <div className="flex justify-center mb-3">
                <h1 className="font-semibold font-mono dark:text-gray-100 text-rose-600">
                   Kayıt Ol
@@ -173,6 +174,15 @@ const Register: FC = () => {
                   </div>
                )}
             </Formik>
+            <p className="text-end text-sm text-gray-500 dark:text-gray-400 my-2">
+               Bir hesabın var mı ?
+               <NavLink
+                  to="/login"
+                  className="ml-1 font-medium text-rose-500 hover:underline dark:text-indigo-400"
+               >
+                  Giriş yap
+               </NavLink>
+            </p>
          </div>
       </div>
    );

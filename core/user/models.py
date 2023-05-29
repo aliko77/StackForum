@@ -3,6 +3,7 @@ from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.utils import timezone
+import os
 
 
 class UserManager(BaseUserManager):
@@ -66,6 +67,17 @@ PROFILE_STATUS_CHOICES = (
     ('ONLINE', 'Çevrimiçi'),
     ('OFFLINE', 'Çevrimdışı'),
 )
+def get_upload_path(instance, filename):
+    # Dosya adını kullanıcı ID'si ve zaman damgasıyla birleştirerek oluşturun
+    user_id = instance.user.id
+    timestamp = timezone.now().strftime('%Y%m%d%H%M%S')
+    _, ext = os.path.splitext(filename)
+    new_filename = f"{user_id}_{timestamp}{ext}"
+
+    # Profil resimlerinin yükleneceği dosya yolunu belirleyin
+    # Örneğin: media/profile_pictures/userID_20230101153000.jpg
+    return f"profile_pictures/{new_filename}"
+
 class Profile(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE)
@@ -79,6 +91,7 @@ class Profile(models.Model):
     email_secondary = models.EmailField(max_length=254, blank=True)
     phone_number = models.CharField(max_length=20, blank=True)
     status = models.CharField(max_length=20, choices=PROFILE_STATUS_CHOICES, default='OFFLINE')
+    avatar = models.ImageField(upload_to=get_upload_path, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
