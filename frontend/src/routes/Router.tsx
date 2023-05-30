@@ -13,6 +13,7 @@ const AuthVerify = lazy(() => import('pages/Auth/Verify'));
 const PasswordReset = lazy(() => import('pages/Auth/Password/Reset'));
 const PasswordChange = lazy(() => import('pages/Auth/Password/Change'));
 const ControlPanel = lazy(() => import('pages/ControlPanel'));
+const ProfilEdit = lazy(() => import('pages/Profil/Edit'));
 //404
 const PageNotFound = lazy(() => import('pages/PageNotFound'));
 
@@ -54,6 +55,10 @@ const routes: IRoutes[] = [
    {
       path: 'kontrol-paneli/',
       element: getRouteElement(() => <PrivateRoute>{<ControlPanel />}</PrivateRoute>),
+   },
+   {
+      path: 'profil/duzenle/',
+      element: getRouteElement(() => <PrivateRoute>{<ProfilEdit />}</PrivateRoute>),
    },
    { path: '*', element: getRouteElement(PageNotFound) },
 ];

@@ -7,7 +7,8 @@ export default {
          colors: {
             night: {
                100: '#383b50',
-               200: '#323448'
+               200: '#323448',
+               300: '#2b2e47',
             }
          },
          animation: {

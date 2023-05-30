@@ -24,29 +24,7 @@ export const items: ItemProp[] = [
          },
          {
             name: 'Gizlilik & Özelleştirme',
-            link: '/profil',
-         },
-         {
-            name: 'Avatarı değiştir',
-            link: '/profil/avatar',
-         },
-      ],
-   },
-   {
-      name: 'Profil',
-      submenu: true,
-      sublinks: [
-         {
-            name: 'Profiliniz',
-            link: '/profil',
-         },
-         {
-            name: 'Profili Düzenle',
-            link: '/profil/duzenle',
-         },
-         {
-            name: 'Gizlilik & Özelleştirme',
-            link: '/profil',
+            link: '/profil/ozellestir',
          },
          {
             name: 'Avatarı değiştir',
