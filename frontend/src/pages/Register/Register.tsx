@@ -87,7 +87,7 @@ const Register: FC = () => {
                   <div>
                      {errors && <FormErrors errors={errors} />}
                      {isSubmitting && <LoadSpinner />}
-                     <form noValidate onSubmit={handleSubmit} className="space-y-3">
+                     <form noValidate onSubmit={handleSubmit} className="space-y-4">
                         <div>
                            <div className="flex space-x-3">
                               <div>

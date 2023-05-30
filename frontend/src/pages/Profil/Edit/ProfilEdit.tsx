@@ -20,9 +20,9 @@ const ProfilEdit: FC = () => {
                         </p>
                      </legend>
                      <div className="content ml-4">
-                        <p className="text-gray-900 dark:text-gray-100">
+                        <p className="text-gray-900 dark:text-gray-400">
                            Email ve şifre değiştirmek için{' '}
-                           <span className="underline">tıklayın.</span>
+                           <span className="underline text-gray-300">tıklayın.</span>
                         </p>
                      </div>
                   </fieldset>
