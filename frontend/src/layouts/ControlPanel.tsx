@@ -9,7 +9,7 @@ const ControlPanelLayout = ({ children }: IReactChildren) => {
                <>
                   <Sidebar />
                </>
-               <div className="float-none md:float-right w-full md:w-[calc(100%-300px)]">
+               <div className="mt-4 md:mt-0 float-none md:float-right w-full md:w-[calc(100%-260px)]">
                   {children}
                </div>
             </div>

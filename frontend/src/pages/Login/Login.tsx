@@ -56,7 +56,6 @@ const Login: FC = () => {
                {({
                   values,
                   errors: formikErrors,
-                  touched,
                   handleChange,
                   handleBlur,
                   handleSubmit,
@@ -75,10 +74,8 @@ const Login: FC = () => {
                               onBlur={handleBlur}
                               value={values.email}
                               placeholder="Email"
+                              errorMessage={formikErrors.email}
                            />
-                           <p className="text-red-500 dark:text-red-400 text-sm ml-1">
-                              {formikErrors.email && touched.email && formikErrors.email}
-                           </p>
                         </div>
                         <div>
                            <Field
@@ -89,10 +86,9 @@ const Login: FC = () => {
                               onBlur={handleBlur}
                               value={values.password}
                               placeholder="Şifre"
+                              autoComplete="on"
+                              errorMessage={formikErrors.password}
                            />
-                           <p className="text-red-500 dark:text-red-400 text-sm ml-1">
-                              {formikErrors.password && touched.password && formikErrors.password}
-                           </p>
                         </div>
                         <div className="flex justify-end">
                            <NavLink

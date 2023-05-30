@@ -1,4 +1,4 @@
-import { axiosService } from 'api/axios';;
+import { axiosService } from 'api/axios';
 import { AxiosError } from 'axios';
 import { Alert } from 'components/Alert';
 import { Button } from 'components/Button';
@@ -63,7 +63,6 @@ const Reset: FC = () => {
                   {({
                      values,
                      errors: formikErrors,
-                     touched,
                      handleChange,
                      handleBlur,
                      handleSubmit,
@@ -82,10 +81,8 @@ const Reset: FC = () => {
                               onChange={handleChange}
                               onBlur={handleBlur}
                               value={values.email}
+                              errorMessage={formikErrors.email}
                            />
-                           <p className="text-red-500 dak:text-red-400 text-sm ml-1">
-                              {formikErrors.email && touched.email && formikErrors.email}
-                           </p>
                            <div className="mt-4">
                               <Button text="Gönder" type="submit" disabled={isSubmitting} />
                            </div>

@@ -66,7 +66,6 @@ const PasswordChange: FC = () => {
                   {({
                      values,
                      errors: formikErrors,
-                     touched,
                      handleChange,
                      handleBlur,
                      handleSubmit,
@@ -86,12 +85,8 @@ const PasswordChange: FC = () => {
                                  onChange={handleChange}
                                  onBlur={handleBlur}
                                  value={values.password}
+                                 errorMessage={formikErrors.password}
                               />
-                              <p className="text-red-500 dak:text-red-400 text-sm ml-1">
-                                 {formikErrors.password &&
-                                    touched.password &&
-                                    formikErrors.password}
-                              </p>
                            </div>
                            <div>
                               <Field
@@ -102,12 +97,8 @@ const PasswordChange: FC = () => {
                                  onChange={handleChange}
                                  onBlur={handleBlur}
                                  value={values.confirmPassword}
+                                 errorMessage={formikErrors.confirmPassword}
                               />
-                              <p className="text-red-500 dak:text-red-400 text-sm ml-1">
-                                 {formikErrors.confirmPassword &&
-                                    touched.confirmPassword &&
-                                    formikErrors.confirmPassword}
-                              </p>
                            </div>
                            <div>
                               <Button text="Kaydet" type="submit" disabled={isSubmitting} />

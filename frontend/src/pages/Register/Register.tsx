@@ -83,7 +83,6 @@ const Register: FC = () => {
                   handleChange,
                   values,
                   handleBlur,
-                  touched,
                }) => (
                   <div>
                      {errors && <FormErrors errors={errors} />}
@@ -100,12 +99,8 @@ const Register: FC = () => {
                                     onBlur={handleBlur}
                                     value={values.first_name}
                                     placeholder="İsim"
+                                    errorMessage={formikErrors.first_name}
                                  />
-                                 <p className="text-red-500 dark:text-red-400 text-sm ml-1">
-                                    {formikErrors.first_name &&
-                                       touched.first_name &&
-                                       formikErrors.first_name}
-                                 </p>
                               </div>
                               <div>
                                  <Field
@@ -116,12 +111,8 @@ const Register: FC = () => {
                                     onBlur={handleBlur}
                                     value={values.last_name}
                                     placeholder="Soyisim"
+                                    errorMessage={formikErrors.last_name}
                                  />
-                                 <p className="text-red-500 dark:text-red-400 text-sm ml-1">
-                                    {formikErrors.last_name &&
-                                       touched.last_name &&
-                                       formikErrors.last_name}
-                                 </p>
                               </div>
                            </div>
                         </div>
@@ -134,10 +125,8 @@ const Register: FC = () => {
                               onBlur={handleBlur}
                               value={values.email}
                               placeholder="Email"
+                              errorMessage={formikErrors.email}
                            />
-                           <p className="text-red-500 dark:text-red-400 text-sm ml-1">
-                              {formikErrors.email && touched.email && formikErrors.email}
-                           </p>
                         </div>
                         <div>
                            <Field
@@ -148,10 +137,8 @@ const Register: FC = () => {
                               onBlur={handleBlur}
                               value={values.password}
                               placeholder="Şifre"
+                              errorMessage={formikErrors.password}
                            />
-                           <p className="text-red-500 dark:text-red-400 text-sm ml-1">
-                              {formikErrors.password && touched.password && formikErrors.password}
-                           </p>
                         </div>
                         <div>
                            <Field
@@ -162,12 +149,8 @@ const Register: FC = () => {
                               onBlur={handleBlur}
                               value={values.confirmPassword}
                               placeholder="Şifreyi onayla"
+                              errorMessage={formikErrors.confirmPassword}
                            />
-                           <p className="text-red-500 dark:text-red-400 text-sm ml-1">
-                              {formikErrors.confirmPassword &&
-                                 touched.confirmPassword &&
-                                 formikErrors.confirmPassword}
-                           </p>
                         </div>
                         <Button text={'Kayıt ol'} type="submit" disabled={isSubmitting} />
                      </form>
