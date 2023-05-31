@@ -17,7 +17,7 @@ export const Field: FC<InputProps> = ({
    ...props
 }) => {
    return (
-      <div className="mb-4">
+      <div>
          <label
             htmlFor={id}
             className={

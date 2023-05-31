@@ -1,4 +1,4 @@
-import { axiosService } from 'api/axios';;
+import { axiosService } from 'api/axios';
 import { AxiosError } from 'axios';
 import { Alert } from 'components/Alert';
 import { Button } from 'components/Button';
@@ -29,7 +29,6 @@ const AuthVerify: FC = () => {
       setIsSubmitting(true);
       try {
          const { status } = await verify(vcode, user?.email);
-
          if (status === true) {
             setNoRedirect(true);
             setMessage('Başarıyla doğrulandı.');
@@ -114,7 +113,11 @@ const AuthVerify: FC = () => {
                               }}
                            />
                            <div className="mt-4 mx-2">
-                              <Button text={'Doğrula'} type="submit" disabled={isSubmitting} />
+                              <Button
+                                 text={'Doğrula'}
+                                 type="submit"
+                                 disabled={isSubmitting || noRedirect}
+                              />
                            </div>
                         </form>
                      </div>

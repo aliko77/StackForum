@@ -64,7 +64,7 @@ const Login: FC = () => {
                   <div>
                      {message && <Alert color={eColors.Rose} text={message} />}
                      {isSubmitting && <LoadSpinner />}
-                     <form noValidate onSubmit={handleSubmit} className="space-y-3">
+                     <form noValidate onSubmit={handleSubmit} className="space-y-4">
                         <div>
                            <Field
                               id="email"
@@ -89,14 +89,14 @@ const Login: FC = () => {
                               autoComplete="on"
                               errorMessage={formikErrors.password}
                            />
-                        </div>
-                        <div className="flex justify-end">
-                           <NavLink
-                              to="/auth/password/reset"
-                              className="text-sm font-medium text-rose-500 hover:underline dark:text-indigo-400"
-                           >
-                              Şifreni mi unuttun?
-                           </NavLink>
+                           <div className="flex justify-end mt-2">
+                              <NavLink
+                                 to="/auth/password/reset"
+                                 className="text-sm font-medium text-rose-500 hover:underline dark:text-indigo-400"
+                              >
+                                 Şifreni mi unuttun?
+                              </NavLink>
+                           </div>
                         </div>
                         <Button text={'Giriş yap'} type="submit" disabled={isSubmitting} />
                      </form>
