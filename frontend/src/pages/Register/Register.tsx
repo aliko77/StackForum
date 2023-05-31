@@ -98,8 +98,8 @@ const Register: FC = () => {
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.first_name}
-                                    placeholder="İsim"
                                     errorMessage={formikErrors.first_name}
+                                    placeholder="İsim"
                                  />
                               </div>
                               <div>

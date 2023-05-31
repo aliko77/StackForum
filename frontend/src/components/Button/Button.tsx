@@ -1,13 +1,8 @@
-import { FC, ReactNode } from 'react';
+import { FC, ButtonHTMLAttributes } from 'react';
 
-interface IButton {
-   children?: ReactNode;
-   onClick?: () => void;
+interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
    text: string;
-   color?: string;
    dark?: string;
-   type?: 'button' | 'submit' | 'reset';
-   disabled?: boolean;
 }
 
 interface IcolorVariants {

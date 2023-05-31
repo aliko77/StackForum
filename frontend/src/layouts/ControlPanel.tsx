@@ -4,7 +4,7 @@ import { IReactChildren } from 'types';
 const ControlPanelLayout = ({ children }: IReactChildren) => {
    return (
       <>
-         <div className="container mx-auto mt-4">
+         <div className="container mx-auto my-4">
             <div className="table table-fixed w-full">
                <>
                   <Sidebar />
