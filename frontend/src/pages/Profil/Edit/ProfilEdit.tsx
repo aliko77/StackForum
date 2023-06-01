@@ -7,30 +7,39 @@ import { Button } from 'components/Button';
 import { FormErrors } from 'components/FormErrors';
 import { LoadSpinner } from 'components/LoadSpinner';
 import { object, string, date } from 'yup';
-import { differenceInYears } from 'date-fns';
+import { Label } from 'components/Label';
+import { useAuth } from 'hooks/useAuth';
 
 interface FormProp {
-   username: string;
-   dob: Date;
+   dob: string | undefined;
+   dob_privacy: string | undefined;
+   city: string | undefined;
 }
 
-const initialValues: FormProp = {
-   username: '',
-   dob: new Date(),
-};
-
 const validationSchema = object({
-   username: string().required('Bu alan zorunludur.').min(3).max(32),
    dob: date()
-      .typeError('Değer bir tarih olmalıdır (YYYY-AA-GG)')
       .required('Bu alan zorunludur.')
-      .test('dob', '15 Yaşından küçükler kayıt olamaz.', function (value) {
-         return differenceInYears(new Date(), new Date(value)) >= 18;
+      .test('date', '15 Yaşından küçükseniz devam edemezsiniz.', (value) => {
+         const currentDate = new Date();
+         const minDate = new Date();
+         const maxDate = new Date();
+         minDate.setFullYear(currentDate.getFullYear() - 90);
+         maxDate.setFullYear(currentDate.getFullYear() - 15);
+         return value >= minDate && value <= maxDate;
       }),
+   dob_privacy: string().required('Bu alan zorunludur.').trim(),
+   city: string().required('Bu alan zorunludur.'),
 });
 
 const ProfilEdit: FC = () => {
+   const { user } = useAuth();
    const [errors, setErrors] = useState<null | string[]>(null);
+
+   const initialValues: FormProp = {
+      dob: new Date(user?.profile?.dob ?? '1001-01-01').toISOString().split('T')[0],
+      dob_privacy: user?.profile?.dob_privacy,
+      city: user?.profile?.city,
+   };
 
    return (
       <ControlPanelLayout>
@@ -44,6 +53,7 @@ const ProfilEdit: FC = () => {
                validationSchema={validationSchema}
                initialValues={initialValues}
                onSubmit={(values, actions) => {
+                  setErrors(null);
                   console.log(values);
                   actions.setSubmitting(false);
                }}
@@ -82,6 +92,8 @@ const ProfilEdit: FC = () => {
                               </legend>
                               <div className="ml-4">
                                  <Field
+                                    readOnly
+                                    disabled
                                     label="Kullanıcı Adı"
                                     type="text"
                                     id="username"
@@ -89,18 +101,19 @@ const ProfilEdit: FC = () => {
                                     placeholder="Kullanıcı adınızı giriniz."
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    value={values.username}
-                                    errorMessage={formikErrors.username}
+                                    value={user?.username}
                                  />
                               </div>
                            </fieldset>
                            <fieldset id="dob">
-                              <legend className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">
-                                 <p className="font-medium text-gray-900 dark:text-gray-100">
-                                    Doğum Günü
-                                 </p>
+                              <legend className="w-full">
+                                 <div className="mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">
+                                    <p className="font-medium text-gray-900 dark:text-gray-100">
+                                       Doğum Günü
+                                    </p>
+                                 </div>
                               </legend>
-                              <div className="ml-4">
+                              <div className="ml-4 mb-4">
                                  <Field
                                     label="Doğum Tarihi"
                                     type="date"
@@ -109,7 +122,43 @@ const ProfilEdit: FC = () => {
                                     placeholder="Doğum tarihinizi giriniz."
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    value={values.dob.toString()}
+                                    value={values.dob}
+                                    errorMessage={formikErrors.dob}
+                                 />
+                              </div>
+                              <div className="ml-4">
+                                 <Label htmlFor="dob_privacy">Gizlilik</Label>
+                                 <select
+                                    id="dob_privacy"
+                                    className="w-full outline-none text-sm p-1.5 bg-gray-50 dark:bg-gray-700 border rounded-sm border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 focus:ring-rose-500 focus:border-rose-500 dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.dob_privacy}
+                                 >
+                                    <option value="none">Yaşı ve doğum tarihini gösterme</option>
+                                    <option value="age">Sadece yaşı göster</option>
+                                    <option value="month_day">Sadece ay ve günü göster</option>
+                                    <option value="show">Yaşı ve doğum tarihini göster</option>
+                                 </select>
+                              </div>
+                           </fieldset>
+                           <fieldset id="city">
+                              <legend className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">
+                                 <p className="font-medium text-gray-900 dark:text-gray-100">
+                                    Şehir
+                                 </p>
+                              </legend>
+                              <div className="ml-4">
+                                 <Field
+                                    label="Bulunduğunuz Şehri / Bölgeyi yazınız."
+                                    type="text"
+                                    id="city"
+                                    name="city"
+                                    placeholder="İstanbul/Avrupa"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.city}
+                                    errorMessage={formikErrors.city}
                                  />
                               </div>
                            </fieldset>

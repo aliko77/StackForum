@@ -62,10 +62,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         db_table = "user"
 
 
-PROFILE_STATUS_CHOICES = (
-    ('ONLINE', 'Çevrimiçi'),
-    ('OFFLINE', 'Çevrimdışı'),
-)
 def get_upload_path(instance, filename):
     # Dosya adını kullanıcı ID'si ve zaman damgasıyla birleştirerek oluşturun
     user_id = instance.user.id
@@ -77,10 +73,22 @@ def get_upload_path(instance, filename):
     # Örneğin: media/profile_pictures/userID_20230101153000.jpg
     return f"profile_pictures/{new_filename}"
 
+PROFILE_STATUS_CHOICES = (
+    ('ONLINE', 'Çevrimiçi'),
+    ('OFFLINE', 'Çevrimdışı'),
+)
+PROFILE_DOB_PRIVACY_CHOICES = (
+    ('none', 'Hiçbir Şeyi Gösterme'),
+    ('age', 'Sadece Yaş'),
+    ('month_day', 'Ay ve Gün'),
+    ('show', 'Her Şeyi Göster')
+)
+
 class Profile(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE)
-    age = models.PositiveIntegerField(null=True, blank=True)
+    dob = models.DateField(null=True, blank=True)
+    dob_privacy = models.CharField(max_length=20, choices=PROFILE_DOB_PRIVACY_CHOICES, default='age')
     city = models.CharField(max_length=50)
     about = models.TextField(max_length=500, blank=True)
     profession = models.CharField(max_length=50, blank=True)

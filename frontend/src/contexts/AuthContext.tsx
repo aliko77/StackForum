@@ -5,7 +5,7 @@ import { IReactChildren, ILoginFunc, IRegisterFunc, IUser, IVerifyFunc } from 't
 import { AxiosError } from 'axios';
 import { setAxiosPrivateHeaders, useAxiosPrivate } from 'hooks/useAxiosPrivate';
 interface IAuthContext {
-   user?: IUser;
+   user: IUser | undefined;
    setUser: Dispatch<SetStateAction<IUser | undefined>>;
    accessToken?: string;
    setAccessToken: Dispatch<SetStateAction<string | undefined>>;
@@ -79,10 +79,10 @@ export const AuthProvider = ({ children }: IReactChildren) => {
       const { status } = data;
 
       if (typeof status === 'boolean') {
-         setUser((prevUser: unknown) => {
-            if (!prevUser) return undefined;
+         setUser((prevState: IUser | undefined) => {
+            if (!prevState) return undefined;
             return {
-               ...prevUser,
+               ...prevState,
                is_verified: status,
             };
          });

@@ -12,7 +12,7 @@ export const HeaderPopOver = () => {
    const lastlogin = user?.last_login ? parseDateTimeToString(user.last_login) : 'Bilinmiyor.';
    return (
       <Popover className="relative">
-         <Popover.Button className="group inline-flex p-1.5 items-center bg-white dark:bg-night-100 shadow rounded focus:outline-none">
+         <Popover.Button className="group inline-flex p-1.5 items-center bg-white dark:bg-night-100 shadow rounded-sm focus:outline-none">
             <div className="text-zinc-500 hover:text-rose-500 dark:text-zinc-400 dark:hover:text-indigo-500">
                <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -74,7 +74,7 @@ export const HeaderPopOver = () => {
                            </div>
                         </div>
                         <div className="absolute right-2">
-                           <div className="bg-white border border-solid border-gray-300 dark:border-gray-600 dark:bg-night-100 p-2 rounded shadow">
+                           <div className="bg-white border border-solid border-gray-300 dark:border-gray-600 dark:bg-night-100 p-2 rounded-sm shadow">
                               <LogoutButton />
                            </div>
                         </div>

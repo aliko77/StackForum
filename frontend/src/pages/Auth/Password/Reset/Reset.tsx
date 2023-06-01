@@ -20,7 +20,7 @@ const Reset: FC = () => {
 
    return (
       <div className="m-auto p-4">
-         <div className="p-8 flex w-full border dark:border-night-200 max-w-lg items-center justify-center space-y-4 antialiased bg-white dark:bg-night-200 rounded dark:text-gray-200">
+         <div className="p-8 flex w-full border dark:border-night-200 max-w-lg items-center justify-center space-y-4 antialiased bg-white dark:bg-night-200 rounded-sm dark:text-gray-200">
             <div>
                <div className="mb-4">
                   <h1 className="mb-6 text-3xl font-semibold text-center">Endişelenmeyin</h1>
