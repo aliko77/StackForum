@@ -95,11 +95,11 @@ const Register: FC = () => {
                                     id="first_name"
                                     type="text"
                                     name="first_name"
+                                    placeholder="İsim"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.first_name}
                                     errorMessage={formikErrors.first_name}
-                                    placeholder="İsim"
                                  />
                               </div>
                               <div>
@@ -107,10 +107,10 @@ const Register: FC = () => {
                                     id="last_name"
                                     type="text"
                                     name="last_name"
+                                    placeholder="Soyisim"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.last_name}
-                                    placeholder="Soyisim"
                                     errorMessage={formikErrors.last_name}
                                  />
                               </div>
@@ -121,10 +121,10 @@ const Register: FC = () => {
                               id="email"
                               type="email"
                               name="email"
+                              placeholder="Email"
                               onChange={handleChange}
                               onBlur={handleBlur}
                               value={values.email}
-                              placeholder="Email"
                               errorMessage={formikErrors.email}
                            />
                         </div>
@@ -133,10 +133,10 @@ const Register: FC = () => {
                               id="password"
                               type="password"
                               name="password"
+                              placeholder="Şifre"
                               onChange={handleChange}
                               onBlur={handleBlur}
                               value={values.password}
-                              placeholder="Şifre"
                               errorMessage={formikErrors.password}
                            />
                         </div>
@@ -145,10 +145,10 @@ const Register: FC = () => {
                               id="confirmPassword"
                               type="password"
                               name="confirmPassword"
+                              placeholder="Şifreyi onayla"
                               onChange={handleChange}
                               onBlur={handleBlur}
                               value={values.confirmPassword}
-                              placeholder="Şifreyi onayla"
                               errorMessage={formikErrors.confirmPassword}
                            />
                         </div>
