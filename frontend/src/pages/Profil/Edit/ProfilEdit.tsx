@@ -52,10 +52,9 @@ const ProfilEdit: FC = () => {
             <Formik
                validationSchema={validationSchema}
                initialValues={initialValues}
-               onSubmit={(values, actions) => {
+               onSubmit={async (values, actions): Promise<void> => {
                   setErrors(null);
-                  console.log(values);
-                  actions.setSubmitting(false);
+                  console.log(values, actions);
                }}
             >
                {({

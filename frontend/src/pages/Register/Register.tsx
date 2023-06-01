@@ -9,6 +9,7 @@ import { LoadSpinner } from 'components/LoadSpinner';
 import { Button } from 'components/Button';
 import { Field } from 'components/Field';
 import { NavLink } from 'react-router-dom';
+import { Alert } from 'components/Alert';
 
 interface RegisterFormProp {
    username: string;
@@ -27,9 +28,13 @@ const initialValues: RegisterFormProp = {
 const validationSchema = object({
    username: string()
       .required('*')
+      .matches(
+         /^(?!.*[-_.]{2})[a-zA-Z0-9_.çÇğĞıİöÖşŞüÜ-]+$/,
+         'Sadece "_" ve "." işaretlerine izin verilmektedir ve ard arda kullanılamaz.',
+      )
       .min(3, 'En az 3 haneli olmalı.')
-      .max(16, 'En fazla 16 haneli olmalı.'),
-   email: string().email('*').required('*'),
+      .max(32, 'En fazla 32 haneli olmalı.'),
+   email: string().email('*').required('*').lowercase(),
    password: string()
       .required('*')
       .min(8, 'Şifreniz en az 8 karakter olmalıdır.')
@@ -41,6 +46,7 @@ const validationSchema = object({
 
 const Register: FC = () => {
    const { register } = useAuth();
+   const [message, setMessage] = useState<null | string>(null);
    const [errors, setErrors] = useState<null | string[]>(null);
 
    return (
@@ -61,12 +67,15 @@ const Register: FC = () => {
                onSubmit={async (values: RegisterFormProp): Promise<void> => {
                   setErrors(null);
                   try {
-                     await register(
+                     const status = await register(
                         values.username,
                         values.email,
                         values.password,
                         values.confirmPassword,
                      );
+                     status === 201
+                        ? setMessage('Başarıyla kayıt oldunuz.')
+                        : setErrors(['Bir hata oluştu.']);
                   } catch (error: unknown) {
                      if (error instanceof AxiosError) {
                         const responseErrors = error.response?.data as string[];
@@ -85,6 +94,7 @@ const Register: FC = () => {
                }) => (
                   <div>
                      {errors && <FormErrors errors={errors} />}
+                     {message && <Alert text={message} />}
                      {isSubmitting && <LoadSpinner />}
                      <form noValidate onSubmit={handleSubmit} className="space-y-4">
                         <div>
@@ -117,6 +127,7 @@ const Register: FC = () => {
                               type="password"
                               name="password"
                               placeholder="Şifre"
+                              autoComplete="on"
                               onChange={handleChange}
                               onBlur={handleBlur}
                               value={values.password}
@@ -129,6 +140,7 @@ const Register: FC = () => {
                               type="password"
                               name="confirmPassword"
                               placeholder="Şifreyi onayla"
+                              autoComplete="on"
                               onChange={handleChange}
                               onBlur={handleBlur}
                               value={values.confirmPassword}

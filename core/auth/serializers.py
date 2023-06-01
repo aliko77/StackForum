@@ -9,6 +9,8 @@ from core.user.serializers import UserSerializer
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.signals import user_logged_in
 from django.conf import settings
+from django.db.models import Q
+from django.core.validators import RegexValidator
 
 User = get_user_model()
 
@@ -61,7 +63,13 @@ class RegisterSerializer(UserSerializer):
     email = EmailField(
         required=True, write_only=True, max_length=128)
     username = CharField(
-        write_only=True, required=True
+        write_only=True, required=True, min_length=3, max_length=32,
+            validators=[
+                RegexValidator(
+                    regex=r'^(?!.*[-_.]{2})[a-zA-Z0-9_.çÇğĞıİöÖşŞüÜ-]+$',
+                    message='Sadece "_", ".", "-" karakterlerine izin verilmektedir ve ard arda kullanılamaz.'
+                )
+            ]
     )
 
     class Meta:
@@ -74,6 +82,7 @@ class RegisterSerializer(UserSerializer):
             raise ValidationError(
                 'Şifreler eşleşmiyor.'
             )
+        
         try:
             User.objects.get(email=attrs['email'])
             raise ValidationError(
@@ -81,6 +90,15 @@ class RegisterSerializer(UserSerializer):
             )
         except ObjectDoesNotExist:
             pass
+
+        try:
+            User.objects.get(Q(username__iexact=attrs['username']))
+            raise ValidationError(
+                'Bu kullanıcı adı zaten kullanılıyor.'
+            )
+        except ObjectDoesNotExist:
+            pass
+
         return attrs
 
     def create(self, validated_data):

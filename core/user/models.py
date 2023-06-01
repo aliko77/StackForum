@@ -48,7 +48,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_login = models.DateTimeField(null=True, blank=True)
     date_joined = models.DateTimeField(auto_now_add=True)
 
-    USERNAME_FIELD = 'username'
+    USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
 
     objects = UserManager()

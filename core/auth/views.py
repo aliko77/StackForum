@@ -51,10 +51,7 @@ class CustomTokenRefreshView(TokenRefreshView):
             response.data = tokens
             return response
         except TokenError:
-            refresh_token = request.COOKIES.get(settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'])
-            token = RefreshToken(refresh_token)
-            token.blacklist() # adds it to the blacklist
-            response = Response(status=status.HTTP_401_UNAUTHORIZED)
+            response = Response()
             response.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'])
             response.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE'])
             response.delete_cookie("csrftoken")

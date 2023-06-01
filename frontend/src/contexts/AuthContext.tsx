@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }: IReactChildren) => {
       setAccessToken(access_token);
       setCsrfToken(xcsrfToken);
       setUser(user);
-      navigate('/');
+      user.is_verified ? navigate('/') : navigate('/auth/verify/');
    };
 
    const logout = async (): Promise<void> => {
@@ -55,19 +55,13 @@ export const AuthProvider = ({ children }: IReactChildren) => {
    };
 
    const register: IRegisterFunc = async (username, email, password, confirm_password) => {
-      const { data, headers } = await axiosService.post('/auth/register/', {
+      const { status } = await axiosService.post('/auth/register/', {
          username: username,
          email: email,
          password: password,
          confirm_password: confirm_password,
       });
-      const { access_token, user } = data;
-      const xcsrfToken = headers['x-csrftoken'];
-      setAxiosPrivateHeaders(access_token, xcsrfToken);
-      setAccessToken(access_token);
-      setCsrfToken(xcsrfToken);
-      setUser(user);
-      navigate('/auth/verify');
+      return status;
    };
 
    const verify: IVerifyFunc = async (vcode, email) => {

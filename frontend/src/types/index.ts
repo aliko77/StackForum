@@ -16,7 +16,7 @@ export interface IVerifyFunc {
 }
 
 export interface IRegisterFunc {
-   (email: string, password: string, confirm_password: string, username: string): Promise<void>;
+   (email: string, password: string, confirm_password: string, username: string): Promise<number>;
 }
 
 export interface IUser {
