@@ -3,6 +3,9 @@ from rest_framework.viewsets import ModelViewSet
 from .serializers import UserSerializer
 from django.contrib.auth import get_user_model
 from rest_framework.response import Response
+from django.conf import settings
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework import status
 
 User = get_user_model()
 

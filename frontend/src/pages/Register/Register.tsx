@@ -11,22 +11,24 @@ import { Field } from 'components/Field';
 import { NavLink } from 'react-router-dom';
 
 interface RegisterFormProp {
+   username: string;
    email: string;
    password: string;
    confirmPassword: string;
-   first_name: string;
-   last_name: string;
 }
 
 const initialValues: RegisterFormProp = {
+   username: '',
    email: '',
    password: '',
    confirmPassword: '',
-   first_name: '',
-   last_name: '',
 };
 
 const validationSchema = object({
+   username: string()
+      .required('*')
+      .min(3, 'En az 3 haneli olmalı.')
+      .max(16, 'En fazla 16 haneli olmalı.'),
    email: string().email('*').required('*'),
    password: string()
       .required('*')
@@ -35,8 +37,6 @@ const validationSchema = object({
    confirmPassword: string()
       .required('*')
       .oneOf([ref('password')], 'Şifreler eşleşmiyor.'),
-   first_name: string().trim().required('*'),
-   last_name: string().trim().required('*'),
 });
 
 const Register: FC = () => {
@@ -62,11 +62,10 @@ const Register: FC = () => {
                   setErrors(null);
                   try {
                      await register(
+                        values.username,
                         values.email,
                         values.password,
                         values.confirmPassword,
-                        values.first_name,
-                        values.last_name,
                      );
                   } catch (error: unknown) {
                      if (error instanceof AxiosError) {
@@ -89,32 +88,16 @@ const Register: FC = () => {
                      {isSubmitting && <LoadSpinner />}
                      <form noValidate onSubmit={handleSubmit} className="space-y-4">
                         <div>
-                           <div className="flex space-x-3">
-                              <div>
-                                 <Field
-                                    id="first_name"
-                                    type="text"
-                                    name="first_name"
-                                    placeholder="İsim"
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    value={values.first_name}
-                                    errorMessage={formikErrors.first_name}
-                                 />
-                              </div>
-                              <div>
-                                 <Field
-                                    id="last_name"
-                                    type="text"
-                                    name="last_name"
-                                    placeholder="Soyisim"
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    value={values.last_name}
-                                    errorMessage={formikErrors.last_name}
-                                 />
-                              </div>
-                           </div>
+                           <Field
+                              id="username"
+                              type="text"
+                              name="username"
+                              placeholder="Kullanıcı adı"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.username}
+                              errorMessage={formikErrors.username}
+                           />
                         </div>
                         <div>
                            <Field

@@ -20,16 +20,14 @@ export interface IRegisterFunc {
       email: string,
       password: string,
       confirm_password: string,
-      first_name: string,
-      last_name: string,
+      username: string,
    ): Promise<void>;
 }
 
 export interface IUser {
    id?: number;
    email?: string;
-   first_name?: string;
-   last_name?: string;
+   username?: string;
    is_active?: boolean;
    is_verified?: boolean;
    last_login?: string;

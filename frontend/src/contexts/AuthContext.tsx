@@ -54,19 +54,12 @@ export const AuthProvider = ({ children }: IReactChildren) => {
       }
    };
 
-   const register: IRegisterFunc = async (
-      email,
-      password,
-      confirm_password,
-      first_name,
-      last_name,
-   ) => {
+   const register: IRegisterFunc = async (username, email, password, confirm_password) => {
       const { data, headers } = await axiosService.post('/auth/register/', {
+         username: username,
          email: email,
          password: password,
          confirm_password: confirm_password,
-         first_name: first_name,
-         last_name: last_name,
       });
       const { access_token, user } = data;
       const xcsrfToken = headers['x-csrftoken'];

@@ -60,17 +60,14 @@ class RegisterSerializer(UserSerializer):
     confirm_password = CharField(write_only=True, required=True)
     email = EmailField(
         required=True, write_only=True, max_length=128)
-    first_name = CharField(
-        write_only=True, required=True
-    )
-    last_name = CharField(
+    username = CharField(
         write_only=True, required=True
     )
 
     class Meta:
         model = User
         fields = ['email', 'password',
-                  'confirm_password', 'first_name', 'last_name']
+                  'confirm_password', 'username']
 
     def validate(self, attrs):
         if attrs['password'] != attrs['confirm_password']:
@@ -88,10 +85,9 @@ class RegisterSerializer(UserSerializer):
 
     def create(self, validated_data):
         user_data = {
+            'username': validated_data['username'],
             'email': validated_data['email'],
             'password': validated_data['password'],
-            'first_name': validated_data['first_name'],
-            'last_name': validated_data['last_name'],
         }
         user = User.objects.create_user(**user_data)
         return user

@@ -39,9 +39,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         primary_key=True,
         editable=False
     )
+    username = models.CharField(max_length=16, unique=True, null=True)
     email = models.EmailField(max_length=255, unique=True)
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -49,7 +48,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_login = models.DateTimeField(null=True, blank=True)
     date_joined = models.DateTimeField(auto_now_add=True)
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'username'
     EMAIL_FIELD = 'email'
 
     objects = UserManager()

@@ -71,7 +71,7 @@ export const Header: FC = () => {
                                     {'Hoş geldin'}
                                  </span>
                                  <p className="text-gray-900 dark:text-gray-100 font-semibold text-base">
-                                    {user?.first_name + ' ' + user?.last_name}
+                                    {user?.username}
                                  </p>
                               </div>
                            </div>

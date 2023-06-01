@@ -49,7 +49,7 @@ export const HeaderPopOver = () => {
                         </div>
                         <div>
                            <div className="text-sm text-gray-900 dark:text-gray-100 font-semibold">
-                              <span>{user?.first_name + ' ' + user?.last_name}</span>
+                              <span>{user?.username}</span>
                            </div>
                            <div className="text-xs flex space-x-1 items-center mt-1">
                               <div className="text-gray-500 dark:text-gray-100">
