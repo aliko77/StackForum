@@ -1,7 +1,14 @@
 import { Dispatch, SetStateAction, createContext, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { axiosService } from 'api/axios/axios';
-import { IReactChildren, ILoginFunc, IRegisterFunc, IUser, IVerifyFunc } from 'types';
+import {
+   IReactChildren,
+   ILoginFunc,
+   IRegisterFunc,
+   IUser,
+   IVerifyFunc,
+   IUpdateUserFunc,
+} from 'types';
 import { AxiosError } from 'axios';
 import { setAxiosPrivateHeaders, useAxiosPrivate } from 'hooks/useAxiosPrivate';
 interface IAuthContext {
@@ -15,6 +22,7 @@ interface IAuthContext {
    register: IRegisterFunc;
    logout: () => void;
    verify: IVerifyFunc;
+   updateProfile: IUpdateUserFunc;
 }
 
 export const AuthContext = createContext<IAuthContext>({} as IAuthContext);
@@ -84,6 +92,10 @@ export const AuthProvider = ({ children }: IReactChildren) => {
       return data;
    };
 
+   const updateProfile: IUpdateUserFunc = async (data) => {
+      console.log(data);
+   };
+
    const value = useMemo(() => {
       return {
          user,
@@ -96,6 +108,7 @@ export const AuthProvider = ({ children }: IReactChildren) => {
          logout,
          register,
          verify,
+         updateProfile,
       };
    }, [user, accessToken, csrfToken]);
 

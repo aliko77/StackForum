@@ -19,6 +19,10 @@ export interface IRegisterFunc {
    (email: string, password: string, confirm_password: string, username: string): Promise<number>;
 }
 
+export interface IUpdateUserFunc {
+   (data: Record<string, unknown>): Promise<void>;
+}
+
 export interface IUser {
    id: number;
    email: string;

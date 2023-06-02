@@ -32,7 +32,7 @@ const validationSchema = object({
 });
 
 const ProfilEdit: FC = () => {
-   const { user } = useAuth();
+   const { user, updateProfile } = useAuth();
    const [errors, setErrors] = useState<null | string[]>(null);
 
    const initialValues: FormProp = {
@@ -52,9 +52,9 @@ const ProfilEdit: FC = () => {
             <Formik
                validationSchema={validationSchema}
                initialValues={initialValues}
-               onSubmit={async (values, actions): Promise<void> => {
+               onSubmit={async (values): Promise<void> => {
                   setErrors(null);
-                  console.log(values, actions);
+                  updateProfile(values);
                }}
             >
                {({
