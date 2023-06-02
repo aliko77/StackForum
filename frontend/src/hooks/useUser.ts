@@ -8,7 +8,7 @@ export default function useUser() {
 
    async function getUser() {
       try {
-         const { data } = await axiosPrivate.get('/user/');
+         const { data } = await axiosPrivate.get('/user/@me');
          setUser(data);
          return data;
       } catch (error: unknown) {

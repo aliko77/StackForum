@@ -64,7 +64,7 @@ const Register: FC = () => {
             <Formik
                validationSchema={validationSchema}
                initialValues={initialValues}
-               onSubmit={async (values: RegisterFormProp): Promise<void> => {
+               onSubmit={async (values: RegisterFormProp, { resetForm }): Promise<void> => {
                   setErrors(null);
                   try {
                      const status = await register(
@@ -73,9 +73,10 @@ const Register: FC = () => {
                         values.password,
                         values.confirmPassword,
                      );
-                     status === 201
-                        ? setMessage('Başarıyla kayıt oldunuz.')
-                        : setErrors(['Bir hata oluştu.']);
+                     if (status === 201) {
+                        setMessage('Başarıyla kayıt oldunuz.');
+                        resetForm();
+                     } else setErrors(['Bir hata oluştu.']);
                   } catch (error: unknown) {
                      if (error instanceof AxiosError) {
                         const responseErrors = error.response?.data as string[];

@@ -32,10 +32,10 @@ export const AuthProvider = ({ children }: IReactChildren) => {
          email: email,
          password: password,
       });
-      const { access_token, user } = data;
+      const { access, user } = data;
       const xcsrfToken = headers['x-csrftoken'];
-      setAxiosPrivateHeaders(access_token, xcsrfToken);
-      setAccessToken(access_token);
+      setAxiosPrivateHeaders(access, xcsrfToken);
+      setAccessToken(access);
       setCsrfToken(xcsrfToken);
       setUser(user);
       user.is_verified ? navigate('/') : navigate('/auth/verify/');
@@ -65,7 +65,7 @@ export const AuthProvider = ({ children }: IReactChildren) => {
    };
 
    const verify: IVerifyFunc = async (vcode, email) => {
-      const response = await axiosService.post('/auth/verify/', {
+      const response = await axiosService.post('/user/verify/', {
          activation_code: vcode,
          email: email,
       });
