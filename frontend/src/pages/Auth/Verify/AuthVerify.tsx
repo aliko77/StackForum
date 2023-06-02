@@ -52,7 +52,7 @@ const AuthVerify: FC = () => {
       }
       setIsSubmitting(true);
       try {
-         const { data } = await axiosService.post('/auth/verify/resend/', {
+         const { data } = await axiosService.post('/user/verify/resend/', {
             email: user?.email,
          });
 
