@@ -3,9 +3,7 @@ from rest_framework.viewsets import ModelViewSet
 from .serializers import UserSerializer
 from django.contrib.auth import get_user_model
 from rest_framework.response import Response
-from django.conf import settings
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework import status
+from django.shortcuts import get_object_or_404
 
 User = get_user_model()
 
@@ -15,6 +13,8 @@ class UserViewSet(ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = (IsAuthenticated,)
 
-    def list(self, request):
-        serializer = self.get_serializer(request.user)
+    def retrieve(self, request, pk=None):
+        queryset = User.objects.all()
+        user = get_object_or_404(queryset, pk=pk)
+        serializer = UserSerializer(user)
         return Response(serializer.data)

@@ -4,7 +4,6 @@ from django.utils.decorators import method_decorator
 from rest_framework.response import Response
 from django.conf import settings
 from rest_framework_simplejwt.exceptions import TokenError, InvalidToken 
-from django.middleware import csrf
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
