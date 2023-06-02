@@ -23,7 +23,6 @@ export const useRefreshToken = () => {
          }
          const { access: access_token } = data;
          const csrf_token = headers['x-csrftoken'];
-
          setAxiosPrivateHeaders(access_token, csrf_token);
          setAccessToken(access_token);
          setCsrfToken(csrf_token);
