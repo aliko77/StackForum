@@ -1,7 +1,6 @@
 import { FC, useState } from 'react';
 import { Formik } from 'formik';
 import { object, string, ref } from 'yup';
-import { useAuth } from 'hooks/useAuth';
 import { AxiosError } from 'axios';
 import { Logo } from 'components/Logo';
 import { FormErrors } from 'components/FormErrors';
@@ -10,19 +9,13 @@ import { Button } from 'components/Button';
 import { Field } from 'components/Field';
 import { NavLink } from 'react-router-dom';
 import { Alert } from 'components/Alert';
+import AuthService from 'services/auth/AuthService';
 
-interface RegisterFormProp {
+type RegisterFormProps = {
    username: string;
    email: string;
    password: string;
    confirmPassword: string;
-}
-
-const initialValues: RegisterFormProp = {
-   username: '',
-   email: '',
-   password: '',
-   confirmPassword: '',
 };
 
 const validationSchema = object({
@@ -44,10 +37,17 @@ const validationSchema = object({
       .oneOf([ref('password')], 'Şifreler eşleşmiyor.'),
 });
 
+const initialValues: RegisterFormProps = {
+   username: '',
+   email: '',
+   password: '',
+   confirmPassword: '',
+};
+
 const Register: FC = () => {
-   const { register } = useAuth();
    const [message, setMessage] = useState<null | string>(null);
    const [errors, setErrors] = useState<null | string[]>(null);
+   const { register } = AuthService;
 
    return (
       <div className="mx-auto w-full max-w-sm p-3 sm:my-20 my-10">
@@ -64,7 +64,7 @@ const Register: FC = () => {
             <Formik
                validationSchema={validationSchema}
                initialValues={initialValues}
-               onSubmit={async (values: RegisterFormProp, { resetForm }): Promise<void> => {
+               onSubmit={async (values: RegisterFormProps, { resetForm }): Promise<void> => {
                   setErrors(null);
                   try {
                      const status = await register(
@@ -73,7 +73,7 @@ const Register: FC = () => {
                         values.password,
                         values.confirmPassword,
                      );
-                     if (status === 201) {
+                     if (status) {
                         setMessage('Başarıyla kayıt oldunuz.');
                         resetForm();
                      } else setErrors(['Bir hata oluştu.']);

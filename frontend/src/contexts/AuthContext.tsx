@@ -1,41 +1,36 @@
 import { Dispatch, SetStateAction, createContext, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { axiosService } from 'api/axios/axios';
-import {
-   IReactChildren,
-   ILoginFunc,
-   IRegisterFunc,
-   IUser,
-   IVerifyFunc,
-   IUpdateUserFunc,
-} from 'types';
 import { AxiosError } from 'axios';
 import { setAxiosPrivateHeaders, useAxiosPrivate } from 'hooks/useAxiosPrivate';
+import { ReactChildrenProps, UserProps } from 'types';
+
+interface LoginFunctionProps {
+   (email: string, password: string): Promise<void>;
+}
+
 interface IAuthContext {
-   user: IUser | undefined;
-   setUser: Dispatch<SetStateAction<IUser | undefined>>;
+   user: UserProps | undefined;
+   setUser: Dispatch<SetStateAction<UserProps | undefined>>;
    accessToken?: string;
    setAccessToken: Dispatch<SetStateAction<string | undefined>>;
    csrfToken?: string;
    setCsrfToken: Dispatch<SetStateAction<string | undefined>>;
-   login: ILoginFunc;
-   register: IRegisterFunc;
+   login: LoginFunctionProps;
    logout: () => void;
-   verify: IVerifyFunc;
-   updateProfile: IUpdateUserFunc;
 }
 
 export const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
-export const AuthProvider = ({ children }: IReactChildren) => {
+export const AuthProvider = ({ children }: ReactChildrenProps) => {
    const navigate = useNavigate();
    const axiosPrivateI = useAxiosPrivate();
 
-   const [user, setUser] = useState<IUser>();
+   const [user, setUser] = useState<UserProps>();
    const [accessToken, setAccessToken] = useState<string>();
    const [csrfToken, setCsrfToken] = useState<string>();
 
-   const login: ILoginFunc = async (email, password) => {
+   const login: LoginFunctionProps = async (email, password) => {
       const { data, headers } = await axiosService.post('/auth/token/', {
          email: email,
          password: password,
@@ -62,40 +57,6 @@ export const AuthProvider = ({ children }: IReactChildren) => {
       }
    };
 
-   const register: IRegisterFunc = async (username, email, password, confirm_password) => {
-      const { status } = await axiosService.post('/auth/register/', {
-         username: username,
-         email: email,
-         password: password,
-         confirm_password: confirm_password,
-      });
-      return status;
-   };
-
-   const verify: IVerifyFunc = async (vcode, email) => {
-      const response = await axiosService.post('/user/verify/', {
-         activation_code: vcode,
-         email: email,
-      });
-      const { data } = response;
-      const { status } = data;
-
-      if (typeof status === 'boolean') {
-         setUser((prevState: IUser | undefined) => {
-            if (!prevState) return undefined;
-            return {
-               ...prevState,
-               is_verified: status,
-            };
-         });
-      }
-      return data;
-   };
-
-   const updateProfile: IUpdateUserFunc = async (data) => {
-      console.log(data);
-   };
-
    const value = useMemo(() => {
       return {
          user,
@@ -106,9 +67,6 @@ export const AuthProvider = ({ children }: IReactChildren) => {
          setCsrfToken,
          login,
          logout,
-         register,
-         verify,
-         updateProfile,
       };
    }, [user, accessToken, csrfToken]);
 

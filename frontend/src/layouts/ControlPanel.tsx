@@ -1,7 +1,7 @@
 import { Sidebar } from 'components/ControlPanel/Sidebar';
-import { IReactChildren } from 'types';
+import { ReactChildrenProps } from 'types';
 
-const ControlPanelLayout = ({ children }: IReactChildren) => {
+const ControlPanelLayout = ({ children }: ReactChildrenProps) => {
    return (
       <>
          <div className="container mx-auto my-4">

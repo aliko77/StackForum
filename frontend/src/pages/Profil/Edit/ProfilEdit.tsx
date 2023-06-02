@@ -32,7 +32,7 @@ const validationSchema = object({
 });
 
 const ProfilEdit: FC = () => {
-   const { user, updateProfile } = useAuth();
+   const { user } = useAuth();
    const [errors, setErrors] = useState<null | string[]>(null);
 
    const initialValues: FormProp = {
@@ -54,7 +54,7 @@ const ProfilEdit: FC = () => {
                initialValues={initialValues}
                onSubmit={async (values): Promise<void> => {
                   setErrors(null);
-                  updateProfile(values);
+                  console.log(values);
                }}
             >
                {({

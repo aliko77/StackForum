@@ -9,9 +9,11 @@ import { OtpInput } from 'components/OtpInput';
 import { useAuth } from 'hooks/useAuth';
 import { FC, useState, FormEvent, MouseEventHandler } from 'react';
 import { Navigate } from 'react-router-dom';
+import AuthService from 'services/auth/AuthService';
 
 const AuthVerify: FC = () => {
-   const { user, verify } = useAuth();
+   const { user } = useAuth();
+   const { verify } = new AuthService();
    const [vcode, setVcode] = useState<string>('');
    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
    const [errors, setErrors] = useState<null | string[]>(null);
@@ -28,8 +30,8 @@ const AuthVerify: FC = () => {
       setMessage(null);
       setIsSubmitting(true);
       try {
-         const { status } = await verify(vcode, user?.email);
-         if (status === true) {
+         const status = await verify(vcode, user?.email);
+         if (status) {
             setNoRedirect(true);
             setMessage('Başarıyla doğrulandı.');
          } else {
@@ -39,8 +41,9 @@ const AuthVerify: FC = () => {
          if (error instanceof AxiosError) {
             setErrors(error.response?.data);
          }
+      } finally {
+         setIsSubmitting(false);
       }
-      setIsSubmitting(false);
    };
 
    const handleResend: MouseEventHandler<HTMLButtonElement> = async () => {

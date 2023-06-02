@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from 'hooks/useAuth';
-import { IReactChildren } from 'types';
+import { ReactChildrenProps } from 'types';
 import useUser from 'hooks/useUser';
 import { PageLoading } from 'components/PageLoading';
 import { useRefreshToken } from 'hooks/useRefreshToken';

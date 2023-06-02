@@ -1,8 +1,8 @@
 import { Footer } from 'components/Footer';
 import { Header } from 'components/Header';
-import { IReactChildren } from 'types';
+import { ReactChildrenProps } from 'types';
 
-const Layout = ({ children }: IReactChildren) => {
+const Layout = ({ children }: ReactChildrenProps) => {
    return (
       <>
          <Header />
