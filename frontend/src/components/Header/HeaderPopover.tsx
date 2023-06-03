@@ -82,13 +82,13 @@ export const HeaderPopOver = () => {
                      <div className="w-full flex border-y border-gray-300 h-10 leading-10">
                         <NavLink
                            to="/profil/"
-                           className="w-1/2 text-center border-r font-semibold float-left text-gray-900 hover:bg-gray-100 hover:text-rose-500 dark:text-gray-100 dark:hover:text-indigo-400 dark:hover:bg-gray-800"
+                           className="w-1/2 text-center border-r font-semibold float-left text-gray-900 hover:bg-gray-200 hover:text-rose-500 dark:text-gray-100 dark:hover:text-indigo-400 dark:hover:bg-gray-800"
                         >
                            Profilim
                         </NavLink>
                         <NavLink
                            to="/kontrol-paneli/"
-                           className="w-1/2 text-center font-semibold float-left text-gray-900 hover:bg-gray-100 hover:text-rose-500 dark:text-gray-100 dark:hover:text-indigo-400 dark:hover:bg-gray-800"
+                           className="w-1/2 text-center font-semibold float-left text-gray-900 hover:bg-gray-200 hover:text-rose-500 dark:text-gray-100 dark:hover:text-indigo-400 dark:hover:bg-gray-800"
                         >
                            Panelim
                         </NavLink>
@@ -112,9 +112,32 @@ export const HeaderPopOver = () => {
                               </svg>
                            </div>
                            <div>
-                              <span> E-posta veya Şifre Değiştir</span>
+                              <span>E-posta veya Şifre Değiştir</span>
                            </div>
                         </div>
+                        <NavLink to="/profil/duzenle/">
+                           <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800">
+                              <div className="text-gray-900 dark:text-gray-400">
+                                 <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth={1.5}
+                                    stroke="currentColor"
+                                    className="w-5 h-5"
+                                 >
+                                    <path
+                                       strokeLinecap="round"
+                                       strokeLinejoin="round"
+                                       d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"
+                                    />
+                                 </svg>
+                              </div>
+                              <div>
+                                 <span>Profili Düzenle</span>
+                              </div>
+                           </div>
+                        </NavLink>
                         <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600">
                            <div className="text-gray-900 dark:text-gray-400">
                               <svg

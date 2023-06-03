@@ -16,19 +16,19 @@ export const items: ItemProp[] = [
       sublinks: [
          {
             name: 'Profiliniz',
-            link: '/profil',
+            link: '/profil/',
          },
          {
             name: 'Profili Düzenle',
-            link: '/profil/duzenle',
+            link: '/profil/duzenle/',
          },
          {
             name: 'Gizlilik & Özelleştirme',
-            link: '/profil/ozellestir',
+            link: '/profil/ozellestir/',
          },
          {
             name: 'Avatarı değiştir',
-            link: '/profil/avatar',
+            link: '/profil/avatar/',
          },
       ],
    },
