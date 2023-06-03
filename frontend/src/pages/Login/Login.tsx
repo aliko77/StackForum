@@ -10,12 +10,12 @@ import { LoadSpinner } from 'components/LoadSpinner';
 import { Button } from 'components/Button';
 import { Field } from 'components/Field';
 
-interface LoginProp {
+type LoginProps = {
    email: string;
    password: string;
-}
+};
 
-const InitialState: LoginProp = {
+const InitialState: LoginProps = {
    email: '',
    password: '',
 };

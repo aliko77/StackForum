@@ -1,11 +1,11 @@
 import { Logo } from 'components/Logo';
 import { FC } from 'react';
 
-interface IProp {
+type Props = {
    message?: string;
-}
+};
 
-export const PageLoading: FC<IProp> = ({ message }) => {
+export const PageLoading: FC<Props> = ({ message }) => {
    const circleCommonClasses = 'h-5 w-5 bg-indigo-600 rounded-full';
 
    return (

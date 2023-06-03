@@ -1,12 +1,12 @@
 import { FC } from 'react';
 
-interface Prop {
+type Props = {
    path: string | undefined;
    width?: string;
    height?: string;
-}
+};
 
-export const Avatar: FC<Prop> = ({ path, height, width }) => {
+export const Avatar: FC<Props> = ({ path, height, width }) => {
    return (
       <>
          <img

@@ -4,16 +4,20 @@ import { useAuth } from 'hooks/useAuth';
 import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
 import { ProfileProps, UserProps } from 'types';
 
-interface AccountVerifyProps {
+type AccountVerifyProps = {
    vcode: string;
-   email: string | undefined;
-}
-interface RegisterProps {
+   email: string;
+};
+type RegisterProps = {
    username: string | undefined;
    email: string | undefined;
    password: string | undefined;
    confirm_password: string | undefined;
-}
+};
+
+type AvatarProps = {
+   avatar: string | undefined;
+};
 
 export default function useUser() {
    const { setUser } = useAuth();
@@ -63,6 +67,20 @@ export default function useUser() {
          return {
             ...prevState,
             profile: data.profile,
+         };
+      });
+      return status === 200 ? true : false;
+   };
+
+   const updateProfileAvatar = async (avatar: AvatarProps): Promise<boolean> => {
+      const { data, status } = await axiosPrivate.post('/user/profile/avatar/update/', avatar);
+      setUser((prevState) => {
+         if (!prevState) return undefined;
+         return {
+            ...prevState,
+            profile: {
+               avatar: data.avatar,
+            },
          };
       });
       return status === 200 ? true : false;

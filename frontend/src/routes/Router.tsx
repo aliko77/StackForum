@@ -19,10 +19,10 @@ const ProfilAvatar = lazy(() => import('pages/Profil/Avatar'));
 //404
 const PageNotFound = lazy(() => import('pages/PageNotFound'));
 
-interface IRoutes {
+type RouteProps = {
    path: string;
    element: ReactNode;
-}
+};
 
 const getRouteElement = (Component: ElementType): ReactElement => (
    <Suspense fallback={<PageLoading />}>
@@ -38,7 +38,7 @@ const getRouteElement = (Component: ElementType): ReactElement => (
    </Suspense>
 );
 
-const routes: IRoutes[] = [
+const routes: RouteProps[] = [
    { path: '/', element: getRouteElement(Home) },
    { path: 'login/', element: getRouteElement(() => <GuestRoute>{<Login />}</GuestRoute>) },
    { path: 'register/', element: getRouteElement(() => <GuestRoute>{<Register />}</GuestRoute>) },

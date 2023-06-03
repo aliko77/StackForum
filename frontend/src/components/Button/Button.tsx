@@ -1,26 +1,23 @@
 import { FC, ButtonHTMLAttributes } from 'react';
+import { KeyValue } from 'types';
 
-interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
    text: string;
    dark?: string;
-}
+};
 
-interface IcolorVariants {
-   [key: string]: string;
-}
-
-const colorVariants: IcolorVariants = {
+const colorVariants: KeyValue = {
    rose: 'bg-rose-500 focus:ring-rose-600 hover:bg-rose-600 disabled:bg-rose-600',
    indigo: 'bg-indigo-500 focus:ring-indigo-600 hover:bg-indigo-600 disabled:bg-indigo-600',
 };
 
-const darkColorVariants: IcolorVariants = {
+const darkColorVariants: KeyValue = {
    rose: 'dark:bg-rose-500 dark:hover:bg-rose-600 dark:focus:ring-rose-500 dark:disabled:bg-rose-600',
    indigo:
       'dark:bg-indigo-500 dark:hover:bg-indigo-600 dark:focus:ring-indigo-500 dark:disabled:bg-indigo-600',
 };
 
-export const Button: FC<IButton> = ({
+export const Button: FC<ButtonProps> = ({
    children,
    onClick,
    text,

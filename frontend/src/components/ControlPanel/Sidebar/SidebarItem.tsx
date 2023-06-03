@@ -1,13 +1,13 @@
 import { FC } from 'react';
-import { ItemProp } from './items';
+import { ItemProps } from './items';
 import { Disclosure } from '@headlessui/react';
 import { NavLink } from 'react-router-dom';
 
-interface Prop {
-   item: ItemProp;
-}
+type Props = {
+   item: ItemProps;
+};
 
-export const SidebarItem: FC<Prop> = ({ item }) => {
+export const SidebarItem: FC<Props> = ({ item }) => {
    return (
       <Disclosure defaultOpen>
          <div className={`${item.name.toLowerCase()}`}>

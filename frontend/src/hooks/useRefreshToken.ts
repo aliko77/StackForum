@@ -3,16 +3,16 @@ import { useAuth } from 'hooks/useAuth';
 import { setAxiosPrivateHeaders } from './useAxiosPrivate';
 import { AxiosError } from 'axios';
 
-interface RefreshResponse {
+type RefreshProps = {
    code?: string;
    access_token?: string;
    csrf_token?: string;
-}
+};
 
 export const useRefreshToken = () => {
    const { setAccessToken, setCsrfToken } = useAuth();
 
-   const refresh = async (): Promise<RefreshResponse | undefined> => {
+   const refresh = async (): Promise<RefreshProps | undefined> => {
       try {
          const { data, headers } = await axiosService.post('auth/token/refresh/');
          if (

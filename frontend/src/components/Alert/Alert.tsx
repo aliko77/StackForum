@@ -7,12 +7,12 @@ export enum eColors {
    None = '',
 }
 
-interface IAlert {
+type AlertProps = {
    text: string;
    color?: eColors | null | undefined;
-}
+};
 
-export const Alert: FC<IAlert> = ({ text, color = eColors.Green }) => {
+export const Alert: FC<AlertProps> = ({ text, color = eColors.Green }) => {
    return (
       <div
          className={`flex p-4 mb-4 text-center text-sm ${color} rounded-lg bg-blue-100 dark:bg-gray-800`}

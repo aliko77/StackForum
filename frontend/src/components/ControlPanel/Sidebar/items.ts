@@ -1,15 +1,15 @@
-interface SubItemProp {
+type SubItemProps = {
    name: string;
    link: string;
-}
+};
 
-export interface ItemProp {
+export type ItemProps = {
    name: string;
    submenu: boolean;
-   sublinks?: SubItemProp[];
-}
+   sublinks?: SubItemProps[];
+};
 
-export const items: ItemProp[] = [
+export const items: ItemProps[] = [
    {
       name: 'Profil',
       submenu: true,

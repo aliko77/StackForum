@@ -1,9 +1,9 @@
 import { FC } from 'react';
 
-interface StatusIconProps {
+type StatusIconProps = {
    status?: string;
    transitions?: string;
-}
+};
 
 export const StatusIcon: FC<StatusIconProps> = ({ status, transitions }) => {
    const iconColor = status === 'ONLINE' ? 'bg-green-400' : 'bg-red-400';

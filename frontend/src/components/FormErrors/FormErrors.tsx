@@ -1,10 +1,10 @@
 import { FC } from 'react';
 
-interface IFormErrors {
+type FormErrorProps = {
    errors: string[];
-}
+};
 
-export const FormErrors: FC<IFormErrors> = ({ errors }) => {
+export const FormErrors: FC<FormErrorProps> = ({ errors }) => {
    return (
       <>
          {Object.values(errors).map((value) => {

@@ -5,11 +5,11 @@ import { AxiosError } from 'axios';
 import { setAxiosPrivateHeaders, useAxiosPrivate } from 'hooks/useAxiosPrivate';
 import { ReactChildrenProps, UserProps } from 'types';
 
-interface LoginFunctionProps {
+type LoginFunctionProps = {
    (email: string, password: string): Promise<void>;
-}
+};
 
-interface IAuthContext {
+type IAuthContext = {
    user: UserProps | undefined;
    setUser: Dispatch<SetStateAction<UserProps | undefined>>;
    accessToken?: string;
@@ -18,7 +18,7 @@ interface IAuthContext {
    setCsrfToken: Dispatch<SetStateAction<string | undefined>>;
    login: LoginFunctionProps;
    logout: () => void;
-}
+};
 
 export const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 

@@ -1,8 +1,8 @@
 import { FC, LabelHTMLAttributes } from 'react';
 
-interface ILabel extends LabelHTMLAttributes<HTMLLabelElement> {
+type ILabel = LabelHTMLAttributes<HTMLLabelElement> & {
    htmlFor: string;
-}
+};
 
 export const Label: FC<ILabel> = ({ htmlFor, children, ...props }) => {
    return (

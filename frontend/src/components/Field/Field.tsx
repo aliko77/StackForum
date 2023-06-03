@@ -1,11 +1,11 @@
 import { ChangeEvent, FocusEvent, FC, InputHTMLAttributes } from 'react';
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+type InputProps = InputHTMLAttributes<HTMLInputElement> & {
    label?: string;
    errorMessage?: string;
    onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
    onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
-}
+};
 
 export const Field: FC<InputProps> = ({
    id,
