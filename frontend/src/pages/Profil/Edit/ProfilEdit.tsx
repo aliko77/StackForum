@@ -1,7 +1,6 @@
 import { Field } from 'components/Field';
 import ControlPanelLayout from 'layouts/ControlPanel';
 import { FC, useState } from 'react';
-
 import { Formik, Form } from 'formik';
 import { Button } from 'components/Button';
 import { FormErrors } from 'components/FormErrors';
@@ -36,40 +35,48 @@ const ProfilEdit: FC = () => {
       dob: new Date(user?.profile?.dob ?? '0001-01-01').toISOString().split('T')[0],
       dob_privacy: user?.profile?.dob_privacy,
       city: user?.profile?.city,
+      twitter_url: user?.profile?.twitter_url,
+      github_url: user?.profile?.github_url,
+      email_secondary: user?.profile?.email_secondary,
+      phone_number: user?.profile?.phone_number,
+      profession: user?.profile?.profession,
+      hobbies: user?.profile?.hobbies,
+      about: user?.profile?.about,
    };
 
    return (
       <ControlPanelLayout>
-         <div className="w-full">
-            <div className="title bg-night-200 dark:bg-night-300 p-2 rounded-t">
-               <p className="text-base font-semibold tracking-wide text-gray-100">
-                  Zorunlu Bilgiler
-               </p>
-            </div>
-            <Formik
-               validationSchema={validationSchema}
-               initialValues={initialValues}
-               onSubmit={async (values): Promise<void> => {
-                  setErrors(null);
-                  const status = await updateProfile(values);
-                  status &&
-                     Toast.fire({
-                        title: 'Başarıyla kaydedildi.',
-                        icon: 'success',
-                     });
-               }}
-            >
-               {({
-                  errors: formikErrors,
-                  handleSubmit,
-                  handleChange,
-                  values,
-                  handleBlur,
-                  isSubmitting,
-               }) => (
-                  <>
-                     {errors && <FormErrors errors={errors} />}
-                     <Form noValidate onSubmit={handleSubmit}>
+         <Formik
+            validationSchema={validationSchema}
+            initialValues={initialValues}
+            onSubmit={async (values): Promise<void> => {
+               setErrors(null);
+               const status = await updateProfile(values);
+               status &&
+                  Toast.fire({
+                     title: 'Başarıyla kaydedildi.',
+                     icon: 'success',
+                     timer: 2000,
+                  });
+            }}
+         >
+            {({
+               errors: formikErrors,
+               handleSubmit,
+               handleChange,
+               values,
+               handleBlur,
+               isSubmitting,
+            }) => (
+               <>
+                  {errors && <FormErrors errors={errors} />}
+                  <Form noValidate onSubmit={handleSubmit}>
+                     <div className="w-full mb-4">
+                        <div className="title bg-night-200 dark:bg-night-300 p-2 rounded-t">
+                           <p className="text-base font-semibold tracking-wide text-gray-100">
+                              Zorunlu Bilgiler
+                           </p>
+                        </div>
                         <div className="content px-4 py-4 space-y-8 bg-gray-200 dark:bg-night-200">
                            <fieldset id="email-password">
                               <legend className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">
@@ -163,14 +170,114 @@ const ProfilEdit: FC = () => {
                               </div>
                            </fieldset>
                         </div>
-                        <div className="w-full max-w-xs mx-auto mt-4 float-right">
-                           <Button type="submit" text="Kaydet" disabled={isSubmitting} />
+                     </div>
+                     <div className="w-full">
+                        <div className="title bg-night-200 dark:bg-night-300 p-2 rounded-t">
+                           <p className="text-base font-semibold tracking-wide text-gray-100">
+                              Genel Bilgiler - Bu bilgiler diğer forum üyeleri ile paylaşılır.
+                           </p>
                         </div>
-                     </Form>
-                  </>
-               )}
-            </Formik>
-         </div>
+                        <div className="content px-4 py-4 space-y-8 bg-gray-200 dark:bg-night-200">
+                           <fieldset id="social-accounts">
+                              <legend className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">
+                                 <p className="font-medium text-gray-900 dark:text-gray-100">
+                                    Sosyal Medya Hesapları
+                                 </p>
+                              </legend>
+                              <div className="content ml-4">
+                                 <div className="grid gap-6 md:grid-cols-2">
+                                    <Field
+                                       label="Twitter URL"
+                                       type="text"
+                                       id="twitter_url"
+                                       name="twitter_url"
+                                       onChange={handleChange}
+                                       onBlur={handleBlur}
+                                       value={values.twitter_url}
+                                       errorMessage={formikErrors.twitter_url}
+                                    />
+                                    <Field
+                                       label="Github URL"
+                                       type="text"
+                                       id="github_url"
+                                       name="github_url"
+                                       onChange={handleChange}
+                                       onBlur={handleBlur}
+                                       value={values.github_url}
+                                       errorMessage={formikErrors.github_url}
+                                    />
+                                 </div>
+                              </div>
+                           </fieldset>
+                           <fieldset id="personal_information">
+                              <legend className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">
+                                 <p className="font-medium text-gray-900 dark:text-gray-100">
+                                    Kişisel Bilgiler
+                                 </p>
+                              </legend>
+                              <div className="ml-4 space-y-4">
+                                 <Field
+                                    label="İletişim Maili"
+                                    type="text"
+                                    id="email_secondary"
+                                    name="email_secondary"
+                                    placeholder="email@mail.com"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.email_secondary}
+                                 />
+                                 <Field
+                                    label="Meslek"
+                                    type="text"
+                                    id="profession"
+                                    name="profession"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.profession}
+                                 />
+                                 <Field
+                                    label="Telefon Numarası"
+                                    type="text"
+                                    id="phone_number"
+                                    name="phone_number"
+                                    placeholder="555 555 55 55"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.phone_number}
+                                 />
+                                 <Field
+                                    label="Hobileriniz"
+                                    type="text"
+                                    id="hobbies"
+                                    name="hobbies"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.hobbies}
+                                 />
+                                 <div>
+                                    <Label htmlFor="about">Hakkımda</Label>
+                                    <textarea
+                                       id="about"
+                                       name="about"
+                                       rows={4}
+                                       className="block w-full p-1.5 outline-none disabled:bg-gray-300 disabled:dark:bg-gray-800 bg-gray-50 dark:bg-gray-700 border border-gray-300 text-gray-900 rounded-sm focus:ring-rose-500 focus:border-rose-500 dark:focus:ring-indigo-500 dark:focus:border-indigo-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-100 placeholder:text-sm"
+                                       placeholder="..."
+                                       onChange={handleChange}
+                                       onBlur={handleBlur}
+                                       value={values.about}
+                                    ></textarea>
+                                 </div>
+                              </div>
+                           </fieldset>
+                        </div>
+                     </div>
+                     <div className="w-full max-w-xs mx-auto mt-4 float-right">
+                        <Button type="submit" text="Kaydet" disabled={isSubmitting} />
+                     </div>
+                  </Form>
+               </>
+            )}
+         </Formik>
       </ControlPanelLayout>
    );
 };
