@@ -1,7 +1,8 @@
-from rest_framework.serializers import ModelSerializer, EmailField, CharField, ValidationError, ReadOnlyField
+from rest_framework.serializers import ModelSerializer, EmailField, CharField, ValidationError, SerializerMethodField 
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.http import urlsafe_base64_decode
+from django.conf import settings
 from .models import Profile, AuthActivation
 from .utils import SendVerificationEmail, SendPasswordResetEmail, token_generator
 
@@ -9,11 +10,26 @@ User = get_user_model()
 
 
 class ProfileSerializer(ModelSerializer):
-    avatar = ReadOnlyField(source='avatar_url')
+    avatar = SerializerMethodField(method_name="get_avatar")
+    
     class Meta:
         model = Profile
         exclude = ['id', 'user', 'created_at', 'updated_at']
 
+    def get_avatar(self, instance):
+        return settings.BASE_URL + instance.avatar.url
+    
+    def set_avatar(self, instance, validated_data):
+        print(1)
+        avatar = validated_data.get('avatar')
+        instance.avatar = avatar
+        instance.save()
+        
+
+    def update(self, instance, validated_data):
+        instance = super().update(instance, validated_data)
+        self.set_avatar(instance, validated_data)
+        return instance
 
 class UserSerializer(ModelSerializer):
     profile = ProfileSerializer()

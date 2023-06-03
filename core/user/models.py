@@ -3,7 +3,6 @@ from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.utils import timezone
-from django.conf import settings
 import os
 
 
@@ -89,8 +88,8 @@ class Profile(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE)
     dob = models.DateField(null=True, blank=True)
-    dob_privacy = models.CharField(max_length=20, choices=PROFILE_DOB_PRIVACY_CHOICES, default='age')
-    city = models.CharField(max_length=50)
+    dob_privacy = models.CharField(max_length=20, choices=PROFILE_DOB_PRIVACY_CHOICES, default='age', blank=True)
+    city = models.CharField(max_length=50, blank=True)
     about = models.TextField(max_length=500, blank=True)
     profession = models.CharField(max_length=50, blank=True)
     hobbies = models.TextField(max_length=500, blank=True)
@@ -98,17 +97,13 @@ class Profile(models.Model):
     github_url = models.URLField(max_length=200, blank=True)
     email_secondary = models.EmailField(max_length=254, blank=True)
     phone_number = models.CharField(max_length=20, blank=True)
-    status = models.CharField(max_length=20, choices=PROFILE_STATUS_CHOICES, default='OFFLINE')
+    status = models.CharField(max_length=20, choices=PROFILE_STATUS_CHOICES, default='OFFLINE', blank=True)
     avatar = models.ImageField(upload_to=get_upload_path, blank=True, null=True, default="profile_pictures/default.jpg")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = "user_profile"
-
-    @property
-    def avatar_url(self):
-        return settings.BASE_URL + self.avatar.url
 
 class AuthActivation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

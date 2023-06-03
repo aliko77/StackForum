@@ -16,7 +16,8 @@ type RegisterProps = {
 };
 
 type AvatarProps = {
-   avatar: string | undefined;
+   remove_avatar?: boolean;
+   avatar?: string;
 };
 
 export default function useUser() {
@@ -73,18 +74,29 @@ export default function useUser() {
    };
 
    const updateProfileAvatar = async (avatar: AvatarProps): Promise<boolean> => {
-      const { data, status } = await axiosPrivate.post('/user/profile/avatar/update/', avatar);
-      setUser((prevState) => {
-         if (!prevState) return undefined;
-         return {
-            ...prevState,
-            profile: {
-               avatar: data.avatar,
-            },
-         };
-      });
-      return status === 200 ? true : false;
+      try {
+         const { data, status } = await axiosPrivate.post('/user/profile/avatar/update/', avatar);
+         setUser((prevState) => {
+            if (!prevState) return undefined;
+            return {
+               ...prevState,
+               profile: {
+                  ...prevState.profile,
+                  avatar: data.avatar,
+               },
+            };
+         });
+         return status === 200 ? true : false;
+      } catch (error) {
+         return false;
+      }
    };
 
-   return { getUser, accountVerify, register, updateProfile };
+   return {
+      getUser,
+      accountVerify,
+      register,
+      updateProfile,
+      updateProfileAvatar,
+   };
 }

@@ -36,8 +36,33 @@ class UserViewSet(ModelViewSet):
         serializer = self.serializer_class(profile, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            data = {
+            response = Response(status=status.HTTP_200_OK)
+            response.data = {
                 "profile": serializer.data
             }
-            return Response(data, status=status.HTTP_200_OK)
+            return response
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(
+        methods=['post'],
+        detail=False,
+        serializer_class=ProfileSerializer,
+        url_path='profile/avatar/update'
+    )
+    def profile_avatar_update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        profile = instance.profile
+        if request.data.get('remove_avatar'):
+            vdata = {
+                'avatar': 'profile_pictures/default.jpg'
+            }
+        serializer = self.serializer_class(profile, data=vdata)
+        if serializer.is_valid():
+            serializer.save()
+            new_avatar = serializer.data.get('avatar')
+            response = Response(status=status.HTTP_200_OK)
+            response.data = {
+                'avatar': new_avatar
+            }
+            return response
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -4,11 +4,13 @@ import { Avatar as AvatarImage } from 'components/Profile/Avatar';
 import { useAuth } from 'hooks/useAuth';
 import { Button } from 'components/Button';
 import { Toast } from 'utils';
+import useUser from 'hooks/useUser';
 
 const EditAvatar: FC = () => {
    const { user } = useAuth();
+   const { updateProfileAvatar } = useUser();
 
-   const handleRemoveAvatar = () => {
+   const handleRemoveAvatar = async () => {
       const url = user?.profile?.avatar;
       const fileName = url && url.substring(url.lastIndexOf('/') + 1);
       if (fileName && fileName === 'default.jpg') {
@@ -17,6 +19,18 @@ const EditAvatar: FC = () => {
             icon: 'info',
          });
          return;
+      }
+      const status = await updateProfileAvatar({ remove_avatar: true });
+      if (status) {
+         Toast.fire({
+            title: 'Başarıyla kaldırıldı.',
+            icon: 'success',
+         });
+      } else {
+         Toast.fire({
+            title: 'Bir hata oluştu.',
+            icon: 'error',
+         });
       }
    };
 
@@ -88,10 +102,10 @@ const EditAvatar: FC = () => {
                      </div>
                   </div>
                </fieldset>
-               <fieldset id="avatar-info">
-                  <legend className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">
+               <div id="avatar-info">
+                  <div className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">
                      <p className="font-medium text-gray-900 dark:text-gray-100">Avatar Hakkında</p>
-                  </legend>
+                  </div>
                   <div className="content ml-2">
                      <ul className="max-w-md space-y-1 text-sm text-gray-600 list-disc list-inside dark:text-gray-400">
                         <li>Mevcut avatar herkes tarafından görülmektedir.</li>
@@ -99,7 +113,7 @@ const EditAvatar: FC = () => {
                         <li>Avatar ebatı maksimum 100x100 pixel ve 3.00 MB olmalıdır.</li>
                      </ul>
                   </div>
-               </fieldset>
+               </div>
             </div>
          </div>
       </ControlPanelLayout>
