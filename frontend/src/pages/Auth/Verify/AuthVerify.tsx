@@ -7,13 +7,13 @@ import { LoadSpinner } from 'components/LoadSpinner';
 import { Logo } from 'components/Logo';
 import { OtpInput } from 'components/OtpInput';
 import { useAuth } from 'hooks/useAuth';
+import useUser from 'hooks/useUser';
 import { FC, useState, FormEvent, MouseEventHandler } from 'react';
 import { Navigate } from 'react-router-dom';
-import AuthService from 'services/auth/AuthService';
 
 const AuthVerify: FC = () => {
    const { user } = useAuth();
-   const { verify } = new AuthService();
+   const { accountVerify } = useUser();
    const [vcode, setVcode] = useState<string>('');
    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
    const [errors, setErrors] = useState<null | string[]>(null);
@@ -30,7 +30,7 @@ const AuthVerify: FC = () => {
       setMessage(null);
       setIsSubmitting(true);
       try {
-         const status = await verify(vcode, user?.email);
+         const status = await accountVerify(vcode, user?.email);
          if (status) {
             setNoRedirect(true);
             setMessage('Başarıyla doğrulandı.');

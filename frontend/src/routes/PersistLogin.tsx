@@ -5,12 +5,12 @@ import useUser from 'hooks/useUser';
 import { PageLoading } from 'components/PageLoading';
 import { useRefreshToken } from 'hooks/useRefreshToken';
 
-export const PersistLogin = ({ children }: IReactChildren) => {
+export const PersistLogin = ({ children }: ReactChildrenProps) => {
    const refresh = useRefreshToken();
    const { accessToken } = useAuth();
    const [loading, setLoading] = useState(true);
    const [userLoaded, setUserLoaded] = useState(false);
-   const getUser = useUser();
+   const { getUser } = useUser();
 
    useEffect(() => {
       let isMounted = true;

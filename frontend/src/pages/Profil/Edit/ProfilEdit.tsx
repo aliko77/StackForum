@@ -36,7 +36,7 @@ const ProfilEdit: FC = () => {
    const [errors, setErrors] = useState<null | string[]>(null);
 
    const initialValues: FormProp = {
-      dob: new Date(user?.profile?.dob ?? '1001-01-01').toISOString().split('T')[0],
+      dob: new Date(user?.profile?.dob ?? '0001-01-01').toISOString().split('T')[0],
       dob_privacy: user?.profile?.dob_privacy,
       city: user?.profile?.city,
    };

@@ -1,14 +1,29 @@
 import { ReactNode } from 'react';
 
-export interface ReactChildrenProps {
+export type ReactChildrenProps = {
    children: ReactNode | ReactNode[];
-}
+};
 
-export interface KeyValue {
+export type KeyValue = {
    [key: string]: unknown;
-}
+};
 
-export interface UserProps {
+export type ProfileProps = {
+   dob: string;
+   dob_privacy: string;
+   city: string;
+   about: string;
+   profession: string;
+   hobbies: string;
+   twitter_url: string;
+   github_url: string;
+   email_secondary: string;
+   phone_number: string;
+   status: string;
+   avatar: string;
+};
+
+export type UserProps = {
    id: number;
    email: string;
    username: string;
@@ -16,5 +31,5 @@ export interface UserProps {
    is_verified: boolean;
    last_login: string;
    date_joined: string;
-   profile?: { [key: string]: string };
-}
+   profile?: ProfileProps;
+};

@@ -9,7 +9,7 @@ import { Button } from 'components/Button';
 import { Field } from 'components/Field';
 import { NavLink } from 'react-router-dom';
 import { Alert } from 'components/Alert';
-import AuthService from 'services/auth/AuthService';
+import useUser from 'hooks/useUser';
 
 type RegisterFormProps = {
    username: string;
@@ -45,9 +45,9 @@ const initialValues: RegisterFormProps = {
 };
 
 const Register: FC = () => {
+   const { register } = useUser();
    const [message, setMessage] = useState<null | string>(null);
    const [errors, setErrors] = useState<null | string[]>(null);
-   const { register } = AuthService;
 
    return (
       <div className="mx-auto w-full max-w-sm p-3 sm:my-20 my-10">
