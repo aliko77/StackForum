@@ -9,18 +9,18 @@ export type KeyValue = {
 };
 
 export type ProfileProps = {
-   dob: string;
-   dob_privacy: string;
-   city: string;
-   about: string;
-   profession: string;
-   hobbies: string;
-   twitter_url: string;
-   github_url: string;
-   email_secondary: string;
-   phone_number: string;
-   status: string;
-   avatar: string;
+   dob?: string;
+   dob_privacy?: string;
+   city?: string;
+   about?: string;
+   profession?: string;
+   hobbies?: string;
+   twitter_url?: string;
+   github_url?: string;
+   email_secondary?: string;
+   phone_number?: string;
+   status?: string;
+   avatar?: string;
 };
 
 export type UserProps = {

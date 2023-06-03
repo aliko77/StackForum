@@ -11,7 +11,7 @@ User = get_user_model()
 class ProfileSerializer(ModelSerializer):
     class Meta:
         model = Profile
-        exclude = ['id', 'created_at', 'user', 'updated_at']
+        exclude = ['id', 'user', 'created_at', 'updated_at']
 
 
 class UserSerializer(ModelSerializer):

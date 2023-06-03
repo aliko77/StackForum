@@ -5,16 +5,12 @@ import { FC, useState } from 'react';
 import { Formik, Form } from 'formik';
 import { Button } from 'components/Button';
 import { FormErrors } from 'components/FormErrors';
-import { LoadSpinner } from 'components/LoadSpinner';
 import { object, string, date } from 'yup';
 import { Label } from 'components/Label';
 import { useAuth } from 'hooks/useAuth';
-
-interface FormProp {
-   dob: string | undefined;
-   dob_privacy: string | undefined;
-   city: string | undefined;
-}
+import { ProfileProps } from 'types';
+import useUser from 'hooks/useUser';
+import { Toast } from 'utils';
 
 const validationSchema = object({
    dob: date()
@@ -33,9 +29,10 @@ const validationSchema = object({
 
 const ProfilEdit: FC = () => {
    const { user } = useAuth();
+   const { updateProfile } = useUser();
    const [errors, setErrors] = useState<null | string[]>(null);
 
-   const initialValues: FormProp = {
+   const initialValues: ProfileProps = {
       dob: new Date(user?.profile?.dob ?? '0001-01-01').toISOString().split('T')[0],
       dob_privacy: user?.profile?.dob_privacy,
       city: user?.profile?.city,
@@ -54,20 +51,24 @@ const ProfilEdit: FC = () => {
                initialValues={initialValues}
                onSubmit={async (values): Promise<void> => {
                   setErrors(null);
-                  console.log(values);
+                  const status = await updateProfile(values);
+                  status &&
+                     Toast.fire({
+                        title: 'Başarıyla kaydedildi.',
+                        icon: 'success',
+                     });
                }}
             >
                {({
                   errors: formikErrors,
-                  isSubmitting,
                   handleSubmit,
                   handleChange,
                   values,
                   handleBlur,
+                  isSubmitting,
                }) => (
                   <>
                      {errors && <FormErrors errors={errors} />}
-                     {isSubmitting && <LoadSpinner />}
                      <Form noValidate onSubmit={handleSubmit}>
                         <div className="content px-4 py-4 space-y-8 bg-gray-200 dark:bg-night-200">
                            <fieldset id="email-password">
@@ -163,7 +164,7 @@ const ProfilEdit: FC = () => {
                            </fieldset>
                         </div>
                         <div className="w-full max-w-xs mx-auto mt-4 float-right">
-                           <Button type="submit" text="Kaydet" />
+                           <Button type="submit" text="Kaydet" disabled={isSubmitting} />
                         </div>
                      </Form>
                   </>

@@ -2,20 +2,24 @@ import { axiosService } from 'api/axios';
 import { AxiosError } from 'axios';
 import { useAuth } from 'hooks/useAuth';
 import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
-import { KeyValue } from 'types';
+import { ProfileProps, UserProps } from 'types';
 
-interface VerifyFunctionProps {
-   (vcode: string, email: string | undefined): Promise<KeyValue>;
+interface AccountVerifyProps {
+   vcode: string;
+   email: string | undefined;
 }
 interface RegisterProps {
-   (username: string, email: string, password: string, confirm_password: string): Promise<boolean>;
+   username: string;
+   email: string;
+   password: string;
+   confirm_password: string;
 }
 
 export default function useUser() {
    const { setUser } = useAuth();
    const axiosPrivate = useAxiosPrivate();
 
-   async function getUser() {
+   const getUser = async (): Promise<UserProps | boolean> => {
       try {
          const { data } = await axiosPrivate.get('/user/@me');
          setUser(data);
@@ -24,28 +28,30 @@ export default function useUser() {
          error instanceof AxiosError && console.debug('[Request]', error?.response);
          return false;
       }
-   }
+   };
 
-   const accountVerify: VerifyFunctionProps = async (vcode, email) => {
+   const accountVerify = async ({ vcode, email }: AccountVerifyProps): Promise<boolean> => {
       const response = await axiosPrivate.post('/user/verify/', {
          activation_code: vcode,
          email: email,
       });
       const { status } = response.data;
-
-      if (typeof status === 'boolean') {
-         setUser((prevState) => {
-            if (!prevState) return undefined;
-            return {
-               ...prevState,
-               is_verified: status,
-            };
-         });
-      }
+      setUser((prevState) => {
+         if (!prevState) return undefined;
+         return {
+            ...prevState,
+            is_verified: status,
+         };
+      });
       return status;
    };
 
-   const register: RegisterProps = async (username, email, password, confirm_password) => {
+   const register = async ({
+      username,
+      email,
+      password,
+      confirm_password,
+   }: RegisterProps): Promise<boolean> => {
       const { status } = await axiosService.post('/auth/register/', {
          username: username,
          email: email,
@@ -55,5 +61,17 @@ export default function useUser() {
       return status === 201 ? true : false;
    };
 
-   return { getUser, accountVerify, register };
+   const updateProfile = async (profile: ProfileProps): Promise<boolean> => {
+      const { data, status } = await axiosPrivate.post('/user/profile/update/', profile);
+      setUser((prevState) => {
+         if (!prevState) return undefined;
+         return {
+            ...prevState,
+            profile: data.profile,
+         };
+      });
+      return status === 200 ? true : false;
+   };
+
+   return { getUser, accountVerify, register, updateProfile };
 }

@@ -1,3 +1,6 @@
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
 export const secretMail = (email: string) => {
    const [username, domain] = email.split('@');
    const [dom, dot] = domain.split('.');
@@ -16,3 +19,15 @@ export function parseDateTimeToString(dateTimeString: string): string {
    const formattedDate = `${day}/${month}/${year} ${hour}:${minute}`;
    return formattedDate;
 }
+
+export const Toast = withReactContent(Swal).mixin({
+   toast: true,
+   position: 'top-end',
+   showConfirmButton: false,
+   timer: 3000,
+   timerProgressBar: true,
+   customClass: {
+      popup: '!bg-night-300 text-gray-100',
+      timerProgressBar: 'bg-gray-600',
+   },
+});

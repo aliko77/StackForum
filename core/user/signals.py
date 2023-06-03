@@ -13,11 +13,6 @@ def after_create_user(sender, instance, created, **kwargs):
         SendVerificationEmail(instance)  # Doğrulama maili gönderilecek
 
 
-@receiver(post_save, sender=User)
-def save_profile(sender, instance, **kwargs):
-    instance.profile.save()
-
-
 @receiver(user_logged_in, sender=User)
 def user_logged_in_handler(sender, user, request, **kwargs):
     # Kullanıcı giriş yaptığında burası çalışacak
