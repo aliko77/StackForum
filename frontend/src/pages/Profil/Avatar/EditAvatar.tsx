@@ -3,13 +3,21 @@ import { FC } from 'react';
 import { Avatar as AvatarImage } from 'components/Profile/Avatar';
 import { useAuth } from 'hooks/useAuth';
 import { Button } from 'components/Button';
+import { Toast } from 'utils';
 
 const EditAvatar: FC = () => {
    const { user } = useAuth();
 
    const handleRemoveAvatar = () => {
-      if (user?.profile?.avatar === 'default.jpg') return;
-      console.log('.');
+      const url = user?.profile?.avatar;
+      const fileName = url && url.substring(url.lastIndexOf('/') + 1);
+      if (fileName && fileName === 'default.jpg') {
+         Toast.fire({
+            title: 'Avatarınız zaten varsayılan.',
+            icon: 'info',
+         });
+         return;
+      }
    };
 
    return (
