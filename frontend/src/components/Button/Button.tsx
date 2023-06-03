@@ -29,7 +29,7 @@ export const Button: FC<IButton> = ({
    type = 'button',
    ...props
 }) => {
-   const buttonClass = `w-full ${colorVariants[color]} focus:outline-none focus:ring-1 py-1.5 px-2 rounded-sm dark:text-gray-100 ${darkColorVariants[dark]}`;
+   const buttonClass = `w-full flex justify-center items-center ${colorVariants[color]} focus:outline-none focus:ring-1 py-1.5 px-2 rounded-sm text-gray-100 ${darkColorVariants[dark]}`;
 
    return (
       <button className={`${buttonClass}`} onClick={onClick} type={type} {...props}>

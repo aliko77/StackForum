@@ -63,7 +63,11 @@ export const Header: FC = () => {
                         <div className="hidden sm:block mx-4">
                            <div className="flex items-center justify-center whitespace-nowrap">
                               <div className="mr-4">
-                                 <Avatar path="53571.jpg" width="2.5rem" height="2.5rem" />
+                                 <Avatar
+                                    path={user.profile?.avatar}
+                                    width="2.5rem"
+                                    height="2.5rem"
+                                 />
                                  <StatusIcon status="ONLINE" transitions="top-1/2 -translate-x-1" />
                               </div>
                               <div>

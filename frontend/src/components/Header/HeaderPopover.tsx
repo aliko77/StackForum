@@ -44,7 +44,7 @@ export const HeaderPopOver = () => {
                   <div className="relative flex flex-row flex-wrap h-full w-full m-0 float-none">
                      <div className="flex items-center w-full leading-4 p-2">
                         <div className="mr-4">
-                           <Avatar path="53571.jpg" width="4rem" height="4rem" />
+                           <Avatar path={user?.profile?.avatar} width="4rem" height="4rem" />
                            <StatusIcon status="ONLINE" transitions="top-12" />
                         </div>
                         <div>

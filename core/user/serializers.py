@@ -1,4 +1,4 @@
-from rest_framework.serializers import ModelSerializer, EmailField, CharField, ValidationError
+from rest_framework.serializers import ModelSerializer, EmailField, CharField, ValidationError, ReadOnlyField
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.http import urlsafe_base64_decode
@@ -9,6 +9,7 @@ User = get_user_model()
 
 
 class ProfileSerializer(ModelSerializer):
+    avatar = ReadOnlyField(source='avatar_url')
     class Meta:
         model = Profile
         exclude = ['id', 'user', 'created_at', 'updated_at']

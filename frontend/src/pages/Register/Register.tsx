@@ -15,7 +15,7 @@ type RegisterFormProps = {
    username: string;
    email: string;
    password: string;
-   confirmPassword: string;
+   confirm_password: string;
 };
 
 const validationSchema = object({
@@ -32,7 +32,7 @@ const validationSchema = object({
       .required('*')
       .min(8, 'Şifreniz en az 8 karakter olmalıdır.')
       .max(128, 'En fazla 128 karakter.'),
-   confirmPassword: string()
+   confirm_password: string()
       .required('*')
       .oneOf([ref('password')], 'Şifreler eşleşmiyor.'),
 });
@@ -41,7 +41,7 @@ const initialValues: RegisterFormProps = {
    username: '',
    email: '',
    password: '',
-   confirmPassword: '',
+   confirm_password: '',
 };
 
 const Register: FC = () => {
@@ -67,12 +67,7 @@ const Register: FC = () => {
                onSubmit={async (values: RegisterFormProps, { resetForm }): Promise<void> => {
                   setErrors(null);
                   try {
-                     const status = await register(
-                        values.username,
-                        values.email,
-                        values.password,
-                        values.confirmPassword,
-                     );
+                     const status = await register(values);
                      if (status) {
                         setMessage('Başarıyla kayıt oldunuz.');
                         resetForm();
@@ -137,15 +132,15 @@ const Register: FC = () => {
                         </div>
                         <div>
                            <Field
-                              id="confirmPassword"
+                              id="confirm_password"
                               type="password"
-                              name="confirmPassword"
+                              name="confirm_password"
                               placeholder="Şifreyi onayla"
                               autoComplete="on"
                               onChange={handleChange}
                               onBlur={handleBlur}
-                              value={values.confirmPassword}
-                              errorMessage={formikErrors.confirmPassword}
+                              value={values.confirm_password}
+                              errorMessage={formikErrors.confirm_password}
                            />
                         </div>
                         <Button text={'Kayıt ol'} type="submit" disabled={isSubmitting} />

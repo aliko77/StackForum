@@ -3,6 +3,7 @@ from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.utils import timezone
+from django.conf import settings
 import os
 
 
@@ -98,13 +99,16 @@ class Profile(models.Model):
     email_secondary = models.EmailField(max_length=254, blank=True)
     phone_number = models.CharField(max_length=20, blank=True)
     status = models.CharField(max_length=20, choices=PROFILE_STATUS_CHOICES, default='OFFLINE')
-    avatar = models.ImageField(upload_to=get_upload_path, blank=True, null=True)
+    avatar = models.ImageField(upload_to=get_upload_path, blank=True, null=True, default="profile_pictures/default.jpg")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = "user_profile"
 
+    @property
+    def avatar_url(self):
+        return settings.BASE_URL + self.avatar.url
 
 class AuthActivation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

@@ -2,6 +2,7 @@ from pathlib import Path
 import os
 from datetime import timedelta
 
+BASE_URL = 'http://localhost:8000'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

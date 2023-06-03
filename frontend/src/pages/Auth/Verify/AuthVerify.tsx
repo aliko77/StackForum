@@ -30,7 +30,7 @@ const AuthVerify: FC = () => {
       setMessage(null);
       setIsSubmitting(true);
       try {
-         const status = await accountVerify(vcode, user?.email);
+         const status = await accountVerify({ email: user?.email, vcode: vcode });
          if (status) {
             setNoRedirect(true);
             setMessage('Başarıyla doğrulandı.');

@@ -9,10 +9,10 @@ interface AccountVerifyProps {
    email: string | undefined;
 }
 interface RegisterProps {
-   username: string;
-   email: string;
-   password: string;
-   confirm_password: string;
+   username: string | undefined;
+   email: string | undefined;
+   password: string | undefined;
+   confirm_password: string | undefined;
 }
 
 export default function useUser() {
@@ -30,10 +30,10 @@ export default function useUser() {
       }
    };
 
-   const accountVerify = async ({ vcode, email }: AccountVerifyProps): Promise<boolean> => {
+   const accountVerify = async (data: AccountVerifyProps): Promise<boolean> => {
       const response = await axiosPrivate.post('/user/verify/', {
-         activation_code: vcode,
-         email: email,
+         activation_code: data.vcode,
+         email: data.email,
       });
       const { status } = response.data;
       setUser((prevState) => {
@@ -46,17 +46,12 @@ export default function useUser() {
       return status;
    };
 
-   const register = async ({
-      username,
-      email,
-      password,
-      confirm_password,
-   }: RegisterProps): Promise<boolean> => {
+   const register = async (data: RegisterProps): Promise<boolean> => {
       const { status } = await axiosService.post('/auth/register/', {
-         username: username,
-         email: email,
-         password: password,
-         confirm_password: confirm_password,
+         username: data.username,
+         email: data.email,
+         password: data.password,
+         confirm_password: data.confirm_password,
       });
       return status === 201 ? true : false;
    };
