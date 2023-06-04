@@ -7,7 +7,7 @@ import { Toast } from 'utils';
 import useUser from 'hooks/useUser';
 import { useState, useRef, ChangeEvent } from 'react';
 
-const EditAvatar: FC = () => {
+const Avatar: FC = () => {
    const { user } = useAuth();
    const { deleteProfileAvatar, updateProfileAvatar } = useUser();
    const [uploadedImage, setUploadedImage] = useState<File | null>(null);
@@ -187,4 +187,4 @@ const EditAvatar: FC = () => {
    );
 };
 
-export default EditAvatar;
+export default Avatar;
