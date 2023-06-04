@@ -32,4 +32,14 @@ export const items: ItemProps[] = [
          },
       ],
    },
+   {
+      name: 'Ayarlar & Özellikler',
+      submenu: true,
+      sublinks: [
+         {
+            name: 'Email & Şifre',
+            link: '/profil/sifre',
+         },
+      ],
+   },
 ];
