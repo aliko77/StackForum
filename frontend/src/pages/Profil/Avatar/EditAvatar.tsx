@@ -8,7 +8,7 @@ import useUser from 'hooks/useUser';
 
 const EditAvatar: FC = () => {
    const { user } = useAuth();
-   const { updateProfileAvatar } = useUser();
+   const { deleteProfileAvatar } = useUser();
 
    const handleRemoveAvatar = async () => {
       const url = user?.profile?.avatar;
@@ -20,7 +20,7 @@ const EditAvatar: FC = () => {
          });
          return;
       }
-      const status = await updateProfileAvatar({ remove_avatar: true });
+      const status = await deleteProfileAvatar();
       if (status) {
          Toast.fire({
             title: 'Başarıyla kaldırıldı.',

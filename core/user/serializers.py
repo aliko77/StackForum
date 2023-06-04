@@ -17,19 +17,12 @@ class ProfileSerializer(ModelSerializer):
         exclude = ['id', 'user', 'created_at', 'updated_at']
 
     def get_avatar(self, instance):
-        return settings.BASE_URL + instance.avatar.url
-    
-    def set_avatar(self, instance, validated_data):
-        print(1)
-        avatar = validated_data.get('avatar')
-        instance.avatar = avatar
-        instance.save()
-        
-
-    def update(self, instance, validated_data):
-        instance = super().update(instance, validated_data)
-        self.set_avatar(instance, validated_data)
-        return instance
+        if instance.avatar:
+            return settings.BASE_URL + instance.avatar.url
+        else:
+            default_avatar = '/profile_pictures/avatar1.jpg'
+            return f"{settings.BASE_URL}{settings.MEDIA_URL}{default_avatar}"
+            
 
 class UserSerializer(ModelSerializer):
     profile = ProfileSerializer()

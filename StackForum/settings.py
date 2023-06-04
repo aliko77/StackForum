@@ -198,3 +198,5 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny'
     ]
 }
+
+PROFILE_AVATAR_FILE = 'profile_pictures/default.jpg'
