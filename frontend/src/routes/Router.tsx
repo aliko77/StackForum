@@ -16,6 +16,7 @@ const ControlPanel = lazy(() => import('pages/ControlPanel'));
 const ProfilEdit = lazy(() => import('pages/Profil/Edit'));
 const ProfilCustomize = lazy(() => import('pages/Profil/Customize'));
 const ProfilAvatar = lazy(() => import('pages/Profil/Avatar'));
+const ProfilPassword = lazy(() => import('pages/Profil/Password'));
 //404
 const PageNotFound = lazy(() => import('pages/PageNotFound'));
 
@@ -69,6 +70,10 @@ const routes: RouteProps[] = [
    {
       path: 'profil/avatar/',
       element: getRouteElement(() => <PrivateRoute>{<ProfilAvatar />}</PrivateRoute>),
+   },
+   {
+      path: 'profil/sifre/',
+      element: getRouteElement(() => <PrivateRoute>{<ProfilPassword />}</PrivateRoute>),
    },
    { path: '*', element: getRouteElement(PageNotFound) },
 ];
