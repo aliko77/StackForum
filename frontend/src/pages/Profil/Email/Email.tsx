@@ -1,6 +1,7 @@
 import { Button } from 'components/Button';
 import { Field } from 'components/Field';
 import { FormErrors } from 'components/FormErrors';
+import { LoadSpinner } from 'components/LoadSpinner';
 import { Form, Formik } from 'formik';
 import useUser from 'hooks/useUser';
 import ControlPanelLayout from 'layouts/ControlPanel';
@@ -60,6 +61,7 @@ const Email: FC = () => {
                               </p>
                            </legend>
                            {errors && <FormErrors errors={errors} />}
+                           {isSubmitting && <LoadSpinner />}
                            <div className="content space-y-2">
                               <div>
                                  <Field

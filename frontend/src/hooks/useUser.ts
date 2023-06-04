@@ -191,7 +191,6 @@ export default function useUser() {
             return true;
          }
          return false;
-         return true;
       } catch (error) {
          error instanceof AxiosError && setErrors(error.response?.data);
          return false;
