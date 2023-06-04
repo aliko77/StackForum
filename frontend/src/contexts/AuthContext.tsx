@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction, createContext, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { axiosService } from 'api/axios/axios';
-import { AxiosError } from 'axios';
 import { setAxiosPrivateHeaders, useAxiosPrivate } from 'hooks/useAxiosPrivate';
 import { ReactChildrenProps, UserProps } from 'types';
 
@@ -47,8 +46,6 @@ export const AuthProvider = ({ children }: ReactChildrenProps) => {
    const logout = async (): Promise<void> => {
       try {
          await axiosPrivateI.post('/auth/logout/');
-      } catch (error: unknown) {
-         error instanceof AxiosError && console.debug('[Error]', error.response?.data);
       } finally {
          setAxiosPrivateHeaders(undefined, undefined);
          setAccessToken(undefined);

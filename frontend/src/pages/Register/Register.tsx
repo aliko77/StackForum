@@ -1,7 +1,6 @@
 import { FC, useState } from 'react';
 import { Formik } from 'formik';
 import { object, string, ref } from 'yup';
-import { AxiosError } from 'axios';
 import { Logo } from 'components/Logo';
 import { FormErrors } from 'components/FormErrors';
 import { LoadSpinner } from 'components/LoadSpinner';
@@ -45,9 +44,8 @@ const initialValues: RegisterFormProps = {
 };
 
 const Register: FC = () => {
-   const { register } = useUser();
+   const { register, errors } = useUser();
    const [message, setMessage] = useState<null | string>(null);
-   const [errors, setErrors] = useState<null | string[]>(null);
 
    return (
       <div className="mx-auto w-full max-w-sm p-3 sm:my-20 my-10">
@@ -65,18 +63,10 @@ const Register: FC = () => {
                validationSchema={validationSchema}
                initialValues={initialValues}
                onSubmit={async (values: RegisterFormProps, { resetForm }): Promise<void> => {
-                  setErrors(null);
-                  try {
-                     const status = await register(values);
-                     if (status) {
-                        setMessage('Başarıyla kayıt oldunuz.');
-                        resetForm();
-                     } else setErrors(['Bir hata oluştu.']);
-                  } catch (error: unknown) {
-                     if (error instanceof AxiosError) {
-                        const responseErrors = error.response?.data as string[];
-                        setErrors(responseErrors);
-                     } else setErrors(['Bir hata oluştu. Lütfen tekrar deneyiniz.']);
+                  const status = await register(values);
+                  if (status) {
+                     setMessage('Başarıyla kayıt oldunuz.');
+                     resetForm();
                   }
                }}
             >

@@ -6,10 +6,11 @@ import { Button } from 'components/Button';
 import { Toast } from 'utils';
 import useUser from 'hooks/useUser';
 import { useState, useRef, ChangeEvent } from 'react';
+import { FormErrors } from 'components/FormErrors';
 
 const Avatar: FC = () => {
    const { user } = useAuth();
-   const { deleteProfileAvatar, updateProfileAvatar } = useUser();
+   const { deleteProfileAvatar, updateProfileAvatar, errors } = useUser();
    const [uploadedImage, setUploadedImage] = useState<File | null>(null);
    const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -28,17 +29,11 @@ const Avatar: FC = () => {
          return;
       }
       const status = await deleteProfileAvatar();
-      if (status) {
+      if (status)
          Toast.fire({
             title: 'Başarıyla kaldırıldı.',
             icon: 'success',
          });
-      } else {
-         Toast.fire({
-            title: 'Bir hata oluştu.',
-            icon: 'error',
-         });
-      }
    };
 
    const handleUploadAvatar = async () => {
@@ -52,12 +47,6 @@ const Avatar: FC = () => {
             Toast.fire({
                title: 'Başarıyla kaydedildi.',
                icon: 'success',
-               timer: 2000,
-            });
-         else
-            Toast.fire({
-               title: 'Bir hata oluştu.',
-               icon: 'error',
                timer: 2000,
             });
          setUploadedImage(null);
@@ -100,6 +89,7 @@ const Avatar: FC = () => {
                   <legend className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">
                      <p className="font-medium text-gray-900 dark:text-gray-100">Avatar</p>
                   </legend>
+                  {errors && <FormErrors errors={errors} />}
                   <div className="content">
                      <div className="flex items-center space-x-4">
                         {!uploadedImage && (

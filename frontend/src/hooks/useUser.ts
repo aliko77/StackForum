@@ -2,6 +2,7 @@ import { axiosService } from 'api/axios';
 import { AxiosError } from 'axios';
 import { useAuth } from 'hooks/useAuth';
 import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
+import { useState } from 'react';
 import { ProfileProps, UserProps } from 'types';
 
 type AccountVerifyProps = {
@@ -20,19 +21,22 @@ type AvatarProps = File;
 export default function useUser() {
    const { setUser, user } = useAuth();
    const axiosPrivate = useAxiosPrivate();
+   const [errors, setErrors] = useState<null | string[]>(null);
 
    const getUser = async (): Promise<UserProps | boolean> => {
+      setErrors(null);
       try {
          const { data } = await axiosPrivate.get('/user/@me');
          setUser(data);
          return data;
-      } catch (error: unknown) {
-         error instanceof AxiosError && console.debug('[Request]', error?.response);
+      } catch (error) {
+         error instanceof AxiosError && setErrors(error.response?.data);
          return false;
       }
    };
 
    const accountVerify = async ({ email, vcode }: AccountVerifyProps): Promise<boolean> => {
+      setErrors(null);
       try {
          const { data, status } = await axiosPrivate.post('/user/verify/', {
             activation_code: vcode,
@@ -47,32 +51,42 @@ export default function useUser() {
          });
          return status === 200 ? true : false;
       } catch (error) {
+         error instanceof AxiosError && setErrors(error.response?.data);
          return false;
       }
    };
 
    const accountVerifyResend = async (): Promise<boolean> => {
+      setErrors(null);
       try {
          const { status } = await axiosPrivate.post('/user/verify/resend/', {
             email: user?.email,
          });
          return status === 200 ? true : false;
       } catch (error) {
+         error instanceof AxiosError && setErrors(error.response?.data);
          return false;
       }
    };
 
    const register = async (data: RegisterProps): Promise<boolean> => {
-      const { status } = await axiosService.post('/auth/register/', {
-         username: data.username,
-         email: data.email,
-         password: data.password,
-         confirm_password: data.confirm_password,
-      });
-      return status === 201 ? true : false;
+      setErrors(null);
+      try {
+         const { status } = await axiosService.post('/auth/register/', {
+            username: data.username,
+            email: data.email,
+            password: data.password,
+            confirm_password: data.confirm_password,
+         });
+         return status === 201 ? true : false;
+      } catch (error) {
+         error instanceof AxiosError && setErrors(error.response?.data);
+         return false;
+      }
    };
 
    const updateProfile = async (profile: ProfileProps): Promise<boolean> => {
+      setErrors(null);
       try {
          const { data, status } = await axiosPrivate.post('/user/profile/update/', profile);
          setUser((prevState) => {
@@ -84,11 +98,13 @@ export default function useUser() {
          });
          return status === 200 ? true : false;
       } catch (error) {
+         error instanceof AxiosError && setErrors(error.response?.data);
          return false;
       }
    };
 
    const deleteProfileAvatar = async (): Promise<boolean> => {
+      setErrors(null);
       try {
          const { data, status } = await axiosPrivate.post('/user/profile/avatar/delete/');
          setUser((prevState) => {
@@ -103,11 +119,13 @@ export default function useUser() {
          });
          return status === 200 ? true : false;
       } catch (error) {
+         error instanceof AxiosError && setErrors(error.response?.data);
          return false;
       }
    };
 
    const updateProfileAvatar = async (avatar: AvatarProps): Promise<boolean> => {
+      setErrors(null);
       try {
          const formData = new FormData();
          formData.append('avatar', avatar);
@@ -132,11 +150,13 @@ export default function useUser() {
          });
          return status === 200 ? true : false;
       } catch (error) {
+         error instanceof AxiosError && setErrors(error.response?.data);
          return false;
       }
    };
 
    return {
+      errors,
       getUser,
       accountVerify,
       accountVerifyResend,

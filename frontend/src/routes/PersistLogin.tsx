@@ -36,7 +36,6 @@ export const PersistLogin = ({ children }: ReactChildrenProps) => {
          await getUser();
          setUserLoaded(true);
       }
-
       accessToken && !userLoaded && _getUser();
    }, [accessToken]);
 

@@ -1,6 +1,6 @@
 import { Field } from 'components/Field';
 import ControlPanelLayout from 'layouts/ControlPanel';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { Formik, Form } from 'formik';
 import { Button } from 'components/Button';
 import { FormErrors } from 'components/FormErrors';
@@ -29,8 +29,7 @@ const validationSchema = object({
 
 const ProfilEdit: FC = () => {
    const { user } = useAuth();
-   const { updateProfile } = useUser();
-   const [errors, setErrors] = useState<null | string[]>(null);
+   const { updateProfile, errors } = useUser();
 
    const initialValues: ProfileProps = {
       dob: new Date(user?.profile?.dob ?? '0001-01-01').toISOString().split('T')[0],
@@ -51,7 +50,6 @@ const ProfilEdit: FC = () => {
             validationSchema={validationSchema}
             initialValues={initialValues}
             onSubmit={async (values): Promise<void> => {
-               setErrors(null);
                const status = await updateProfile(values);
                status &&
                   Toast.fire({
