@@ -4,7 +4,7 @@ import { FC } from 'react';
 const Customize: FC = () => {
    return (
       <ControlPanelLayout>
-         <div className="w-full mb-4">
+         <div className="w-full">
             <div className="title bg-night-200 dark:bg-night-300 p-2 rounded-t">
                <p className="text-base font-semibold tracking-wide text-gray-100">
                   Profilinizi Özelleştirin

@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.views.decorators.csrf import csrf_protect
 from django.utils.decorators import method_decorator
 from .serializers import VerifySerializer, VerifyResendSerializer, \
-    PasswordChangeSerializer, PasswordResetSerializer
+    PasswordForgotSerializer, PasswordResetSerializer
 
 
 @method_decorator(csrf_protect, name='dispatch')
@@ -35,13 +35,13 @@ class PasswordResetView(APIView):
     def post(self, request):
         serializer = PasswordResetSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        is_sended = serializer.save()
-        return Response({'status': is_sended}, status=status.HTTP_200_OK)
-
-
-class PasswordChangeView(APIView):
-    def post(self, request):
-        serializer = PasswordChangeSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response({'status': True}, status=status.HTTP_200_OK)
+
+
+class PasswordForgotView(APIView):
+    def post(self, request):
+        serializer = PasswordForgotSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        is_sended = serializer.save()
+        return Response({'status': is_sended}, status=status.HTTP_200_OK)

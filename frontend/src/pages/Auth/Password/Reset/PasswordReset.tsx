@@ -11,7 +11,7 @@ import { FC, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { object, string, ref } from 'yup';
 
-const PasswordChange: FC = () => {
+const PasswordReset: FC = () => {
    const { uid, token } = useParams();
    const [errors, setErrors] = useState<string[] | null>(null);
    const [message, setMessage] = useState<string | null>(null);
@@ -118,4 +118,4 @@ const PasswordChange: FC = () => {
    );
 };
 
-export default PasswordChange;
+export default PasswordReset;

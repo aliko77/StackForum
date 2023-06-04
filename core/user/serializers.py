@@ -25,6 +25,7 @@ class ProfileSerializer(ModelSerializer):
             
 
 class UserSerializer(ModelSerializer):
+    email = EmailField(required=False)
     profile = ProfileSerializer()
 
     class Meta:
@@ -123,7 +124,7 @@ class VerifyResendSerializer(ModelSerializer):
         return is_send
 
 
-class PasswordResetSerializer(ModelSerializer):
+class PasswordForgotSerializer(ModelSerializer):
     email = EmailField(
         required=True, write_only=True, max_length=128)
 
@@ -150,7 +151,7 @@ class PasswordResetSerializer(ModelSerializer):
         return is_send
 
 
-class PasswordChangeSerializer(ModelSerializer):
+class PasswordResetSerializer(ModelSerializer):
     uid = CharField(
         required=True, write_only=True)
     token = CharField(

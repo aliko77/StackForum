@@ -10,13 +10,14 @@ const Login = lazy(() => import('pages/Login'));
 const Register = lazy(() => import('pages/Register'));
 const Home = lazy(() => import('pages/Home'));
 const AuthVerify = lazy(() => import('pages/Auth/Verify'));
+const PasswordForgot = lazy(() => import('pages/Auth/Password/Forgot'));
 const PasswordReset = lazy(() => import('pages/Auth/Password/Reset'));
-const PasswordChange = lazy(() => import('pages/Auth/Password/Change'));
 const ControlPanel = lazy(() => import('pages/ControlPanel'));
 const ProfilEdit = lazy(() => import('pages/Profil/Edit'));
 const ProfilCustomize = lazy(() => import('pages/Profil/Customize'));
 const ProfilAvatar = lazy(() => import('pages/Profil/Avatar'));
 const ProfilPassword = lazy(() => import('pages/Profil/Password'));
+const ProfilEmail = lazy(() => import('pages/Profil/Email'));
 //404
 const PageNotFound = lazy(() => import('pages/PageNotFound'));
 
@@ -44,12 +45,12 @@ const routes: RouteProps[] = [
    { path: 'login/', element: getRouteElement(() => <GuestRoute>{<Login />}</GuestRoute>) },
    { path: 'register/', element: getRouteElement(() => <GuestRoute>{<Register />}</GuestRoute>) },
    {
-      path: 'auth/password/reset/',
-      element: getRouteElement(() => <GuestRoute>{<PasswordReset />}</GuestRoute>),
+      path: 'auth/password/forgot/',
+      element: getRouteElement(() => <GuestRoute>{<PasswordForgot />}</GuestRoute>),
    },
    {
-      path: 'auth/password/change/:uid/:token/',
-      element: getRouteElement(() => <GuestRoute>{<PasswordChange />}</GuestRoute>),
+      path: 'auth/password/reset/:uid/:token/',
+      element: getRouteElement(() => <GuestRoute>{<PasswordReset />}</GuestRoute>),
    },
    {
       path: 'auth/verify/',
@@ -74,6 +75,10 @@ const routes: RouteProps[] = [
    {
       path: 'profil/sifre/',
       element: getRouteElement(() => <PrivateRoute>{<ProfilPassword />}</PrivateRoute>),
+   },
+   {
+      path: 'profil/email/',
+      element: getRouteElement(() => <PrivateRoute>{<ProfilEmail />}</PrivateRoute>),
    },
    { path: '*', element: getRouteElement(PageNotFound) },
 ];

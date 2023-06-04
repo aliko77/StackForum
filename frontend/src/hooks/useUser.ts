@@ -9,6 +9,7 @@ type AccountVerifyProps = {
    vcode: string;
    email: string | undefined;
 };
+
 type RegisterProps = {
    username: string | undefined;
    email: string | undefined;
@@ -18,8 +19,19 @@ type RegisterProps = {
 
 type AvatarProps = File;
 
+type ChangePasswordProps = {
+   password: string;
+   new_password: string;
+   new_confirm_password: string;
+};
+
+type ChangeEmailProps = {
+   password: string;
+   new_email: string;
+};
+
 export default function useUser() {
-   const { setUser, user } = useAuth();
+   const { setUser, user, logout } = useAuth();
    const axiosPrivate = useAxiosPrivate();
    const [errors, setErrors] = useState<null | string[]>(null);
 
@@ -155,6 +167,37 @@ export default function useUser() {
       }
    };
 
+   const changePassword = async (passwords: ChangePasswordProps): Promise<boolean> => {
+      setErrors(null);
+      try {
+         const { status } = await axiosPrivate.post('/user/password/change/', passwords);
+         if (status === 200) {
+            logout();
+            return true;
+         }
+         return false;
+      } catch (error) {
+         error instanceof AxiosError && setErrors(error.response?.data);
+         return false;
+      }
+   };
+
+   const changeEmail = async (emails: ChangeEmailProps): Promise<boolean> => {
+      setErrors(null);
+      try {
+         const { status } = await axiosPrivate.post('/user/email/change/', emails);
+         if (status === 200) {
+            logout();
+            return true;
+         }
+         return false;
+         return true;
+      } catch (error) {
+         error instanceof AxiosError && setErrors(error.response?.data);
+         return false;
+      }
+   };
+
    return {
       errors,
       getUser,
@@ -164,5 +207,7 @@ export default function useUser() {
       updateProfile,
       deleteProfileAvatar,
       updateProfileAvatar,
+      changePassword,
+      changeEmail,
    };
 }

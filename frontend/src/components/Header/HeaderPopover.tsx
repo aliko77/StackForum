@@ -94,27 +94,29 @@ export const HeaderPopOver = () => {
                         </NavLink>
                      </div>
                      <div className="w-full bg-white dark:bg-night-100 text-gray-900 dark:text-gray-200 text-sm">
-                        <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600">
-                           <div className="text-gray-900 dark:text-gray-400">
-                              <svg
-                                 xmlns="http://www.w3.org/2000/svg"
-                                 fill="none"
-                                 viewBox="0 0 24 24"
-                                 strokeWidth={1.5}
-                                 stroke="currentColor"
-                                 className="w-5 h-5"
-                              >
-                                 <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"
-                                 />
-                              </svg>
+                        <NavLink to="/profil/sifre/">
+                           <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800">
+                              <div className="text-gray-900 dark:text-gray-400">
+                                 <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth={1.5}
+                                    stroke="currentColor"
+                                    className="w-5 h-5"
+                                 >
+                                    <path
+                                       strokeLinecap="round"
+                                       strokeLinejoin="round"
+                                       d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"
+                                    />
+                                 </svg>
+                              </div>
+                              <div>
+                                 <span>E-posta veya Şifre Değiştir</span>
+                              </div>
                            </div>
-                           <div>
-                              <span>E-posta veya Şifre Değiştir</span>
-                           </div>
-                        </div>
+                        </NavLink>
                         <NavLink to="/profil/duzenle/">
                            <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800">
                               <div className="text-gray-900 dark:text-gray-400">
@@ -138,32 +140,34 @@ export const HeaderPopOver = () => {
                               </div>
                            </div>
                         </NavLink>
-                        <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600">
-                           <div className="text-gray-900 dark:text-gray-400">
-                              <svg
-                                 xmlns="http://www.w3.org/2000/svg"
-                                 fill="none"
-                                 viewBox="0 0 24 24"
-                                 strokeWidth={1.5}
-                                 stroke="currentColor"
-                                 className="w-5 h-5"
-                              >
-                                 <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"
-                                 />
-                                 <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"
-                                 />
-                              </svg>
+                        <NavLink to="/profil/avatar/">
+                           <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800">
+                              <div className="text-gray-900 dark:text-gray-400">
+                                 <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth={1.5}
+                                    stroke="currentColor"
+                                    className="w-5 h-5"
+                                 >
+                                    <path
+                                       strokeLinecap="round"
+                                       strokeLinejoin="round"
+                                       d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"
+                                    />
+                                    <path
+                                       strokeLinecap="round"
+                                       strokeLinejoin="round"
+                                       d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"
+                                    />
+                                 </svg>
+                              </div>
+                              <div>
+                                 <span>Profil Resmini Değiştir</span>
+                              </div>
                            </div>
-                           <div>
-                              <span>Profil Resmini Değiştir</span>
-                           </div>
-                        </div>
+                        </NavLink>
                         <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600">
                            <div className="text-gray-900 dark:text-gray-400">
                               <svg

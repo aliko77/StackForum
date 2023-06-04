@@ -68,7 +68,6 @@ const ProfilEdit: FC = () => {
                isSubmitting,
             }) => (
                <>
-                  {errors && <FormErrors errors={errors} />}
                   <Form noValidate onSubmit={handleSubmit}>
                      <div className="w-full mb-4">
                         <div className="title bg-night-200 dark:bg-night-300 p-2 rounded-t">
@@ -76,6 +75,7 @@ const ProfilEdit: FC = () => {
                               Zorunlu Bilgiler
                            </p>
                         </div>
+                        {errors && <FormErrors errors={errors} />}
                         <div className="content px-4 py-4 space-y-8 bg-gray-200 dark:bg-night-200">
                            <fieldset id="email-password">
                               <legend className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">

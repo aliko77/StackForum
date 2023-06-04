@@ -10,7 +10,7 @@ import { FC, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { object, string } from 'yup';
 
-const Reset: FC = () => {
+const PasswordForgot: FC = () => {
    const [errors, setErrors] = useState<string[] | null>(null);
    const [message, setMessage] = useState<string | null>(null);
 
@@ -118,4 +118,4 @@ const Reset: FC = () => {
    );
 };
 
-export default Reset;
+export default PasswordForgot;

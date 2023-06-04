@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import action
 from .serializers import UserSerializer, ProfileSerializer
+from .utils import SendVerificationEmail
 
 User = get_user_model()
 
@@ -65,6 +66,7 @@ class UserViewSet(ModelViewSet):
                 default_avatar = settings.PROFILE_AVATAR_FILE
                 user = serializer.save(avatar=default_avatar)
                 response_data = {
+                    'status':True,
                     'avatar': settings.BASE_URL + user.avatar.url
                 }
                 return Response(response_data, status=status.HTTP_200_OK)
@@ -92,7 +94,53 @@ class UserViewSet(ModelViewSet):
         if serializer.is_valid(raise_exception=True):
             user = serializer.save(avatar=avatar_file)
             response_data = {
+                'status': True,
                 'avatar': settings.BASE_URL + user.avatar.url
             }
             return Response(response_data, status=status.HTTP_200_OK)
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    @action(
+        methods=['post'],
+        detail=False,
+        url_path='password/change'
+    )
+    def change_password(self,request,*args, **kwargs):
+        user = self.get_object()
+        password = request.data.get('password')
+        new_password = request.data.get('new_password')
+        new_confirm_password = request.data.get('new_confirm_password')
+
+        if not user.check_password(password):
+            return Response({'error': 'Mevcut parola yanlış.'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if new_password != new_confirm_password:
+            return Response({'error': 'Yeni parolalar eşleşmiyor.'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        user.set_password(new_password)
+        user.save()
+        return Response({'status': True}, status=status.HTTP_200_OK)
+    
+    @action(
+        methods=['post'],
+        detail=False,
+        url_path='email/change'
+    )
+    def change_email(self,request,*args, **kwargs):
+        user = self.get_object()
+        password = request.data.get('password')
+        new_email = request.data.get('new_email')
+
+        if not user.check_password(password):
+            return Response({'error': 'Mevcut parola yanlış.'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if User.objects.filter(email=new_email).exists():
+            return Response({'error': 'Bu e-posta adresini kullanamazsınız.'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        user.email = new_email
+        user.is_verified = False
+        user.save()
+        SendVerificationEmail(user)
+        return Response({'status': True}, status=status.HTTP_200_OK)
+    
+

@@ -4,7 +4,7 @@ import { ReactChildrenProps } from 'types';
 const ControlPanelLayout = ({ children }: ReactChildrenProps) => {
    return (
       <>
-         <div className="container mx-auto my-4">
+         <div className="sm:container mx-2 sm:mx-auto my-4">
             <div className="table table-fixed w-full">
                <>
                   <Sidebar />

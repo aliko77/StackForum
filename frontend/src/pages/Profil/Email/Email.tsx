@@ -6,43 +6,35 @@ import useUser from 'hooks/useUser';
 import ControlPanelLayout from 'layouts/ControlPanel';
 import { FC } from 'react';
 import { Toast } from 'utils';
-import { object, ref, string } from 'yup';
+import { object, string } from 'yup';
 
 const validationSchema = object({
    password: string().required('Bu alan zorunlu.'),
-   new_password: string()
-      .required('Bu alan zorunlu.')
-      .min(8, 'Şifreniz en az 8 karakter olmalıdır.')
-      .max(128, 'En fazla 128 karakter.'),
-   new_confirm_password: string()
-      .required('Bu alan zorunlu.')
-      .oneOf([ref('new_password')], 'Yeni şifreler eşleşmiyor.'),
+   new_email: string().email('Geçersiz email.').required('Bu alan zorunlu.'),
 });
 
 const initialValues = {
    password: '',
-   new_password: '',
-   new_confirm_password: '',
+   new_email: '',
 };
 
-const Password: FC = () => {
-   const { changePassword, errors } = useUser();
+const Email: FC = () => {
+   const { changeEmail, errors } = useUser();
 
    return (
       <ControlPanelLayout>
          <div className="w-full">
             <div className="title bg-night-200 dark:bg-night-300 p-2 rounded-t">
-               <p className="text-base font-semibold tracking-wide text-gray-100">Şifre Ayarları</p>
+               <p className="text-base font-semibold tracking-wide text-gray-100">Email Ayarları</p>
             </div>
             <div className="content px-4 py-4 space-y-8 bg-gray-200 dark:bg-night-200">
                <Formik
                   validationSchema={validationSchema}
                   initialValues={initialValues}
                   onSubmit={async (values): Promise<void> => {
-                     const status = await changePassword({
+                     const status = await changeEmail({
                         password: values.password,
-                        new_password: values.new_password,
-                        new_confirm_password: values.new_confirm_password,
+                        new_email: values.new_email,
                      });
                      status &&
                         Toast.fire({
@@ -61,10 +53,10 @@ const Password: FC = () => {
                      isSubmitting,
                   }) => (
                      <Form noValidate onSubmit={handleSubmit}>
-                        <fieldset id="change_password">
+                        <fieldset id="change_email">
                            <legend className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">
                               <p className="font-medium text-gray-900 dark:text-gray-100">
-                                 Şifre Değişikliği
+                                 Email Değişikliği
                               </p>
                            </legend>
                            {errors && <FormErrors errors={errors} />}
@@ -85,30 +77,15 @@ const Password: FC = () => {
                               </div>
                               <div>
                                  <Field
-                                    autoComplete="on"
-                                    label="Yeni Şifre"
-                                    type="password"
-                                    id="new_password"
-                                    name="new_password"
-                                    placeholder="Yeni şifrenizi giriniz."
+                                    label="Yeni Email"
+                                    type="text"
+                                    id="new_email"
+                                    name="new_email"
+                                    placeholder="Yeni e-mail adresinizi giriniz."
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    value={values.new_password}
-                                    errorMessage={formikErrors.new_password}
-                                 />
-                              </div>
-                              <div>
-                                 <Field
-                                    autoComplete="on"
-                                    label="Yeni Şifreyi Onayla"
-                                    type="password"
-                                    id="new_confirm_password"
-                                    name="new_confirm_password"
-                                    placeholder="Yeni şifrenizi onaylayın."
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    value={values.new_confirm_password}
-                                    errorMessage={formikErrors.new_confirm_password}
+                                    value={values.new_email}
+                                    errorMessage={formikErrors.new_email}
                                  />
                               </div>
                            </div>
@@ -125,4 +102,4 @@ const Password: FC = () => {
    );
 };
 
-export default Password;
+export default Email;
