@@ -10,6 +10,7 @@ import { useAuth } from 'hooks/useAuth';
 import { ProfileProps } from 'types';
 import useUser from 'hooks/useUser';
 import { Toast } from 'utils';
+import { NavLink } from 'react-router-dom';
 
 const validationSchema = object({
    dob: date()
@@ -87,7 +88,9 @@ const ProfilEdit: FC = () => {
                               <div className="content ml-4">
                                  <p className="text-gray-900 dark:text-gray-100">
                                     Email ve şifre değiştirmek için{' '}
-                                    <span className="underline">tıklayın.</span>
+                                    <NavLink to="/profil/sifre/">
+                                       <span className="underline">tıklayın.</span>
+                                    </NavLink>
                                  </p>
                               </div>
                            </fieldset>
