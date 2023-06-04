@@ -6,7 +6,7 @@ import { ProfileProps, UserProps } from 'types';
 
 type AccountVerifyProps = {
    vcode: string;
-   email: string;
+   email: string | undefined;
 };
 type RegisterProps = {
    username: string | undefined;
@@ -18,7 +18,7 @@ type RegisterProps = {
 type AvatarProps = File;
 
 export default function useUser() {
-   const { setUser } = useAuth();
+   const { setUser, user } = useAuth();
    const axiosPrivate = useAxiosPrivate();
 
    const getUser = async (): Promise<UserProps | boolean> => {
@@ -32,20 +32,34 @@ export default function useUser() {
       }
    };
 
-   const accountVerify = async (data: AccountVerifyProps): Promise<boolean> => {
-      const response = await axiosPrivate.post('/user/verify/', {
-         activation_code: data.vcode,
-         email: data.email,
-      });
-      const { status } = response.data;
-      setUser((prevState) => {
-         if (!prevState) return undefined;
-         return {
-            ...prevState,
-            is_verified: status,
-         };
-      });
-      return status;
+   const accountVerify = async ({ email, vcode }: AccountVerifyProps): Promise<boolean> => {
+      try {
+         const { data, status } = await axiosPrivate.post('/user/verify/', {
+            activation_code: vcode,
+            email: email,
+         });
+         setUser((prevState) => {
+            if (!prevState) return undefined;
+            return {
+               ...prevState,
+               is_verified: data.status,
+            };
+         });
+         return status === 200 ? true : false;
+      } catch (error) {
+         return false;
+      }
+   };
+
+   const accountVerifyResend = async (): Promise<boolean> => {
+      try {
+         const { status } = await axiosPrivate.post('/user/verify/resend/', {
+            email: user?.email,
+         });
+         return status === 200 ? true : false;
+      } catch (error) {
+         return false;
+      }
    };
 
    const register = async (data: RegisterProps): Promise<boolean> => {
@@ -59,15 +73,19 @@ export default function useUser() {
    };
 
    const updateProfile = async (profile: ProfileProps): Promise<boolean> => {
-      const { data, status } = await axiosPrivate.post('/user/profile/update/', profile);
-      setUser((prevState) => {
-         if (!prevState) return undefined;
-         return {
-            ...prevState,
-            profile: data,
-         };
-      });
-      return status === 200 ? true : false;
+      try {
+         const { data, status } = await axiosPrivate.post('/user/profile/update/', profile);
+         setUser((prevState) => {
+            if (!prevState) return undefined;
+            return {
+               ...prevState,
+               profile: data,
+            };
+         });
+         return status === 200 ? true : false;
+      } catch (error) {
+         return false;
+      }
    };
 
    const deleteProfileAvatar = async (): Promise<boolean> => {
@@ -93,11 +111,15 @@ export default function useUser() {
       try {
          const formData = new FormData();
          formData.append('avatar', avatar);
-         const { data, status } = await axiosPrivate.post('/user/profile/avatar/update/', formData, {
-            headers: {
-               'Content-Type': 'multipart/form-data',
+         const { data, status } = await axiosPrivate.post(
+            '/user/profile/avatar/update/',
+            formData,
+            {
+               headers: {
+                  'Content-Type': 'multipart/form-data',
+               },
             },
-         });
+         );
          setUser((prevState) => {
             if (!prevState) return undefined;
             return {
@@ -117,6 +139,7 @@ export default function useUser() {
    return {
       getUser,
       accountVerify,
+      accountVerifyResend,
       register,
       updateProfile,
       deleteProfileAvatar,

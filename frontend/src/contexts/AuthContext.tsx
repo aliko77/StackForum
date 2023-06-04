@@ -9,7 +9,7 @@ type LoginFunctionProps = {
    (email: string, password: string): Promise<void>;
 };
 
-type IAuthContext = {
+type AuthContextProps = {
    user: UserProps | undefined;
    setUser: Dispatch<SetStateAction<UserProps | undefined>>;
    accessToken?: string;
@@ -20,7 +20,7 @@ type IAuthContext = {
    logout: () => void;
 };
 
-export const AuthContext = createContext<IAuthContext>({} as IAuthContext);
+export const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
 
 export const AuthProvider = ({ children }: ReactChildrenProps) => {
    const navigate = useNavigate();

@@ -1,5 +1,3 @@
-import { axiosService } from 'api/axios';
-import { AxiosError } from 'axios';
 import { Alert } from 'components/Alert';
 import { Button } from 'components/Button';
 import { FormErrors } from 'components/FormErrors';
@@ -7,13 +5,13 @@ import { LoadSpinner } from 'components/LoadSpinner';
 import { Logo } from 'components/Logo';
 import { OtpInput } from 'components/OtpInput';
 import { useAuth } from 'hooks/useAuth';
-import useUser from 'hooks/useUser';
 import { FC, useState, FormEvent, MouseEventHandler } from 'react';
 import { Navigate } from 'react-router-dom';
+import useUser from 'hooks/useUser';
 
 const AuthVerify: FC = () => {
    const { user } = useAuth();
-   const { accountVerify } = useUser();
+   const { accountVerify, accountVerifyResend } = useUser();
    const [vcode, setVcode] = useState<string>('');
    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
    const [errors, setErrors] = useState<null | string[]>(null);
@@ -29,21 +27,14 @@ const AuthVerify: FC = () => {
       setErrors(null);
       setMessage(null);
       setIsSubmitting(true);
-      try {
-         const status = await accountVerify({ email: user?.email, vcode: vcode });
-         if (status) {
-            setNoRedirect(true);
-            setMessage('Başarıyla doğrulandı.');
-         } else {
-            setErrors(['Bir hata oluştu.']);
-         }
-      } catch (error: unknown) {
-         if (error instanceof AxiosError) {
-            setErrors(error.response?.data);
-         }
-      } finally {
-         setIsSubmitting(false);
+      const status = await accountVerify({ email: user?.email, vcode: vcode });
+      if (status) {
+         setNoRedirect(true);
+         setMessage('Başarıyla doğrulandı.');
+      } else {
+         setErrors(['Bir hata oluştu.']);
       }
+      setIsSubmitting(false);
    };
 
    const handleResend: MouseEventHandler<HTMLButtonElement> = async () => {
@@ -54,23 +45,14 @@ const AuthVerify: FC = () => {
          return;
       }
       setIsSubmitting(true);
-      try {
-         const { data } = await axiosService.post('/user/verify/resend/', {
-            email: user?.email,
-         });
-
-         if (data.status) {
-            setMessage('Kod tekrar gönderildi.');
-         } else {
-            throw new Error();
-         }
-      } catch (error: unknown) {
-         if (error instanceof AxiosError) {
-            setErrors(error.response?.data);
-         }
-      } finally {
-         setIsSubmitting(false);
+      const status = await accountVerifyResend();
+      if (status) {
+         setNoRedirect(true);
+         setMessage('Kod tekrar gönderildi.');
+      } else {
+         setErrors(['Bir hata oluştu.']);
       }
+      setIsSubmitting(false);
    };
 
    return (
