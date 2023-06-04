@@ -10,6 +10,12 @@ from .serializers import UserSerializer, ProfileSerializer
 User = get_user_model()
 
 
+def check_file_size(file):
+    if file.size > settings.AVATAR_MAX_FILE_SIZE:
+        return False
+    return True
+
+
 class UserViewSet(ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = (IsAuthenticated,)
@@ -71,17 +77,22 @@ class UserViewSet(ModelViewSet):
         url_path='profile/avatar/update'
     )
     def profile_avatar_update(self, request, *args, **kwargs):
+        avatar_file = request.FILES.get('avatar')
+        if not avatar_file:
+            return Response(data={'error': 'Avatar dosyası yüklenemedi.'}, status=status.HTTP_400_BAD_REQUEST)
+        if not check_file_size(avatar_file):
+            return Response(data={'error': 'Dosya boyutu çok büyük.'}, status=status.HTTP_400_BAD_REQUEST)
         instance = self.get_object()
         profile = instance.profile
         if profile.avatar != settings.PROFILE_AVATAR_FILE:
             profile.avatar.delete()
             profile.save()
-            
+
         serializer = self.get_serializer(profile, data={})
         if serializer.is_valid(raise_exception=True):
-            user = serializer.save(avatar=request.FILES['avatar'])
+            user = serializer.save(avatar=avatar_file)
             response_data = {
                 'avatar': settings.BASE_URL + user.avatar.url
             }
             return Response(response_data, status=status.HTTP_200_OK)
-        return Response(data={'error': 'Bir hata oluştu.'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
