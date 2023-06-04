@@ -65,7 +65,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 def get_upload_path(instance, filename):
     # Dosya adını kullanıcı ID'si ve zaman damgasıyla birleştirerek oluşturun
-    user_id = instance.user.id
+    user_id = "_".join(instance.user.username.split())
     timestamp = timezone.now().strftime('%Y%m%d%H%M%S')
     _, ext = os.path.splitext(filename)
     new_filename = f"{user_id}_{timestamp}{ext}"

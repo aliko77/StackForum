@@ -5,12 +5,19 @@ import { useAuth } from 'hooks/useAuth';
 import { Button } from 'components/Button';
 import { Toast } from 'utils';
 import useUser from 'hooks/useUser';
+import { useState, useRef, ChangeEvent } from 'react';
 
 const EditAvatar: FC = () => {
    const { user } = useAuth();
-   const { deleteProfileAvatar } = useUser();
+   const { deleteProfileAvatar, updateProfileAvatar } = useUser();
+   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
+   const fileInputRef = useRef<HTMLInputElement>(null);
 
    const handleRemoveAvatar = async () => {
+      if (uploadedImage) {
+         setUploadedImage(null);
+         return;
+      }
       const url = user?.profile?.avatar;
       const fileName = url && url.substring(url.lastIndexOf('/') + 1);
       if (fileName && fileName === 'default.jpg') {
@@ -34,8 +41,54 @@ const EditAvatar: FC = () => {
       }
    };
 
+   const handleUploadAvatar = async () => {
+      if (!uploadedImage && fileInputRef.current) {
+         fileInputRef.current.click();
+         return;
+      }
+      if (uploadedImage) {
+         const status = await updateProfileAvatar(uploadedImage);
+         if (status)
+            Toast.fire({
+               title: 'Başarıyla kaydedildi.',
+               icon: 'success',
+               timer: 2000,
+            });
+         else
+            Toast.fire({
+               title: 'Bir hata oluştu.',
+               icon: 'error',
+               timer: 2000,
+            });
+         setUploadedImage(null);
+      }
+   };
+
+   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files && event.target.files[0];
+      if (file) {
+         const maxSize = 3 * 1024 * 1024; // 3 MB
+         if (file.size > maxSize) {
+            Toast.fire({
+               title: "3 MB' den fazla !",
+               icon: 'warning',
+            });
+            return;
+         }
+         setUploadedImage(file);
+      }
+   };
+
    return (
       <ControlPanelLayout>
+         <input
+            type="file"
+            accept="image/*"
+            name="avatar"
+            onChange={handleFileChange}
+            ref={fileInputRef}
+            hidden
+         />
          <div className="w-full">
             <div className="title bg-night-200 dark:bg-night-300 p-2 rounded-t">
                <p className="text-base font-semibold tracking-wide text-gray-100">
@@ -48,8 +101,19 @@ const EditAvatar: FC = () => {
                      <p className="font-medium text-gray-900 dark:text-gray-100">Avatar</p>
                   </legend>
                   <div className="content">
-                     <div>
-                        <AvatarImage path={user?.profile?.avatar} height="6rem" width="6rem" />
+                     <div className="flex items-center space-x-4">
+                        {!uploadedImage && (
+                           <AvatarImage path={user?.profile?.avatar} height="6rem" width="6rem" />
+                        )}
+                        {uploadedImage && (
+                           <div>
+                              <AvatarImage
+                                 path={URL.createObjectURL(uploadedImage)}
+                                 height="6rem"
+                                 width="6rem"
+                              />
+                           </div>
+                        )}
                      </div>
                      <div className="mt-4">
                         <div className="flex justify-start space-x-4">
@@ -79,7 +143,10 @@ const EditAvatar: FC = () => {
                               </Button>
                            </div>
                            <div>
-                              <Button text="Yükle">
+                              <Button
+                                 onClick={handleUploadAvatar}
+                                 text={!uploadedImage ? 'Yükle' : 'Kaydet'}
+                              >
                                  <div className="ml-2">
                                     <svg
                                        xmlns="http://www.w3.org/2000/svg"

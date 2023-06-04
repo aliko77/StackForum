@@ -63,3 +63,25 @@ class UserViewSet(ModelViewSet):
                 }
                 return Response(response_data, status=status.HTTP_200_OK)
         return Response(data={'error': 'Bir hata oluştu.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(
+        methods=['post'],
+        detail=False,
+        serializer_class=ProfileSerializer,
+        url_path='profile/avatar/update'
+    )
+    def profile_avatar_update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        profile = instance.profile
+        if profile.avatar != settings.PROFILE_AVATAR_FILE:
+            profile.avatar.delete()
+            profile.save()
+            
+        serializer = self.get_serializer(profile, data={})
+        if serializer.is_valid(raise_exception=True):
+            user = serializer.save(avatar=request.FILES['avatar'])
+            response_data = {
+                'avatar': settings.BASE_URL + user.avatar.url
+            }
+            return Response(response_data, status=status.HTTP_200_OK)
+        return Response(data={'error': 'Bir hata oluştu.'}, status=status.HTTP_400_BAD_REQUEST)
