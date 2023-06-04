@@ -38,7 +38,7 @@ export const items: ItemProps[] = [
       sublinks: [
          {
             name: 'Email & Şifre',
-            link: '/profil/sifre',
+            link: '/profil/sifre/',
          },
       ],
    },
