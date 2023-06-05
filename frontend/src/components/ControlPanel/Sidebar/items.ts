@@ -37,11 +37,15 @@ export const items: ItemProps[] = [
       submenu: true,
       sublinks: [
          {
-            name: 'Şifre',
+            name: 'İmzanı Değiştir',
+            link: '/profil/imza/',
+         },
+         {
+            name: 'Şifreni Değiştir',
             link: '/profil/sifre/',
          },
          {
-            name: 'Email',
+            name: 'Email Değiştir',
             link: '/profil/email/',
          },
       ],

@@ -21,6 +21,7 @@ export type ProfileProps = {
    about?: string;
    status?: string;
    avatar?: string;
+   signature?: string;
 };
 
 export type UserProps = {

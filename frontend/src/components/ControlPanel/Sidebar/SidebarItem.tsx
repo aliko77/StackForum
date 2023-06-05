@@ -54,7 +54,7 @@ export const SidebarItem: FC<Props> = ({ item }) => {
                            <path
                               strokeLinecap="round"
                               strokeLinejoin="round"
-                              d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5"
+                              d="M8.25 4.5l7.5 7.5-7.5 7.5"
                            />
                         </svg>
                         <span className="text-sm font-medium text-gray-900 dark:text-indigo-400">

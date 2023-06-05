@@ -64,11 +64,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 def get_upload_path(instance, filename):
-    # Dosya adını kullanıcı ID'si ve zaman damgasıyla birleştirerek oluşturun
-    user_id = "_".join(instance.user.username.split())
+    # Dosya adını kullanıcı username'i ve zaman damgasıyla birleştirerek oluşturun
+    username = "_".join(instance.user.username.split())
     timestamp = timezone.now().strftime('%Y%m%d%H%M%S')
     _, ext = os.path.splitext(filename)
-    new_filename = f"{user_id}_{timestamp}{ext}"
+    new_filename = f"{username}_{timestamp}{ext}"
 
     # Profil resimlerinin yükleneceği dosya yolunu belirleyin
     # Örneğin: media/profile_pictures/userID_20230101153000.jpg
@@ -90,16 +90,17 @@ class Profile(models.Model):
         User, on_delete=models.CASCADE)
     dob = models.DateField(null=True, blank=True)
     dob_privacy = models.CharField(max_length=20, choices=PROFILE_DOB_PRIVACY_CHOICES, default='age', blank=True)
-    city = models.CharField(max_length=50, blank=True)
-    about = models.TextField(max_length=500, blank=True)
-    profession = models.CharField(max_length=50, blank=True)
-    hobbies = models.TextField(max_length=500, blank=True)
-    twitter_url = models.URLField(max_length=200, blank=True)
-    github_url = models.URLField(max_length=200, blank=True)
-    email_secondary = models.EmailField(max_length=254, blank=True)
-    phone_number = models.CharField(max_length=20, blank=True)
+    city = models.CharField(max_length=50, blank=True, null=True)
+    about = models.TextField(max_length=500, blank=True, null=True)
+    profession = models.CharField(max_length=50, blank=True, null=True)
+    hobbies = models.TextField(max_length=500, blank=True, null=True)
+    twitter_url = models.URLField(max_length=200, blank=True, null=True)
+    github_url = models.URLField(max_length=200, blank=True, null=True)
+    email_secondary = models.EmailField(max_length=254, blank=True, null=True)
+    phone_number = models.CharField(max_length=20, blank=True, null=True)
     status = models.CharField(max_length=20, choices=PROFILE_STATUS_CHOICES, default='OFFLINE', blank=True)
     avatar = models.ImageField(upload_to=get_upload_path, blank=True, null=True, default=settings.PROFILE_AVATAR_FILE)
+    signature = models.CharField(max_length=1024, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

@@ -18,6 +18,7 @@ const ProfilCustomize = lazy(() => import('pages/Profil/Customize'));
 const ProfilAvatar = lazy(() => import('pages/Profil/Avatar'));
 const ProfilPassword = lazy(() => import('pages/Profil/Password'));
 const ProfilEmail = lazy(() => import('pages/Profil/Email'));
+const ProfilSignature = lazy(() => import('pages/Profil/Signature'));
 //404
 const PageNotFound = lazy(() => import('pages/PageNotFound'));
 
@@ -79,6 +80,10 @@ const routes: RouteProps[] = [
    {
       path: 'profil/email/',
       element: getRouteElement(() => <PrivateRoute>{<ProfilEmail />}</PrivateRoute>),
+   },
+   {
+      path: 'profil/imza/',
+      element: getRouteElement(() => <PrivateRoute>{<ProfilSignature />}</PrivateRoute>),
    },
    { path: '*', element: getRouteElement(PageNotFound) },
 ];
