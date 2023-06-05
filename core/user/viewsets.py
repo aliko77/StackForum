@@ -7,6 +7,7 @@ from rest_framework import status
 from rest_framework.decorators import action
 from .serializers import UserSerializer, ProfileSerializer
 from .utils import SendVerificationEmail
+import re
 
 User = get_user_model()
 
@@ -147,6 +148,20 @@ class UserViewSet(ModelViewSet):
     def profile_signature_update(self, request, *args, **kwargs) -> Response:
         profile = self.get_object().profile
         signature = request.data.get('signature')
+        # İmza kontrolü
+        link_pattern = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+' 
+        links = re.findall(link_pattern, signature)
+        errors = []
+        if len(signature) > 120:
+            errors.append('İmza 120 karakterden fazla.')
+        if signature.count('\n') > 2:
+            errors.append('İmza 3 satırdan fazla.')
+        if len(links) > 1:
+            errors.append('İmza 1 den fazla link içeriyor.')
+        if len(errors) > 0:
+            return Response(data=errors, status=status.HTTP_400_BAD_REQUEST)
+            
+        
         serializer = self.serializer_class(profile, data={}, partial=True)
         if serializer.is_valid(raise_exception=True):
             profile = serializer.save(signature=signature)
