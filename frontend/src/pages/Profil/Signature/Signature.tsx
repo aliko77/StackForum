@@ -2,13 +2,12 @@ import { Button } from 'components/Button';
 import { FormErrors } from 'components/FormErrors';
 import { Form, Formik } from 'formik';
 import { useAuth } from 'hooks/useAuth';
-import useUser from 'hooks/useUser';
-import ControlPanelLayout from 'layouts/ControlPanel';
 import { FC } from 'react';
 import { Toast } from 'utils';
 import { object, string } from 'yup';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import useUser from 'hooks/useUser';
+import ControlPanelLayout from 'layouts/ControlPanel';
+import { Textarea } from 'components/Textarea';
 
 const validationSchema = object({
    signature: string().required('Bu alan zorunlu.').max(120),
@@ -34,7 +33,6 @@ export const Signature: FC = () => {
                   initialValues={initialValues}
                   onSubmit={async (values): Promise<void> => {
                      console.log(values);
-
                      const status = true;
                      status &&
                         Toast.fire({
@@ -62,12 +60,14 @@ export const Signature: FC = () => {
                            {errors && <FormErrors errors={errors} />}
                            <div className="content space-y-2">
                               <div>
-                                 <ReactQuill
+                                 <Textarea
                                     id="signature"
+                                    name="signature"
+                                    rows={10}
+                                    defaultValue={values.signature}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    value={values.signature}
-                                    theme="snow"
+                                    errorMessage={formikErrors.signature}
                                  />
                               </div>
                            </div>

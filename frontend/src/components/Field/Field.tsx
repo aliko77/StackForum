@@ -7,15 +7,7 @@ type InputProps = InputHTMLAttributes<HTMLInputElement> & {
    onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
 };
 
-export const Field: FC<InputProps> = ({
-   id,
-   label,
-   type = 'text',
-   errorMessage,
-   onChange,
-   onBlur,
-   ...props
-}) => {
+export const Field: FC<InputProps> = ({ id, label, errorMessage, ...props }) => {
    return (
       <div>
          <label
@@ -29,11 +21,7 @@ export const Field: FC<InputProps> = ({
             {label}
          </label>
          <input
-            type={type}
-            id={id}
             className="block w-full p-1.5 outline-none disabled:bg-gray-300 disabled:dark:bg-gray-800 bg-gray-50 dark:bg-gray-700 border border-gray-300 text-gray-900 rounded-sm focus:ring-rose-500 focus:border-rose-500 dark:focus:ring-indigo-500 dark:focus:border-indigo-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-100 placeholder:text-sm"
-            onChange={onChange}
-            onBlur={onBlur}
             {...props}
          />
          {errorMessage && (
