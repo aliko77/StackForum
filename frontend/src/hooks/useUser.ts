@@ -30,6 +30,10 @@ type ChangeEmailProps = {
    new_email: string;
 };
 
+type SignatureProps = {
+   signature: string | undefined;
+};
+
 export default function useUser() {
    const { setUser, user, logout } = useAuth();
    const axiosPrivate = useAxiosPrivate();
@@ -115,10 +119,10 @@ export default function useUser() {
       }
    };
 
-   const deleteProfileAvatar = async (): Promise<boolean> => {
+   const deleteAvatar = async (): Promise<boolean> => {
       setErrors(null);
       try {
-         const { data, status } = await axiosPrivate.post('/user/profile/avatar/delete/');
+         const { data, status } = await axiosPrivate.post('/user/avatar/delete/');
          setUser((prevState) => {
             if (!prevState) return undefined;
             return {
@@ -136,20 +140,16 @@ export default function useUser() {
       }
    };
 
-   const updateProfileAvatar = async (avatar: AvatarProps): Promise<boolean> => {
+   const updateAvatar = async (avatar: AvatarProps): Promise<boolean> => {
       setErrors(null);
       try {
          const formData = new FormData();
          formData.append('avatar', avatar);
-         const { data, status } = await axiosPrivate.post(
-            '/user/profile/avatar/update/',
-            formData,
-            {
-               headers: {
-                  'Content-Type': 'multipart/form-data',
-               },
+         const { data, status } = await axiosPrivate.post('/user/avatar/update/', formData, {
+            headers: {
+               'Content-Type': 'multipart/form-data',
             },
-         );
+         });
          setUser((prevState) => {
             if (!prevState) return undefined;
             return {
@@ -197,6 +197,27 @@ export default function useUser() {
       }
    };
 
+   const updateSignature = async (signature: SignatureProps): Promise<boolean> => {
+      setErrors(null);
+      try {
+         const { data, status } = await axiosPrivate.post('/user/signature/update/', signature);
+         setUser((prevState) => {
+            if (!prevState) return undefined;
+            return {
+               ...prevState,
+               profile: {
+                  ...prevState.profile,
+                  signature: data.signature,
+               },
+            };
+         });
+         return status === 200 ? true : false;
+      } catch (error) {
+         error instanceof AxiosError && setErrors(error.response?.data);
+         return false;
+      }
+   };
+
    return {
       errors,
       getUser,
@@ -204,9 +225,10 @@ export default function useUser() {
       accountVerifyResend,
       register,
       updateProfile,
-      deleteProfileAvatar,
-      updateProfileAvatar,
+      deleteAvatar,
+      updateAvatar,
       changePassword,
       changeEmail,
+      updateSignature,
    };
 }

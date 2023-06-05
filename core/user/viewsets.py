@@ -27,7 +27,7 @@ class UserViewSet(ModelViewSet):
     def get_object(self):
         return self.get_queryset().first()
 
-    def retrieve(self, request, *args, **kwargs):
+    def retrieve(self, request, *args, **kwargs) -> Response:
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
@@ -38,11 +38,10 @@ class UserViewSet(ModelViewSet):
         serializer_class=ProfileSerializer,
         url_path='profile/update'
     )
-    def profile_update(self, request, *args, **kwargs):
-        instance = self.get_object()
-        profile = instance.profile
+    def profile_update(self, request, *args, **kwargs) -> Response:
+        profile = self.get_object().profile
         serializer = self.serializer_class(profile, data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
             response = Response(status=status.HTTP_200_OK)
             response.data = serializer.data
@@ -53,51 +52,47 @@ class UserViewSet(ModelViewSet):
         methods=['post'],
         detail=False,
         serializer_class=ProfileSerializer,
-        url_path='profile/avatar/delete'
+        url_path='avatar/delete'
     )
-    def profile_avatar_delete(self, request, *args, **kwargs):
-        instance = self.get_object()
-        profile = instance.profile
+    def profile_avatar_delete(self, request, *args, **kwargs) -> Response:
+        profile = self.get_object().profile
         if profile.avatar != settings.PROFILE_AVATAR_FILE:
             profile.avatar.delete()
             profile.save()
-            serializer = self.get_serializer(profile, data=request.data)
+            serializer = self.get_serializer(profile, data={}, partial=True)
             if serializer.is_valid(raise_exception=True):
                 default_avatar = settings.PROFILE_AVATAR_FILE
                 user = serializer.save(avatar=default_avatar)
-                response_data = {
+                return Response(data={
                     'status':True,
                     'avatar': settings.BASE_URL + user.avatar.url
-                }
-                return Response(response_data, status=status.HTTP_200_OK)
+                }, status=status.HTTP_200_OK)
         return Response(data={'error': 'Bir hata oluştu.'}, status=status.HTTP_400_BAD_REQUEST)
 
     @action(
         methods=['post'],
         detail=False,
         serializer_class=ProfileSerializer,
-        url_path='profile/avatar/update'
+        url_path='avatar/update'
     )
-    def profile_avatar_update(self, request, *args, **kwargs):
+    def profile_avatar_update(self, request, *args, **kwargs) -> Response:
         avatar_file = request.FILES.get('avatar')
         if not avatar_file:
             return Response(data={'error': 'Avatar dosyası yüklenemedi.'}, status=status.HTTP_400_BAD_REQUEST)
         if not check_file_size(avatar_file):
             return Response(data={'error': 'Dosya boyutu çok büyük.'}, status=status.HTTP_400_BAD_REQUEST)
-        instance = self.get_object()
-        profile = instance.profile
+        profile = self.get_object().profile
         if profile.avatar != settings.PROFILE_AVATAR_FILE:
             profile.avatar.delete()
             profile.save()
 
-        serializer = self.get_serializer(profile, data={})
+        serializer = self.get_serializer(profile, data={}, partial=True)
         if serializer.is_valid(raise_exception=True):
             user = serializer.save(avatar=avatar_file)
-            response_data = {
+            return Response(data={
                 'status': True,
                 'avatar': settings.BASE_URL + user.avatar.url
-            }
-            return Response(response_data, status=status.HTTP_200_OK)
+            }, status=status.HTTP_200_OK)
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     @action(
@@ -105,7 +100,7 @@ class UserViewSet(ModelViewSet):
         detail=False,
         url_path='password/change'
     )
-    def change_password(self,request,*args, **kwargs):
+    def change_password(self,request,*args, **kwargs) -> Response:
         user = self.get_object()
         password = request.data.get('password')
         new_password = request.data.get('new_password')
@@ -126,7 +121,7 @@ class UserViewSet(ModelViewSet):
         detail=False,
         url_path='email/change'
     )
-    def change_email(self,request,*args, **kwargs):
+    def change_email(self, request, *args, **kwargs) -> Response:
         user = self.get_object()
         password = request.data.get('password')
         new_email = request.data.get('new_email')
@@ -143,4 +138,21 @@ class UserViewSet(ModelViewSet):
         SendVerificationEmail(user)
         return Response({'status': True}, status=status.HTTP_200_OK)
     
+    @action(
+        methods=['post'],
+        detail=False,
+        serializer_class=ProfileSerializer,
+        url_path='signature/update'
+    )
+    def profile_signature_update(self, request, *args, **kwargs) -> Response:
+        profile = self.get_object().profile
+        signature = request.data.get('signature')
+        serializer = self.serializer_class(profile, data={}, partial=True)
+        if serializer.is_valid(raise_exception=True):
+            profile = serializer.save(signature=signature)
+            return Response({
+                'status': True,
+                'signature': profile.signature
+            }, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

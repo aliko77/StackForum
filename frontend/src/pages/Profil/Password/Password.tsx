@@ -39,11 +39,7 @@ const Password: FC = () => {
                   validationSchema={validationSchema}
                   initialValues={initialValues}
                   onSubmit={async (values): Promise<void> => {
-                     const status = await changePassword({
-                        password: values.password,
-                        new_password: values.new_password,
-                        new_confirm_password: values.new_confirm_password,
-                     });
+                     const status = await changePassword(values);
                      status &&
                         Toast.fire({
                            title: 'Başarıyla değiştirildi.',

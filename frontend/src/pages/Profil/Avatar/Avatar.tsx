@@ -10,7 +10,7 @@ import { FormErrors } from 'components/FormErrors';
 
 const Avatar: FC = () => {
    const { user } = useAuth();
-   const { deleteProfileAvatar, updateProfileAvatar, errors } = useUser();
+   const { deleteAvatar, updateAvatar, errors } = useUser();
    const [uploadedImage, setUploadedImage] = useState<File | null>(null);
    const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -28,7 +28,7 @@ const Avatar: FC = () => {
          });
          return;
       }
-      const status = await deleteProfileAvatar();
+      const status = await deleteAvatar();
       if (status)
          Toast.fire({
             title: 'Başarıyla kaldırıldı.',
@@ -42,7 +42,7 @@ const Avatar: FC = () => {
          return;
       }
       if (uploadedImage) {
-         const status = await updateProfileAvatar(uploadedImage);
+         const status = await updateAvatar(uploadedImage);
          if (status)
             Toast.fire({
                title: 'Başarıyla kaydedildi.',
@@ -164,7 +164,7 @@ const Avatar: FC = () => {
                      <p className="font-medium text-gray-900 dark:text-gray-100">Avatar Hakkında</p>
                   </div>
                   <div className="content ml-2">
-                     <ul className="max-w-md space-y-1 text-sm text-gray-600 list-disc list-inside dark:text-gray-400">
+                     <ul className="space-y-1 text-sm text-gray-600 list-disc list-inside dark:text-gray-400">
                         <li>Mevcut avatar herkes tarafından görülmektedir.</li>
                         <li>Avatarınızı kaldırdığınızda varsayılan avatar gözükecektir.</li>
                         <li>Avatar ebatı maksimum 100x100 pixel ve 3.00 MB olmalıdır.</li>

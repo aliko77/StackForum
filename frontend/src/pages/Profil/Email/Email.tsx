@@ -33,10 +33,7 @@ const Email: FC = () => {
                   validationSchema={validationSchema}
                   initialValues={initialValues}
                   onSubmit={async (values): Promise<void> => {
-                     const status = await changeEmail({
-                        password: values.password,
-                        new_email: values.new_email,
-                     });
+                     const status = await changeEmail(values);
                      status &&
                         Toast.fire({
                            title: 'Başarıyla değiştirildi.',

@@ -9,13 +9,13 @@ import useUser from 'hooks/useUser';
 import ControlPanelLayout from 'layouts/ControlPanel';
 import { Textarea } from 'components/Textarea';
 
-const validationSchema = object({
-   signature: string().required('Bu alan zorunlu.').max(120),
-});
-
 export const Signature: FC = () => {
    const { user } = useAuth();
-   const { errors } = useUser();
+   const { errors, updateSignature } = useUser();
+
+   const validationSchema = object({
+      signature: string().required('Bu alan zorunlu.').max(120),
+   });
 
    const initialValues = {
       signature: user?.profile?.signature,
@@ -32,8 +32,7 @@ export const Signature: FC = () => {
                   validationSchema={validationSchema}
                   initialValues={initialValues}
                   onSubmit={async (values): Promise<void> => {
-                     console.log(values);
-                     const status = true;
+                     const status = await updateSignature(values);
                      status &&
                         Toast.fire({
                            title: 'Başarıyla kaydedildi.',
@@ -50,7 +49,7 @@ export const Signature: FC = () => {
                      handleBlur,
                      isSubmitting,
                   }) => (
-                     <Form noValidate onSubmit={handleSubmit}>
+                     <Form noValidate onSubmit={handleSubmit} className="space-y-4">
                         <fieldset id="change_signature">
                            <legend className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">
                               <p className="font-medium text-gray-900 dark:text-gray-100">
@@ -72,8 +71,22 @@ export const Signature: FC = () => {
                               </div>
                            </div>
                         </fieldset>
-                        <div className="w-full max-w-xs mt-4">
+                        <div className="w-full max-w-xs">
                            <Button type="submit" text="Kaydet" disabled={isSubmitting} />
+                        </div>
+                        <div id="signature-info">
+                           <div className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">
+                              <p className="font-medium text-gray-900 dark:text-gray-100">
+                                 İmza Hakkında
+                              </p>
+                           </div>
+                           <div className="content ml-2">
+                              <ul className="space-y-1 text-sm text-gray-600 list-disc list-inside dark:text-gray-400">
+                                 <li>Maksimum 120 Karakter.</li>
+                                 <li>Maksimum 3 Satır.</li>
+                                 <li>Maksimum 1 Link.</li>
+                              </ul>
+                           </div>
                         </div>
                      </Form>
                   )}
