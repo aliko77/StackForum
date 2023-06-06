@@ -106,6 +106,9 @@ class Profile(models.Model):
 
     class Meta:
         db_table = "user_profile"
+        
+    def __str__(self):
+        return f"{self.user.username} 's profile"
 
 class AuthActivation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -123,3 +126,15 @@ class AuthActivation(models.Model):
 
     class Meta:
         db_table = "user_activation_code"
+
+class UserLogin(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    device = models.CharField(max_length=100)
+    ip_address = models.GenericIPAddressField()
+    login_time = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = "user_login"
+
+    def __str__(self):
+        return f"{self.user.username} - {self.device}"

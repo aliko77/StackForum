@@ -14,7 +14,7 @@ export const Signature: FC = () => {
    const { errors, updateSignature } = useUser();
 
    const validationSchema = object({
-      signature: string().required('Bu alan zorunlu.').max(120),
+      signature: string().max(120),
    });
 
    const initialValues = {
@@ -63,6 +63,7 @@ export const Signature: FC = () => {
                                     id="signature"
                                     name="signature"
                                     rows={10}
+                                    placeholder='İmzanı düzenle...'
                                     defaultValue={values.signature}
                                     onChange={handleChange}
                                     onBlur={handleBlur}

@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save
 from django.contrib.auth.signals import user_logged_in, user_logged_out
 from django.dispatch import receiver
-from .models import Profile, User
+from .models import Profile, User, UserLogin
 from .utils import SendVerificationEmail
 
 
@@ -19,6 +19,10 @@ def user_logged_in_handler(sender, user, request, **kwargs):
     profile = user.profile  # Profili almak için uygun şekilde değiştirin
     profile.status = 'ONLINE'
     profile.save()
+
+    device = request.META.get('HTTP_USER_AGENT')
+    ip_address = request.META.get('REMOTE_ADDR')
+    UserLogin.objects.create(user=user, device=device, ip_address=ip_address)
 
 
 @receiver(user_logged_out, sender=User)
