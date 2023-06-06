@@ -1,9 +1,9 @@
-from rest_framework.serializers import ModelSerializer, EmailField, CharField, ValidationError, SerializerMethodField 
+from rest_framework.serializers import ModelSerializer, EmailField, CharField, ValidationError, SerializerMethodField
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.http import urlsafe_base64_decode
 from django.conf import settings
-from .models import Profile, AuthActivation
+from .models import Profile, AuthActivation, UserLogin
 from .utils import SendVerificationEmail, SendPasswordResetEmail, token_generator
 
 User = get_user_model()
@@ -196,3 +196,10 @@ class PasswordResetSerializer(ModelSerializer):
         user.set_password(password)
         user.save()
         return user
+
+
+class LoginRecordsSerializer(ModelSerializer):
+    class Meta:
+        model = UserLogin
+        fields = '__all__'
+

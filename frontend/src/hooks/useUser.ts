@@ -34,6 +34,13 @@ type SignatureProps = {
    signature: string | undefined;
 };
 
+type LoginRecordProps = {
+   ip_address: string;
+   login_time: string;
+   browser: string;
+   device: string;
+};
+
 export default function useUser() {
    const { setUser, user, logout } = useAuth();
    const axiosPrivate = useAxiosPrivate();
@@ -218,6 +225,16 @@ export default function useUser() {
       }
    };
 
+   const getLastLoginRecords = async (): Promise<LoginRecordProps | boolean> => {
+      try {
+         const { data, status } = await axiosPrivate.get('/user/last-login-records/');
+         return status === 200 ? data : false;
+      } catch (error) {
+         error instanceof AxiosError && setErrors(error.response?.data);
+         return false;
+      }
+   };
+
    return {
       errors,
       getUser,
@@ -230,5 +247,6 @@ export default function useUser() {
       changePassword,
       changeEmail,
       updateSignature,
+      getLastLoginRecords,
    };
 }

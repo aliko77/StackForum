@@ -21,7 +21,7 @@ const initialValues = {
 
 const Email: FC = () => {
    const { changeEmail, errors } = useUser();
-
+   
    return (
       <ControlPanelLayout>
          <div className="w-full">

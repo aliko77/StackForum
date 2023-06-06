@@ -1,13 +1,14 @@
+import random
+import string
 from django.conf import settings
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
-import random
-import string
-from .models import AuthActivation
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
-from user_agent import device
+from user_agents import parse
+from .models import AuthActivation
+
 
 
 class TokenGenerator(PasswordResetTokenGenerator):
@@ -59,3 +60,22 @@ def SendPasswordResetEmail(user):
     email.content_subtype = "html"
     is_send = email.send()
     return True if is_send else False
+
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
+class UserAgent:
+    def __init__(self, ua_string):
+        user_agent = parse(ua_string)
+        self.browser = user_agent.browser.family
+        self.os = user_agent.os.family
+        self.device = user_agent.device.family
+
+def get_client_agent(request):
+    ua_string = request.META.get('HTTP_USER_AGENT')
+    return UserAgent(ua_string)

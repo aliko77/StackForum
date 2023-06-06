@@ -48,6 +48,10 @@ export const items: ItemProps[] = [
             name: 'Email Değiştir',
             link: '/profil/email/',
          },
+         {
+            name: 'Giriş Kayıtları',
+            link: '/profil/giris-kayitlari/',
+         },
       ],
    },
 ];

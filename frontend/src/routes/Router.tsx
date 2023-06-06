@@ -1,4 +1,4 @@
-import { ElementType, lazy, ReactNode, Suspense, ReactElement, StrictMode } from 'react';
+import { ElementType, lazy, ReactNode, Suspense, ReactElement } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import { PageLoading } from 'components/PageLoading';
 import { AuthProvider } from 'contexts/AuthContext';
@@ -19,6 +19,7 @@ const ProfilAvatar = lazy(() => import('pages/Profil/Avatar'));
 const ProfilPassword = lazy(() => import('pages/Profil/Password'));
 const ProfilEmail = lazy(() => import('pages/Profil/Email'));
 const ProfilSignature = lazy(() => import('pages/Profil/Signature'));
+const ProfilLoginLogs = lazy(() => import('pages/Profil/LoginLogs'));
 //404
 const PageNotFound = lazy(() => import('pages/PageNotFound'));
 
@@ -31,11 +32,9 @@ const getRouteElement = (Component: ElementType): ReactElement => (
    <Suspense fallback={<PageLoading />}>
       <AuthProvider>
          <PersistLogin>
-            <StrictMode>
-               <Layout>
-                  <Component />
-               </Layout>
-            </StrictMode>
+            <Layout>
+               <Component />
+            </Layout>
          </PersistLogin>
       </AuthProvider>
    </Suspense>
@@ -84,6 +83,10 @@ const routes: RouteProps[] = [
    {
       path: 'profil/imza/',
       element: getRouteElement(() => <PrivateRoute>{<ProfilSignature />}</PrivateRoute>),
+   },
+   {
+      path: 'profil/giris-kayitlari/',
+      element: getRouteElement(() => <PrivateRoute>{<ProfilLoginLogs />}</PrivateRoute>),
    },
    { path: '*', element: getRouteElement(PageNotFound) },
 ];

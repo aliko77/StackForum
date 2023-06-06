@@ -129,7 +129,9 @@ class AuthActivation(models.Model):
 
 class UserLogin(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    device = models.CharField(max_length=100)
+    browser = models.CharField(max_length=100, null=True)
+    os = models.CharField(max_length=100, null=True)
+    device = models.CharField(max_length=100, null=True)
     ip_address = models.GenericIPAddressField()
     login_time = models.DateTimeField(auto_now_add=True)
 

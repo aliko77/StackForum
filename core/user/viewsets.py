@@ -5,7 +5,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import action
-from .serializers import UserSerializer, ProfileSerializer
+from .serializers import UserSerializer, ProfileSerializer, LoginRecordsSerializer
 from .utils import SendVerificationEmail
 import re
 
@@ -65,7 +65,7 @@ class UserViewSet(ModelViewSet):
                 default_avatar = settings.PROFILE_AVATAR_FILE
                 user = serializer.save(avatar=default_avatar)
                 return Response(data={
-                    'status':True,
+                    'status': True,
                     'avatar': settings.BASE_URL + user.avatar.url
                 }, status=status.HTTP_200_OK)
         return Response(data={'error': 'Bir hata oluştu.'}, status=status.HTTP_400_BAD_REQUEST)
@@ -95,13 +95,13 @@ class UserViewSet(ModelViewSet):
                 'avatar': settings.BASE_URL + user.avatar.url
             }, status=status.HTTP_200_OK)
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     @action(
         methods=['post'],
         detail=False,
         url_path='password/change'
     )
-    def change_password(self,request,*args, **kwargs) -> Response:
+    def change_password(self, request, *args, **kwargs) -> Response:
         user = self.get_object()
         password = request.data.get('password')
         new_password = request.data.get('new_password')
@@ -109,14 +109,14 @@ class UserViewSet(ModelViewSet):
 
         if not user.check_password(password):
             return Response({'error': 'Mevcut parola yanlış.'}, status=status.HTTP_400_BAD_REQUEST)
-        
+
         if new_password != new_confirm_password:
             return Response({'error': 'Yeni parolalar eşleşmiyor.'}, status=status.HTTP_400_BAD_REQUEST)
-        
+
         user.set_password(new_password)
         user.save()
         return Response({'status': True}, status=status.HTTP_200_OK)
-    
+
     @action(
         methods=['post'],
         detail=False,
@@ -129,16 +129,16 @@ class UserViewSet(ModelViewSet):
 
         if not user.check_password(password):
             return Response({'error': 'Mevcut parola yanlış.'}, status=status.HTTP_400_BAD_REQUEST)
-        
+
         if User.objects.filter(email=new_email).exists():
             return Response({'error': 'Bu e-posta adresini kullanamazsınız.'}, status=status.HTTP_400_BAD_REQUEST)
-        
+
         user.email = new_email
         user.is_verified = False
         user.save()
         SendVerificationEmail(user)
         return Response({'status': True}, status=status.HTTP_200_OK)
-    
+
     @action(
         methods=['post'],
         detail=False,
@@ -149,7 +149,7 @@ class UserViewSet(ModelViewSet):
         profile = self.get_object().profile
         signature = request.data.get('signature')
         # İmza kontrolü
-        link_pattern = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+' 
+        link_pattern = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
         links = re.findall(link_pattern, signature)
         errors = []
         if len(signature) > 120:
@@ -160,8 +160,7 @@ class UserViewSet(ModelViewSet):
             errors.append('İmza 1 den fazla link içeriyor.')
         if len(errors) > 0:
             return Response(data=errors, status=status.HTTP_400_BAD_REQUEST)
-            
-        
+
         serializer = self.serializer_class(profile, data={}, partial=True)
         if serializer.is_valid(raise_exception=True):
             profile = serializer.save(signature=signature)
@@ -171,3 +170,14 @@ class UserViewSet(ModelViewSet):
             }, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    @action(
+        methods=['get'],
+        detail=False,
+        serializer_class=LoginRecordsSerializer,
+        url_path='last-login-records'
+    )
+    def get_last_login_records(self, request, *args, **kwargs) -> Response:
+        instance = self.get_object()
+        serializer = self.serializer_class(instance=instance)
+        print(serializer)
+        return Response(serializer.data)
