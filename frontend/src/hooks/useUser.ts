@@ -3,7 +3,7 @@ import { AxiosError } from 'axios';
 import { useAuth } from 'hooks/useAuth';
 import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
 import { useState } from 'react';
-import { ProfileProps, UserProps } from 'types';
+import { LoginRecordProps, ProfileProps, UserProps } from 'types';
 
 type AccountVerifyProps = {
    vcode: string;
@@ -32,13 +32,6 @@ type ChangeEmailProps = {
 
 type SignatureProps = {
    signature: string | undefined;
-};
-
-type LoginRecordProps = {
-   ip_address: string;
-   login_time: string;
-   browser: string;
-   device: string;
 };
 
 export default function useUser() {
@@ -225,13 +218,14 @@ export default function useUser() {
       }
    };
 
-   const getLastLoginRecords = async (): Promise<LoginRecordProps | boolean> => {
+   const getLastLoginRecords = async (): Promise<LoginRecordProps> => {
       try {
          const { data, status } = await axiosPrivate.get('/user/last-login-records/');
-         return status === 200 ? data : false;
+         if (status === 200) return data;
+         return [];
       } catch (error) {
          error instanceof AxiosError && setErrors(error.response?.data);
-         return false;
+         return [];
       }
    };
 

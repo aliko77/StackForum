@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.http import urlsafe_base64_decode
 from django.conf import settings
-from .models import Profile, AuthActivation, UserLogin
+from .models import Profile, AuthActivation, UserLoginRecords
 from .utils import SendVerificationEmail, SendPasswordResetEmail, token_generator
 
 User = get_user_model()
@@ -200,6 +200,6 @@ class PasswordResetSerializer(ModelSerializer):
 
 class LoginRecordsSerializer(ModelSerializer):
     class Meta:
-        model = UserLogin
-        fields = '__all__'
+        model = UserLoginRecords
+        exclude = ['id']
 

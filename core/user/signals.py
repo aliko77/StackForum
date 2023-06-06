@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save
 from django.contrib.auth.signals import user_logged_in, user_logged_out
 from django.dispatch import receiver
-from .models import Profile, User, UserLogin
+from .models import Profile, User, UserLoginRecords
 from .utils import SendVerificationEmail, get_client_ip, get_client_agent
 
 
@@ -22,7 +22,7 @@ def user_logged_in_handler(sender, user, request, **kwargs):
 
     ip_address = get_client_ip(request)
     agent = get_client_agent(request)
-    UserLogin.objects.create(
+    UserLoginRecords.objects.create(
         user=user,
         browser=agent.browser,
         os=agent.os,

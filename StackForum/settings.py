@@ -145,7 +145,7 @@ REACT_APP_URL = os.getenv('REACT_APP_URL', 'http://localhost:5173')
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',  # React uygulamasının yerel adresi
-    'http://192.168.1.223:5173'
+    'http://192.168.1.190:5173'
 ]
 CORS_ALLOW_CREDENTIALS = True  # CORS isteklerinde kullanıcı kimlik bilgileri gönderilmesine izin verir
 CSRF_COOKIE_HTTPONLY = True  # CSRF cookie'sine JavaScript tarafından erişimi devre dışı bırakır
@@ -155,8 +155,9 @@ CSRF_COOKIE_SAMESITE = 'Lax'  # CSRF cookie'sini yalnızca aynı site üzerindek
 SESSION_COOKIE_SAMESITE = 'Lax'  # Oturum cookie'sini yalnızca aynı site üzerindeki isteklere gönderir
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:5173',  # React uygulamasının yerel adresi
-    'http://192.168.1.223:5173'
+    'http://192.168.1.190:5173'
 ]
+
 CORS_EXPOSE_HEADERS = [
     'Content-Type',
     'Authorization',  # İsteğe bağlı olarak, kullanıcının yetkilendirme bilgilerini alabilirsiniz
@@ -200,4 +201,4 @@ REST_FRAMEWORK = {
 }
 
 PROFILE_AVATAR_FILE = 'profile_pictures/default.jpg'
-AVATAR_MAX_FILE_SIZE = 3 * 1024 * 1024
+AVATAR_MAX_FILE_SIZE = 3 * 1024 * 1024 # 3MB

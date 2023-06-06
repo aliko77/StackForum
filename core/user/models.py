@@ -127,16 +127,16 @@ class AuthActivation(models.Model):
     class Meta:
         db_table = "user_activation_code"
 
-class UserLogin(models.Model):
+class UserLoginRecords(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     browser = models.CharField(max_length=100, null=True)
     os = models.CharField(max_length=100, null=True)
     device = models.CharField(max_length=100, null=True)
-    ip_address = models.GenericIPAddressField()
+    ip_address = models.GenericIPAddressField(null=True)
     login_time = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = "user_login"
+        db_table = "user_login_records"
 
     def __str__(self):
         return f"{self.user.username} - {self.device}"

@@ -7,6 +7,7 @@ from rest_framework import status
 from rest_framework.decorators import action
 from .serializers import UserSerializer, ProfileSerializer, LoginRecordsSerializer
 from .utils import SendVerificationEmail
+from .models import UserLoginRecords
 import re
 
 User = get_user_model()
@@ -176,8 +177,8 @@ class UserViewSet(ModelViewSet):
         serializer_class=LoginRecordsSerializer,
         url_path='last-login-records'
     )
-    def get_last_login_records(self, request, *args, **kwargs) -> Response:
-        instance = self.get_object()
-        serializer = self.serializer_class(instance=instance)
-        print(serializer)
+    def user_last_login_records(self, request, *args, **kwargs) -> Response:
+        user = self.get_object()
+        last_logins = UserLoginRecords.objects.filter(user=user).order_by('-login_time')
+        serializer = self.serializer_class(last_logins, many=True)
         return Response(serializer.data)

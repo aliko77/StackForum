@@ -34,3 +34,10 @@ export type UserProps = {
    date_joined: string;
    profile?: ProfileProps;
 };
+
+export type LoginRecordProps = {
+   ip_address: string;
+   login_time: string;
+   browser: string;
+   device: string;
+}[];
