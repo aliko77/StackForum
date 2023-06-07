@@ -31,3 +31,5 @@ export const Toast = withReactContent(Swal).mixin({
       timerProgressBar: 'bg-gray-600',
    },
 });
+
+export const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
