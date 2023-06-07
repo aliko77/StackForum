@@ -196,7 +196,7 @@ class UserViewSet(ModelViewSet):
     def block_user_by_username(self, request, *args, **kwargs) -> Response:
         serializer = self.serializer_class(
             data=request.data,
-            context={'user': request.user}
+            context={'request': request}
         )
         if serializer.is_valid(raise_exception=True):
             serializer.save()

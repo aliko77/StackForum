@@ -151,10 +151,7 @@ class BlockedUser(models.Model):
     class Meta:
         db_table = 'user_blockeduser'
         unique_together = ('blocked_by', 'blocked_user')
+        ordering = ["-blocked_at"]
 
     def __str__(self):
         return f'{self.blocked_by} blocked {self.blocked_user}'
-    
-    def clean(self):
-        if self.blocked_by == self.blocked_user:
-            raise ValidationError("A user cannot block themselves.")

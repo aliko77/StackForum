@@ -53,12 +53,14 @@ const Blocked: FC = () => {
                      initialValues={initialValues}
                      onSubmit={async (values): Promise<void> => {
                         const data = await blockUserByUsername(values);
-                        typeof data === 'object' &&
+                        if (typeof data === 'object') {
+                           setRecords([data, ...records]);
                            Toast.fire({
                               title: `Kullanıcı bloklandı. [${data.username}]`,
                               icon: 'success',
                               timer: 2000,
                            });
+                        }
                      }}
                   >
                      {({
@@ -109,66 +111,64 @@ const Blocked: FC = () => {
                               <LoadSpinner />
                            </div>
                         )}
-                        <div>
-                           <div className="relative overflow-x-auto shadow-md">
-                              <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-night-300 dark:text-indigo-400">
-                                    <tr>
-                                       <th scope="col" className="px-6 py-3">
-                                          Kullanıcı
-                                       </th>
-                                       <th scope="col" className="px-6 py-3">
-                                          Tarih
-                                       </th>
-                                       <th scope="col" className="px-6 py-3">
-                                          Etkileşimler
-                                       </th>
-                                    </tr>
-                                 </thead>
-                                 <tbody>
-                                    {records.length == 0 && (
-                                       <tr className="border-b bg-gray-200 dark:bg-gray-900 dark:border-gray-700">
-                                          <th
-                                             scope="row"
-                                             className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-gray-100"
-                                          >
-                                             #
-                                          </th>
-                                          <td className="px-6 py-4">#</td>
-                                          <td className="px-6 py-4">#</td>
-                                       </tr>
-                                    )}
-                                    {records.map((record, index) => (
-                                       <tr
-                                          key={index}
-                                          className={`border-b ${
-                                             index % 2 == 0
-                                                ? 'bg-gray-200 dark:bg-gray-900'
-                                                : 'bg-gray-100 dark:bg-gray-800'
-                                          } dark:border-gray-700`}
+                        <div className="relative overflow-x-auto shadow-md">
+                           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-night-300 dark:text-indigo-400">
+                                 <tr>
+                                    <th scope="col" className="px-6 py-3">
+                                       Kullanıcı
+                                    </th>
+                                    <th scope="col" className="px-6 py-3">
+                                       Tarih
+                                    </th>
+                                    <th scope="col" className="px-6 py-3">
+                                       Etkileşimler
+                                    </th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 {records.length == 0 && (
+                                    <tr className="border-b bg-gray-200 dark:bg-gray-900 dark:border-gray-700">
+                                       <th
+                                          scope="row"
+                                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-gray-100"
                                        >
-                                          <th
-                                             scope="row"
-                                             className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-gray-100"
+                                          #
+                                       </th>
+                                       <td className="px-6 py-4">#</td>
+                                       <td className="px-6 py-4">#</td>
+                                    </tr>
+                                 )}
+                                 {records.map((record, index) => (
+                                    <tr
+                                       key={index}
+                                       className={`border-b ${
+                                          index % 2 == 0
+                                             ? 'bg-gray-200 dark:bg-gray-900'
+                                             : 'bg-gray-100 dark:bg-gray-800'
+                                       } dark:border-gray-700`}
+                                    >
+                                       <th
+                                          scope="row"
+                                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-gray-100"
+                                       >
+                                          {record.username}
+                                       </th>
+                                       <td className="px-6 py-4">
+                                          {parseDateTimeToString(record.blocked_at)}
+                                       </td>
+                                       <td className="px-6 py-4">
+                                          <a
+                                             href="#"
+                                             className="font-medium text-indigo-700 dark:text-indigo-500 hover:underline"
                                           >
-                                             {record.username}
-                                          </th>
-                                          <td className="px-6 py-4">
-                                             {parseDateTimeToString(record.blocked_at)}
-                                          </td>
-                                          <td className="px-6 py-4">
-                                             <a
-                                                href="#"
-                                                className="font-medium text-indigo-700 dark:text-indigo-500 hover:underline"
-                                             >
-                                                Kaldır
-                                             </a>
-                                          </td>
-                                       </tr>
-                                    ))}
-                                 </tbody>
-                              </table>
-                           </div>
+                                             Kaldır
+                                          </a>
+                                       </td>
+                                    </tr>
+                                 ))}
+                              </tbody>
+                           </table>
                         </div>
                      </div>
                   </div>

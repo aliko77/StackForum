@@ -38,7 +38,15 @@ type BlockedUserProps = {
    username: string;
 };
 
-type BlockedUserReturnProps = Promise<{ username: string; avatar: string } | boolean>;
+type BlockedUserReturnProps = Promise<
+   | {
+        username: string;
+        avatar: string;
+        blocked_at: string;
+        blocked: boolean;
+     }
+   | boolean
+>;
 
 export default function useUser() {
    const { setUser, user, logout } = useAuth();
@@ -245,6 +253,7 @@ export default function useUser() {
    };
 
    const getLastLoginRecords = async (): Promise<LoginRecordProps> => {
+      setErrors(null);
       try {
          const { data, status } = await axiosPrivate.get('/user/last-login-records/');
          if (status === 200) return data;
@@ -260,6 +269,7 @@ export default function useUser() {
    const blockUserByUsername = async (
       username: BlockedUserProps,
    ): Promise<BlockedUserReturnProps> => {
+      setErrors(null);
       try {
          const { data, status } = await axiosPrivate.post(
             '/user/block-user-by-username/',
@@ -276,6 +286,7 @@ export default function useUser() {
 
    const getBlockedUsers = async (): Promise<BlockedUsersProps> => {
       try {
+         setErrors(null);
          const { data, status } = await axiosPrivate.get('/user/blocked-users/');
          if (status === 200) return data;
          return [];
