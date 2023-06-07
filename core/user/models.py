@@ -4,6 +4,7 @@ from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
+from django.core.exceptions import ValidationError
 import os
 
 
@@ -140,3 +141,20 @@ class UserLoginRecords(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.device}"
+    
+
+class BlockedUser(models.Model):
+    blocked_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blocked_by')
+    blocked_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blocked_user')
+    blocked_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'user_blockeduser'
+        unique_together = ('blocked_by', 'blocked_user')
+
+    def __str__(self):
+        return f'{self.blocked_by} blocked {self.blocked_user}'
+    
+    def clean(self):
+        if self.blocked_by == self.blocked_user:
+            raise ValidationError("A user cannot block themselves.")

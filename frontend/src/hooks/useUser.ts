@@ -34,6 +34,10 @@ type SignatureProps = {
    signature: string | undefined;
 };
 
+type BlockUserProps = {
+   username: string;
+};
+
 export default function useUser() {
    const { setUser, user, logout } = useAuth();
    const axiosPrivate = useAxiosPrivate();
@@ -229,6 +233,16 @@ export default function useUser() {
       }
    };
 
+   const blockUserByUsername = async (username: BlockUserProps): Promise<boolean> => {
+      try {
+         const { status } = await axiosPrivate.post('/user/block-user-by-username/', username);
+         return status === 200 ? true : false;
+      } catch (error) {
+         error instanceof AxiosError && setErrors(error.response?.data);
+         return false;
+      }
+   };
+
    return {
       errors,
       getUser,
@@ -242,5 +256,6 @@ export default function useUser() {
       changeEmail,
       updateSignature,
       getLastLoginRecords,
+      blockUserByUsername,
    };
 }

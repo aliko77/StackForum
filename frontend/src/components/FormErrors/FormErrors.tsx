@@ -7,9 +7,9 @@ type FormErrorProps = {
 export const FormErrors: FC<FormErrorProps> = ({ errors }) => {
    return (
       <>
-         {Object.values(errors).map((value) => {
+         {Object.values(errors).map((value, index) => {
             return (
-               <div key={value}>
+               <div key={index}>
                   <div
                      className={`flex p-4 mb-2 text-center text-sm text-rose-700 dark:text-rose-400 rounded-lg bg-blue-100 dark:bg-gray-800`}
                      role="alert"

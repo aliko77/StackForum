@@ -5,7 +5,8 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import action
-from .serializers import UserSerializer, ProfileSerializer, LoginRecordsSerializer
+from .serializers import UserSerializer, ProfileSerializer, LoginRecordsSerializer, \
+    BlockUserByUsernameSerializer
 from .utils import SendVerificationEmail
 from .models import UserLoginRecords
 import re
@@ -179,6 +180,20 @@ class UserViewSet(ModelViewSet):
     )
     def user_last_login_records(self, request, *args, **kwargs) -> Response:
         user = self.get_object()
-        last_logins = UserLoginRecords.objects.filter(user=user).order_by('-login_time')
+        last_logins = UserLoginRecords.objects.filter(
+            user=user).order_by('-login_time')
         serializer = self.serializer_class(last_logins, many=True)
         return Response(serializer.data)
+
+    @action(
+        methods=['post'],
+        detail=False,
+        serializer_class=BlockUserByUsernameSerializer,
+        url_path='block-user-by-username'
+    )
+    def block_user_by_username(self, request, *args, **kwargs) -> Response:
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

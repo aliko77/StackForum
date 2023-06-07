@@ -52,6 +52,10 @@ export const items: ItemProps[] = [
             name: 'Giriş Kayıtları',
             link: '/profil/giris-kayitlari/',
          },
+         {
+            name: 'Engellenen Kullanıcılar',
+            link: '/profil/engellenenler/',
+         },
       ],
    },
 ];

@@ -1,9 +1,10 @@
-from rest_framework.serializers import ModelSerializer, EmailField, CharField, ValidationError, SerializerMethodField
+from rest_framework.serializers import ModelSerializer, EmailField, CharField, \
+    ValidationError, SerializerMethodField, PrimaryKeyRelatedField, CurrentUserDefault
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.http import urlsafe_base64_decode
 from django.conf import settings
-from .models import Profile, AuthActivation, UserLoginRecords
+from .models import Profile, AuthActivation, UserLoginRecords, BlockedUser
 from .utils import SendVerificationEmail, SendPasswordResetEmail, token_generator
 
 User = get_user_model()
@@ -203,3 +204,25 @@ class LoginRecordsSerializer(ModelSerializer):
         model = UserLoginRecords
         exclude = ['id']
 
+class BlockUserByUsernameSerializer(ModelSerializer):
+    username = CharField(required=True)
+    blocked_by = PrimaryKeyRelatedField(read_only=True, default=CurrentUserDefault())
+    blocked_user = PrimaryKeyRelatedField(queryset=User.objects.all(), required=False)
+
+    class Meta:
+        model = BlockedUser
+        fields = '__all__'
+        
+    def validate(self, value):
+        blocked_by_user = self.context['request'].user
+        
+        if blocked_by_user.username == value:
+            raise ValidationError("Kendinizi engelleyemezsiniz.")
+        
+        return value
+    
+    def create(self, validated_data):
+        blocked_by_user = self.context['request'].user
+        blocked_user = User.objects.get(username=validated_data['username'])
+        # Kullanıcıyı engelleme işlemini gerçekleştir
+        BlockedUser.objects.get_or_create(blocked_by=blocked_by_user, blocked_user=blocked_user)
