@@ -66,9 +66,10 @@ const Blocked: FC = () => {
                   <Formik
                      validationSchema={validationSchema}
                      initialValues={initialValues}
-                     onSubmit={async (values): Promise<void> => {
+                     onSubmit={async (values, { resetForm }): Promise<void> => {
                         const data = await blockUserByUsername(values);
                         if (typeof data === 'object') {
+                           resetForm();
                            setRecords([data, ...records]);
                            Toast.fire({
                               title: `Kullanıcı bloklandı.`,
