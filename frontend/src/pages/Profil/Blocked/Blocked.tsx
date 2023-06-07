@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState, MouseEvent } from 'react';
 import ControlPanelLayout from 'layouts/ControlPanel';
 import { Field } from 'components/Field';
 import { Button } from 'components/Button';
@@ -12,7 +12,7 @@ import { LoadSpinner } from 'components/LoadSpinner';
 import { parseDateTimeToString } from 'utils';
 
 const Blocked: FC = () => {
-   const { blockUserByUsername, getBlockedUsers, errors } = useUser();
+   const { blockUserByUsername, unBlockUserByUsername, getBlockedUsers, errors } = useUser();
    const [ready, setReady] = useState<boolean>(false);
    const [records, setRecords] = useState<BlockedUsersProps>([]);
 
@@ -32,6 +32,21 @@ const Blocked: FC = () => {
       };
       fetchBlockedUsers();
    }, []);
+
+   const handleUnBlock = async (event: MouseEvent<HTMLSpanElement>) => {
+      const target = event.currentTarget.dataset.blocked_user;
+      if (!target) return;
+      const data = await unBlockUserByUsername({ username: target });
+      if (typeof data === 'object') {
+         setRecords((prevRecords) => prevRecords.filter((record) => record.username !== target));
+         Toast.fire({
+            title: `Kullanıcın engeli kaldırıldı.`,
+            text: data.username,
+            icon: 'success',
+            timer: 2000,
+         });
+      }
+   };
 
    return (
       <ControlPanelLayout>
@@ -56,7 +71,8 @@ const Blocked: FC = () => {
                         if (typeof data === 'object') {
                            setRecords([data, ...records]);
                            Toast.fire({
-                              title: `Kullanıcı bloklandı. [${data.username}]`,
+                              title: `Kullanıcı bloklandı.`,
+                              text: data.username,
                               icon: 'success',
                               timer: 2000,
                            });
@@ -158,12 +174,13 @@ const Blocked: FC = () => {
                                           {parseDateTimeToString(record.blocked_at)}
                                        </td>
                                        <td className="px-6 py-4">
-                                          <a
-                                             href="#"
-                                             className="font-medium text-indigo-700 dark:text-indigo-500 hover:underline"
+                                          <span
+                                             data-blocked_user={record.username}
+                                             onClick={handleUnBlock}
+                                             className="cursor-pointer font-medium text-indigo-700 dark:text-indigo-500 hover:underline"
                                           >
                                              Kaldır
-                                          </a>
+                                          </span>
                                        </td>
                                     </tr>
                                  ))}

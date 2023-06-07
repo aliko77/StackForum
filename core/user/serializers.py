@@ -242,6 +242,35 @@ class BlockUserByUsernameSerializer(Serializer):
         BlockedUser.objects.get_or_create(blocked_by=blocked_by, blocked_user=blocked_user)
         return validated_data
     
+class UnBlockUserByUsernameSerializer(Serializer):
+    username = CharField(required=True)
+    un_blocked = BooleanField(read_only=True)
+
+    def validate(self, attrs):
+        un_blocked_by = self.context['request'].user
+        username = attrs['username']
+
+        try:
+            un_blocked_user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            raise ValidationError("Belirtilen kullanıcı bulunamadı.")
+
+        if un_blocked_by == un_blocked_user:
+            raise ValidationError("Kendinize işlem yapamazsınız.")
+        
+        if not un_blocked_by.blocked_by.filter(blocked_user=un_blocked_user).exists():
+            raise ValidationError("Kullanıcı zaten engellenmemiş.")
+
+        attrs['un_blocked'] = True
+        attrs['un_blocked_user'] = un_blocked_user
+        return attrs
+
+    def create(self, validated_data):
+        un_blocked_by = self.context['request'].user
+        un_blocked_user = validated_data['un_blocked_user']
+        BlockedUser.objects.filter(blocked_by=un_blocked_by, blocked_user=un_blocked_user).delete()
+        return validated_data
+    
 
 class BlockedUsersSerializer(ModelSerializer):
     username = SerializerMethodField()

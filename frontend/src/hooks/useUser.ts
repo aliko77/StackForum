@@ -298,6 +298,24 @@ export default function useUser() {
       }
    };
 
+   const unBlockUserByUsername = async (
+      username: BlockedUserProps,
+   ): Promise<BlockedUserProps | boolean> => {
+      setErrors(null);
+      try {
+         const { data, status } = await axiosPrivate.post(
+            '/user/unblock-user-by-username/',
+            username,
+         );
+         return status === 200 ? data : false;
+      } catch (error) {
+         error instanceof AxiosError &&
+            error.response?.status !== 500 &&
+            setErrors(error.response?.data);
+         return false;
+      }
+   };
+
    return {
       errors,
       getUser,
@@ -313,5 +331,6 @@ export default function useUser() {
       getLastLoginRecords,
       blockUserByUsername,
       getBlockedUsers,
+      unBlockUserByUsername,
    };
 }

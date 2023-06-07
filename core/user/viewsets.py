@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import action
 from .serializers import UserSerializer, ProfileSerializer, LoginRecordsSerializer, \
-    BlockUserByUsernameSerializer, BlockedUsersSerializer
+    BlockUserByUsernameSerializer, BlockedUsersSerializer, UnBlockUserByUsernameSerializer
 from .utils import SendVerificationEmail
 from .models import UserLoginRecords
 import re
@@ -194,6 +194,22 @@ class UserViewSet(ModelViewSet):
         url_path='block-user-by-username'
     )
     def block_user_by_username(self, request, *args, **kwargs) -> Response:
+        serializer = self.serializer_class(
+            data=request.data,
+            context={'request': request}
+        )
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(
+        methods=['post'],
+        detail=False,
+        serializer_class=UnBlockUserByUsernameSerializer,
+        url_path='unblock-user-by-username'
+    )
+    def unblock_user_by_username(self, request, *args, **kwargs) -> Response:
         serializer = self.serializer_class(
             data=request.data,
             context={'request': request}
