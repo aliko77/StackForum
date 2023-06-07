@@ -40,4 +40,5 @@ export type LoginRecordProps = {
    login_time: string;
    browser: string;
    device: string;
+   os: string;
 }[];
