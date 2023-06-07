@@ -8,16 +8,17 @@ type LogoProps = {
 };
 
 export const Logo: FC<LogoProps> = ({ noText, noRedirect }) => {
-   const classList = `hidden sm:block font-mono space-x-0.5 text-xl dark:text-gray-100 ${
-      noText ? 'sr-only' : ''
-   }`;
    if (noRedirect) {
       return (
-         <div className="flex justify-center">
+         <div className="flex justify-center outline-none">
             <div>
                <div className="flex space-x-2 items-center outline-0">
                   <img width="36px" src={StackLogo} alt="Logo" />
-                  <h1 className={classList}>
+                  <h1
+                     className={`hidden sm:block font-mono space-x-0.5 text-xl dark:text-gray-100 ${
+                        noText ? 'sr-only' : ''
+                     }`}
+                  >
                      <span>Stack</span>
                      <span className="font-semibold">Forum</span>
                   </h1>
@@ -27,12 +28,16 @@ export const Logo: FC<LogoProps> = ({ noText, noRedirect }) => {
       );
    }
    return (
-      <div className="flex">
+      <div className="flex outline-none">
          <Link to="/">
             <div>
                <div className="flex space-x-2 items-center outline-0">
                   <img width="36px" src={StackLogo} alt="Logo" />
-                  <h1 className={classList}>
+                  <h1
+                     className={`hidden sm:block font-mono space-x-0.5 text-xl dark:text-gray-100 ${
+                        noText ? 'sr-only' : ''
+                     }`}
+                  >
                      <span>Stack</span>
                      <span className="font-semibold">Forum</span>
                   </h1>

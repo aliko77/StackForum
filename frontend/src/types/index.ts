@@ -42,3 +42,9 @@ export type LoginRecordProps = {
    device: string;
    os: string;
 }[];
+
+export type BlockedUsersProps = {
+   blocked_user: string;
+   username: string;
+   avatar: string;
+}[];

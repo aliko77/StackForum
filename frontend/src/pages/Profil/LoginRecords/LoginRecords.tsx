@@ -30,11 +30,9 @@ const LoginLogs: FC = () => {
             <div className="content bg-gray-200 dark:bg-night-200">
                <div>
                   {!ready && (
-                     <>
-                        <div>
-                           <LoadSpinner />
-                        </div>
-                     </>
+                     <div>
+                        <LoadSpinner />
+                     </div>
                   )}
                   {records.map((record, index) => (
                      <div key={index} className="flex w-full">

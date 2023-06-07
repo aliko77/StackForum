@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer, EmailField, CharField, \
-    ValidationError, SerializerMethodField, PrimaryKeyRelatedField, CurrentUserDefault
+    ValidationError, SerializerMethodField
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.http import urlsafe_base64_decode
@@ -206,23 +206,53 @@ class LoginRecordsSerializer(ModelSerializer):
 
 class BlockUserByUsernameSerializer(ModelSerializer):
     username = CharField(required=True)
-    blocked_by = PrimaryKeyRelatedField(read_only=True, default=CurrentUserDefault())
-    blocked_user = PrimaryKeyRelatedField(queryset=User.objects.all(), required=False)
+    avatar = SerializerMethodField()
 
     class Meta:
         model = BlockedUser
-        fields = '__all__'
-        
-    def validate(self, value):
-        blocked_by_user = self.context['request'].user
-        
-        if blocked_by_user.username == value:
+        fields = ['username', 'avatar']
+
+    def get_avatar(self, obj):
+        blocked_user = User.objects.get(username=obj['username'])
+        user_serializer = UserSerializer(blocked_user)
+        return user_serializer.data['profile']['avatar']
+
+    def validate(self, attrs):
+        username = attrs['username']
+        blocked_by_user = self.context['user']
+
+        try:
+            blocked_user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            raise ValidationError("Belirtilen kullanıcı bulunamadı.")
+
+        if blocked_by_user.username == username:
             raise ValidationError("Kendinizi engelleyemezsiniz.")
-        
-        return value
-    
+
+        attrs['blocked_by'] = blocked_by_user
+        attrs['blocked_user'] = blocked_user
+
+        return attrs
+
     def create(self, validated_data):
-        blocked_by_user = self.context['request'].user
-        blocked_user = User.objects.get(username=validated_data['username'])
-        # Kullanıcıyı engelleme işlemini gerçekleştir
+        blocked_by_user = validated_data['blocked_by']
+        blocked_user = validated_data['blocked_user']
         BlockedUser.objects.get_or_create(blocked_by=blocked_by_user, blocked_user=blocked_user)
+        return validated_data
+    
+
+class BlockedUsersSerializer(ModelSerializer):
+    username = SerializerMethodField()
+    avatar = SerializerMethodField()
+
+    def get_username(self, obj):
+        return obj.blocked_by.username
+    
+    def get_avatar(self, obj):
+        profile_serializer = ProfileSerializer(obj.blocked_by.profile)
+        return profile_serializer.data['avatar']
+
+    class Meta:
+        model = BlockedUser
+        fields = ['blocked_by', 'username', 'avatar']
+

@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import action
 from .serializers import UserSerializer, ProfileSerializer, LoginRecordsSerializer, \
-    BlockUserByUsernameSerializer
+    BlockUserByUsernameSerializer, BlockedUsersSerializer
 from .utils import SendVerificationEmail
 from .models import UserLoginRecords
 import re
@@ -31,6 +31,8 @@ class UserViewSet(ModelViewSet):
         return self.get_queryset().first()
 
     def retrieve(self, request, *args, **kwargs) -> Response:
+        if kwargs.get("pk") != "@me":
+            return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
@@ -192,8 +194,23 @@ class UserViewSet(ModelViewSet):
         url_path='block-user-by-username'
     )
     def block_user_by_username(self, request, *args, **kwargs) -> Response:
-        serializer = self.serializer_class(data=request.data)
+        serializer = self.serializer_class(
+            data=request.data,
+            context={'user': request.user}
+        )
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(
+        methods=['get'],
+        detail=False,
+        serializer_class=BlockedUsersSerializer,
+        url_path='blocked-users'
+    )
+    def blocked_users(self, request, *args, **kwargs) -> Response:
+        user = self.get_object()
+        blockedUsers = user.blocked_user.all()
+        serializer = self.serializer_class(blockedUsers, many=True)
+        return Response(serializer.data)

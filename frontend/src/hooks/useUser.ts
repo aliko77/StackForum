@@ -3,7 +3,7 @@ import { AxiosError } from 'axios';
 import { useAuth } from 'hooks/useAuth';
 import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
 import { useState } from 'react';
-import { LoginRecordProps, ProfileProps, UserProps } from 'types';
+import { BlockedUsersProps, LoginRecordProps, ProfileProps, UserProps } from 'types';
 
 type AccountVerifyProps = {
    vcode: string;
@@ -34,9 +34,11 @@ type SignatureProps = {
    signature: string | undefined;
 };
 
-type BlockUserProps = {
+type BlockedUserProps = {
    username: string;
 };
+
+type BlockedUserReturnProps = Promise<{ username: string; avatar: string } | boolean>;
 
 export default function useUser() {
    const { setUser, user, logout } = useAuth();
@@ -50,7 +52,7 @@ export default function useUser() {
          setUser(data);
          return data;
       } catch (error) {
-         error instanceof AxiosError && setErrors(error.response?.data);
+         error instanceof AxiosError && error.response?.status !== 500 && setErrors(error.response?.data);
          return false;
       }
    };
@@ -71,7 +73,7 @@ export default function useUser() {
          });
          return status === 200 ? true : false;
       } catch (error) {
-         error instanceof AxiosError && setErrors(error.response?.data);
+         error instanceof AxiosError && error.response?.status !== 500 && setErrors(error.response?.data);
          return false;
       }
    };
@@ -84,7 +86,7 @@ export default function useUser() {
          });
          return status === 200 ? true : false;
       } catch (error) {
-         error instanceof AxiosError && setErrors(error.response?.data);
+         error instanceof AxiosError && error.response?.status !== 500 && setErrors(error.response?.data);
          return false;
       }
    };
@@ -100,7 +102,7 @@ export default function useUser() {
          });
          return status === 201 ? true : false;
       } catch (error) {
-         error instanceof AxiosError && setErrors(error.response?.data);
+         error instanceof AxiosError && error.response?.status !== 500 && setErrors(error.response?.data);
          return false;
       }
    };
@@ -118,7 +120,7 @@ export default function useUser() {
          });
          return status === 200 ? true : false;
       } catch (error) {
-         error instanceof AxiosError && setErrors(error.response?.data);
+         error instanceof AxiosError && error.response?.status !== 500 && setErrors(error.response?.data);
          return false;
       }
    };
@@ -139,7 +141,7 @@ export default function useUser() {
          });
          return status === 200 ? true : false;
       } catch (error) {
-         error instanceof AxiosError && setErrors(error.response?.data);
+         error instanceof AxiosError && error.response?.status !== 500 && setErrors(error.response?.data);
          return false;
       }
    };
@@ -166,7 +168,7 @@ export default function useUser() {
          });
          return status === 200 ? true : false;
       } catch (error) {
-         error instanceof AxiosError && setErrors(error.response?.data);
+         error instanceof AxiosError && error.response?.status !== 500 && setErrors(error.response?.data);
          return false;
       }
    };
@@ -181,7 +183,7 @@ export default function useUser() {
          }
          return false;
       } catch (error) {
-         error instanceof AxiosError && setErrors(error.response?.data);
+         error instanceof AxiosError && error.response?.status !== 500 && setErrors(error.response?.data);
          return false;
       }
    };
@@ -196,7 +198,7 @@ export default function useUser() {
          }
          return false;
       } catch (error) {
-         error instanceof AxiosError && setErrors(error.response?.data);
+         error instanceof AxiosError && error.response?.status !== 500 && setErrors(error.response?.data);
          return false;
       }
    };
@@ -217,7 +219,7 @@ export default function useUser() {
          });
          return status === 200 ? true : false;
       } catch (error) {
-         error instanceof AxiosError && setErrors(error.response?.data);
+         error instanceof AxiosError && error.response?.status !== 500 && setErrors(error.response?.data);
          return false;
       }
    };
@@ -228,18 +230,36 @@ export default function useUser() {
          if (status === 200) return data;
          return [];
       } catch (error) {
-         error instanceof AxiosError && setErrors(error.response?.data);
+         error instanceof AxiosError && error.response?.status !== 500 && setErrors(error.response?.data);
          return [];
       }
    };
 
-   const blockUserByUsername = async (username: BlockUserProps): Promise<boolean> => {
+   const blockUserByUsername = async (
+      username: BlockedUserProps,
+   ): Promise<BlockedUserReturnProps> => {
       try {
-         const { status } = await axiosPrivate.post('/user/block-user-by-username/', username);
-         return status === 200 ? true : false;
+         const { data, status } = await axiosPrivate.post(
+            '/user/block-user-by-username/',
+            username,
+         );
+         return status === 200 ? data : false;
       } catch (error) {
-         error instanceof AxiosError && setErrors(error.response?.data);
+         error instanceof AxiosError && error.response?.status !== 500 && setErrors(error.response?.data);
          return false;
+      }
+   };
+
+   const getBlockedUsers = async (): Promise<BlockedUsersProps> => {
+      try {
+         const { data, status } = await axiosPrivate.get('/user/blocked-users/');         
+         if (status === 200) return data;
+         return [];
+      } catch (error) {
+         error instanceof AxiosError &&
+            error.response?.status !== 500 &&
+            setErrors(error.response?.data);
+         return [];
       }
    };
 
@@ -257,5 +277,6 @@ export default function useUser() {
       updateSignature,
       getLastLoginRecords,
       blockUserByUsername,
+      getBlockedUsers,
    };
 }
