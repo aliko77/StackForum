@@ -9,6 +9,7 @@ import { Toast } from 'utils';
 import { FormErrors } from 'components/FormErrors';
 import { BlockedUsersProps } from 'types';
 import { LoadSpinner } from 'components/LoadSpinner';
+import { parseDateTimeToString } from 'utils';
 
 const Blocked: FC = () => {
    const { blockUserByUsername, getBlockedUsers, errors } = useUser();
@@ -24,14 +25,12 @@ const Blocked: FC = () => {
    };
 
    useEffect(() => {
-      const fetchBlockesdsers = async () => {
+      const fetchBlockedUsers = async () => {
          const blocked_users = await getBlockedUsers();
-         console.log(blocked_users);
-
          setRecords(blocked_users);
          setReady(true);
       };
-      fetchBlockesdsers();
+      fetchBlockedUsers();
    }, []);
 
    return (
@@ -100,7 +99,7 @@ const Blocked: FC = () => {
                   </Formik>
                </div>
                <div id="blocked_users">
-                  <div className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">
+                  <div className="w-full border-b pb-1 border-gray-400 dark:border-gray-500">
                      <p className="font-medium text-gray-900 dark:text-gray-100">Bloklananlar</p>
                   </div>
                   <div className="content">
@@ -110,15 +109,67 @@ const Blocked: FC = () => {
                               <LoadSpinner />
                            </div>
                         )}
-                        {records.map((record, index) => (
-                           <div key={index}>
-                              <div className="flex">
-                                 <div className="w-full border-b border-gray-400 dark:border-gray-600 p-2">
-                                    <span>{record.username}</span>
-                                 </div>
-                              </div>
+                        <div>
+                           <div className="relative overflow-x-auto shadow-md">
+                              <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-night-300 dark:text-indigo-400">
+                                    <tr>
+                                       <th scope="col" className="px-6 py-3">
+                                          Kullanıcı
+                                       </th>
+                                       <th scope="col" className="px-6 py-3">
+                                          Tarih
+                                       </th>
+                                       <th scope="col" className="px-6 py-3">
+                                          Etkileşimler
+                                       </th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    {records.length == 0 && (
+                                       <tr className="border-b bg-gray-200 dark:bg-gray-900 dark:border-gray-700">
+                                          <th
+                                             scope="row"
+                                             className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-gray-100"
+                                          >
+                                             #
+                                          </th>
+                                          <td className="px-6 py-4">#</td>
+                                          <td className="px-6 py-4">#</td>
+                                       </tr>
+                                    )}
+                                    {records.map((record, index) => (
+                                       <tr
+                                          key={index}
+                                          className={`border-b ${
+                                             index % 2 == 0
+                                                ? 'bg-gray-200 dark:bg-gray-900'
+                                                : 'bg-gray-100 dark:bg-gray-800'
+                                          } dark:border-gray-700`}
+                                       >
+                                          <th
+                                             scope="row"
+                                             className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-gray-100"
+                                          >
+                                             {record.username}
+                                          </th>
+                                          <td className="px-6 py-4">
+                                             {parseDateTimeToString(record.blocked_at)}
+                                          </td>
+                                          <td className="px-6 py-4">
+                                             <a
+                                                href="#"
+                                                className="font-medium text-indigo-700 dark:text-indigo-500 hover:underline"
+                                             >
+                                                Kaldır
+                                             </a>
+                                          </td>
+                                       </tr>
+                                    ))}
+                                 </tbody>
+                              </table>
                            </div>
-                        ))}
+                        </div>
                      </div>
                   </div>
                </div>

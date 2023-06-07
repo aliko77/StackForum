@@ -52,7 +52,9 @@ export default function useUser() {
          setUser(data);
          return data;
       } catch (error) {
-         error instanceof AxiosError && error.response?.status !== 500 && setErrors(error.response?.data);
+         error instanceof AxiosError &&
+            error.response?.status !== 500 &&
+            setErrors(error.response?.data);
          return false;
       }
    };
@@ -73,7 +75,9 @@ export default function useUser() {
          });
          return status === 200 ? true : false;
       } catch (error) {
-         error instanceof AxiosError && error.response?.status !== 500 && setErrors(error.response?.data);
+         error instanceof AxiosError &&
+            error.response?.status !== 500 &&
+            setErrors(error.response?.data);
          return false;
       }
    };
@@ -86,7 +90,9 @@ export default function useUser() {
          });
          return status === 200 ? true : false;
       } catch (error) {
-         error instanceof AxiosError && error.response?.status !== 500 && setErrors(error.response?.data);
+         error instanceof AxiosError &&
+            error.response?.status !== 500 &&
+            setErrors(error.response?.data);
          return false;
       }
    };
@@ -102,7 +108,9 @@ export default function useUser() {
          });
          return status === 201 ? true : false;
       } catch (error) {
-         error instanceof AxiosError && error.response?.status !== 500 && setErrors(error.response?.data);
+         error instanceof AxiosError &&
+            error.response?.status !== 500 &&
+            setErrors(error.response?.data);
          return false;
       }
    };
@@ -120,7 +128,9 @@ export default function useUser() {
          });
          return status === 200 ? true : false;
       } catch (error) {
-         error instanceof AxiosError && error.response?.status !== 500 && setErrors(error.response?.data);
+         error instanceof AxiosError &&
+            error.response?.status !== 500 &&
+            setErrors(error.response?.data);
          return false;
       }
    };
@@ -141,7 +151,9 @@ export default function useUser() {
          });
          return status === 200 ? true : false;
       } catch (error) {
-         error instanceof AxiosError && error.response?.status !== 500 && setErrors(error.response?.data);
+         error instanceof AxiosError &&
+            error.response?.status !== 500 &&
+            setErrors(error.response?.data);
          return false;
       }
    };
@@ -168,7 +180,9 @@ export default function useUser() {
          });
          return status === 200 ? true : false;
       } catch (error) {
-         error instanceof AxiosError && error.response?.status !== 500 && setErrors(error.response?.data);
+         error instanceof AxiosError &&
+            error.response?.status !== 500 &&
+            setErrors(error.response?.data);
          return false;
       }
    };
@@ -183,7 +197,9 @@ export default function useUser() {
          }
          return false;
       } catch (error) {
-         error instanceof AxiosError && error.response?.status !== 500 && setErrors(error.response?.data);
+         error instanceof AxiosError &&
+            error.response?.status !== 500 &&
+            setErrors(error.response?.data);
          return false;
       }
    };
@@ -198,7 +214,9 @@ export default function useUser() {
          }
          return false;
       } catch (error) {
-         error instanceof AxiosError && error.response?.status !== 500 && setErrors(error.response?.data);
+         error instanceof AxiosError &&
+            error.response?.status !== 500 &&
+            setErrors(error.response?.data);
          return false;
       }
    };
@@ -219,7 +237,9 @@ export default function useUser() {
          });
          return status === 200 ? true : false;
       } catch (error) {
-         error instanceof AxiosError && error.response?.status !== 500 && setErrors(error.response?.data);
+         error instanceof AxiosError &&
+            error.response?.status !== 500 &&
+            setErrors(error.response?.data);
          return false;
       }
    };
@@ -230,7 +250,9 @@ export default function useUser() {
          if (status === 200) return data;
          return [];
       } catch (error) {
-         error instanceof AxiosError && error.response?.status !== 500 && setErrors(error.response?.data);
+         error instanceof AxiosError &&
+            error.response?.status !== 500 &&
+            setErrors(error.response?.data);
          return [];
       }
    };
@@ -245,14 +267,16 @@ export default function useUser() {
          );
          return status === 200 ? data : false;
       } catch (error) {
-         error instanceof AxiosError && error.response?.status !== 500 && setErrors(error.response?.data);
+         error instanceof AxiosError &&
+            error.response?.status !== 500 &&
+            setErrors(error.response?.data);
          return false;
       }
    };
 
    const getBlockedUsers = async (): Promise<BlockedUsersProps> => {
       try {
-         const { data, status } = await axiosPrivate.get('/user/blocked-users/');         
+         const { data, status } = await axiosPrivate.get('/user/blocked-users/');
          if (status === 200) return data;
          return [];
       } catch (error) {

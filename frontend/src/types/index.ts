@@ -47,4 +47,5 @@ export type BlockedUsersProps = {
    blocked_user: string;
    username: string;
    avatar: string;
+   blocked_at: string;
 }[];

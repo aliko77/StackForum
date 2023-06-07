@@ -246,7 +246,7 @@ class BlockedUsersSerializer(ModelSerializer):
     avatar = SerializerMethodField()
 
     def get_username(self, obj):
-        return obj.blocked_by.username
+        return obj.blocked_user.username
     
     def get_avatar(self, obj):
         profile_serializer = ProfileSerializer(obj.blocked_by.profile)
@@ -254,5 +254,5 @@ class BlockedUsersSerializer(ModelSerializer):
 
     class Meta:
         model = BlockedUser
-        fields = ['blocked_by', 'username', 'avatar']
+        fields = ['blocked_by', 'username', 'avatar', 'blocked_at']
 

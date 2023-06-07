@@ -211,6 +211,6 @@ class UserViewSet(ModelViewSet):
     )
     def blocked_users(self, request, *args, **kwargs) -> Response:
         user = self.get_object()
-        blockedUsers = user.blocked_user.all()
+        blockedUsers = user.blocked_by.all()
         serializer = self.serializer_class(blockedUsers, many=True)
         return Response(serializer.data)
