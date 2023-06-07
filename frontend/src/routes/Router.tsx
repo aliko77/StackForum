@@ -19,7 +19,7 @@ const ProfilAvatar = lazy(() => import('pages/Profil/Avatar'));
 const ProfilPassword = lazy(() => import('pages/Profil/Password'));
 const ProfilEmail = lazy(() => import('pages/Profil/Email'));
 const ProfilSignature = lazy(() => import('pages/Profil/Signature'));
-const ProfilLoginLogs = lazy(() => import('pages/Profil/LoginLogs'));
+const ProfilLoginLogs = lazy(() => import('pages/Profil/LoginRecords'));
 //404
 const PageNotFound = lazy(() => import('pages/PageNotFound'));
 
