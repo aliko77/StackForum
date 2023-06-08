@@ -198,7 +198,9 @@ export const HeaderPopOver = () => {
                               <Button text="Abonelikler" />
                            </div>
                            <div>
-                              <Button text="Sosyal Ağ" />
+                              <NavLink to="/sosyal/arkadaslar/">
+                                 <Button text="Sosyal Ağ" />
+                              </NavLink>
                            </div>
                         </div>
                      </div>
