@@ -1,15 +1,15 @@
-import { FC, useEffect, useState, MouseEvent } from 'react';
+import { FC, MouseEvent, useEffect, useState } from 'react';
 import ControlPanelLayout from 'layouts/ControlPanel';
 import { Field } from 'components/Field';
 import { Button } from 'components/Button';
 import { Form, Formik } from 'formik';
 import { object, string } from 'yup';
 import useUser from 'hooks/useUser';
-import { Toast } from 'utils';
+import { parseDateTimeToString, Toast } from 'utils';
 import { FormErrors } from 'components/FormErrors';
 import { BlockedUsersProps } from 'types';
 import { LoadSpinner } from 'components/LoadSpinner';
-import { parseDateTimeToString } from 'utils';
+import { Avatar } from 'components/Profile';
 
 const Blocked: FC = () => {
    const { blockUserByUsername, unBlockUserByUsername, getBlockedUsers, errors } = useUser();
@@ -39,7 +39,7 @@ const Blocked: FC = () => {
       const data = await unBlockUserByUsername({ username: target });
       if (typeof data === 'object') {
          setRecords((prevRecords) => prevRecords.filter((record) => record.username !== target));
-         Toast.fire({
+         await Toast.fire({
             title: `Kullanıcın engeli kaldırıldı.`,
             text: data.username,
             icon: 'success',
@@ -71,7 +71,7 @@ const Blocked: FC = () => {
                         if (typeof data === 'object') {
                            resetForm();
                            setRecords([data, ...records]);
-                           Toast.fire({
+                           await Toast.fire({
                               title: `Kullanıcı bloklandı.`,
                               text: data.username,
                               icon: 'success',
@@ -169,7 +169,18 @@ const Blocked: FC = () => {
                                           scope="row"
                                           className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-gray-100"
                                        >
-                                          {record.username}
+                                          <div className="flex w-max sm:w-full items-center space-x-3">
+                                             <div>
+                                                <Avatar
+                                                   width="2.5rem"
+                                                   height="2.5rem"
+                                                   path={record.avatar}
+                                                />
+                                             </div>
+                                             <div>
+                                                <span>{record.username}</span>
+                                             </div>
+                                          </div>
                                        </th>
                                        <td className="px-6 py-4">
                                           {parseDateTimeToString(record.blocked_at)}

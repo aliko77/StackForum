@@ -10,6 +10,7 @@ import { FormErrors } from 'components/FormErrors';
 import { FriendsProps } from 'types';
 import { LoadSpinner } from 'components/LoadSpinner';
 import { parseDateTimeToString } from 'utils';
+import { Avatar } from 'components/Profile';
 
 const Friend: FC = () => {
    const { removeFriendByUsername, addFriendByUsername, getUserFriends, errors } = useUser();
@@ -40,7 +41,7 @@ const Friend: FC = () => {
       if (typeof data === 'object') {
          setRecords((prevRecords) => prevRecords.filter((record) => record.username !== target));
          Toast.fire({
-            title: `Arkadaş listenizden kaldırıldı.`,
+            title: `Arkadaş listenizden çıkarıldı.`,
             text: data.username,
             icon: 'success',
             timer: 2000,
@@ -60,7 +61,7 @@ const Friend: FC = () => {
                      <FormErrors errors={errors} />
                   </div>
                )}
-               <div className="mb-8">
+               <div className="mb-4">
                   <Formik
                      validationSchema={validationSchema}
                      initialValues={initialValues}
@@ -70,7 +71,7 @@ const Friend: FC = () => {
                            resetForm();
                            setRecords([data, ...records]);
                            Toast.fire({
-                              title: `İstek gönderildi.`,
+                              title: `Arkadaş Eklendi`,
                               text: data.username,
                               icon: 'success',
                               timer: 2000,
@@ -106,7 +107,7 @@ const Friend: FC = () => {
                                  />
                                  <div className="mt-4">
                                     <div className="w-full sm:max-w-[8rem]">
-                                       <Button type="submit" text="İstek Gönder" />
+                                       <Button type="submit" text="Arkadaş Ekle" />
                                     </div>
                                  </div>
                               </div>
@@ -114,6 +115,19 @@ const Friend: FC = () => {
                         </Form>
                      )}
                   </Formik>
+               </div>
+               <div id="friend-info" className="mb-8">
+                  <div className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">
+                     <p className="font-medium text-gray-900 dark:text-gray-100">
+                        Arkadaşlık Hakkında
+                     </p>
+                  </div>
+                  <div className="content ml-2">
+                     <ul className="space-y-1 text-sm text-gray-600 list-disc list-inside dark:text-gray-400">
+                        <li>Arkadaşınız hakkında bildirimler alabilirsiniz.</li>
+                        <li>Arkadaşınız, sizi kendi listesine eklememiş olabilir.</li>
+                     </ul>
+                  </div>
                </div>
                <div id="blocked_users">
                   <div className="w-full border-b pb-1 border-gray-400 dark:border-gray-500">
@@ -167,7 +181,18 @@ const Friend: FC = () => {
                                           scope="row"
                                           className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-gray-100"
                                        >
-                                          {record.username}
+                                          <div className="flex w-max sm:w-full items-center space-x-3">
+                                             <div>
+                                                <Avatar
+                                                   width="2.5rem"
+                                                   height="2.5rem"
+                                                   path={record.avatar}
+                                                />
+                                             </div>
+                                             <div>
+                                                <span>{record.username}</span>
+                                             </div>
+                                          </div>
                                        </th>
                                        <td className="px-6 py-4">
                                           {parseDateTimeToString(record.friendship_at)}

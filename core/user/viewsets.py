@@ -1,22 +1,26 @@
-from django.contrib.auth import get_user_model
+import re
+
 from django.conf import settings
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.response import Response
+from django.contrib.auth import get_user_model
 from rest_framework import status
 from rest_framework.decorators import action
-from .serializers import UserSerializer, ProfileSerializer, LoginRecordsSerializer, \
-    BlockUserByUsernameSerializer, BlockedUsersSerializer, UnBlockUserByUsernameSerializer
-from .utils import SendVerificationEmail
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
+
 from .models import UserLoginRecords
-import re
+from .serializers import UserSerializer, ProfileSerializer, LoginRecordsSerializer, \
+    BlockUserByUsernameSerializer, BlockedUsersSerializer, UnBlockUserByUsernameSerializer, \
+    UserFriendsSerializer, AddFriendByUsernameSerializer, RemoveFriendByUsernameSerializer
+from .utils import SendVerificationEmail
+
 
 User = get_user_model()
 
 
 def check_file_size(file):
     if file.size > settings.AVATAR_MAX_FILE_SIZE:
-        return False
+        return
     return True
 
 
@@ -38,12 +42,10 @@ class UserViewSet(ModelViewSet):
         return Response(serializer.data)
 
     @action(
-        methods=['post'],
-        detail=False,
-        serializer_class=ProfileSerializer,
+        methods=['post'], detail=False, serializer_class=ProfileSerializer,
         url_path='profile/update'
     )
-    def profile_update(self, request, *args, **kwargs) -> Response:
+    def profile_update(self, request) -> Response:
         profile = self.get_object().profile
         serializer = self.serializer_class(profile, data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -54,12 +56,10 @@ class UserViewSet(ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @action(
-        methods=['post'],
-        detail=False,
-        serializer_class=ProfileSerializer,
+        methods=['post'], detail=False, serializer_class=ProfileSerializer,
         url_path='avatar/delete'
     )
-    def profile_avatar_delete(self, request, *args, **kwargs) -> Response:
+    def profile_avatar_delete(self) -> Response:
         profile = self.get_object().profile
         if profile.avatar != settings.PROFILE_AVATAR_FILE:
             profile.avatar.delete()
@@ -68,24 +68,29 @@ class UserViewSet(ModelViewSet):
             if serializer.is_valid(raise_exception=True):
                 default_avatar = settings.PROFILE_AVATAR_FILE
                 user = serializer.save(avatar=default_avatar)
-                return Response(data={
-                    'status': True,
-                    'avatar': settings.BASE_URL + user.avatar.url
-                }, status=status.HTTP_200_OK)
+                return Response(
+                    data={'status': True,
+                          'avatar': settings.BASE_URL + user.avatar.url
+                          }, status=status.HTTP_200_OK
+                )
         return Response(data={'error': 'Bir hata oluştu.'}, status=status.HTTP_400_BAD_REQUEST)
 
     @action(
-        methods=['post'],
-        detail=False,
-        serializer_class=ProfileSerializer,
+        methods=['post'], detail=False, serializer_class=ProfileSerializer,
         url_path='avatar/update'
     )
-    def profile_avatar_update(self, request, *args, **kwargs) -> Response:
+    def profile_avatar_update(self, request) -> Response:
         avatar_file = request.FILES.get('avatar')
         if not avatar_file:
-            return Response(data={'error': 'Avatar dosyası yüklenemedi.'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                data={'error': 'Avatar dosyası yüklenemedi.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
         if not check_file_size(avatar_file):
-            return Response(data={'error': 'Dosya boyutu çok büyük.'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                data={'error': 'Dosya boyutu çok büyük.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
         profile = self.get_object().profile
         if profile.avatar != settings.PROFILE_AVATAR_FILE:
             profile.avatar.delete()
@@ -94,48 +99,52 @@ class UserViewSet(ModelViewSet):
         serializer = self.get_serializer(profile, data={}, partial=True)
         if serializer.is_valid(raise_exception=True):
             user = serializer.save(avatar=avatar_file)
-            return Response(data={
-                'status': True,
-                'avatar': settings.BASE_URL + user.avatar.url
-            }, status=status.HTTP_200_OK)
+            return Response(
+                data={
+                    'status': True,
+                    'avatar': settings.BASE_URL + user.avatar.url
+                }, status=status.HTTP_200_OK
+            )
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    @action(
-        methods=['post'],
-        detail=False,
-        url_path='password/change'
-    )
-    def change_password(self, request, *args, **kwargs) -> Response:
+    @action(methods=['post'], detail=False, url_path='password/change')
+    def change_password(self, request) -> Response:
         user = self.get_object()
         password = request.data.get('password')
         new_password = request.data.get('new_password')
         new_confirm_password = request.data.get('new_confirm_password')
 
         if not user.check_password(password):
-            return Response({'error': 'Mevcut parola yanlış.'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {'error': 'Mevcut parola yanlış.'}, status=status.HTTP_400_BAD_REQUEST
+            )
 
         if new_password != new_confirm_password:
-            return Response({'error': 'Yeni parolalar eşleşmiyor.'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {'error': 'Yeni parolalar eşleşmiyor.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         user.set_password(new_password)
         user.save()
         return Response({'status': True}, status=status.HTTP_200_OK)
 
-    @action(
-        methods=['post'],
-        detail=False,
-        url_path='email/change'
-    )
-    def change_email(self, request, *args, **kwargs) -> Response:
+    @action(methods=['post'], detail=False, url_path='email/change')
+    def change_email(self, request) -> Response:
         user = self.get_object()
         password = request.data.get('password')
         new_email = request.data.get('new_email')
 
         if not user.check_password(password):
-            return Response({'error': 'Mevcut parola yanlış.'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {'error': 'Mevcut parola yanlış.'}, status=status.HTTP_400_BAD_REQUEST
+            )
 
         if User.objects.filter(email=new_email).exists():
-            return Response({'error': 'Bu e-posta adresini kullanamazsınız.'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {'error': 'Bu e-posta adresini kullanamazsınız.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         user.email = new_email
         user.is_verified = False
@@ -144,12 +153,10 @@ class UserViewSet(ModelViewSet):
         return Response({'status': True}, status=status.HTTP_200_OK)
 
     @action(
-        methods=['post'],
-        detail=False,
-        serializer_class=ProfileSerializer,
+        methods=['post'], detail=False, serializer_class=ProfileSerializer,
         url_path='signature/update'
     )
-    def profile_signature_update(self, request, *args, **kwargs) -> Response:
+    def profile_signature_update(self, request) -> Response:
         profile = self.get_object().profile
         signature = request.data.get('signature')
         # İmza kontrolü
@@ -168,19 +175,19 @@ class UserViewSet(ModelViewSet):
         serializer = self.serializer_class(profile, data={}, partial=True)
         if serializer.is_valid(raise_exception=True):
             profile = serializer.save(signature=signature)
-            return Response({
-                'status': True,
-                'signature': profile.signature
-            }, status=status.HTTP_200_OK)
+            return Response(
+                {
+                    'status': True,
+                    'signature': profile.signature
+                }, status=status.HTTP_200_OK
+            )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @action(
-        methods=['get'],
-        detail=False,
-        serializer_class=LoginRecordsSerializer,
+        methods=['get'], detail=False, serializer_class=LoginRecordsSerializer,
         url_path='last-login-records'
     )
-    def user_last_login_records(self, request, *args, **kwargs) -> Response:
+    def user_last_login_records(self, request) -> Response:
         user = self.get_object()
         last_logins = UserLoginRecords.objects.filter(
             user=user).order_by('-login_time')
@@ -188,45 +195,69 @@ class UserViewSet(ModelViewSet):
         return Response(serializer.data)
 
     @action(
-        methods=['post'],
-        detail=False,
-        serializer_class=BlockUserByUsernameSerializer,
+        methods=['post'], detail=False, serializer_class=BlockUserByUsernameSerializer,
         url_path='block-user-by-username'
     )
-    def block_user_by_username(self, request, *args, **kwargs) -> Response:
+    def block_user_by_username(self, request) -> Response:
         serializer = self.serializer_class(
-            data=request.data,
-            context={'request': request}
-        )
+            data=request.data, context={'request': request})
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @action(
-        methods=['post'],
-        detail=False,
-        serializer_class=UnBlockUserByUsernameSerializer,
+        methods=['post'], detail=False, serializer_class=UnBlockUserByUsernameSerializer,
         url_path='unblock-user-by-username'
     )
-    def unblock_user_by_username(self, request, *args, **kwargs) -> Response:
+    def unblock_user_by_username(self, request) -> Response:
         serializer = self.serializer_class(
-            data=request.data,
-            context={'request': request}
-        )
+            data=request.data, context={'request': request})
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @action(
-        methods=['get'],
-        detail=False,
-        serializer_class=BlockedUsersSerializer,
+        methods=['get'], detail=False, serializer_class=BlockedUsersSerializer,
         url_path='blocked-users'
     )
-    def blocked_users(self, request, *args, **kwargs) -> Response:
+    def blocked_users(self, request) -> Response:
         user = self.get_object()
-        blockedUsers = user.blocked_by.all()
-        serializer = self.serializer_class(blockedUsers, many=True)
+        blocked_users = user.blocked_users.all()
+        serializer = self.serializer_class(blocked_users, many=True)
         return Response(serializer.data)
+
+    @action(
+        methods=['get'], detail=False, serializer_class=UserFriendsSerializer,
+        url_path='friends'
+    )
+    def user_friends(self, request) -> Response:
+        user = self.get_object()
+        user_friends = user.friends.all()
+        serializer = self.serializer_class(user_friends, many=True)
+        return Response(serializer.data)
+
+    @action(
+        methods=['post'], detail=False, serializer_class=AddFriendByUsernameSerializer,
+        url_path='add-friend-by-username'
+    )
+    def add_friend_by_username(self, request) -> Response:
+        serializer = self.serializer_class(
+            data=request.data, context={'request': request})
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(
+        methods=['post'], detail=False, serializer_class=RemoveFriendByUsernameSerializer,
+        url_path='remove-friend-by-username'
+    )
+    def remove_friend_by_username(self, request) -> Response:
+        serializer = self.serializer_class(
+            data=request.data, context={'request': request})
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

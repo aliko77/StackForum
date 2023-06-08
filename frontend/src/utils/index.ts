@@ -4,8 +4,7 @@ import withReactContent from 'sweetalert2-react-content';
 export const secretMail = (email: string) => {
    const [username, domain] = email.split('@');
    const [dom, dot] = domain.split('.');
-   const secretText = username.slice(0, 3) + '***' + '@' + '*'.repeat(dom.length) + '.' + dot;
-   return secretText;
+   return username.slice(0, 3) + '***' + '@' + '*'.repeat(dom.length) + '.' + dot;
 };
 
 export function parseDateTimeToString(dateTimeString: string): string {
@@ -16,8 +15,7 @@ export function parseDateTimeToString(dateTimeString: string): string {
    const hour = String(dateTime.getHours()).padStart(2, '0');
    const minute = String(dateTime.getMinutes()).padStart(2, '0');
 
-   const formattedDate = `${day}/${month}/${year} ${hour}:${minute}`;
-   return formattedDate;
+   return `${day}/${month}/${year} ${hour}:${minute}`;
 }
 
 export const Toast = withReactContent(Swal).mixin({

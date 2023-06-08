@@ -21,7 +21,7 @@ const PasswordReset: FC = () => {
          .required('*')
          .min(8, 'Şifreniz en az 8 karakter olmalıdır.')
          .max(128, 'En fazla 128 karakter.'),
-      confirmPassword: string()
+      confirm_password: string()
          .required('*')
          .oneOf([ref('password')], 'Şifreler eşleşmiyor.'),
    });
@@ -39,7 +39,7 @@ const PasswordReset: FC = () => {
                   </h1>
                </div>
                <Formik
-                  initialValues={{ password: '', confirmPassword: '' }}
+                  initialValues={{ password: '', confirm_password: '' }}
                   validationSchema={validationSchema}
                   onSubmit={async (values) => {
                      setMessage(null);
@@ -49,7 +49,7 @@ const PasswordReset: FC = () => {
                            uid: uid,
                            token: token,
                            password: values.password,
-                           confirmPassword: values.confirmPassword,
+                           confirm_password: values.confirm_password,
                         });
                         if (data.status) {
                            setMessage('Şifreniz değiştirildi.');
@@ -90,14 +90,14 @@ const PasswordReset: FC = () => {
                            </div>
                            <div>
                               <Field
-                                 id="confirmPassword"
+                                 id="confirm_password"
                                  type="password"
-                                 name="confirmPassword"
+                                 name="confirm_password"
                                  placeholder="Şifreyi onayla"
                                  onChange={handleChange}
                                  onBlur={handleBlur}
-                                 value={values.confirmPassword}
-                                 errorMessage={formikErrors.confirmPassword}
+                                 value={values.confirm_password}
+                                 errorMessage={formikErrors.confirm_password}
                               />
                            </div>
                            <div>
