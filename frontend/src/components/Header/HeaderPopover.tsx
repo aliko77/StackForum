@@ -94,7 +94,7 @@ export const HeaderPopOver = () => {
                         </NavLink>
                      </div>
                      <div className="w-full bg-white dark:bg-night-100 text-gray-900 dark:text-gray-200 text-sm">
-                        <NavLink to="/profil/sifre/">
+                        <NavLink to="/ayarlar/sifre/">
                            <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800">
                               <div className="text-gray-900 dark:text-gray-400">
                                  <svg

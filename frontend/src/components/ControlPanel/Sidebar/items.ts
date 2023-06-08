@@ -30,6 +30,24 @@ export const items: ItemProps[] = [
             name: 'Avatarı değiştir',
             link: '/profil/avatar/',
          },
+         {
+            name: 'İmzanı Değiştir',
+            link: '/profil/imza/',
+         },
+      ],
+   },
+   {
+      name: 'Sosyal Ağ',
+      submenu: true,
+      sublinks: [
+         {
+            name: 'Arkadaşlar',
+            link: '/sosyal/arkadaslar/',
+         },
+         {
+            name: 'Engellenen Kullanıcılar',
+            link: '/sosyal/engellenenler/',
+         },
       ],
    },
    {
@@ -37,24 +55,16 @@ export const items: ItemProps[] = [
       submenu: true,
       sublinks: [
          {
-            name: 'İmzanı Değiştir',
-            link: '/profil/imza/',
-         },
-         {
             name: 'Şifreni Değiştir',
-            link: '/profil/sifre/',
+            link: '/ayarlar/sifre/',
          },
          {
             name: 'Email Değiştir',
-            link: '/profil/email/',
+            link: '/ayarlar/email/',
          },
          {
             name: 'Giriş Kayıtları',
-            link: '/profil/giris-kayitlari/',
-         },
-         {
-            name: 'Engellenen Kullanıcılar',
-            link: '/profil/engellenenler/',
+            link: '/ayarlar/giris-kayitlari/',
          },
       ],
    },

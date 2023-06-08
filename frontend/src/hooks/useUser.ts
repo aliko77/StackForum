@@ -3,7 +3,7 @@ import { AxiosError } from 'axios';
 import { useAuth } from 'hooks/useAuth';
 import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
 import { useState } from 'react';
-import { BlockedUsersProps, LoginRecordProps, ProfileProps, UserProps } from 'types';
+import { BlockedUsersProps, FriendsProps, LoginRecordProps, ProfileProps, UserProps } from 'types';
 
 type AccountVerifyProps = {
    vcode: string;
@@ -44,6 +44,19 @@ type BlockedUserReturnProps = Promise<
         avatar: string;
         blocked_at: string;
         blocked: boolean;
+     }
+   | boolean
+>;
+type FriendProps = {
+   username: string;
+};
+
+type FriendReturnProps = Promise<
+   | {
+        username: string;
+        avatar: string;
+        friendship_at: string;
+        friendship: boolean;
      }
    | boolean
 >;
@@ -266,6 +279,20 @@ export default function useUser() {
       }
    };
 
+   const getBlockedUsers = async (): Promise<BlockedUsersProps> => {
+      try {
+         setErrors(null);
+         const { data, status } = await axiosPrivate.get('/user/blocked-users/');
+         if (status === 200) return data;
+         return [];
+      } catch (error) {
+         error instanceof AxiosError &&
+            error.response?.status !== 500 &&
+            setErrors(error.response?.data);
+         return [];
+      }
+   };
+
    const blockUserByUsername = async (
       username: BlockedUserProps,
    ): Promise<BlockedUserReturnProps> => {
@@ -284,10 +311,28 @@ export default function useUser() {
       }
    };
 
-   const getBlockedUsers = async (): Promise<BlockedUsersProps> => {
+   const unBlockUserByUsername = async (
+      username: BlockedUserProps,
+   ): Promise<BlockedUserProps | boolean> => {
+      setErrors(null);
+      try {
+         const { data, status } = await axiosPrivate.post(
+            '/user/unblock-user-by-username/',
+            username,
+         );
+         return status === 200 ? data : false;
+      } catch (error) {
+         error instanceof AxiosError &&
+            error.response?.status !== 500 &&
+            setErrors(error.response?.data);
+         return false;
+      }
+   };
+
+   const getUserFriends = async (): Promise<FriendsProps> => {
       try {
          setErrors(null);
-         const { data, status } = await axiosPrivate.get('/user/blocked-users/');
+         const { data, status } = await axiosPrivate.get('/user/friends/');
          if (status === 200) return data;
          return [];
       } catch (error) {
@@ -298,13 +343,31 @@ export default function useUser() {
       }
    };
 
-   const unBlockUserByUsername = async (
-      username: BlockedUserProps,
-   ): Promise<BlockedUserProps | boolean> => {
+   const addFriendByUsername = async (
+      username: FriendProps,
+   ): Promise<FriendReturnProps> => {
       setErrors(null);
       try {
          const { data, status } = await axiosPrivate.post(
-            '/user/unblock-user-by-username/',
+            '/user/add-friend-by-username/',
+            username,
+         );
+         return status === 200 ? data : false;
+      } catch (error) {
+         error instanceof AxiosError &&
+            error.response?.status !== 500 &&
+            setErrors(error.response?.data);
+         return false;
+      }
+   };
+
+   const removeFriendByUsername = async (
+      username: FriendProps,
+   ): Promise<FriendProps | boolean> => {
+      setErrors(null);
+      try {
+         const { data, status } = await axiosPrivate.post(
+            '/user/remove-friend-by-username/',
             username,
          );
          return status === 200 ? data : false;
@@ -332,5 +395,8 @@ export default function useUser() {
       blockUserByUsername,
       getBlockedUsers,
       unBlockUserByUsername,
+      getUserFriends,
+      addFriendByUsername,
+      removeFriendByUsername,
    };
 }

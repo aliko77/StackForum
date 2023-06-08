@@ -48,3 +48,9 @@ export type BlockedUsersProps = {
    avatar: string;
    blocked_at: string;
 }[];
+
+export type FriendsProps = {
+   username: string;
+   avatar: string;
+   friendship_at: string;
+}[];

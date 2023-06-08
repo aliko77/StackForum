@@ -16,11 +16,12 @@ const ControlPanel = lazy(() => import('pages/ControlPanel'));
 const ProfilEdit = lazy(() => import('pages/Profil/Edit'));
 const ProfilCustomize = lazy(() => import('pages/Profil/Customize'));
 const ProfilAvatar = lazy(() => import('pages/Profil/Avatar'));
-const ProfilPassword = lazy(() => import('pages/Profil/Password'));
-const ProfilEmail = lazy(() => import('pages/Profil/Email'));
 const ProfilSignature = lazy(() => import('pages/Profil/Signature'));
-const ProfilLoginLogs = lazy(() => import('pages/Profil/LoginRecords'));
-const ProfilBlocked = lazy(() => import('pages/Profil/Blocked'));
+const SettingsPassword = lazy(() => import('pages/Settings/Password'));
+const SettingsEmail = lazy(() => import('pages/Settings/Email'));
+const SettingsLoginLogs = lazy(() => import('pages/Settings/LoginRecords'));
+const SocialBlocked = lazy(() => import('pages/Social/Blocked'));
+const SocialFriends = lazy(() => import('pages/Social/Friends'));
 //404
 const PageNotFound = lazy(() => import('pages/PageNotFound'));
 
@@ -74,24 +75,28 @@ const routes: RouteProps[] = [
       element: getRouteElement(() => <PrivateRoute>{<ProfilAvatar />}</PrivateRoute>),
    },
    {
-      path: 'profil/sifre/',
-      element: getRouteElement(() => <PrivateRoute>{<ProfilPassword />}</PrivateRoute>),
-   },
-   {
-      path: 'profil/email/',
-      element: getRouteElement(() => <PrivateRoute>{<ProfilEmail />}</PrivateRoute>),
-   },
-   {
       path: 'profil/imza/',
       element: getRouteElement(() => <PrivateRoute>{<ProfilSignature />}</PrivateRoute>),
    },
    {
-      path: 'profil/giris-kayitlari/',
-      element: getRouteElement(() => <PrivateRoute>{<ProfilLoginLogs />}</PrivateRoute>),
+      path: 'ayarlar/sifre/',
+      element: getRouteElement(() => <PrivateRoute>{<SettingsPassword />}</PrivateRoute>),
    },
    {
-      path: 'profil/engellenenler/',
-      element: getRouteElement(() => <PrivateRoute>{<ProfilBlocked />}</PrivateRoute>),
+      path: 'ayarlar/email/',
+      element: getRouteElement(() => <PrivateRoute>{<SettingsEmail />}</PrivateRoute>),
+   },
+   {
+      path: 'ayarlar/giris-kayitlari/',
+      element: getRouteElement(() => <PrivateRoute>{<SettingsLoginLogs />}</PrivateRoute>),
+   },
+   {
+      path: 'sosyal/engellenenler/',
+      element: getRouteElement(() => <PrivateRoute>{<SocialBlocked />}</PrivateRoute>),
+   },
+   {
+      path: 'sosyal/arkadaslar/',
+      element: getRouteElement(() => <PrivateRoute>{<SocialFriends />}</PrivateRoute>),
    },
    { path: '*', element: getRouteElement(PageNotFound) },
 ];

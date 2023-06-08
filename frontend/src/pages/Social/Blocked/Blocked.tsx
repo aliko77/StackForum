@@ -25,12 +25,12 @@ const Blocked: FC = () => {
    };
 
    useEffect(() => {
-      const fetchBlockedUsers = async () => {
+      const retrieveBlockedUsers = async () => {
          const blocked_users = await getBlockedUsers();
          setRecords(blocked_users);
          setReady(true);
       };
-      fetchBlockedUsers();
+      retrieveBlockedUsers();
    }, []);
 
    const handleUnBlock = async (event: MouseEvent<HTMLSpanElement>) => {
