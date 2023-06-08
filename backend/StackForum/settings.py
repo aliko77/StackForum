@@ -2,7 +2,8 @@ from pathlib import Path
 import os
 from datetime import timedelta
 
-BASE_URL = 'http://localhost:8000'
+# BASE_URL = 'http://localhost:8000'
+BASE_URL = 'http://api.alikoc.dev'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -16,7 +17,12 @@ SECRET_KEY = 'django-insecure-gacefy7x^b9gux^ell_*az_++r9^zr*x$qk_((+qf4gs4p&_k0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'api.alikoc.dev',
+    'alikoc.dev'
+]
 
 # Application definition
 
