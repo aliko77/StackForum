@@ -1,56 +1,51 @@
 import { Alert } from 'components/Alert';
-import { Button } from 'components/Button';
 import { FormErrors } from 'components/FormErrors';
 import { LoadSpinner } from 'components/LoadSpinner';
 import { Logo } from 'components/Logo';
 import { OtpInput } from 'components/OtpInput';
 import { useAuth } from 'hooks/useAuth';
-import { FC, useState, FormEvent, MouseEventHandler } from 'react';
+import { FC, useState, MouseEventHandler } from 'react';
 import { Navigate } from 'react-router-dom';
 import useUser from 'hooks/useUser';
+import { Toast } from 'utils';
 
 const AuthVerify: FC = () => {
    const { user } = useAuth();
-   const { accountVerify, accountVerifyResend } = useUser();
+   const { accountVerify, accountVerifyResend, errors } = useUser();
    const [vcode, setVcode] = useState<string>('');
    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-   const [errors, setErrors] = useState<null | string[]>(null);
    const [message, setMessage] = useState<null | string>(null);
-   const [noRedirect, setNoRedirect] = useState<boolean>(false);
 
-   if (!noRedirect && user?.is_verified) {
+   if (user?.is_verified) {
       return <Navigate to={'/'} />;
    }
 
-   const handleSubmit = async (e: FormEvent) => {
-      e.preventDefault();
-      setErrors(null);
+   const handleVerify = async (value: string) => {
+      if (value.length != 6) return;
       setMessage(null);
       setIsSubmitting(true);
-      const status = await accountVerify({ email: user?.email, vcode: vcode });
+
+      const status = await accountVerify({ email: user?.email, vcode: value });
       if (status) {
-         setNoRedirect(true);
-         setMessage('Başarıyla doğrulandı.');
-      } else {
-         setErrors(['Bir hata oluştu.']);
+         await Toast.fire({
+            title: 'Hesabınız Doğrulandı',
+            icon: 'success',
+         });
       }
       setIsSubmitting(false);
    };
 
+   const handleChange = (value: string) => {
+      setVcode(value);
+      handleVerify(value);
+   };
+
    const handleResend: MouseEventHandler<HTMLButtonElement> = async () => {
-      setErrors(null);
       setMessage(null);
-      if (user?.is_verified) {
-         setErrors(() => [...[], 'Zaten doğrulanmış.']);
-         return;
-      }
       setIsSubmitting(true);
       const status = await accountVerifyResend();
       if (status) {
-         setNoRedirect(true);
          setMessage('Kod tekrar gönderildi.');
-      } else {
-         setErrors(['Bir hata oluştu.']);
       }
       setIsSubmitting(false);
    };
@@ -60,19 +55,14 @@ const AuthVerify: FC = () => {
          <div className="sm:container mx-2 sm:mx-auto">
             <div className="max-w-sm mx-auto md:max-w-lg">
                <div className="w-full">
-                  <div className="text-gray-800 dark:text-gray-100 border dark:border-gray-600 dark:bg-night-200 py-8 rounded-sm text-center flex flex-col justify-center">
-                     <div className="m-auto mb-4">
+                  <div className="text-gray-800 dark:text-gray-100 border dark:border-gray-600 dark:bg-night-200 rounded-sm text-center flex flex-col justify-center">
+                     <div className="my-4">
                         <Logo noRedirect />
                      </div>
                      <h1 className="text-2xl font-semibold">Hesap Doğrulama</h1>
                      <div className="flex flex-col my-2">
                         <span className="text-sm font-semibold uppercase">
-                           <div>
-                              <span>Hoşgeldin.</span>
-                           </div>
-                           <div>
-                              <span>Doğrulamak için</span>
-                           </div>
+                           <div>Hesabını Doğrulamak İçin</div>
                         </span>
                         <span className="font-bold text-indigo-500 dark:text-indigo-400 my-2">
                            {user?.email}
@@ -89,32 +79,18 @@ const AuthVerify: FC = () => {
                         {message && <Alert text={message} />}
                         {isSubmitting && <LoadSpinner />}
                      </div>
-                     <div className="flex justify-center items-center">
-                        <form onSubmit={handleSubmit}>
-                           <OtpInput
-                              value={vcode}
-                              onChange={(value) => {
-                                 setVcode(value);
-                              }}
-                           />
-                           <div className="mt-4 mx-2">
-                              <Button
-                                 text={'Doğrula'}
-                                 type="submit"
-                                 disabled={isSubmitting || noRedirect}
-                              />
-                           </div>
-                        </form>
+                     <div>
+                        <OtpInput value={vcode} onChange={handleChange} />
                      </div>
-                  </div>
-                  <div className="text-right">
-                     <button
-                        className="underline text-sm text-indigo-500 hover:text-indigo-600"
-                        onClick={handleResend}
-                        disabled={isSubmitting}
-                     >
-                        Maili tekrar gönder.
-                     </button>
+                     <div className="text-right my-4 px-2">
+                        <button
+                           className="underline text-sm text-indigo-500 hover:text-indigo-600"
+                           onClick={handleResend}
+                           disabled={isSubmitting}
+                        >
+                           Maili tekrar gönder.
+                        </button>
+                     </div>
                   </div>
                </div>
             </div>

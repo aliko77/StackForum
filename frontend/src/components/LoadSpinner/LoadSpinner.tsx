@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 export const LoadSpinner: FC = () => {
    return (
-      <div role="status" className="flex justify-center items-center p-2">
+      <div role="status" className="flex justify-center items-center mb-4">
          <svg
             aria-hidden="true"
             className="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-rose-500 dark:fill-indigo-600"

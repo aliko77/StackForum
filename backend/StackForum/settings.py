@@ -2,8 +2,8 @@ from pathlib import Path
 import os
 from datetime import timedelta
 
-# BASE_URL = 'http://localhost:8000'
-BASE_URL = 'https://api.alikoc.dev'
+BASE_URL = 'http://localhost:8000'
+# BASE_URL = 'https://api.alikoc.dev'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,9 +19,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
-    '127.0.0.1',
-    'api.alikoc.dev',
-    'alikoc.dev'
+    'api.alikoc.dev'
 ]
 
 # Application definition
@@ -141,19 +139,18 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Email sunucu ayarları
 
 EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
-EMAIL_HOST_USER = '562a52fa2435f9'
-EMAIL_HOST_PASSWORD = '068c5e92d1826d'
+EMAIL_HOST_USER = '70474e2cf39515'
+EMAIL_HOST_PASSWORD = '7dbad6c740d736'
 EMAIL_PORT = '2525'
 
 # React App
 
-# REACT_APP_URL = os.getenv('REACT_APP_URL', 'http://localhost:5173')
-REACT_APP_URL = os.getenv('REACT_APP_URL', 'https://alikoc.dev')
+REACT_APP_URL = os.getenv('REACT_APP_URL', 'http://localhost:5173')
+# REACT_APP_URL = os.getenv('REACT_APP_URL', 'https://alikoc.dev')
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',  # React uygulamasının yerel adresi
     'https://alikoc.dev',
-    'https://api.alikoc.dev'
 ]
 CORS_ALLOW_CREDENTIALS = True  # CORS isteklerinde kullanıcı kimlik bilgileri gönderilmesine izin verir
 CSRF_COOKIE_HTTPONLY = True  # CSRF cookie'sine JavaScript tarafından erişimi devre dışı bırakır
@@ -164,7 +161,6 @@ SESSION_COOKIE_SAMESITE = 'Lax'  # Oturum cookie'sini yalnızca aynı site üzer
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:5173',  # React uygulamasının yerel adresi
     'https://alikoc.dev',
-    'https://api.alikoc.dev'
 ]
 
 CORS_EXPOSE_HEADERS = [
@@ -198,8 +194,7 @@ SIMPLE_JWT = {
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'core.user.authentication.CustomAuthentication',
-        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer'
