@@ -12,7 +12,7 @@ export const HeaderPopOver = () => {
    const lastlogin = user?.last_login ? parseDateTimeToString(user.last_login) : 'Bilinmiyor.';
    return (
       <Popover className="relative">
-         <Popover.Button className="group inline-flex p-1.5 items-center bg-white dark:bg-night-800 shadow rounded-sm focus:outline-none">
+         <Popover.Button className="group inline-flex p-1.5 items-center bg-white dark:bg-night-800 shadow rounded-sm focus:outline-none text-zinc-500 hover:text-rose-500 dark:text-zinc-400 dark:hover:text-violet-500">
             <div>
                <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -20,7 +20,7 @@ export const HeaderPopOver = () => {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-6 h-6 text-zinc-500 hover:text-rose-500 dark:text-zinc-400 dark:hover:text-violet-500"
+                  className="w-6 h-6"
                >
                   <path
                      strokeLinecap="round"
@@ -68,7 +68,7 @@ export const HeaderPopOver = () => {
                                     />
                                  </svg>
                               </div>
-                              <span className="text-gray-500 dark:text-gray-100">
+                              <span className="text-gray-700 dark:text-gray-100">
                                  Son giriş: {lastlogin}
                               </span>
                            </div>
@@ -95,17 +95,17 @@ export const HeaderPopOver = () => {
                            Panelim
                         </Popover.Button>
                      </div>
-                     <div className="w-full bg-white dark:bg-night-800 text-gray-900 dark:text-gray-200 text-sm">
+                     <div className="w-full">
                         <Popover.Button as={NavLink} to="/ayarlar/sifre/">
-                           <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800">
-                              <div className="text-gray-900 dark:text-gray-400">
+                           <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600 bg-white hover:bg-gray-200 dark:bg-night-800 dark:hover:bg-gray-900 dark:text-gray-100 dark:hover:text-violet-400">
+                              <div>
                                  <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     strokeWidth={1.5}
                                     stroke="currentColor"
-                                    className="w-5 h-5"
+                                    className="w-5 h-5 text-rose-500 dark:text-violet-400"
                                  >
                                     <path
                                        strokeLinecap="round"
@@ -120,7 +120,7 @@ export const HeaderPopOver = () => {
                            </div>
                         </Popover.Button>
                         <Popover.Button as={NavLink} to="/profil/duzenle/">
-                           <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800">
+                           <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600 bg-white hover:bg-gray-200 dark:bg-night-800 dark:hover:bg-gray-900 dark:text-gray-100 dark:hover:text-violet-400">
                               <div className="text-gray-900 dark:text-gray-400">
                                  <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -128,12 +128,12 @@ export const HeaderPopOver = () => {
                                     viewBox="0 0 24 24"
                                     strokeWidth={1.5}
                                     stroke="currentColor"
-                                    className="w-5 h-5"
+                                    className="w-5 h-5 text-rose-500 dark:text-violet-400"
                                  >
                                     <path
                                        strokeLinecap="round"
                                        strokeLinejoin="round"
-                                       d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"
+                                       d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
                                     />
                                  </svg>
                               </div>
@@ -143,7 +143,7 @@ export const HeaderPopOver = () => {
                            </div>
                         </Popover.Button>
                         <Popover.Button as={NavLink} to="/profil/avatar/">
-                           <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800">
+                           <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600 bg-white hover:bg-gray-200 dark:bg-night-800 dark:hover:bg-gray-900 dark:text-gray-100 dark:hover:text-violet-400">
                               <div className="text-gray-900 dark:text-gray-400">
                                  <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -151,7 +151,7 @@ export const HeaderPopOver = () => {
                                     viewBox="0 0 24 24"
                                     strokeWidth={1.5}
                                     stroke="currentColor"
-                                    className="w-5 h-5"
+                                    className="w-5 h-5 text-rose-500 dark:text-violet-400"
                                  >
                                     <path
                                        strokeLinecap="round"
@@ -171,7 +171,7 @@ export const HeaderPopOver = () => {
                            </div>
                         </Popover.Button>
                         <Popover.Button as={NavLink} to="/profil/imza/">
-                           <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800">
+                           <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600 bg-white hover:bg-gray-200 dark:bg-night-800 dark:hover:bg-gray-900 dark:text-gray-100 dark:hover:text-violet-400">
                               <div className="text-gray-900 dark:text-gray-400">
                                  <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -179,7 +179,7 @@ export const HeaderPopOver = () => {
                                     viewBox="0 0 24 24"
                                     strokeWidth={1.5}
                                     stroke="currentColor"
-                                    className="w-5 h-4"
+                                    className="w-5 h-5 text-rose-500 dark:text-violet-400"
                                  >
                                     <path
                                        strokeLinecap="round"
