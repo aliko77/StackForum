@@ -145,7 +145,7 @@ const ProfilEdit: FC = () => {
                                     <Label htmlFor="dob_privacy">Gizlilik</Label>
                                     <select
                                        id="dob_privacy"
-                                       className="w-full outline-none text-sm p-1.5 bg-gray-50 dark:bg-gray-700 border rounded-sm border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 focus:ring-rose-500 focus:border-rose-500 dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
+                                       className="w-full outline-none text-sm p-1.5 bg-gray-50 dark:bg-gray-700 border rounded-sm border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 focus:ring-rose-500 focus:border-rose-500 dark:focus:ring-violet-500 dark:focus:border-violet-500"
                                        onChange={handleChange}
                                        onBlur={handleBlur}
                                        value={values.dob_privacy}
@@ -282,7 +282,7 @@ const ProfilEdit: FC = () => {
                                           id="about"
                                           name="about"
                                           rows={4}
-                                          className="block w-full p-1.5 outline-none disabled:bg-gray-300 disabled:dark:bg-gray-800 bg-gray-50 dark:bg-gray-700 border border-gray-300 text-gray-900 rounded-sm focus:ring-rose-500 focus:border-rose-500 dark:focus:ring-indigo-500 dark:focus:border-indigo-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-100 placeholder:text-sm"
+                                          className="block w-full p-1.5 outline-none disabled:bg-gray-300 disabled:dark:bg-gray-800 bg-gray-50 dark:bg-gray-700 border border-gray-300 text-gray-900 rounded-sm focus:ring-rose-500 focus:border-rose-500 dark:focus:ring-violet-500 dark:focus:border-violet-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-100 placeholder:text-sm"
                                           placeholder="..."
                                           onChange={handleChange}
                                           onBlur={handleBlur}

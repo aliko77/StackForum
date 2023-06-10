@@ -12,7 +12,7 @@ export const Header: FC = () => {
    const { user } = useAuth();
 
    return (
-      <header className="fixed shadow flex z-50 w-full h-16 bg-white dark:bg-night-900 border-t-4 border-t-violet-700 border-b border-b-gray-300 dark:border-b-violet-500">
+      <header className="fixed shadow flex z-50 w-full h-16 bg-white dark:bg-night-900 border-t-4 border-t-rose-400 dark:border-t-violet-700 border-b border-b-rose-400 dark:border-b-violet-500">
          <div className="w-full md:w-4/6 max-w-full h-full flex items-center m-[0_auto] px-2 md:p-0">
             <div>
                <Logo />
@@ -20,7 +20,7 @@ export const Header: FC = () => {
             <div className="ml-auto">
                <div className="flex items-center">
                   <div className="p-1.5 mx-2 bg-white dark:bg-night-800 shadow rounded-full">
-                     <div className="text-zinc-500 hover:text-rose-500 dark:text-zinc-400 dark:hover:text-indigo-500">
+                     <div className="text-gray-500 hover:text-rose-400 dark:text-gray-400 dark:hover:text-violet-500">
                         <svg
                            xmlns="http://www.w3.org/2000/svg"
                            fill="none"
@@ -43,7 +43,7 @@ export const Header: FC = () => {
                            <ThemeSwitcher />
                         </div>
                         <div className="p-1.5 mx-2 bg-white dark:bg-night-800 shadow rounded-full">
-                           <div className="text-zinc-500 hover:text-rose-500 dark:text-zinc-400 dark:hover:text-indigo-500">
+                           <div className="text-gray-500 hover:text-rose-400 dark:text-gray-400 dark:hover:text-violet-500">
                               <svg
                                  xmlns="http://www.w3.org/2000/svg"
                                  fill="none"
@@ -99,7 +99,7 @@ export const Header: FC = () => {
                         <div className="mr-2">
                            <Button
                               text="Kayıt ol"
-                              color="indigo"
+                              color="violet"
                               onClick={(): void => {
                                  navigate('/register/');
                               }}

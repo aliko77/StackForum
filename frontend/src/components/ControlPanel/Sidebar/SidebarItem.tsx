@@ -22,7 +22,7 @@ export const SidebarItem: FC<Props> = ({ item }) => {
                      viewBox="0 0 24 24"
                      strokeWidth={1.5}
                      stroke="currentColor"
-                     className="w-4 h-4 text-rose-500 dark:text-indigo-500"
+                     className="w-4 h-4 text-rose-500 dark:text-violet-400"
                   >
                      <path
                         strokeLinecap="round"
@@ -58,7 +58,7 @@ export const SidebarItem: FC<Props> = ({ item }) => {
                            />
                         </svg>
 
-                        <span className="text-sm font-medium text-gray-900 dark:text-indigo-400">
+                        <span className="text-sm font-medium text-gray-900 dark:text-violet-400">
                            {item.name}
                         </span>
                      </NavLink>

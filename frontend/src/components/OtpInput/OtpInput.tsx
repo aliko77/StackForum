@@ -57,7 +57,7 @@ export const OtpInput = (props: Props) => {
             return (
                <input
                   key={index}
-                  className={`m-2 border dark:border-rose-400 border-indigo-400 h-10 w-10 text-center rounded-sm text-black dark:text-gray-100 dark:bg-night-800 outline-none`}
+                  className={`m-2 border border-rose-500 dark:border-violet-500 h-10 w-10 text-center rounded-sm text-black dark:text-gray-100 dark:bg-night-800 outline-none`}
                   type="text"
                   inputMode="numeric"
                   autoComplete="one-time-code"

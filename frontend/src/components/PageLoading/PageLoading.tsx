@@ -6,7 +6,7 @@ type Props = {
 };
 
 export const PageLoading: FC<Props> = ({ message }) => {
-   const circleCommonClasses = 'h-5 w-5 bg-indigo-600 rounded-full';
+   const circleCommonClasses = 'h-5 w-5 bg-violet-600 rounded-full';
 
    return (
       <div className="dark:bg-night-800 h-screen">

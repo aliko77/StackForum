@@ -64,7 +64,7 @@ const AuthVerify: FC = () => {
                         <span className="text-sm font-semibold uppercase">
                            <div>Hesabını Doğrulamak İçin</div>
                         </span>
-                        <span className="font-bold text-indigo-500 dark:text-indigo-400 my-2">
+                        <span className="font-bold text-rose-500 dark:text-violet-400 my-2">
                            {user?.email}
                         </span>
                         <span className="text-sm font-semibold uppercase ">
@@ -84,7 +84,7 @@ const AuthVerify: FC = () => {
                      </div>
                      <div className="text-right my-4 px-2">
                         <button
-                           className="underline text-sm text-indigo-500 hover:text-indigo-600"
+                           className="underline text-sm text-rose-500 hover:text-rose-700 dark:text-violet-500 dark:hover:text-violet-600"
                            onClick={handleResend}
                            disabled={isSubmitting}
                         >

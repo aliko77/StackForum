@@ -9,7 +9,7 @@ export const ThemeSwitcher: FC = () => {
       <>
          <button
             data-about="theme-dark"
-            className="hidden dark:flex dark:text-zinc-400 dark:hover:text-indigo-500 focus:outline-none"
+            className="hidden dark:flex dark:text-zinc-400 dark:hover:text-violet-500 focus:outline-none"
             onClick={handleClick}
          >
             <svg

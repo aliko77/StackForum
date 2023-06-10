@@ -142,7 +142,7 @@ const Friend: FC = () => {
                         )}
                         <div className="relative overflow-x-auto shadow-md">
                            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:text-indigo-400">
+                              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-900 dark:text-violet-400">
                                  <tr>
                                     <th scope="col" className="px-6 py-3">
                                        Kullanıcı
@@ -157,7 +157,7 @@ const Friend: FC = () => {
                               </thead>
                               <tbody>
                                  {records.length == 0 && (
-                                    <tr className="border-b bg-gray-200 dark:bg-gray-900 dark:border-gray-700">
+                                    <tr className="border-b bg-gray-200 dark:bg-night-900 dark:border-gray-700">
                                        <th
                                           scope="row"
                                           className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-gray-100"
@@ -173,8 +173,8 @@ const Friend: FC = () => {
                                        key={index}
                                        className={`border-b ${
                                           index % 2 == 0
-                                             ? 'bg-gray-200 dark:bg-gray-900'
-                                             : 'bg-gray-100 dark:bg-gray-800'
+                                             ? 'bg-gray-200 dark:bg-night-900'
+                                             : 'bg-gray-100 dark:bg-night-700'
                                        } dark:border-gray-700`}
                                     >
                                        <th
@@ -201,7 +201,7 @@ const Friend: FC = () => {
                                           <span
                                              data-blocked_user={record.username}
                                              onClick={handleUnBlock}
-                                             className="cursor-pointer font-medium text-indigo-700 dark:text-indigo-500 hover:underline"
+                                             className="cursor-pointer font-medium text-rose-600 dark:text-violet-500 hover:underline"
                                           >
                                              Kaldır
                                           </span>

@@ -111,7 +111,7 @@ const Avatar: FC = () => {
                               <Button
                                  onClick={handleRemoveAvatar}
                                  text="Kaldır"
-                                 color="indigo"
+                                 color="violet"
                                  dark="rose"
                               >
                                  <div className="ml-2">

@@ -1,9 +1,8 @@
 import { FC } from 'react';
 
 export enum eColors {
-   Rose = 'text-rose-900 dark:text-rose-400',
-   Indigo = 'text-indigo-700 dark:text-indigo-400',
-   Green = 'text-green-700 dark:text-green-500',
+   Error = 'text-rose-600 dark:text-violet-400',
+   Success = 'text-green-700 dark:text-green-500',
    None = '',
 }
 
@@ -12,10 +11,10 @@ type AlertProps = {
    color?: eColors | null | undefined;
 };
 
-export const Alert: FC<AlertProps> = ({text, color = eColors.Green}) => {
+export const Alert: FC<AlertProps> = ({ text, color = eColors.Success }) => {
    return (
       <div
-         className={`flex p-4 mb-4 text-center text-sm ${color} rounded-lg bg-blue-100 dark:bg-gray-800`}
+         className={`flex p-4 mb-4 text-center text-sm ${color} border border-gray-300 dark:border-night-700 rounded-lg bg-gray-100 dark:bg-gray-900`}
          role="alert"
       >
          <svg

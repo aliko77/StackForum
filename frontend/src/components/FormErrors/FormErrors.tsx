@@ -11,7 +11,7 @@ export const FormErrors: FC<FormErrorProps> = ({ errors }) => {
             return (
                <div key={index}>
                   <div
-                     className={`flex p-4 mb-2 text-center text-sm text-rose-700 dark:text-rose-400 rounded-lg bg-blue-100 dark:bg-gray-800`}
+                     className={`flex p-4 mb-2 text-center text-sm text-rose-600 dark:text-violet-400 border border-gray-300 dark:border-night-700 rounded-lg bg-gray-100 dark:bg-gray-900`}
                      role="alert"
                   >
                      <svg

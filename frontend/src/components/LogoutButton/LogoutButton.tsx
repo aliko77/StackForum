@@ -6,7 +6,7 @@ export const LogoutButton: FC = () => {
 
    return (
       <button onClick={logout} className="flex justify-center items-center" title="Çıkış yap">
-         <div className="text-zinc-500 hover:text-rose-500 dark:text-zinc-400 dark:hover:text-indigo-500">
+         <div className="text-zinc-500 hover:text-rose-500 dark:text-zinc-400 dark:hover:text-violet-500">
             <svg
                xmlns="http://www.w3.org/2000/svg"
                fill="none"

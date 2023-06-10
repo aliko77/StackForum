@@ -3,7 +3,9 @@ import os
 from datetime import timedelta
 
 BASE_URL = 'http://localhost:8000'
-# BASE_URL = 'https://api.alikoc.dev'
+
+# React App
+REACT_APP_URL = os.getenv('REACT_APP_URL', 'http://localhost:5173')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -143,15 +145,12 @@ EMAIL_HOST_USER = '70474e2cf39515'
 EMAIL_HOST_PASSWORD = '7dbad6c740d736'
 EMAIL_PORT = '2525'
 
-# React App
-
-REACT_APP_URL = os.getenv('REACT_APP_URL', 'http://localhost:5173')
-# REACT_APP_URL = os.getenv('REACT_APP_URL', 'https://alikoc.dev')
-
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',  # React uygulamasının yerel adresi
     'https://alikoc.dev',
 ]
+CSRF_COOKIE_DOMAIN = None
 CORS_ALLOW_CREDENTIALS = True  # CORS isteklerinde kullanıcı kimlik bilgileri gönderilmesine izin verir
 CSRF_COOKIE_HTTPONLY = True  # CSRF cookie'sine JavaScript tarafından erişimi devre dışı bırakır
 CSRF_COOKIE_SECURE = False  # CSRF cookie'sini sadece HTTPS üzerinden iletilmesini sağlar

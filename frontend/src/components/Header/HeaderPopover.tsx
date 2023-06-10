@@ -12,15 +12,15 @@ export const HeaderPopOver = () => {
    const lastlogin = user?.last_login ? parseDateTimeToString(user.last_login) : 'Bilinmiyor.';
    return (
       <Popover className="relative">
-         <Popover.Button className="group inline-flex p-1.5 items-center bg-white dark:bg-night-900 shadow rounded-sm focus:outline-none">
-            <div className="text-zinc-500 hover:text-rose-500 dark:text-zinc-400 dark:hover:text-indigo-500">
+         <Popover.Button className="group inline-flex p-1.5 items-center bg-white dark:bg-night-800 shadow rounded-sm focus:outline-none">
+            <div>
                <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-6 h-6"
+                  className="w-6 h-6 text-zinc-500 hover:text-rose-500 dark:text-zinc-400 dark:hover:text-violet-500"
                >
                   <path
                      strokeLinecap="round"
@@ -83,14 +83,14 @@ export const HeaderPopOver = () => {
                         <Popover.Button
                            as={NavLink}
                            to="/profil/"
-                           className="w-1/2 text-center border-r font-semibold float-left text-gray-900 hover:bg-gray-200 hover:text-rose-500 dark:text-gray-100 dark:hover:text-indigo-400 dark:hover:bg-gray-800"
+                           className="w-1/2 text-center border-r font-semibold float-left text-gray-900 hover:bg-gray-200 hover:text-rose-500 dark:text-gray-100 dark:hover:text-violet-400 dark:hover:bg-gray-900"
                         >
                            Profilim
                         </Popover.Button>
                         <Popover.Button
                            as={NavLink}
                            to="/kontrol-paneli/"
-                           className="w-1/2 text-center font-semibold float-left text-gray-900 hover:bg-gray-200 hover:text-rose-500 dark:text-gray-100 dark:hover:text-indigo-400 dark:hover:bg-gray-800"
+                           className="w-1/2 text-center font-semibold float-left text-gray-900 hover:bg-gray-200 hover:text-rose-500 dark:text-gray-100 dark:hover:text-violet-400 dark:hover:bg-gray-900"
                         >
                            Panelim
                         </Popover.Button>
