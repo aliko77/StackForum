@@ -29,7 +29,7 @@ export const useRefreshToken = () => {
          return { access_token, csrf_token };
       } catch (error: unknown) {
          if (error instanceof AxiosError) {
-            const { detail, code } = error?.response?.data ?? {};
+            const { detail, code = 500 } = error?.response?.data ?? {};
             console.debug('[Error]', detail);
             return { code };
          }

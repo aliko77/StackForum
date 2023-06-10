@@ -64,8 +64,8 @@ const Login: FC = () => {
                   <div>
                      {message && <Alert color={eColors.Rose} text={message} />}
                      {isSubmitting && <LoadSpinner />}
-                     <form noValidate onSubmit={handleSubmit} className="space-y-4">
-                        <div>
+                     <form noValidate onSubmit={handleSubmit}>
+                        <div className="mb-4">
                            <Field
                               id="email"
                               type="email"
@@ -89,7 +89,7 @@ const Login: FC = () => {
                               autoComplete="on"
                               errorMessage={formikErrors.password}
                            />
-                           <div className="flex justify-end mt-2">
+                           <div className="flex justify-end my-1.5">
                               <NavLink
                                  to="/auth/password/reset"
                                  className="text-sm font-medium text-rose-500 hover:underline dark:text-indigo-400"

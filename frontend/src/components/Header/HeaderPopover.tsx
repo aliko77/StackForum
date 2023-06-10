@@ -80,21 +80,23 @@ export const HeaderPopOver = () => {
                         </div>
                      </div>
                      <div className="w-full flex border-y border-gray-300 h-10 leading-10">
-                        <NavLink
+                        <Popover.Button
+                           as={NavLink}
                            to="/profil/"
                            className="w-1/2 text-center border-r font-semibold float-left text-gray-900 hover:bg-gray-200 hover:text-rose-500 dark:text-gray-100 dark:hover:text-indigo-400 dark:hover:bg-gray-800"
                         >
                            Profilim
-                        </NavLink>
-                        <NavLink
+                        </Popover.Button>
+                        <Popover.Button
+                           as={NavLink}
                            to="/kontrol-paneli/"
                            className="w-1/2 text-center font-semibold float-left text-gray-900 hover:bg-gray-200 hover:text-rose-500 dark:text-gray-100 dark:hover:text-indigo-400 dark:hover:bg-gray-800"
                         >
                            Panelim
-                        </NavLink>
+                        </Popover.Button>
                      </div>
                      <div className="w-full bg-white dark:bg-night-100 text-gray-900 dark:text-gray-200 text-sm">
-                        <NavLink to="/ayarlar/sifre/">
+                        <Popover.Button as={NavLink} to="/ayarlar/sifre/">
                            <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800">
                               <div className="text-gray-900 dark:text-gray-400">
                                  <svg
@@ -116,8 +118,8 @@ export const HeaderPopOver = () => {
                                  <span>E-posta veya Şifre Değiştir</span>
                               </div>
                            </div>
-                        </NavLink>
-                        <NavLink to="/profil/duzenle/">
+                        </Popover.Button>
+                        <Popover.Button as={NavLink} to="/profil/duzenle/">
                            <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800">
                               <div className="text-gray-900 dark:text-gray-400">
                                  <svg
@@ -139,8 +141,8 @@ export const HeaderPopOver = () => {
                                  <span>Profili Düzenle</span>
                               </div>
                            </div>
-                        </NavLink>
-                        <NavLink to="/profil/avatar/">
+                        </Popover.Button>
+                        <Popover.Button as={NavLink} to="/profil/avatar/">
                            <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800">
                               <div className="text-gray-900 dark:text-gray-400">
                                  <svg
@@ -167,8 +169,8 @@ export const HeaderPopOver = () => {
                                  <span>Profil Resmini Değiştir</span>
                               </div>
                            </div>
-                        </NavLink>
-                        <NavLink to="/profil/imza/">
+                        </Popover.Button>
+                        <Popover.Button as={NavLink} to="/profil/imza/">
                            <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800">
                               <div className="text-gray-900 dark:text-gray-400">
                                  <svg
@@ -190,7 +192,7 @@ export const HeaderPopOver = () => {
                                  <span>İmzanı Değiştir</span>
                               </div>
                            </div>
-                        </NavLink>
+                        </Popover.Button>
                      </div>
                      <div className="w-full">
                         <div className="py-2 px-1 flex justify-evenly">
@@ -198,9 +200,9 @@ export const HeaderPopOver = () => {
                               <Button text="Abonelikler" />
                            </div>
                            <div>
-                              <NavLink to="/sosyal/arkadaslar/">
+                              <Popover.Button as={NavLink} to="/sosyal/arkadaslar/">
                                  <Button text="Sosyal Ağ" />
-                              </NavLink>
+                              </Popover.Button>
                            </div>
                         </div>
                      </div>

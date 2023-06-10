@@ -58,7 +58,7 @@ const Register: FC = () => {
                   Kayıt Ol
                </h1>
             </div>
-            <hr className="mb-4" />
+            <hr className="mb-4 border-gray-300 dark:border-gray-500" />
             <Formik
                validationSchema={validationSchema}
                initialValues={initialValues}

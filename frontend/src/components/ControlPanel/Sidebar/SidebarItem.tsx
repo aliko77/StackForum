@@ -49,14 +49,15 @@ export const SidebarItem: FC<Props> = ({ item }) => {
                            viewBox="0 0 24 24"
                            strokeWidth={1.5}
                            stroke="currentColor"
-                           className="w-4 h-4 text-gray-900 dark:text-gray-100"
+                           className="w-4 h-4 text-gray-900 dark:text-gray-200"
                         >
                            <path
                               strokeLinecap="round"
                               strokeLinejoin="round"
-                              d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                              d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5l-3.9 19.5m-2.1-19.5l-3.9 19.5"
                            />
                         </svg>
+
                         <span className="text-sm font-medium text-gray-900 dark:text-indigo-400">
                            {item.name}
                         </span>
