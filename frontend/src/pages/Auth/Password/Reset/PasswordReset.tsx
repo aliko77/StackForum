@@ -31,7 +31,7 @@ const PasswordReset: FC = () => {
          <div className="flex items-center justify-center mb-4">
             <Logo noRedirect />
          </div>
-         <div className="max-w-md w-full mx-auto p-4 sm:p-6 bg-white border rounded-lg dark:border dark:bg-night-200 dark:border-night-200">
+         <div className="max-w-md w-full mx-auto p-4 sm:p-6 bg-white border rounded-lg dark:border dark:bg-night-900 dark:border-night-700">
             <div>
                <div className="mb-6">
                   <h1 className="text-2xl text-zinc-800 dark:text-gray-100 font-semibold text-left">
@@ -45,7 +45,7 @@ const PasswordReset: FC = () => {
                      setMessage(null);
                      setErrors(null);
                      try {
-                        const { data } = await axiosService.post('auth/password/change/', {
+                        const { data } = await axiosService.post('auth/password/reset/', {
                            uid: uid,
                            token: token,
                            password: values.password,

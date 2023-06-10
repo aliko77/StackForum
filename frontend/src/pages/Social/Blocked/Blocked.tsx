@@ -51,12 +51,12 @@ const Blocked: FC = () => {
    return (
       <ControlPanelLayout>
          <div className="w-full">
-            <div className="title bg-night-200 dark:bg-night-300 p-2 rounded-t">
+            <div className="title bg-night-900 p-2 rounded-t">
                <p className="text-base font-semibold tracking-wide text-gray-100">
                   Engellenen Kullanıcılar
                </p>
             </div>
-            <div className="content p-4 bg-gray-200 dark:bg-night-200">
+            <div className="content p-4 bg-gray-200 dark:bg-night-800">
                {errors && (
                   <div>
                      <FormErrors errors={errors} />
@@ -130,7 +130,7 @@ const Blocked: FC = () => {
                         )}
                         <div className="relative overflow-x-auto shadow-md">
                            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-night-300 dark:text-indigo-400">
+                              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:text-indigo-400">
                                  <tr>
                                     <th scope="col" className="px-6 py-3">
                                        Kullanıcı

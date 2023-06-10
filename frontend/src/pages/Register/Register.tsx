@@ -52,7 +52,7 @@ const Register: FC = () => {
          <div className="flex items-center justify-center mb-4">
             <Logo />
          </div>
-         <div className="border rounded-sm px-3 pt-3 bg-white dark:text-gray-100 dark:bg-night-200 dark:border-gray-500">
+         <div className="border rounded-sm px-3 pt-3 bg-white dark:text-gray-100 dark:bg-night-800 dark:border-gray-500">
             <div className="flex justify-center mb-3">
                <h1 className="font-semibold font-mono dark:text-gray-100 text-rose-600">
                   Kayıt Ol

@@ -79,12 +79,12 @@ const Avatar: FC = () => {
             hidden
          />
          <div className="w-full">
-            <div className="title bg-night-200 dark:bg-night-300 p-2 rounded-t">
+            <div className="title bg-night-900 p-2 rounded-t">
                <p className="text-base font-semibold tracking-wide text-gray-100">
                   Avatarını Düzenle
                </p>
             </div>
-            <div className="content px-4 py-4 space-y-8 bg-gray-200 dark:bg-night-200">
+            <div className="content px-4 py-4 space-y-8 bg-gray-200 dark:bg-night-800">
                <fieldset id="avatar">
                   <legend className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">
                      <p className="font-medium text-gray-900 dark:text-gray-100">Avatar</p>

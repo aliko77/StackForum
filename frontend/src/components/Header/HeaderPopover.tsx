@@ -12,7 +12,7 @@ export const HeaderPopOver = () => {
    const lastlogin = user?.last_login ? parseDateTimeToString(user.last_login) : 'Bilinmiyor.';
    return (
       <Popover className="relative">
-         <Popover.Button className="group inline-flex p-1.5 items-center bg-white dark:bg-night-100 shadow rounded-sm focus:outline-none">
+         <Popover.Button className="group inline-flex p-1.5 items-center bg-white dark:bg-night-900 shadow rounded-sm focus:outline-none">
             <div className="text-zinc-500 hover:text-rose-500 dark:text-zinc-400 dark:hover:text-indigo-500">
                <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -39,7 +39,7 @@ export const HeaderPopOver = () => {
             leaveFrom="opacity-100 translate-x-0 sm:translate-y-0"
             leaveTo="opacity-0 translate-x-3 sm:-translate-y-4 sm:translate-x-0"
          >
-            <Popover.Panel className="z-10 absolute w-screen -right-4 mt-3 sm:mt-4 sm:w-[380px] sm:rounded-t shadow bg-white dark:bg-night-200 border border-gray-300 dark:border-gray-600 whitespace-nowrap">
+            <Popover.Panel className="z-10 absolute w-screen -right-4 mt-3 sm:mt-4 sm:w-[380px] sm:rounded-t shadow bg-white dark:bg-night-900 border border-gray-300 dark:border-gray-600 whitespace-nowrap">
                <div className="overflow-hidden">
                   <div className="relative flex flex-row flex-wrap h-full w-full m-0 float-none">
                      <div className="flex items-center w-full leading-4 p-2">
@@ -74,7 +74,7 @@ export const HeaderPopOver = () => {
                            </div>
                         </div>
                         <div className="absolute right-2">
-                           <div className="bg-white border border-solid border-gray-300 dark:border-gray-600 dark:bg-night-100 p-2 rounded-sm shadow">
+                           <div className="bg-white border border-solid border-gray-300 dark:border-gray-600 dark:bg-night-800 p-2 rounded-sm shadow">
                               <LogoutButton />
                            </div>
                         </div>
@@ -95,7 +95,7 @@ export const HeaderPopOver = () => {
                            Panelim
                         </Popover.Button>
                      </div>
-                     <div className="w-full bg-white dark:bg-night-100 text-gray-900 dark:text-gray-200 text-sm">
+                     <div className="w-full bg-white dark:bg-night-800 text-gray-900 dark:text-gray-200 text-sm">
                         <Popover.Button as={NavLink} to="/ayarlar/sifre/">
                            <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800">
                               <div className="text-gray-900 dark:text-gray-400">

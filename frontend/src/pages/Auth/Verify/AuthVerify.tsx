@@ -55,7 +55,7 @@ const AuthVerify: FC = () => {
          <div className="sm:container mx-2 sm:mx-auto">
             <div className="max-w-sm mx-auto md:max-w-lg">
                <div className="w-full">
-                  <div className="text-gray-800 dark:text-gray-100 border dark:border-gray-600 dark:bg-night-200 rounded-sm text-center flex flex-col justify-center">
+                  <div className="text-gray-800 dark:text-gray-100 border dark:border-gray-600 dark:bg-night-900 rounded-sm text-center flex flex-col justify-center">
                      <div className="my-4">
                         <Logo noRedirect />
                      </div>

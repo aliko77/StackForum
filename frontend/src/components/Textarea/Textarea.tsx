@@ -10,7 +10,7 @@ export const Textarea: FC<TextareaProps> = ({ errorMessage, ...props }) => {
    return (
       <>
          <textarea
-            className="w-full bg-gray-100 dark:bg-night-300 rounded p-2 text-gray-900 dark:text-gray-100 outline-none border border-gray-100 dark:border-night-300 focus:border-gray-900 dark:focus:border-gray-900"
+            className="w-full bg-gray-100 dark:bg-night-700 rounded p-2 text-gray-900 dark:text-gray-100 outline-none border border-gray-100 dark:border-night-700 focus:border-gray-900 dark:focus:border-gray-900"
             {...props}
          />
          {errorMessage && (

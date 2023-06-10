@@ -20,7 +20,7 @@ const PasswordForgot: FC = () => {
 
    return (
       <div className="m-auto p-4">
-         <div className="p-8 flex w-full border dark:border-night-200 max-w-lg items-center justify-center space-y-4 antialiased bg-white dark:bg-night-200 rounded-sm dark:text-gray-200">
+         <div className="p-8 flex w-full border dark:border-night-900 max-w-lg items-center justify-center space-y-4 antialiased bg-white dark:bg-night-900 rounded-sm dark:text-gray-200">
             <div>
                <div className="mb-4">
                   <h1 className="mb-6 text-3xl font-semibold text-center">Endişelenmeyin</h1>
@@ -41,7 +41,7 @@ const PasswordForgot: FC = () => {
                      setMessage(null);
                      setErrors(null);
                      try {
-                        const { data } = await axiosService.post('/auth/password/reset/', {
+                        const { data } = await axiosService.post('/auth/password/forgot/', {
                            email: values.email,
                         });
                         const { status } = data;

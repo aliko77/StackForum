@@ -12,7 +12,7 @@ export const SidebarItem: FC<Props> = ({ item }) => {
       <Disclosure defaultOpen>
          <div className={`${item.name.toLowerCase()}`}>
             <Disclosure.Button className="w-full focus:outline-none">
-               <div className="header bg-gray-100 dark:bg-night-200 px-4 py-2.5 flex justify-between items-center">
+               <div className="header bg-gray-100 dark:bg-night-900 px-4 py-2.5 flex justify-between items-center">
                   <span className="text-sm text-gray-900 dark:text-gray-100 uppercase font-medium">
                      {item.name}
                   </span>
@@ -32,7 +32,7 @@ export const SidebarItem: FC<Props> = ({ item }) => {
                   </svg>
                </div>
             </Disclosure.Button>
-            <Disclosure.Panel className="content w-full bg-gray-200 dark:bg-night-300" as="ul">
+            <Disclosure.Panel className="content w-full bg-gray-200 dark:bg-night-800" as="ul">
                {item.sublinks?.map((item, index) => (
                   <li key={index} className="border-b border-gray-300 dark:border-gray-500">
                      <NavLink

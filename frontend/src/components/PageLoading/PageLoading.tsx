@@ -9,7 +9,7 @@ export const PageLoading: FC<Props> = ({ message }) => {
    const circleCommonClasses = 'h-5 w-5 bg-indigo-600 rounded-full';
 
    return (
-      <div className="dark:bg-night-200 h-screen">
+      <div className="dark:bg-night-800 h-screen">
          <div className="flex justify-center my-20">
             <div>
                <Logo noRedirect />

@@ -70,13 +70,13 @@ const ProfilEdit: FC = () => {
                <>
                   <Form noValidate onSubmit={handleSubmit}>
                      <div className="w-full mb-4">
-                        <div className="bg-night-200 dark:bg-night-300 p-2 rounded-t">
+                        <div className="bg-night-900 p-2 rounded-t">
                            <p className="text-base font-semibold tracking-wide text-gray-100">
                               Zorunlu Bilgiler
                            </p>
                         </div>
                         {errors && <FormErrors errors={errors} />}
-                        <div className="px-4 py-4 bg-gray-200 dark:bg-night-200">
+                        <div className="px-4 py-4 bg-gray-200 dark:bg-night-800">
                            <div className="mb-4">
                               <fieldset id="email-password">
                                  <legend className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">
@@ -183,12 +183,12 @@ const ProfilEdit: FC = () => {
                         </div>
                      </div>
                      <div className="w-full">
-                        <div className="bg-night-200 dark:bg-night-300 p-2 rounded-t">
+                        <div className="bg-night-900 p-2 rounded-t">
                            <p className="text-base font-semibold tracking-wide text-gray-100">
                               Genel Bilgiler - Bu bilgiler diğer forum üyeleri ile paylaşılır.
                            </p>
                         </div>
-                        <div className="px-4 py-4 bg-gray-200 dark:bg-night-200">
+                        <div className="px-4 py-4 bg-gray-200 dark:bg-night-800">
                            <div className="mb-4">
                               <fieldset id="social-accounts">
                                  <legend className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">

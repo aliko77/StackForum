@@ -6,7 +6,7 @@ const Layout = ({ children }: ReactChildrenProps) => {
    return (
       <>
          <Header />
-         <main className="content dark:bg-night-100">{children}</main>
+         <main className="content dark:bg-night-700">{children}</main>
          <Footer />
       </>
    );

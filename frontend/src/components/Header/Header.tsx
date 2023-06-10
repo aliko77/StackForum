@@ -12,14 +12,14 @@ export const Header: FC = () => {
    const { user } = useAuth();
 
    return (
-      <header className="fixed shadow flex z-50 w-full h-16 bg-white dark:bg-night-200 border-t-4 border-t-rose-400 border-b border-b-gray-300 dark:border-b-night-200">
+      <header className="fixed shadow flex z-50 w-full h-16 bg-white dark:bg-night-900 border-t-4 border-t-violet-700 border-b border-b-gray-300 dark:border-b-violet-500">
          <div className="w-full md:w-4/6 max-w-full h-full flex items-center m-[0_auto] px-2 md:p-0">
             <div>
                <Logo />
             </div>
             <div className="ml-auto">
                <div className="flex items-center">
-                  <div className="p-1.5 mx-2 bg-white dark:bg-night-100 shadow rounded-full">
+                  <div className="p-1.5 mx-2 bg-white dark:bg-night-800 shadow rounded-full">
                      <div className="text-zinc-500 hover:text-rose-500 dark:text-zinc-400 dark:hover:text-indigo-500">
                         <svg
                            xmlns="http://www.w3.org/2000/svg"
@@ -39,10 +39,10 @@ export const Header: FC = () => {
                   </div>
                   {user && (
                      <>
-                        <div className="p-1.5 mx-2 bg-white dark:bg-night-100 shadow rounded-full">
+                        <div className="p-1.5 mx-2 bg-white dark:bg-night-800 shadow rounded-full">
                            <ThemeSwitcher />
                         </div>
-                        <div className="p-1.5 mx-2 bg-white dark:bg-night-100 shadow rounded-full">
+                        <div className="p-1.5 mx-2 bg-white dark:bg-night-800 shadow rounded-full">
                            <div className="text-zinc-500 hover:text-rose-500 dark:text-zinc-400 dark:hover:text-indigo-500">
                               <svg
                                  xmlns="http://www.w3.org/2000/svg"

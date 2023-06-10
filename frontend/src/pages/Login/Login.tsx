@@ -34,7 +34,7 @@ const Login: FC = () => {
          <div className="flex items-center justify-center mb-4">
             <Logo noRedirect />
          </div>
-         <div className="border rounded-sm px-3 pt-3 bg-white dark:text-gray-100 dark:bg-night-200 dark:border-gray-500">
+         <div className="border rounded-sm px-3 pt-3 bg-white dark:text-gray-100 dark:bg-night-900 dark:border-gray-500">
             <Formik
                validationSchema={validationSchema}
                initialValues={InitialState}
@@ -91,7 +91,7 @@ const Login: FC = () => {
                            />
                            <div className="flex justify-end my-1.5">
                               <NavLink
-                                 to="/auth/password/reset"
+                                 to="/auth/password/forgot"
                                  className="text-sm font-medium text-rose-500 hover:underline dark:text-indigo-400"
                               >
                                  Şifreni mi unuttun?
