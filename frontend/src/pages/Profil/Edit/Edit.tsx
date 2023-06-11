@@ -11,6 +11,14 @@ import { ProfileProps } from 'types';
 import useUser from 'hooks/useUser';
 import { Toast } from 'utils';
 import { NavLink } from 'react-router-dom';
+import { SelectMenu, CustomDropdownOption } from 'components/SelectMenu';
+
+const choices_DobPrivacy: CustomDropdownOption<string>[] = [
+   { value: 'none', label: 'Hiçbir şeyi gösterme' },
+   { value: 'age', label: 'Sadece yaşı göster' },
+   { value: 'month_day', label: 'Ay ve günü göster' },
+   { value: 'show', label: 'Her şeyi göster' },
+];
 
 const validationSchema = object({
    dob: date()
@@ -32,16 +40,16 @@ const ProfilEdit: FC = () => {
    const { updateProfile, errors } = useUser();
 
    const initialValues: ProfileProps = {
-      dob: user?.profile?.dob,
-      dob_privacy: user?.profile?.dob_privacy,
-      city: user?.profile?.city,
-      twitter_url: user?.profile?.twitter_url,
-      github_url: user?.profile?.github_url,
-      email_secondary: user?.profile?.email_secondary,
-      phone_number: user?.profile?.phone_number,
-      profession: user?.profile?.profession,
-      hobbies: user?.profile?.hobbies,
-      about: user?.profile?.about,
+      dob: user?.profile?.dob ?? '',
+      dob_privacy: user?.profile?.dob_privacy ?? '',
+      city: user?.profile?.city ?? '',
+      twitter_url: user?.profile?.twitter_url ?? '',
+      github_url: user?.profile?.github_url ?? '',
+      email_secondary: user?.profile?.email_secondary ?? '',
+      phone_number: user?.profile?.phone_number ?? '',
+      profession: user?.profile?.profession ?? '',
+      hobbies: user?.profile?.hobbies ?? '',
+      about: user?.profile?.about ?? '',
    };
 
    return (
@@ -142,19 +150,16 @@ const ProfilEdit: FC = () => {
                                     />
                                  </div>
                                  <div className="mb-4">
-                                    <Label htmlFor="dob_privacy">Gizlilik</Label>
-                                    <select
-                                       id="dob_privacy"
-                                       className="w-full outline-none text-sm p-1.5 bg-gray-50 dark:bg-gray-700 border rounded-sm border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 focus:ring-rose-500 focus:border-rose-500 dark:focus:ring-violet-500 dark:focus:border-violet-500"
-                                       onChange={handleChange}
-                                       onBlur={handleBlur}
+                                    <span className="text-sm font-medium text-gray-700 h-7 leading-7 dark:text-gray-100">
+                                       Gizlilik
+                                    </span>
+                                    <SelectMenu
+                                       onChange={(value) => {
+                                          handleChange({ target: { name: 'dob_privacy', value } });
+                                       }}
+                                       options={choices_DobPrivacy}
                                        value={values.dob_privacy}
-                                    >
-                                       <option value="none">Yaşı ve doğum tarihini gösterme</option>
-                                       <option value="age">Sadece yaşı göster</option>
-                                       <option value="month_day">Sadece ay ve günü göster</option>
-                                       <option value="show">Yaşı ve doğum tarihini göster</option>
-                                    </select>
+                                    />
                                  </div>
                               </fieldset>
                            </div>
@@ -236,7 +241,6 @@ const ProfilEdit: FC = () => {
                                           type="text"
                                           id="email_secondary"
                                           name="email_secondary"
-                                          placeholder="email@mail.com"
                                           onChange={handleChange}
                                           onBlur={handleBlur}
                                           value={values.email_secondary}

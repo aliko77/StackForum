@@ -8,7 +8,7 @@ export const Footer: FC = () => {
             <div>
                <Logo />
             </div>
-            <hr className="my-6 border-gray-200 dark:border-gray-400" />
+            <hr className="my-6 border-gray-300 dark:border-gray-600" />
             <span className="block text-sm text-gray-500 text-center dark:text-gray-400">
                © 2023 StackForum™. Tüm hakları saklıdır.
             </span>

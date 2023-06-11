@@ -65,6 +65,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = "Users"
         db_table = "user"
 
+#Profil
 
 def get_upload_path(instance, filename):
     # Dosya adını kullanıcı username'i ve zaman damgasıyla birleştirerek oluşturun
@@ -77,26 +78,19 @@ def get_upload_path(instance, filename):
     # Örneğin: media/profile_pictures/userID_20230101153000.jpg
     return f"profile_pictures/{new_filename}"
 
-
-PROFILE_STATUS_CHOICES = (
-    ('ONLINE', 'Çevrimiçi'),
-    ('OFFLINE', 'Çevrimdışı'),
-)
-PROFILE_DOB_PRIVACY_CHOICES = (
-    ('none', 'Hiçbir Şeyi Gösterme'),
-    ('age', 'Sadece Yaş'),
-    ('month_day', 'Ay ve Gün'),
-    ('show', 'Her Şeyi Göster')
-)
-
-
 class Profile(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE
     )
     dob = models.DateField(null=True, blank=True)
     dob_privacy = models.CharField(
-        max_length=20, choices=PROFILE_DOB_PRIVACY_CHOICES, default='age', blank=True
+        max_length=20, 
+        choices=[
+            ('none', 'Hiçbir Şeyi Gösterme'),
+            ('age', 'Sadece Yaş'),
+            ('month_day', 'Ay ve Gün'),
+            ('show', 'Her Şeyi Göster')
+        ], default='age', blank=True
     )
     city = models.CharField(max_length=50, blank=True, null=True)
     about = models.TextField(max_length=500, blank=True, null=True)
@@ -107,15 +101,40 @@ class Profile(models.Model):
     email_secondary = models.EmailField(max_length=254, blank=True, null=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     status = models.CharField(
-        max_length=20, choices=PROFILE_STATUS_CHOICES, default='OFFLINE', blank=True
+        max_length=20, 
+        choices=[
+            ('ONLINE', 'Çevrimiçi'),
+            ('OFFLINE', 'Çevrimdışı'),    
+        ], 
+        default='OFFLINE',
+        blank=True
     )
     avatar = models.ImageField(
         upload_to=get_upload_path, blank=True, null=True, default=settings.PROFILE_AVATAR_FILE
     )
     signature = models.CharField(max_length=1024, blank=True, null=True)
+    share_info = models.CharField(
+        max_length=20,
+        choices=[
+            ("public", "Herkes"),
+            ("registered", "Kayıtlı Üyeler")
+        ],
+        default="public",
+        blank=True
+    )
+    allow_friend_requests = models.BooleanField(default=True, blank=True)
+    allow_messages = models.CharField(
+        max_length=20,
+        choices=[
+            ("public", "Herkes"),
+            ("registered", "Kayıtlı Üyeler"),
+            ("friends", "Arkadaşlarım")
+        ],
+        default="public",
+        blank=True
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
     
     class Meta:
         db_table = "user_profile"
