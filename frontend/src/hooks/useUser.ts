@@ -140,8 +140,6 @@ export default function useUser() {
       setErrors(null);
       try {
          const { data, status } = await axiosPrivate.post('/user/profile/update/', profile);
-         console.log(profile);
-         console.log(data);
          setUser((prevState) => {
             if (!prevState) return undefined;
             return {
