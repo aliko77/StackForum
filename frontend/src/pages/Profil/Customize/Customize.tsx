@@ -2,6 +2,10 @@ import ControlPanelLayout from 'layouts/ControlPanel';
 import { FC, useState } from 'react';
 import { Button } from 'components/Button';
 import { SelectMenu, CustomDropdownOption } from 'components/SelectMenu';
+import { boolean, object, string } from 'yup';
+import { Toast } from 'utils';
+import useUser from 'hooks/useUser';
+import { useAuth } from 'hooks/useAuth';
 
 const choices_ShareInfo: CustomDropdownOption<string>[] = [
    {
@@ -40,10 +44,51 @@ const choices_AllowMessages: CustomDropdownOption<string>[] = [
    },
 ];
 
+const validationSchema = object({
+   share_info: string()
+      .required('*')
+      .oneOf(choices_ShareInfo.map((o) => o.value)),
+   allow_friend_requests: boolean()
+      .required('*')
+      .oneOf(choices_FriendRequests.map((o) => o.value)),
+   allow_messages: string()
+      .required('*')
+      .oneOf(choices_AllowMessages.map((o) => o.value)),
+});
+
 const Customize: FC = () => {
-   const [shareInfo, setShareInfo] = useState<string>(choices_ShareInfo[0].value);
-   const [friendRequests, setFriendRequests] = useState<boolean>(choices_FriendRequests[0].value);
-   const [allowMessages, setAllowMessages] = useState<string>(choices_AllowMessages[0].value);
+   const { user } = useAuth();
+   const [shareInfo, setShareInfo] = useState<string>(user?.profile?.share_info ?? 'public');
+   const [friendRequests, setFriendRequests] = useState<boolean>(
+      user?.profile?.allow_friend_requests ?? true,
+   );
+   const [allowMessages, setAllowMessages] = useState<string>(
+      user?.profile?.allow_messages ?? 'public',
+   );
+   const { updateProfile } = useUser();
+
+   const handleSubmit = async () => {
+      const values = {
+         share_info: shareInfo,
+         allow_friend_requests: friendRequests,
+         allow_messages: allowMessages,
+      };
+      try {
+         await validationSchema.validate(values);
+         const status = await updateProfile(values);
+         status &&
+            Toast.fire({
+               title: 'Başarıyla kaydedildi.',
+               icon: 'success',
+               timer: 2000,
+            });
+      } catch (error) {
+         await Toast.fire({
+            title: 'Bir hata oluştu.',
+            icon: 'error',
+         });
+      }
+   };
 
    return (
       <ControlPanelLayout>
@@ -120,7 +165,7 @@ const Customize: FC = () => {
                   </div>
                </fieldset>
                <div className="w-full max-w-xs mx-auto mt-4 float-right">
-                  <Button text="Kaydet" />
+                  <Button text="Kaydet" onClick={handleSubmit} />
                </div>
             </div>
          </div>

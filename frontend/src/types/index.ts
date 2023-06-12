@@ -22,6 +22,9 @@ export type ProfileProps = {
    status?: string;
    avatar?: string;
    signature?: string;
+   share_info?: string;
+   allow_friend_requests?: boolean;
+   allow_messages?: string;
 };
 
 export type UserProps = {
