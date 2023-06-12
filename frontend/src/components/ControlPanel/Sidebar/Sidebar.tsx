@@ -11,15 +11,17 @@ export const Sidebar: FC = () => {
 
    return (
       <>
-         <div className="sidebar rounded-t table table-fixed md:float-left w-full md:w-[220px]">
-            <div className="header flex items-center justify-between rounded-t-sm bg-night-900 border-b px-4 border-b-gray-500">
+         <div className="sidebar w-full sm:w-[240px]">
+            <div className="flex items-center justify-between bg-night-900 rounded-t border-b px-4 border-b-gray-500">
                <div>
                   <h1 className="text-rose-400 dark:text-violet-500 font-semibold uppercase py-4">
                      Kontrol Paneli
                   </h1>
                </div>
                <button
-                  className="sm:hidden text-gray-400 border border-gray-400 rounded-full p-1"
+                  className={`${
+                     !hidden && 'sm:hidden'
+                  } text-gray-400 border border-gray-400 rounded-full p-1`}
                   onClick={toggleSidebar}
                >
                   <svg
@@ -40,7 +42,7 @@ export const Sidebar: FC = () => {
                   </svg>
                </button>
             </div>
-            <div className="content" hidden={hidden}>
+            <div hidden={hidden}>
                {items.map((item, index) => (
                   <SidebarItem key={index} item={item} />
                ))}

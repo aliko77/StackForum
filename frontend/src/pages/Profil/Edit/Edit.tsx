@@ -136,7 +136,7 @@ const ProfilEdit: FC = () => {
                                        </p>
                                     </div>
                                  </legend>
-                                 <div className="mb-4">
+                                 <div className="ml-4 mb-4">
                                     <Field
                                        label="Doğum Tarihi"
                                        type="date"
@@ -149,7 +149,7 @@ const ProfilEdit: FC = () => {
                                        errorMessage={formikErrors.dob}
                                     />
                                  </div>
-                                 <div className="mb-4">
+                                 <div className="ml-4">
                                     <span className="text-sm font-medium text-gray-700 h-7 leading-7 dark:text-gray-100">
                                        Gizlilik
                                     </span>
