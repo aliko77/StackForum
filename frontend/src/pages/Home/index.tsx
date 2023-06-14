@@ -5,7 +5,6 @@ import { Button } from 'components/Button';
 
 const Home: FC = () => {
    const { accessToken, user } = useAuth();
-
    return (
       <div className="m-auto text-center">
          <div className="text-xl dark:text-gray-100">Hoşgeldin: {user?.username || 'Misafir'}</div>

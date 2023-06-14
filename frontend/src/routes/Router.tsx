@@ -1,7 +1,7 @@
 import { ElementType, lazy, ReactNode, Suspense, ReactElement } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import { PageLoading } from 'components/PageLoading';
-import { AuthProvider } from 'contexts/AuthContext';
+import { AuthProvider } from 'contexts';
 import { PersistLogin } from 'routes/PersistLogin';
 import { GuestRoute, PrivateRoute } from 'routes/GuardRoutes';
 import Layout from 'layouts/Layout';
