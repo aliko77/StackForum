@@ -13,14 +13,14 @@ export const Header: FC = () => {
 
    return (
       <>
-         <header className="sticky top-0 shadow z-[999] w-full bg-white dark:bg-night-900 border-t-4 border-t-rose-400 dark:border-t-violet-700">
-            <div className="w-full border-b border-b-rose-400 dark:border-b-violet-500 py-2 sm:py-1">
-               <div className="flex w-full md:w-4/6 max-w-full h-full items-center m-[0_auto] px-2 md:px-0">
+         <header className="sticky top-0 shadow z-[999]">
+            <div className="h-full p-2 md:px-0 bg-white dark:bg-night-900 border-t-4 border-t-rose-400 dark:border-t-violet-700 border-b border-b-rose-400 dark:border-b-violet-500">
+               <div className="container mx-auto flex justify-between items-center">
                   <div>
                      <Logo />
                   </div>
-                  <div className="ml-auto">
-                     <div className="flex items-center">
+                  <div>
+                     <div className="flex items-center my-auto">
                         <div className="p-1.5 mr-2 bg-white dark:bg-night-800 shadow rounded-full">
                            <div className="text-gray-500 hover:text-rose-400 dark:text-gray-400 dark:hover:text-violet-500">
                               <svg
@@ -88,7 +88,7 @@ export const Header: FC = () => {
                            </>
                         )}
                         {!user && (
-                           <>
+                           <div className="flex items-center">
                               <div className="mx-2">
                                  <Button
                                     text="Giriş yap"
@@ -98,7 +98,7 @@ export const Header: FC = () => {
                                     }}
                                  />
                               </div>
-                              <div className="mr-2">
+                              <div>
                                  <Button
                                     text="Kayıt ol"
                                     color="violet"
@@ -107,7 +107,7 @@ export const Header: FC = () => {
                                     }}
                                  />
                               </div>
-                           </>
+                           </div>
                         )}
                      </div>
                   </div>
