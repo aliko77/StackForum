@@ -11,6 +11,7 @@ import { FriendsProps } from 'types';
 import { LoadSpinner } from 'components/LoadSpinner';
 import { parseDateTimeToString } from 'utils';
 import { Avatar } from 'components/Profile';
+import classNames from 'classnames';
 
 const Friend: FC = () => {
    const { removeFriendByUsername, addFriendByUsername, getUserFriends, errors } = useUser();
@@ -140,77 +141,74 @@ const Friend: FC = () => {
                               <LoadSpinner />
                            </div>
                         )}
-                        <div className="relative overflow-x-auto shadow-md">
-                           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-900 dark:text-violet-400">
-                                 <tr>
-                                    <th scope="col" className="px-6 py-3">
-                                       Kullanıcı
-                                    </th>
-                                    <th scope="col" className="px-6 py-3">
-                                       Tarih
-                                    </th>
-                                    <th scope="col" className="px-6 py-3">
-                                       Etkileşimler
-                                    </th>
-                                 </tr>
-                              </thead>
-                              <tbody>
-                                 {records.length == 0 && (
-                                    <tr className="border-b bg-gray-200 dark:bg-night-900 dark:border-gray-700">
-                                       <th
-                                          scope="row"
-                                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-gray-100"
-                                       >
-                                          #
-                                       </th>
-                                       <td className="px-6 py-4">#</td>
-                                       <td className="px-6 py-4">#</td>
-                                    </tr>
-                                 )}
-                                 {records.map((record, index) => (
-                                    <tr
-                                       key={index}
-                                       className={`border-b ${
-                                          index % 2 == 0
-                                             ? 'bg-gray-200 dark:bg-night-900'
-                                             : 'bg-gray-100 dark:bg-night-700'
-                                       } dark:border-gray-700`}
+                        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-900 dark:text-violet-400">
+                              <tr>
+                                 <th scope="col" className="px-6 py-3">
+                                    Kullanıcı
+                                 </th>
+                                 <th scope="col" className="px-6 py-3">
+                                    Tarih
+                                 </th>
+                                 <th scope="col" className="px-6 py-3">
+                                    Etkileşimler
+                                 </th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              {records.length == 0 && (
+                                 <tr className="border-b bg-gray-200 dark:bg-night-900 dark:border-gray-700">
+                                    <th
+                                       scope="row"
+                                       className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-gray-100"
                                     >
-                                       <th
-                                          scope="row"
-                                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-gray-100"
-                                       >
-                                          <div className="flex w-max sm:w-full items-center space-x-3">
-                                             <div>
-                                                <Avatar
-                                                   width="2.5rem"
-                                                   height="2.5rem"
-                                                   path={record.avatar}
-                                                />
-                                             </div>
-                                             <div>
-                                                <span>{record.username}</span>
-                                             </div>
+                                       #
+                                    </th>
+                                    <td className="px-6 py-4">#</td>
+                                    <td className="px-6 py-4">#</td>
+                                 </tr>
+                              )}
+                              {records.map((record, index) => (
+                                 <tr
+                                    key={index}
+                                    className={classNames('border-b', 'dark:border-b-gray-700', {
+                                       'bg-gray-200 dark:bg-night-900': index % 2 == 0,
+                                       'bg-gray-100 dark:bg-night-700': index % 2 != 0,
+                                    })}
+                                 >
+                                    <th
+                                       scope="row"
+                                       className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-gray-100"
+                                    >
+                                       <div className="flex w-max sm:w-full items-center space-x-3">
+                                          <div>
+                                             <Avatar
+                                                width="2.5rem"
+                                                height="2.5rem"
+                                                path={record.avatar}
+                                             />
                                           </div>
-                                       </th>
-                                       <td className="px-6 py-4">
-                                          {parseDateTimeToString(record.friendship_at)}
-                                       </td>
-                                       <td className="px-6 py-4">
-                                          <span
-                                             data-blocked_user={record.username}
-                                             onClick={handleUnBlock}
-                                             className="cursor-pointer font-medium text-rose-600 dark:text-violet-500 hover:underline"
-                                          >
-                                             Kaldır
-                                          </span>
-                                       </td>
-                                    </tr>
-                                 ))}
-                              </tbody>
-                           </table>
-                        </div>
+                                          <div>
+                                             <span>{record.username}</span>
+                                          </div>
+                                       </div>
+                                    </th>
+                                    <td className="px-6 py-4">
+                                       {parseDateTimeToString(record.friendship_at)}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                       <span
+                                          data-blocked_user={record.username}
+                                          onClick={handleUnBlock}
+                                          className="cursor-pointer font-medium text-rose-600 dark:text-violet-500 hover:underline"
+                                       >
+                                          Kaldır
+                                       </span>
+                                    </td>
+                                 </tr>
+                              ))}
+                           </tbody>
+                        </table>
                      </div>
                   </div>
                </div>

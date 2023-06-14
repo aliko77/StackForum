@@ -83,14 +83,14 @@ export const HeaderPopOver = () => {
                         <Popover.Button
                            as={NavLink}
                            to="/profil/"
-                           className="w-1/2 text-center border-r font-semibold float-left text-gray-900 hover:bg-gray-200 hover:text-rose-500 dark:text-gray-100 dark:hover:text-violet-400 dark:hover:bg-gray-900"
+                           className="w-1/2 text-center border-r font-semibold text-gray-900 hover:bg-gray-200 hover:text-rose-500 dark:text-gray-100 dark:hover:text-violet-400 dark:hover:bg-gray-900"
                         >
                            Profilim
                         </Popover.Button>
                         <Popover.Button
                            as={NavLink}
                            to="/kontrol-paneli/"
-                           className="w-1/2 text-center font-semibold float-left text-gray-900 hover:bg-gray-200 hover:text-rose-500 dark:text-gray-100 dark:hover:text-violet-400 dark:hover:bg-gray-900"
+                           className="w-1/2 text-center font-semibold text-gray-900 hover:bg-gray-200 hover:text-rose-500 dark:text-gray-100 dark:hover:text-violet-400 dark:hover:bg-gray-900"
                         >
                            Panelim
                         </Popover.Button>

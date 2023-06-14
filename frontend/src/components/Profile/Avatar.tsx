@@ -10,7 +10,7 @@ export const Avatar: FC<Props> = ({ path, height, width }) => {
    return (
       <>
          <img
-            className="border-solid border-2 border-white rounded-full"
+            className="border-solid border-2 border-white rounded-full w-max h-max"
             src={path}
             alt="profile picture"
             style={{ height: `${height}`, width: `${width}` }}
