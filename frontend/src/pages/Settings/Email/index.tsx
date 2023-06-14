@@ -1,4 +1,4 @@
-import { Button } from 'components/Button';
+import Button from 'components/Button';
 import { Field } from 'components/Field';
 import { FormErrors } from 'components/FormErrors';
 import { LoadSpinner } from 'components/LoadSpinner';
@@ -90,7 +90,9 @@ const Email: FC = () => {
                            </div>
                         </fieldset>
                         <div className="w-full max-w-xs mt-4">
-                           <Button type="submit" text="Değiştir" disabled={isSubmitting} />
+                           <Button type="submit" disabled={isSubmitting}>
+                              Değiştir
+                           </Button>
                         </div>
                      </Form>
                   )}

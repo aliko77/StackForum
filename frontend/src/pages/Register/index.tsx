@@ -4,7 +4,7 @@ import { object, string, ref } from 'yup';
 import { Logo } from 'components/Logo';
 import { FormErrors } from 'components/FormErrors';
 import { LoadSpinner } from 'components/LoadSpinner';
-import { Button } from 'components/Button';
+import Button from 'components/Button';
 import { Field } from 'components/Field';
 import { NavLink } from 'react-router-dom';
 import { Alert } from 'components/Alert';
@@ -133,7 +133,9 @@ const Register: FC = () => {
                               errorMessage={formikErrors.confirm_password}
                            />
                         </div>
-                        <Button text={'Kayıt ol'} type="submit" disabled={isSubmitting} />
+                        <Button type="submit" disabled={isSubmitting}>
+                           Kayıt Ol
+                        </Button>
                      </form>
                   </div>
                )}

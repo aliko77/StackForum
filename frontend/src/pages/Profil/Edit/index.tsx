@@ -2,7 +2,7 @@ import { Field } from 'components/Field';
 import ControlPanelLayout from 'layouts/ControlPanel';
 import { FC } from 'react';
 import { Formik, Form } from 'formik';
-import { Button } from 'components/Button';
+import Button from 'components/Button';
 import { FormErrors } from 'components/FormErrors';
 import { object, string, date } from 'yup';
 import { Label } from 'components/Label';
@@ -299,7 +299,9 @@ const ProfilEdit: FC = () => {
                         </div>
                      </div>
                      <div className="w-full max-w-xs mx-auto mt-4 float-right">
-                        <Button type="submit" text="Kaydet" disabled={isSubmitting} />
+                        <Button type="submit" disabled={isSubmitting}>
+                           Kaydet
+                        </Button>
                      </div>
                   </Form>
                </>

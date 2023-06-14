@@ -2,7 +2,7 @@ import ControlPanelLayout from 'layouts/ControlPanel';
 import { FC } from 'react';
 import { Avatar as AvatarImage } from 'components/Profile/Avatar';
 import { useAuth } from 'hooks/useAuth';
-import { Button } from 'components/Button';
+import Button from 'components/Button';
 import { Toast } from 'utils';
 import useUser from 'hooks/useUser';
 import { useState, useRef, ChangeEvent } from 'react';
@@ -108,12 +108,8 @@ const Avatar: FC = () => {
                      <div className="mt-4">
                         <div className="flex justify-start space-x-4">
                            <div>
-                              <Button
-                                 onClick={handleRemoveAvatar}
-                                 text="Kaldır"
-                                 color="violet"
-                                 dark="rose"
-                              >
+                              <Button onClick={handleRemoveAvatar} color="violet" dark="rose">
+                                 <span>Kaldır</span>
                                  <div className="ml-2">
                                     <svg
                                        xmlns="http://www.w3.org/2000/svg"
@@ -133,10 +129,8 @@ const Avatar: FC = () => {
                               </Button>
                            </div>
                            <div>
-                              <Button
-                                 onClick={handleUploadAvatar}
-                                 text={!uploadedImage ? 'Yükle' : 'Kaydet'}
-                              >
+                              <Button onClick={handleUploadAvatar}>
+                                 <span>{!uploadedImage ? 'Yükle' : 'Kaydet'}</span>
                                  <div className="ml-2">
                                     <svg
                                        xmlns="http://www.w3.org/2000/svg"

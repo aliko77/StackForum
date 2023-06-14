@@ -1,4 +1,4 @@
-import { Button } from 'components/Button';
+import Button from 'components/Button';
 import { FormErrors } from 'components/FormErrors';
 import { Form, Formik } from 'formik';
 import { useAuth } from 'hooks/useAuth';
@@ -63,7 +63,7 @@ export const Signature: FC = () => {
                                     id="signature"
                                     name="signature"
                                     rows={10}
-                                    placeholder='İmzanı düzenle...'
+                                    placeholder="İmzanı düzenle..."
                                     defaultValue={values.signature}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
@@ -73,7 +73,9 @@ export const Signature: FC = () => {
                            </div>
                         </fieldset>
                         <div className="w-full max-w-xs">
-                           <Button type="submit" text="Kaydet" disabled={isSubmitting} />
+                           <Button type="submit" disabled={isSubmitting}>
+                              Kaydet
+                           </Button>
                         </div>
                         <div id="signature-info">
                            <div className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">

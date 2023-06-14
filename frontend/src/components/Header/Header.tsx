@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { ThemeSwitcher } from 'components/ThemeSwitcher';
 import { HeaderPopOver, HeaderBottom } from 'components/Header';
 import { Logo } from 'components/Logo';
-import { Button } from 'components/Button';
+import Button from 'components/Button';
 import { Avatar, StatusIcon } from 'components/Profile';
 
 export const Header: FC = () => {
@@ -91,21 +91,22 @@ export const Header: FC = () => {
                            <div className="flex items-center">
                               <div className="mx-2">
                                  <Button
-                                    text="Giriş yap"
                                     dark="rose"
                                     onClick={(): void => {
                                        navigate('/login/');
                                     }}
-                                 />
+                                 >
+                                    Giriş Yap
+                                 </Button>
                               </div>
                               <div>
                                  <Button
-                                    text="Kayıt ol"
-                                    color="violet"
                                     onClick={(): void => {
                                        navigate('/register/');
                                     }}
-                                 />
+                                 >
+                                    Kayıt Ol
+                                 </Button>
                               </div>
                            </div>
                         )}

@@ -1,7 +1,7 @@
 import { axiosService } from 'api/axios';
 import { AxiosError } from 'axios';
 import { Alert } from 'components/Alert';
-import { Button } from 'components/Button';
+import Button from 'components/Button';
 import { Field } from 'components/Field';
 import { FormErrors } from 'components/FormErrors';
 import { LoadSpinner } from 'components/LoadSpinner';
@@ -84,7 +84,9 @@ const PasswordForgot: FC = () => {
                               errorMessage={formikErrors.email}
                            />
                            <div className="mt-4">
-                              <Button text="Gönder" type="submit" disabled={isSubmitting} />
+                              <Button type="submit" disabled={isSubmitting}>
+                                 Gönder
+                              </Button>
                            </div>
                         </form>
                      </div>

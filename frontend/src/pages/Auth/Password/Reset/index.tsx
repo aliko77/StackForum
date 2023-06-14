@@ -1,7 +1,7 @@
 import { axiosService } from 'api/axios';
 import { AxiosError } from 'axios';
 import { Alert } from 'components/Alert';
-import { Button } from 'components/Button';
+import Button from 'components/Button';
 import { Field } from 'components/Field';
 import { FormErrors } from 'components/FormErrors';
 import { LoadSpinner } from 'components/LoadSpinner';
@@ -101,7 +101,9 @@ const PasswordReset: FC = () => {
                               />
                            </div>
                            <div>
-                              <Button text="Kaydet" type="submit" disabled={isSubmitting} />
+                              <Button type="submit" disabled={isSubmitting}>
+                                 Kaydet
+                              </Button>
                            </div>
                         </form>
                      </div>

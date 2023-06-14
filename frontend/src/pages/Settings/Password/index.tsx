@@ -1,4 +1,4 @@
-import { Button } from 'components/Button';
+import Button from 'components/Button';
 import { Field } from 'components/Field';
 import { FormErrors } from 'components/FormErrors';
 import { Form, Formik } from 'formik';
@@ -110,7 +110,9 @@ const Password: FC = () => {
                            </div>
                         </fieldset>
                         <div className="w-full max-w-xs mt-4">
-                           <Button type="submit" text="Değiştir" disabled={isSubmitting} />
+                           <Button type="submit" disabled={isSubmitting}>
+                              Değiştir
+                           </Button>
                         </div>
                      </Form>
                   )}

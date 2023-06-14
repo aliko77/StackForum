@@ -1,7 +1,7 @@
 import { FC, useEffect, useState, MouseEvent } from 'react';
 import ControlPanelLayout from 'layouts/ControlPanel';
 import { Field } from 'components/Field';
-import { Button } from 'components/Button';
+import Button from 'components/Button';
 import { Form, Formik } from 'formik';
 import { object, string } from 'yup';
 import useUser from 'hooks/useUser';
@@ -107,7 +107,7 @@ const Friend: FC = () => {
                                  />
                                  <div className="mt-4">
                                     <div className="w-full sm:max-w-[8rem]">
-                                       <Button type="submit" text="Arkadaş Ekle" />
+                                       <Button type="submit">Arkadaş Ekle</Button>
                                     </div>
                                  </div>
                               </div>

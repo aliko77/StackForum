@@ -1,5 +1,5 @@
 import { Popover, Transition } from '@headlessui/react';
-import { Button } from 'components/Button';
+import Button from 'components/Button';
 import { LogoutButton } from 'components/LogoutButton';
 import { Avatar, StatusIcon } from 'components/Profile';
 import { useAuth } from 'hooks/useAuth';
@@ -197,11 +197,11 @@ export const HeaderPopOver = () => {
                      <div className="w-full">
                         <div className="py-2 px-1 flex justify-evenly">
                            <div>
-                              <Button text="Abonelikler" />
+                              <Button>Abonelikler</Button>
                            </div>
                            <div>
                               <Popover.Button as={NavLink} to="/sosyal/arkadaslar/">
-                                 <Button text="Sosyal Ağ" />
+                                 <Button>Sosyal Ağ</Button>
                               </Popover.Button>
                            </div>
                         </div>

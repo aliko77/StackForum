@@ -7,7 +7,7 @@ import { AxiosError } from 'axios';
 import { Logo } from 'components/Logo';
 import { Alert, eColors } from 'components/Alert';
 import { LoadSpinner } from 'components/LoadSpinner';
-import { Button } from 'components/Button';
+import Button from 'components/Button';
 import { Field } from 'components/Field';
 
 type LoginProps = {
@@ -98,7 +98,9 @@ const Login: FC = () => {
                               </NavLink>
                            </div>
                         </div>
-                        <Button text={'Giriş yap'} type="submit" disabled={isSubmitting} />
+                        <Button type="submit" disabled={isSubmitting}>
+                           Giriş Yap
+                        </Button>
                      </form>
                   </div>
                )}

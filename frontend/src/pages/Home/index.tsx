@@ -1,7 +1,7 @@
 import { useAuth } from 'hooks/useAuth';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from 'components/Button';
+import Button from 'components/Button';
 
 const Home: FC = () => {
    const { accessToken, user } = useAuth();
@@ -11,7 +11,7 @@ const Home: FC = () => {
          {accessToken && !user?.is_verified && (
             <div className="mt-4">
                <Link to={'/auth/verify'}>
-                  <Button text="Lütfen email adresinizi doğrulayınız." />
+                  <Button>Lütfen email adresinizi doğrulayınız.</Button>
                </Link>
             </div>
          )}

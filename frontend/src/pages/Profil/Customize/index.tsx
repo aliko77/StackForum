@@ -1,6 +1,6 @@
 import ControlPanelLayout from 'layouts/ControlPanel';
 import { FC, useState } from 'react';
-import { Button } from 'components/Button';
+import Button from 'components/Button';
 import { SelectMenu, CustomDropdownOption } from 'components/SelectMenu';
 import { boolean, object, string } from 'yup';
 import { Toast } from 'utils';
@@ -165,7 +165,7 @@ const Customize: FC = () => {
                   </div>
                </fieldset>
                <div className="w-full max-w-xs mx-auto mt-4 float-right">
-                  <Button text="Kaydet" onClick={handleSubmit} />
+                  <Button onClick={handleSubmit}>Kaydet</Button>
                </div>
             </div>
          </div>
