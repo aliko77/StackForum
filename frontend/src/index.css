@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+   @apply antialiased;
+}
+
 html,
 body {
    height: 100%;
