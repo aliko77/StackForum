@@ -11,7 +11,7 @@ export const Sidebar: FC = () => {
 
    return (
       <>
-         <div className="sidebar w-full sm:w-[240px]">
+         <aside className="sidebar w-full sm:w-[240px]">
             <div className="flex items-center justify-between bg-night-900 rounded-t border-b px-4 border-b-gray-500">
                <div>
                   <h1 className="text-rose-400 dark:text-violet-500 font-semibold uppercase py-4">
@@ -47,7 +47,7 @@ export const Sidebar: FC = () => {
                   <SidebarItem key={index} item={item} />
                ))}
             </div>
-         </div>
+         </aside>
       </>
    );
 };
