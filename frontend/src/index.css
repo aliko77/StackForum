@@ -21,5 +21,4 @@ div#root > main.content {
    flex: 1 1 auto;
    display: flex;
    flex-direction: column;
-   margin-top: 64px;
 }

@@ -343,9 +343,7 @@ export default function useUser() {
       }
    };
 
-   const addFriendByUsername = async (
-      username: FriendProps,
-   ): Promise<FriendReturnProps> => {
+   const addFriendByUsername = async (username: FriendProps): Promise<FriendReturnProps> => {
       setErrors(null);
       try {
          const { data, status } = await axiosPrivate.post(
@@ -361,9 +359,7 @@ export default function useUser() {
       }
    };
 
-   const removeFriendByUsername = async (
-      username: FriendProps,
-   ): Promise<FriendProps | boolean> => {
+   const removeFriendByUsername = async (username: FriendProps): Promise<FriendProps | boolean> => {
       setErrors(null);
       try {
          const { data, status } = await axiosPrivate.post(
