@@ -52,91 +52,81 @@ const Friend: FC = () => {
 
    return (
       <ControlPanelLayout>
-         <div className="w-full">
-            <div className="title bg-night-900 p-2 rounded-t">
-               <p className="text-base font-semibold tracking-wide text-gray-100">Arkadaşlar</p>
-            </div>
-            <div className="content p-4 bg-gray-200 dark:bg-night-800">
-               {errors && (
-                  <div>
-                     <FormErrors errors={errors} />
-                  </div>
-               )}
-               <div className="mb-4">
-                  <Formik
-                     validationSchema={validationSchema}
-                     initialValues={initialValues}
-                     onSubmit={async (values, { resetForm }): Promise<void> => {
-                        const data = await addFriendByUsername(values);
-                        if (typeof data === 'object') {
-                           resetForm();
-                           setRecords([data, ...records]);
-                           Toast.fire({
-                              title: `Arkadaş Eklendi`,
-                              text: data.username,
-                              icon: 'success',
-                              timer: 2000,
-                           });
-                        }
-                     }}
-                  >
-                     {({
-                        handleSubmit,
-                        values,
-                        handleChange,
-                        handleBlur,
-                        errors: formikErrors,
-                     }) => (
-                        <Form noValidate onSubmit={handleSubmit}>
-                           <fieldset id="block_user">
-                              <legend className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">
-                                 <p className="font-medium text-gray-900 dark:text-gray-100">
-                                    Arkadaş Ekle
-                                 </p>
-                              </legend>
-                              <div className="ml-4">
-                                 <Field
-                                    label="Kullanıcı"
-                                    type="text"
-                                    id="username"
-                                    name="username"
-                                    placeholder="Kullanıcı adı giriniz."
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    value={values.username}
-                                    errorMessage={formikErrors.username}
-                                 />
-                                 <div className="mt-4">
-                                    <div className="w-full sm:max-w-[8rem]">
-                                       <Button type="submit">Arkadaş Ekle</Button>
-                                    </div>
+         <div className="title bg-night-900 p-2 rounded-t">
+            <p className="text-base font-semibold tracking-wide text-gray-100">Arkadaşlar</p>
+         </div>
+         <div className="content p-4 bg-gray-200 dark:bg-night-800">
+            {errors && (
+               <div>
+                  <FormErrors errors={errors} />
+               </div>
+            )}
+            <div>
+               <Formik
+                  validationSchema={validationSchema}
+                  initialValues={initialValues}
+                  onSubmit={async (values, { resetForm }): Promise<void> => {
+                     const data = await addFriendByUsername(values);
+                     if (typeof data === 'object') {
+                        resetForm();
+                        setRecords([data, ...records]);
+                        Toast.fire({
+                           title: `Arkadaş Eklendi`,
+                           text: data.username,
+                           icon: 'success',
+                           timer: 2000,
+                        });
+                     }
+                  }}
+               >
+                  {({ handleSubmit, values, handleChange, handleBlur, errors: formikErrors }) => (
+                     <Form noValidate onSubmit={handleSubmit}>
+                        <fieldset id="block_user">
+                           <legend className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">
+                              <p className="font-medium text-gray-900 dark:text-gray-100">
+                                 Arkadaş Ekle
+                              </p>
+                           </legend>
+                           <div className="ml-4">
+                              <Field
+                                 label="Kullanıcı"
+                                 type="text"
+                                 id="username"
+                                 name="username"
+                                 placeholder="Kullanıcı adı giriniz."
+                                 onChange={handleChange}
+                                 onBlur={handleBlur}
+                                 value={values.username}
+                                 errorMessage={formikErrors.username}
+                              />
+                              <div className="mt-4">
+                                 <div className="w-full sm:max-w-[8rem]">
+                                    <Button type="submit">Arkadaş Ekle</Button>
                                  </div>
                               </div>
-                           </fieldset>
-                        </Form>
-                     )}
-                  </Formik>
+                           </div>
+                        </fieldset>
+                     </Form>
+                  )}
+               </Formik>
+            </div>
+            <div id="friend-info" className="my-8">
+               <div className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">
+                  <p className="font-medium text-gray-900 dark:text-gray-100">
+                     Arkadaşlık Hakkında
+                  </p>
                </div>
-               <div id="friend-info" className="mb-8">
-                  <div className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">
-                     <p className="font-medium text-gray-900 dark:text-gray-100">
-                        Arkadaşlık Hakkında
-                     </p>
-                  </div>
-                  <div className="content ml-2">
-                     <ul className="space-y-1 text-sm text-gray-600 list-disc list-inside dark:text-gray-400">
-                        <li>Arkadaşınız hakkında bildirimler alabilirsiniz.</li>
-                        <li>Arkadaşınız, sizi kendi listesine eklememiş olabilir.</li>
-                     </ul>
-                  </div>
+               <div className="content ml-2">
+                  <ul className="space-y-1 text-sm text-gray-600 list-disc list-inside dark:text-gray-400">
+                     <li>Arkadaşınız hakkında bildirimler alabilirsiniz.</li>
+                     <li>Arkadaşınız, sizi kendi listesine eklememiş olabilir.</li>
+                  </ul>
                </div>
             </div>
-         </div>
-         <div id="blocked_users">
-            <div className="w-full border-b pb-1 border-gray-400 dark:border-gray-500">
-               <p className="font-medium text-gray-900 dark:text-gray-100">Arkadaşlar</p>
-            </div>
-            <div className="content">
+            <div id="blocked_users">
+               <div className="w-full border-b pb-1 border-gray-400 dark:border-gray-500">
+                  <p className="font-medium text-gray-900 dark:text-gray-100">Arkadaşlar</p>
+               </div>
                <div>
                   {!ready && (
                      <div>
