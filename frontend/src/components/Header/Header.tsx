@@ -13,15 +13,15 @@ export const Header: FC = () => {
 
    return (
       <>
-         <header className="sticky top-0 shadow z-[999]">
-            <div className="h-full p-2 bg-white dark:bg-night-900 border-t-4 border-t-rose-400 dark:border-t-violet-700 border-b border-b-rose-400 dark:border-b-violet-500">
-               <div className="w-full md:max-w-6xl mx-auto flex justify-between items-center">
+         <header className="sticky top-0 shadow z-[999] border-t-4 border-t-rose-400 dark:border-t-violet-700">
+            <div className="h-16 p-4 bg-white dark:bg-night-900 border-b border-b-rose-400 dark:border-b-violet-500">
+               <div className="flex justify-between">
                   <div>
                      <Logo />
                   </div>
                   <div>
-                     <div className="flex items-center my-auto">
-                        <div className="p-1.5 mr-2 bg-white dark:bg-night-800 shadow rounded-full">
+                     <div className="flex flex-1">
+                        <div className="p-1 mr-2 bg-white dark:bg-night-800 shadow rounded-full">
                            <div className="text-gray-500 hover:text-rose-400 dark:text-gray-400 dark:hover:text-violet-500">
                               <svg
                                  xmlns="http://www.w3.org/2000/svg"
@@ -41,10 +41,10 @@ export const Header: FC = () => {
                         </div>
                         {user && (
                            <>
-                              <div className="p-1.5 mx-2 bg-white dark:bg-night-800 shadow rounded-full">
+                              <div className="p-1 mx-2 bg-white dark:bg-night-800 shadow rounded-full">
                                  <ThemeSwitcher />
                               </div>
-                              <div className="p-1.5 mx-2 bg-white dark:bg-night-800 shadow rounded-full">
+                              <div className="p-1 mx-2 bg-white dark:bg-night-800 shadow rounded-full">
                                  <div className="text-gray-500 hover:text-rose-400 dark:text-gray-400 dark:hover:text-violet-500">
                                     <svg
                                        xmlns="http://www.w3.org/2000/svg"
@@ -88,8 +88,8 @@ export const Header: FC = () => {
                            </>
                         )}
                         {!user && (
-                           <div className="flex items-center">
-                              <div className="mx-2">
+                           <>
+                              <div className="mr-2">
                                  <Button
                                     dark="rose"
                                     onClick={(): void => {
@@ -108,7 +108,7 @@ export const Header: FC = () => {
                                     Kayıt Ol
                                  </Button>
                               </div>
-                           </div>
+                           </>
                         )}
                      </div>
                   </div>
