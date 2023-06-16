@@ -79,18 +79,18 @@ const Avatar: FC = () => {
             hidden
          />
          <div className="w-full">
-            <div className="title bg-night-900 p-2 rounded-t">
+            <div className="bg-night-900 p-2 rounded-t">
                <p className="text-base font-semibold tracking-wide text-gray-100">
                   Avatarını Düzenle
                </p>
             </div>
-            <div className="content px-4 py-4 space-y-8 bg-gray-200 dark:bg-night-800">
+            <div className="px-4 py-4 space-y-8 bg-gray-200 dark:bg-night-800">
                <fieldset id="avatar">
                   <legend className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">
                      <p className="font-medium text-gray-900 dark:text-gray-100">Avatar</p>
                   </legend>
                   {errors && <FormErrors errors={errors} />}
-                  <div className="content">
+                  <div>
                      <div className="flex items-center space-x-4">
                         {!uploadedImage && (
                            <AvatarImage path={user?.profile?.avatar} height="6rem" width="6rem" />
@@ -157,7 +157,7 @@ const Avatar: FC = () => {
                   <div className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">
                      <p className="font-medium text-gray-900 dark:text-gray-100">Avatar Hakkında</p>
                   </div>
-                  <div className="content ml-2">
+                  <div className="ml-2">
                      <ul className="space-y-1 text-sm text-gray-600 list-disc list-inside dark:text-gray-400">
                         <li>Mevcut avatar herkes tarafından görülmektedir.</li>
                         <li>Avatarınızı kaldırdığınızda varsayılan avatar gözükecektir.</li>

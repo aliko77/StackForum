@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import { items } from './items';
 import { SidebarItem } from './SidebarItem';
+import classNames from 'classnames';
 
 export const Sidebar: FC = () => {
    const [hidden, setHidden] = useState<boolean>(false);
@@ -12,16 +13,17 @@ export const Sidebar: FC = () => {
    return (
       <>
          <aside className="sidebar w-full sm:w-[240px]">
-            <div className="flex items-center justify-between bg-night-900 rounded-t border-b px-4 border-b-gray-500">
-               <div>
-                  <h1 className="text-rose-400 dark:text-violet-500 font-semibold uppercase py-4">
-                     Kontrol Paneli
-                  </h1>
-               </div>
+            <div className="p-3 flex justify-between items-center bg-night-900 rounded-t border-b border-b-gray-500">
+               <h1 className="text-rose-400 dark:text-violet-500 font-semibold uppercase">
+                  Kontrol Paneli
+               </h1>
                <button
-                  className={`${
-                     !hidden && 'sm:hidden'
-                  } text-gray-400 border border-gray-400 rounded-full p-1`}
+                  className={classNames(
+                     {
+                        'sm:hidden': !hidden,
+                     },
+                     'text-gray-400 border border-gray-400 rounded-full p-0.5',
+                  )}
                   onClick={toggleSidebar}
                >
                   <svg
@@ -30,9 +32,9 @@ export const Sidebar: FC = () => {
                      viewBox="0 0 24 24"
                      strokeWidth={1.5}
                      stroke="currentColor"
-                     className={`w-5 h-5 transition-transform duration-300 ${
-                        hidden ? 'transform rotate-180' : ''
-                     }`}
+                     className={classNames('w-5 h-5 transition-transform duration-300', {
+                        'transform rotate-180': hidden,
+                     })}
                   >
                      <path
                         strokeLinecap="round"

@@ -6,14 +6,14 @@ type Props = {
    height?: string;
 };
 
-export const Avatar: FC<Props> = ({ path, height, width }) => {
+export const Avatar: FC<Props> = ({ path, height = '2.5rem', width = '2.5rem' }) => {
    return (
       <>
          <img
-            className="border-solid border-2 border-white rounded-full w-max h-max"
+            className="border-solid border-2 border-white rounded-full min-w-max w-full h-full"
             src={path}
             alt="profile picture"
-            style={{ height: `${height}`, width: `${width}` }}
+            style={{ height, width }}
          />
       </>
    );

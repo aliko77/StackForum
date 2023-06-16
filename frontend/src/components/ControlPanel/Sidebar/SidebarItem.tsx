@@ -32,7 +32,7 @@ export const SidebarItem: FC<Props> = ({ item }) => {
                   </svg>
                </div>
             </Disclosure.Button>
-            <Disclosure.Panel className="content w-full bg-gray-200 dark:bg-night-800" as="ul">
+            <Disclosure.Panel className="w-full bg-gray-200 dark:bg-night-800" as="ul">
                {item.sublinks?.map((item, index) => (
                   <li key={index} className="border-b border-gray-300 dark:border-gray-500">
                      <NavLink

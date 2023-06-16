@@ -2,8 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+   --primary: rgb(54, 56, 77);
+   --secondary: #a78bfa;
+}
+
 * {
    @apply antialiased;
+}
+
+/* Firefox */
+* {
+   scrollbar-width: thin;
+   scrollbar-color: var(--secondary) var(--primary);
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+   width: 10px;
+   height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+   background: var(--primary);
+}
+
+*::-webkit-scrollbar-thumb {
+   @apply border border-solid border-night-800 bg-night-900 rounded-lg;
 }
 
 html,

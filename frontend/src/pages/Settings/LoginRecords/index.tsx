@@ -22,12 +22,12 @@ const LoginLogs: FC = () => {
    return (
       <ControlPanelLayout>
          <div className="w-full">
-            <div className="title bg-night-900 p-2 rounded-t">
+            <div className="bg-night-900 p-2 rounded-t">
                <p className="text-base font-semibold tracking-wide text-gray-100">
                   Son Giriş Kaydı
                </p>
             </div>
-            <div className="content bg-gray-200 dark:bg-night-800">
+            <div className="bg-gray-200 dark:bg-night-800">
                <div>
                   {!ready && (
                      <div>

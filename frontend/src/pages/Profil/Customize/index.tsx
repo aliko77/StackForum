@@ -93,19 +93,19 @@ const Customize: FC = () => {
    return (
       <ControlPanelLayout>
          <div className="w-full">
-            <div className="title bg-night-900 p-2 rounded-t">
+            <div className="bg-night-900 p-2 rounded-t">
                <p className="text-base font-semibold tracking-wide text-gray-100">
                   Profilinizi Özelleştirin
                </p>
             </div>
-            <div className="content px-4 py-4 space-y-8 bg-gray-200 dark:bg-night-800">
+            <div className="px-4 py-4 space-y-8 bg-gray-200 dark:bg-night-800">
                <fieldset id="private">
                   <legend className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">
                      <p className="font-medium text-gray-900 dark:text-gray-100">
                         Profil Gizliliği
                      </p>
                   </legend>
-                  <div className="content ml-4">
+                  <div className="ml-4">
                      <p className="text-gray-900 dark:text-gray-300 text-sm">
                         Profilinizin kimler tarafından ziyaret edilebileceğini ayarlayın.
                      </p>
@@ -126,7 +126,7 @@ const Customize: FC = () => {
                         Arkadaşlık İstekleri
                      </p>
                   </legend>
-                  <div className="content ml-4">
+                  <div className="ml-4">
                      <div className="mb-2">
                         <span className="text-gray-800 dark:text-gray-300 text-sm">
                            Kullanıcılar sizinle arkadaşlık/bağlantı kurup kuramayacağını ayarlayın.
@@ -147,7 +147,7 @@ const Customize: FC = () => {
                   <legend className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">
                      <p className="font-medium text-gray-900 dark:text-gray-100">Mesaj Ayarları</p>
                   </legend>
-                  <div className="content ml-4 mb-4">
+                  <div className="ml-4 mb-4">
                      <div className="mb-2">
                         <span className="text-gray-800 dark:text-gray-300 text-sm">
                            Kimlerin size mesaj gönderebileceğini ayarlayın.

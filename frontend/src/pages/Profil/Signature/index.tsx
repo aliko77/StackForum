@@ -24,10 +24,10 @@ export const Signature: FC = () => {
    return (
       <ControlPanelLayout>
          <div className="w-full">
-            <div className="title bg-night-900 p-2 rounded-t">
+            <div className="bg-night-900 p-2 rounded-t">
                <p className="text-base font-semibold tracking-wide text-gray-100">İmza Ayarları</p>
             </div>
-            <div className="content px-4 py-4 space-y-8 bg-gray-200 dark:bg-night-800">
+            <div className="px-4 py-4 space-y-8 bg-gray-200 dark:bg-night-800">
                <Formik
                   validationSchema={validationSchema}
                   initialValues={initialValues}
@@ -57,7 +57,7 @@ export const Signature: FC = () => {
                               </p>
                            </legend>
                            {errors && <FormErrors errors={errors} />}
-                           <div className="content space-y-2">
+                           <div className="space-y-2">
                               <div>
                                  <Textarea
                                     id="signature"
@@ -83,7 +83,7 @@ export const Signature: FC = () => {
                                  İmza Hakkında
                               </p>
                            </div>
-                           <div className="content ml-2">
+                           <div className="ml-2">
                               <ul className="space-y-1 text-sm text-gray-600 list-disc list-inside dark:text-gray-400">
                                  <li>Maksimum 120 Karakter.</li>
                                  <li>Maksimum 3 Satır.</li>

@@ -9,7 +9,6 @@ import { Toast } from 'utils';
 import { FormErrors } from 'components/FormErrors';
 import { FriendsProps } from 'types';
 import { LoadSpinner } from 'components/LoadSpinner';
-import { parseDateTimeToString } from 'utils';
 import { Avatar } from 'components/Profile';
 import classNames from 'classnames';
 
@@ -52,10 +51,10 @@ const Friend: FC = () => {
 
    return (
       <ControlPanelLayout>
-         <div className="title bg-night-900 p-2 rounded-t">
+         <div className="bg-night-900 p-2 rounded-t">
             <p className="text-base font-semibold tracking-wide text-gray-100">Arkadaşlar</p>
          </div>
-         <div className="content p-4 bg-gray-200 dark:bg-night-800">
+         <div className="p-4 bg-gray-200 dark:bg-night-800">
             {errors && (
                <div>
                   <FormErrors errors={errors} />
@@ -116,14 +115,14 @@ const Friend: FC = () => {
                      Arkadaşlık Hakkında
                   </p>
                </div>
-               <div className="content ml-2">
+               <div className="ml-2">
                   <ul className="space-y-1 text-sm text-gray-600 list-disc list-inside dark:text-gray-400">
                      <li>Arkadaşınız hakkında bildirimler alabilirsiniz.</li>
                      <li>Arkadaşınız, sizi kendi listesine eklememiş olabilir.</li>
                   </ul>
                </div>
             </div>
-            <div id="blocked_users">
+            <div id="friends" className="overflow-auto">
                <div className="w-full border-b pb-1 border-gray-400 dark:border-gray-500">
                   <p className="font-medium text-gray-900 dark:text-gray-100">Arkadaşlar</p>
                </div>
@@ -133,16 +132,13 @@ const Friend: FC = () => {
                         <LoadSpinner />
                      </div>
                   )}
-                  <table className="w-full overflow-auto whitespace-nowrap text-sm text-left text-gray-500 dark:text-gray-400">
+                  <table className="w-full whitespace-nowrap text-sm text-left text-gray-500 dark:text-gray-400">
                      <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-900 dark:text-violet-400">
                         <tr>
-                           <th scope="col" className="px-6 py-3">
+                           <th scope="col" className="p-3">
                               Kullanıcı
                            </th>
-                           <th scope="col" className="px-6 py-3">
-                              Tarih
-                           </th>
-                           <th scope="col" className="px-6 py-3">
+                           <th scope="col" className="p-3">
                               Etkileşimler
                            </th>
                         </tr>
@@ -152,12 +148,11 @@ const Friend: FC = () => {
                            <tr className="border-b bg-gray-200 dark:bg-night-900 dark:border-gray-700">
                               <th
                                  scope="row"
-                                 className="px-6 py-4 font-medium text-gray-900 dark:text-gray-100"
+                                 className="p-3 font-medium text-gray-900 dark:text-gray-100"
                               >
                                  #
                               </th>
-                              <td className="px-6 py-4">#</td>
-                              <td className="px-6 py-4">#</td>
+                              <td className="p-3">#</td>
                            </tr>
                         )}
                         {records.map((record, index) => (
@@ -170,23 +165,22 @@ const Friend: FC = () => {
                            >
                               <td
                                  scope="row"
-                                 className="font-medium text-gray-900 dark:text-gray-100"
+                                 className="p-3 font-medium text-gray-900 dark:text-gray-100"
                               >
-                                 <div className="flex w-max sm:w-full items-center space-x-3">
-                                    <div>
+                                 <div className="flex items-center space-x-3">
+                                    <div className="min-w-max">
                                        <Avatar
                                           width="2.5rem"
                                           height="2.5rem"
                                           path={record.avatar}
                                        />
                                     </div>
-                                    <div>
+                                    <div className="max-w-xs overflow-hidden text-ellipsis">
                                        <span>{record.username}</span>
                                     </div>
                                  </div>
                               </td>
-                              <td>{parseDateTimeToString(record.friendship_at)}</td>
-                              <td>
+                              <td className="p-3">
                                  <span
                                     data-blocked_user={record.username}
                                     onClick={handleUnBlock}

@@ -31,10 +31,10 @@ const Password: FC = () => {
    return (
       <ControlPanelLayout>
          <div className="w-full">
-            <div className="title bg-night-900 p-2 rounded-t">
+            <div className="bg-night-900 p-2 rounded-t">
                <p className="text-base font-semibold tracking-wide text-gray-100">Şifre Ayarları</p>
             </div>
-            <div className="content px-4 py-4 space-y-8 bg-gray-200 dark:bg-night-800">
+            <div className="px-4 py-4 space-y-8 bg-gray-200 dark:bg-night-800">
                <Formik
                   validationSchema={validationSchema}
                   initialValues={initialValues}
@@ -64,7 +64,7 @@ const Password: FC = () => {
                               </p>
                            </legend>
                            {errors && <FormErrors errors={errors} />}
-                           <div className="content space-y-2">
+                           <div className="space-y-2">
                               <div>
                                  <Field
                                     autoComplete="on"
