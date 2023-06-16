@@ -12,12 +12,12 @@ export const Header: FC = () => {
 
    return (
       <header className="sticky top-0 shadow z-[999] border-t-4 border-t-rose-400 dark:border-t-violet-700">
-         <div className="h-16 px-4 py-4 bg-white dark:bg-night-900 border-b border-b-rose-400 dark:border-b-violet-500">
-            <div className="max-w-7xl mx-auto flex flex-row justify-between">
+         <div className="bg-white dark:bg-night-900 border-b border-b-rose-400 dark:border-b-violet-500">
+            <div className="h-16 p-3 max-w-7xl mx-auto flex flex-row items-center justify-between">
                <Logo />
                <div>
                   <div className="flex justify-center items-center">
-                     <div className="p-1 mr-2 bg-white dark:bg-night-800 shadow rounded-full">
+                     <div className="p-1.5 mr-2 bg-white dark:bg-night-800 shadow rounded-full">
                         <div className="text-gray-500 hover:text-rose-400 dark:text-gray-400 dark:hover:text-violet-500">
                            <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -37,10 +37,10 @@ export const Header: FC = () => {
                      </div>
                      {user && (
                         <>
-                           <div className="p-1 mx-2 bg-white dark:bg-night-800 shadow rounded-full">
+                           <div className="p-1.5 mx-2 bg-white dark:bg-night-800 shadow rounded-full">
                               <ThemeSwitcher />
                            </div>
-                           <div className="p-1 mx-2 bg-white dark:bg-night-800 shadow rounded-full">
+                           <div className="p-1.5 mx-2 bg-white dark:bg-night-800 shadow rounded-full">
                               <div className="text-gray-500 hover:text-rose-400 dark:text-gray-400 dark:hover:text-violet-500">
                                  <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -66,13 +66,13 @@ export const Header: FC = () => {
                                        width="2.5rem"
                                        height="2.5rem"
                                     />
-                                    <StatusIcon status="ONLINE" transitions="top-[44%]" />
+                                    <StatusIcon status="ONLINE" transitions="top-[38%]" />
                                  </div>
                                  <div>
                                     <span className="text-xs text-gray-600 dark:text-gray-300">
                                        {'Hoş geldin'}
                                     </span>
-                                    <p className="text-gray-900 dark:text-gray-100 font-semibold text-base">
+                                    <p className="text-xs text-gray-900 dark:text-gray-100 font-semibold">
                                        {user?.username}
                                     </p>
                                  </div>
