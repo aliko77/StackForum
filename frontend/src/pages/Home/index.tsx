@@ -10,7 +10,7 @@ const Home: FC = () => {
          <div className="text-xl dark:text-gray-100">Hoşgeldin: {user?.username || 'Misafir'}</div>
          {accessToken && !user?.is_verified && (
             <div className="mt-4">
-               <Link to={'/auth/verify'}>
+               <Link to="/auth/verify">
                   <Button>Lütfen email adresinizi doğrulayınız.</Button>
                </Link>
             </div>

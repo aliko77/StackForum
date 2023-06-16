@@ -17,7 +17,7 @@ const AuthVerify: FC = () => {
    const [message, setMessage] = useState<null | string>(null);
 
    if (user?.is_verified) {
-      return <Navigate to={'/'} />;
+      return <Navigate to="/" />;
    }
 
    const handleVerify = async (value: string) => {

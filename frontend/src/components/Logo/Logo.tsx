@@ -1,6 +1,7 @@
 import StackLogo from 'assets/images/ForumLogo.png';
 import { Link } from 'react-router-dom';
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
+import classNames from 'classnames';
 
 type LogoProps = {
    noText?: boolean;
@@ -8,42 +9,29 @@ type LogoProps = {
 };
 
 export const Logo: FC<LogoProps> = ({ noText, noRedirect }) => {
-   if (noRedirect) {
+   const _ = (): ReactNode => {
+      const logoClasses = classNames(
+         'hidden',
+         'sm:block',
+         'font-mono',
+         'text-xl',
+         'dark:text-gray-100',
+         { 'sr-only': noText },
+      );
+
       return (
-         <div className="flex justify-center outline-none">
-            <div>
-               <div className="flex space-x-2 items-center outline-0">
-                  <img width="36px" src={StackLogo} alt="Logo" />
-                  <h1
-                     className={`hidden sm:block font-mono space-x-0.5 text-xl dark:text-gray-100 ${
-                        noText ? 'sr-only' : ''
-                     }`}
-                  >
-                     <span>Stack</span>
-                     <span className="font-semibold">Forum</span>
-                  </h1>
-               </div>
-            </div>
+         <div className="flex space-x-2 items-center">
+            <img src={StackLogo} alt="Logo" className="h-8 w-8" />
+            <h1 className={logoClasses}>
+               <span>Stack</span>
+               <span className="font-semibold ml-0.5">Forum</span>
+            </h1>
          </div>
       );
+   };
+
+   if (noRedirect) {
+      return _();
    }
-   return (
-      <div className="flex outline-none">
-         <Link to="/">
-            <div>
-               <div className="flex space-x-2 items-center outline-0">
-                  <img width="36px" src={StackLogo} alt="Logo" />
-                  <h1
-                     className={`hidden sm:block font-mono space-x-0.5 text-xl dark:text-gray-100 ${
-                        noText ? 'sr-only' : ''
-                     }`}
-                  >
-                     <span>Stack</span>
-                     <span className="font-semibold">Forum</span>
-                  </h1>
-               </div>
-            </div>
-         </Link>
-      </div>
-   );
+   return <Link to="/">{_()}</Link>;
 };
