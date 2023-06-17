@@ -5,7 +5,7 @@ export const Footer: FC = () => {
    return (
       <footer className="bg-white dark:bg-night-900 border-t border-t-rose-400 dark:border-t-violet-500">
          <div className="w-full p-4">
-            <div>
+            <div className="inline-block">
                <Logo />
             </div>
             <hr className="my-6 border-gray-300 dark:border-gray-600" />

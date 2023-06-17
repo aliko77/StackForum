@@ -9,10 +9,7 @@
 
 * {
    @apply antialiased;
-}
-
-/* Firefox */
-* {
+   /* Firefox Sidebar */
    scrollbar-width: thin;
    scrollbar-color: var(--secondary) var(--primary);
 }
@@ -22,13 +19,24 @@
    width: 10px;
    height: 6px;
 }
-
 *::-webkit-scrollbar-track {
    background: var(--primary);
 }
-
 *::-webkit-scrollbar-thumb {
    @apply border border-solid border-night-800 bg-night-900 rounded-lg;
+}
+
+@layer utilities {
+   /* Hide scrollbar for Chrome, Safari and Opera */
+   .no-scrollbar::-webkit-scrollbar {
+      display: none;
+   }
+
+   /* Hide scrollbar for IE, Edge and Firefox */
+   .no-scrollbar {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+   }
 }
 
 html,

@@ -3,9 +3,9 @@ import { NavLink } from 'react-router-dom';
 
 export const HeaderBottom: FC = () => {
    return (
-      <div className="bg-white dark:bg-night-900 h-10 flex flex-auto items-center">
+      <div className="bg-white dark:bg-night-900 p-1 sm:p-3 flex flex-auto">
          <div className="container mx-auto max-sm:px-4">
-            <div className="flex flex-auto flex-row space-x-3">
+            <div className="flex flex-auto flex-row space-x-3 items-center overflow-auto no-scrollbar">
                <NavLink to="/profil">
                   <div className="flex items-center text-sm text-gray-700 dark:text-gray-300 hover:text-rose-500 dark:hover:text-violet-500">
                      <svg
