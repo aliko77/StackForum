@@ -13,7 +13,7 @@ export const Header: FC = () => {
    return (
       <header className="sticky top-0 shadow z-[999] border-t-4 border-t-rose-400 dark:border-t-violet-700">
          <div className="bg-white dark:bg-night-900 border-b border-b-rose-400 dark:border-b-violet-500">
-            <div className="h-16 p-3 max-w-7xl mx-auto flex flex-row items-center justify-between">
+            <div className="h-16 p-3 sm:max-w-7xl mx-auto flex flex-row items-center justify-between">
                <Logo />
                <div>
                   <div className="flex justify-center items-center">

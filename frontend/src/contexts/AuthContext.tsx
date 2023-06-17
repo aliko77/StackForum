@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, createContext, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { axiosService } from 'api/axios/axios';
 import { setAxiosPrivateHeaders, useAxiosPrivate } from 'hooks/useAxiosPrivate';
 import { ReactChildrenProps, UserProps } from 'types';
@@ -24,6 +24,7 @@ export const AuthContext = createContext<AuthContextProps>({} as AuthContextProp
 export const AuthProvider = ({ children }: ReactChildrenProps) => {
    const navigate = useNavigate();
    const axiosPrivateI = useAxiosPrivate();
+   const location = useLocation();
 
    const [user, setUser] = useState<UserProps>();
    const [accessToken, setAccessToken] = useState<string>();
@@ -34,13 +35,18 @@ export const AuthProvider = ({ children }: ReactChildrenProps) => {
          email: email,
          password: password,
       });
-      const { access, user } = data;
+      const { access, user: _user } = data;
       const xcsrfToken = headers['x-csrftoken'];
       setAxiosPrivateHeaders(access, xcsrfToken);
       setAccessToken(access);
       setCsrfToken(xcsrfToken);
-      setUser(user);
-      user.is_verified ? navigate('/') : navigate('/auth/verify/');
+      setUser(_user);
+
+      if (location.state.from) {
+         navigate(location.state.from);
+      } else {
+         navigate('/');
+      }
    };
 
    const logout = async (): Promise<void> => {

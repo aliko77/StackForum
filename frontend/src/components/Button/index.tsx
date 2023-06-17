@@ -37,7 +37,7 @@ const Button: FC<ElementProps> = ({
    };
 
    const commonClasses =
-      'w-full flex items-center justify-center rounded-sm focus:outline-none focus:ring text-sm whitespace-nowrap uppercase';
+      'w-full flex items-center justify-center rounded-sm outline-none focus:ring-1 text-sm whitespace-nowrap uppercase';
 
    // Buttonun tüm sınıflarını birleştiren fonksiyon
    const buttonClasses = classNames(

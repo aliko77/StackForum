@@ -3,11 +3,10 @@ import { Navigate, useLocation } from 'react-router-dom';
 
 type IPrivateRoute = {
    children: JSX.Element;
-   verify?: boolean;
 };
 
-export const PrivateRoute = ({ children, verify }: IPrivateRoute) => {
-   const { accessToken } = useAuth();
+export const PrivateRoute = ({ children }: IPrivateRoute) => {
+   const { accessToken, user } = useAuth();
    const location = useLocation();
 
    const nav_state: object = {
@@ -16,7 +15,7 @@ export const PrivateRoute = ({ children, verify }: IPrivateRoute) => {
 
    if (!accessToken) {
       return <Navigate to="/login/" state={nav_state} replace />;
-   } else if (verify && location.pathname != '/auth/verify') {
+   } else if (!user?.is_verified) {
       return <Navigate to="/auth/verify/" state={nav_state} replace />;
    }
    return children;

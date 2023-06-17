@@ -11,10 +11,10 @@ type LogoProps = {
 export const Logo: FC<LogoProps> = ({ noText, noRedirect }) => {
    const _ = (): ReactNode => {
       const logoClasses = classNames(
-         'hidden',
-         'sm:block',
+         'block',
          'font-mono',
-         'text-xl',
+         'text-md',
+         'sm:text-xl',
          'dark:text-gray-100',
          { 'sr-only': noText },
       );
