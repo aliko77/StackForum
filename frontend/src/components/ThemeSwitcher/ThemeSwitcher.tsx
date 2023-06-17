@@ -7,7 +7,6 @@ export const ThemeSwitcher: FC = () => {
    };
 
    const theme = useTheme();
-   console.log(theme);
 
    return (
       <>
