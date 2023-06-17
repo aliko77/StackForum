@@ -1,9 +1,13 @@
+import useTheme from 'hooks/useTheme';
 import { FC } from 'react';
 
 export const ThemeSwitcher: FC = () => {
    const handleClick = () => {
       document.documentElement.classList.toggle('dark');
    };
+
+   const theme = useTheme();
+   console.log(theme);
 
    return (
       <>
