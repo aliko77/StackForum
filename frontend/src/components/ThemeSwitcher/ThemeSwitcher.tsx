@@ -1,4 +1,4 @@
-import useTheme from 'hooks/useTheme';
+import useTheme from 'hooks/useColorScheme';
 import { FC } from 'react';
 
 export const ThemeSwitcher: FC = () => {
