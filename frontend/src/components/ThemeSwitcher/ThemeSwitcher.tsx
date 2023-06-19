@@ -1,19 +1,16 @@
-import useTheme from 'hooks/useColorScheme';
+import useTheme from 'hooks/useTheme';
 import { FC } from 'react';
 
 export const ThemeSwitcher: FC = () => {
-   const handleClick = () => {
-      document.documentElement.classList.toggle('dark');
-   };
-
-   const theme = useTheme();
+   const { changeTheme } = useTheme();
 
    return (
       <>
          <button
-            data-about="theme-dark"
             className="hidden dark:flex dark:text-zinc-400 dark:hover:text-violet-500 focus:outline-none"
-            onClick={handleClick}
+            onClick={() => {
+               changeTheme('light');
+            }}
          >
             <svg
                className="w-5 h-5"
@@ -27,9 +24,10 @@ export const ThemeSwitcher: FC = () => {
             </svg>
          </button>
          <button
-            data-about="theme-light"
             className="dark:hidden flex text-zinc-500 hover:text-rose-500 focus:outline-none"
-            onClick={handleClick}
+            onClick={() => {
+               changeTheme('dark');
+            }}
          >
             <svg
                className="w-5 h-5"

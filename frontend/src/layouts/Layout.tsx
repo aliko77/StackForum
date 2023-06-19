@@ -3,10 +3,11 @@ import { Header } from 'components/Header';
 import { ReactChildrenProps } from 'types';
 
 const Layout = ({ children }: ReactChildrenProps) => {
+
    return (
       <>
          <Header />
-         <main className="content">{children}</main>
+         <main className="content bg-white dark:bg-night-700">{children}</main>
          <Footer />
       </>
    );

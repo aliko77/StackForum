@@ -14,10 +14,10 @@ const Home: FC = () => {
                      </div>
                      <div>
                         <div className="flex flex-auto items-center">
-                           <div className="px-12 leading-10 text-sm bg-night-700 font-medium text-gray-300 border-r-2 border-gray-500">
+                           <div className="px-12 leading-10 text-sm bg-night-600 font-medium text-gray-300 border-r-2 border-gray-500">
                               <p>Son Mesaj</p>
                            </div>
-                           <div className="px-12 leading-10 text-sm bg-night-700 font-medium text-gray-300">
+                           <div className="px-12 leading-10 text-sm bg-night-600 font-medium text-gray-300">
                               <p>Konu / Mesaj</p>
                            </div>
                            <div className="text-gray-300 px-3">

@@ -5,8 +5,6 @@ export default function UseColorScheme() {
 
    useEffect(() => {
       const colorSchemeQ = window.matchMedia('(prefers-color-scheme: dark)');
-      console.log(colorSchemeQ);
-
       const changeHandler = (event: MediaQueryListEvent | MediaQueryList) => {
          const newColorScheme = event.matches ? 'dark' : 'light';
          setColorScheme(newColorScheme);
