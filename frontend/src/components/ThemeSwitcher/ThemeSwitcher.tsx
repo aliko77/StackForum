@@ -1,15 +1,15 @@
-import useTheme from 'hooks/useTheme';
+import { useTheme } from 'hooks/useTheme';
 import { FC } from 'react';
 
 export const ThemeSwitcher: FC = () => {
-   const { changeTheme } = useTheme();
+   const { setTheme } = useTheme();
 
    return (
       <>
          <button
             className="hidden dark:flex dark:text-zinc-400 dark:hover:text-violet-500 focus:outline-none"
             onClick={() => {
-               changeTheme('light');
+               setTheme('light');
             }}
          >
             <svg
@@ -26,7 +26,7 @@ export const ThemeSwitcher: FC = () => {
          <button
             className="dark:hidden flex text-zinc-500 hover:text-rose-500 focus:outline-none"
             onClick={() => {
-               changeTheme('dark');
+               setTheme('dark');
             }}
          >
             <svg

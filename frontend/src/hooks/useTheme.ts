@@ -1,31 +1,11 @@
-import { useState, useEffect } from 'react';
-import UseColorScheme from 'hooks/useColorScheme';
+import { useSelector } from 'react-redux';
+import { _setTheme } from 'slices/app';
+import store, { RootState } from 'stores';
 
-export default function useTheme() {
-   const allowedThemes = ['default', 'dark', 'light'];
-   const [theme, setTheme] = useState<string>('default');
-   const { colorScheme } = UseColorScheme();
+export const useTheme = () => {
+   const theme = useSelector((state: RootState) => state.app.theme);
 
-   const changeTheme = (selectedTheme: string) => {
-      setTheme((currentTheme) => {
-         if (allowedThemes.includes(selectedTheme)) {
-            return selectedTheme;
-         }
-         return currentTheme;
-      });
-   };
+   const setTheme = (theme: string) => store.dispatch(_setTheme(theme));
 
-   useEffect(() => {
-      if (theme === 'default') {
-         document.body.className = colorScheme;
-      } else {
-         document.body.className = theme;
-      }
-   }, [theme, colorScheme]);
-
-   return {
-      theme,
-      changeTheme,
-      setTheme,
-   };
-}
+   return { theme, setTheme };
+};
