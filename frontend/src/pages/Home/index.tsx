@@ -9,18 +9,18 @@ const Home: FC = () => {
                   <div className="flex justify-between items-center bg-night-900 rounded-t">
                      <div className="h-10 leading-10 flex items-center">
                         <h1 className="px-2 text-base font-semibold tracking-wide text-gray-300">
-                           Konu Başlığı
+                           Test Konu Başlığı
                         </h1>
                      </div>
                      <div>
-                        <div className="flex flex-auto items-center">
-                           <div className="px-12 leading-10 text-sm bg-night-600 font-medium text-gray-300 border-r-2 border-gray-500">
+                        <div className="flex flex-auto">
+                           <div className="w-[200px] text-center h-10 leading-10 text-sm bg-night-600 font-medium text-gray-300 border-r-2 border-gray-500">
                               <p>Son Mesaj</p>
                            </div>
-                           <div className="px-12 leading-10 text-sm bg-night-600 font-medium text-gray-300">
+                           <div className="w-[200px] text-center h-10 leading-10 text-sm bg-night-600 font-medium text-gray-300">
                               <p>Konu / Mesaj</p>
                            </div>
-                           <div className="text-gray-300 px-3">
+                           <div className="w-[48px] flex items-center justify-center text-gray-300">
                               <svg
                                  xmlns="http://www.w3.org/2000/svg"
                                  fill="none"
@@ -57,7 +57,7 @@ const Home: FC = () => {
                               />
                            </svg>
                         </div>
-                        <div className="p-3 w-full">Test</div>
+                        <div className="p-3 w-full">Test Konu</div>
                      </div>
                   </div>
                </div>

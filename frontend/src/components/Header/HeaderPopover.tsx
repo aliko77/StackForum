@@ -49,10 +49,10 @@ export const HeaderPopOver = () => {
                         </div>
                         <div>
                            <div className="text-sm text-gray-900 dark:text-gray-100 font-semibold">
-                              <span>{user?.username}</span>
+                              {user?.username}
                            </div>
-                           <div className="text-xs flex space-x-1 items-center mt-1">
-                              <div className="text-gray-500 dark:text-gray-100">
+                           <div className="text-xs flex items-center mt-1">
+                              <div className="text-gray-500 dark:text-gray-100 mr-1">
                                  <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
@@ -79,7 +79,7 @@ export const HeaderPopOver = () => {
                            </div>
                         </div>
                      </div>
-                     <div className="w-full flex border-y border-gray-300 h-10 leading-10">
+                     <div className="w-full flex border-y border-gray-300 h-10 leading-10 text-sm">
                         <Popover.Button
                            as={NavLink}
                            to="/profil/"
@@ -95,7 +95,7 @@ export const HeaderPopOver = () => {
                            Panelim
                         </Popover.Button>
                      </div>
-                     <div className="w-full">
+                     <div className="w-full text-sm">
                         <Popover.Button as={NavLink} to="/ayarlar/sifre/">
                            <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600 bg-white hover:bg-gray-200 dark:bg-night-800 dark:hover:bg-gray-900 dark:text-gray-100 dark:hover:text-violet-400">
                               <div>
