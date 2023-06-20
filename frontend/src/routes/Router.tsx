@@ -1,8 +1,6 @@
 import { ElementType, lazy, ReactNode, Suspense, ReactElement } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import { PageLoading } from 'components/PageLoading';
-import { AuthProvider } from 'contexts';
-import { PersistLogin } from 'routes/PersistLogin';
 import { GuestRoute, PrivateRoute } from 'routes/GuardRoutes';
 import Layout from 'layouts/Layout';
 
@@ -32,13 +30,9 @@ type RouteProps = {
 
 const getRouteElement = (Component: ElementType): ReactElement => (
    <Suspense fallback={<PageLoading />}>
-      <AuthProvider>
-         <PersistLogin>
-            <Layout>
-               <Component />
-            </Layout>
-         </PersistLogin>
-      </AuthProvider>
+      <Layout>
+         <Component />
+      </Layout>
    </Suspense>
 );
 

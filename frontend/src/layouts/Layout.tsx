@@ -1,8 +1,10 @@
 import { Footer } from 'components/Footer';
 import { Header } from 'components/Header';
+import { AuthProvider } from 'contexts';
 import UseColorScheme from 'hooks/useColorScheme';
 import { useTheme } from 'hooks/useTheme';
 import { StrictMode, useEffect } from 'react';
+import { PersistLogin } from 'routes/PersistLogin';
 import { ReactChildrenProps } from 'types';
 
 const Layout = ({ children }: ReactChildrenProps) => {
@@ -19,11 +21,15 @@ const Layout = ({ children }: ReactChildrenProps) => {
 
    return (
       <>
-         <Header />
-         <StrictMode>
-            <main className="content bg-white dark:bg-night-700">{children}</main>
-         </StrictMode>
-         <Footer />
+         <AuthProvider>
+            <PersistLogin>
+               <Header />
+               <StrictMode>
+                  <main className="content bg-white dark:bg-night-700">{children}</main>
+               </StrictMode>
+               <Footer />
+            </PersistLogin>
+         </AuthProvider>
       </>
    );
 };

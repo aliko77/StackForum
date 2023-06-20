@@ -6,7 +6,7 @@ type StateProps = {
 };
 
 const initialState = {
-   theme: 'default',
+   theme: localStorage.getItem('theme') || 'default',
 } as StateProps;
 
 const appSlice = createSlice({
@@ -15,6 +15,11 @@ const appSlice = createSlice({
    reducers: {
       _setTheme: (state, action: PayloadAction<string>) => {
          state.theme = action.payload;
+         if (state.theme === 'default') {
+            localStorage.removeItem('theme');
+         } else {
+            localStorage.setItem('theme', action.payload);
+         }
       },
    },
 });
