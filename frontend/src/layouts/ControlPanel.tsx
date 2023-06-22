@@ -8,7 +8,7 @@ const ControlPanelLayout = ({ children }: ReactChildrenProps) => {
             <div>
                <Sidebar />
             </div>
-            <div className="w-full overflow-auto">{children}</div>
+            <div className="w-full">{children}</div>
          </div>
       </>
    );

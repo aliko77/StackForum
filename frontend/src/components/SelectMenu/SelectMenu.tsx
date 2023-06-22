@@ -36,7 +36,7 @@ export const SelectMenu = <T,>(props: CustomDropdownProps<T>) => {
                   </svg>
                </span>
             </Listbox.Button>
-            <Listbox.Options className="absolute mt-1.5 max-h-60 w-full overflow-auto rounded-sm bg-white dark:bg-gray-700 py-1 shadow-lg border border-gray-300 dark:border-gray-600 ring-1 ring-black ring-opacity-5 text-sm outline-none">
+            <Listbox.Options className="absolute z-50 mt-1.5 max-h-60 w-full overflow-auto rounded-sm bg-white dark:bg-gray-700 py-1 shadow-lg border border-gray-300 dark:border-gray-600 ring-1 ring-black ring-opacity-5 text-sm outline-none">
                {options.map((option, i) => (
                   <Listbox.Option
                      key={i}
