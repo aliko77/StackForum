@@ -46,5 +46,12 @@ export const Logo: FC<LogoProps> = ({ noText, noRedirect, hw = '8' }) => {
    if (noRedirect) {
       return _();
    }
-   return <Link to="/">{_()}</Link>;
+   return (
+      <Link
+         className="rounded focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-violet-500"
+         to="/"
+      >
+         {_()}
+      </Link>
+   );
 };
