@@ -65,12 +65,12 @@ export const Header: FC = () => {
                         <>
                            <div className="mr-2">
                               <NavLink to="/login">
-                                 <Button dark="rose">Giriş Yap</Button>
+                                 <Button dark="secondary">Giriş Yap</Button>
                               </NavLink>
                            </div>
                            <div>
                               <NavLink to="/register">
-                                 <Button color="violet">Kayıt Ol</Button>
+                                 <Button color="primary">Kayıt Ol</Button>
                               </NavLink>
                            </div>
                         </>

@@ -1,4 +1,5 @@
 import { Listbox } from '@headlessui/react';
+import { HiCheck, HiOutlineChevronUpDown } from 'react-icons/hi2';
 
 export type CustomDropdownOption<T> = {
    label: string;
@@ -20,20 +21,7 @@ export const SelectMenu = <T,>(props: CustomDropdownProps<T>) => {
             <Listbox.Button className="relative w-full cursor-default rounded-sm bg-gray-50 dark:bg-gray-700 p-1.5 pl-3 pr-10 text-left outline-none border border-gray-300 text-gray-900 focus:ring-secondary-500 focus:border-secondary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:border-gray-600 dark:text-gray-100">
                <span className="block truncate text-gray-700 dark:text-gray-100">{label}</span>
                <span className="text-gray-600 dark:text-gray-400 pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                  <svg
-                     xmlns="http://www.w3.org/2000/svg"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     strokeWidth={1.5}
-                     stroke="currentColor"
-                     className="w-5 h-5"
-                  >
-                     <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
-                     />
-                  </svg>
+                  <HiOutlineChevronUpDown size="20px" />
                </span>
             </Listbox.Button>
             <Listbox.Options className="absolute z-50 mt-1.5 max-h-60 w-full overflow-auto rounded-sm bg-white dark:bg-gray-700 py-1 shadow-lg border border-gray-300 dark:border-gray-600 ring-1 ring-black ring-opacity-5 text-sm outline-none">
@@ -60,20 +48,7 @@ export const SelectMenu = <T,>(props: CustomDropdownProps<T>) => {
                            </span>
                            {selected ? (
                               <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-secondary-600 dark:text-primary-500">
-                                 <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth={1.5}
-                                    stroke="currentColor"
-                                    className="w-5 h-5"
-                                 >
-                                    <path
-                                       strokeLinecap="round"
-                                       strokeLinejoin="round"
-                                       d="M4.5 12.75l6 6 9-13.5"
-                                    />
-                                 </svg>
+                                 <HiCheck size="20px" />
                               </span>
                            ) : null}
                         </>

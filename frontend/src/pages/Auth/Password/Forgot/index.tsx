@@ -9,6 +9,7 @@ import { Formik } from 'formik';
 import { FC, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { object, string } from 'yup';
+import { BsArrowLeft } from 'react-icons/bs';
 
 const PasswordForgot: FC = () => {
    const [errors, setErrors] = useState<string[] | null>(null);
@@ -95,23 +96,12 @@ const PasswordForgot: FC = () => {
                <div className="mt-4 text-sm text-gray-600 items-center flex justify-between">
                   <NavLink to="/login" className="flex items-center">
                      <div className="text-gray-800 dark:text-gray-200 hover:text-secondary-600 dark:hover:text-primary-400 inline-flex items-center">
-                        <svg
-                           xmlns="http://www.w3.org/2000/svg"
-                           className="h-5 w-5 mr-2"
-                           viewBox="0 0 20 20"
-                           fill="currentColor"
-                        >
-                           <path
-                              fillRule="evenodd"
-                              d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z"
-                              clipRule="evenodd"
-                           />
-                        </svg>
+                        <BsArrowLeft className="mr-2" size="20px" />
                         Geri
                      </div>
                   </NavLink>
                   <p className="dark:text-gray-200 hover:text-secondary-600 dark:hover:text-primary-400 cursor-pointer">
-                     Bir sorun mu var?
+                     Bir sorun mu var ?
                   </p>
                </div>
             </div>

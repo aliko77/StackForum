@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { ButtonHTMLAttributes, FC } from 'react';
 
 type ElementSize = 'small' | 'medium' | 'large';
-type ElementColor = 'violet' | 'rose';
+type ElementColor = 'primary' | 'secondary';
 
 type ElementProps = ButtonHTMLAttributes<HTMLButtonElement> & {
    size?: ElementSize;
@@ -14,8 +14,8 @@ type ElementProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 const Button: FC<ElementProps> = ({
    children,
    size = 'small',
-   color = 'rose',
-   dark = 'violet',
+   color = 'secondary',
+   dark = 'primary',
    onClick,
    ...props
 }) => {
@@ -26,14 +26,14 @@ const Button: FC<ElementProps> = ({
    };
 
    const colorClasses = {
-      violet:
+      primary:
          'bg-primary-500 hover:bg-primary-600 disabled:bg-primary-600 ring-primary-600 text-gray-100',
-      rose: 'bg-secondary-500 hover:bg-secondary-600 disabled:bg-secondary-600 ring-secondary-600 text-gray-100',
+      secondary: 'bg-secondary-500 hover:bg-secondary-600 disabled:bg-secondary-600 ring-secondary-600 text-gray-100',
    };
    const darkColorClasses = {
-      violet:
+      primary:
          'dark:bg-primary-500 dark:hover:bg-primary-600 dark:disabled:bg-primary-600 dark:ring-primary-600',
-      rose: 'dark:bg-secondary-500 dark:hover:bg-secondary-600 dark:disabled:bg-secondary-600 dark:ring-secondary-600',
+      secondary: 'dark:bg-secondary-500 dark:hover:bg-secondary-600 dark:disabled:bg-secondary-600 dark:ring-secondary-600',
    };
 
    const commonClasses =

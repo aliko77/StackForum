@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { ItemProps } from './items';
 import { Disclosure } from '@headlessui/react';
 import { NavLink } from 'react-router-dom';
+import { HiArrowRight, HiChevronUp } from 'react-icons/hi2';
 
 type Props = {
    item: ItemProps;
@@ -16,20 +17,7 @@ export const SidebarItem: FC<Props> = ({ item }) => {
                   <span className="text-sm text-gray-900 dark:text-gray-100 uppercase font-medium">
                      {item.name}
                   </span>
-                  <svg
-                     xmlns="http://www.w3.org/2000/svg"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     strokeWidth={1.5}
-                     stroke="currentColor"
-                     className="w-4 h-4 text-secondary-500 dark:text-primary-400"
-                  >
-                     <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M4.5 15.75l7.5-7.5 7.5 7.5"
-                     />
-                  </svg>
+                  <HiChevronUp className="text-secondary-500 dark:text-primary-400" size="16px" />
                </div>
             </Disclosure.Button>
             <Disclosure.Panel className="w-full bg-gray-200 dark:bg-night-800" as="ul">
@@ -43,21 +31,10 @@ export const SidebarItem: FC<Props> = ({ item }) => {
                            ${isActive && 'bg-gray-300 dark:bg-gray-900'}`
                         }
                      >
-                        <svg
-                           xmlns="http://www.w3.org/2000/svg"
-                           fill="none"
-                           viewBox="0 0 24 24"
-                           strokeWidth={1.5}
-                           stroke="currentColor"
-                           className="w-4 h-4 text-gray-900 dark:text-gray-200"
-                        >
-                           <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
-                           />
-                        </svg>
-
+                        <HiArrowRight
+                           className="text-secondary-500 dark:text-primary-400"
+                           size="16px"
+                        />
                         <span className="text-sm font-medium text-gray-900 dark:text-primary-400">
                            {item.name}
                         </span>
