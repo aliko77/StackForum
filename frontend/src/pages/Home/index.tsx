@@ -1,5 +1,6 @@
 import { FC } from 'react';
-import './index.css';
+import { PiDotOutlineFill } from 'react-icons/pi';
+import { GoFileDirectoryFill } from 'react-icons/go';
 
 const Home: FC = () => {
    return (
@@ -9,8 +10,8 @@ const Home: FC = () => {
                <div>
                   <ul>
                      <li className="header">
-                        <ul>
-                           <li className="relative w-16 border-r border-r-gray-500 bg-night-900">
+                        <ul className="text-sm table table-fixed w-full h-10 leading-10 bg-night-900 rounded-t text-white/80">
+                           <li className="table-cell align-middle font-semibold overflow-hidden whitespace-nowrap text-ellipsis relative w-16 border-r border-r-gray-500">
                               <svg
                                  xmlns="http://www.w3.org/2000/svg"
                                  fill="none"
@@ -26,20 +27,20 @@ const Home: FC = () => {
                                  />
                               </svg>
                            </li>
-                           <li className="sm:w-3/6 px-3 border-r border-r-gray-500 text-left !text-base">
+                           <li className="table-cell align-middle font-semibold sm:w-3/6 px-3 border-r border-r-gray-500 text-left">
                               Test Konu Başlığı
                            </li>
-                           <li className="max-sm:!hidden px-2 bg-night-600 border-r border-r-gray-500 text-center">
+                           <li className="table-cell align-middle font-semibold max-sm:!hidden px-2 bg-night-600 border-r border-r-gray-500 text-center">
                               Son Mesaj
                            </li>
-                           <li className="max-sm:!hidden px-2 bg-night-600 text-center">
+                           <li className="table-cell align-middle font-semibold max-sm:!hidden px-2 bg-night-600 text-center">
                               Konu / Mesaj
                            </li>
                         </ul>
                      </li>
                      <li className="body">
-                        <ul>
-                           <li className="w-16 text-gray-400 py-4 border-r border-r-gray-500">
+                        <ul className="table table-fixed w-full bg-night-800 border-b border-b-gray-500 text-white/80 text-sm">
+                           <li className="table-cell align-middle w-16 text-gray-400 py-4 border-r border-r-gray-500">
                               <svg
                                  xmlns="http://www.w3.org/2000/svg"
                                  fill="none"
@@ -55,18 +56,58 @@ const Home: FC = () => {
                                  />
                               </svg>
                            </li>
-                           <li className="px-3 sm:w-3/6 border-r border-r-gray-500 text-left">s</li>
-                           <li className="px-3 max-sm:hidden border-r border-r-gray-500 text-left">
-                              <div>x Konusunda yeni mesaj</div>
+                           <li className="table-cell align-middle px-3 py-1.5 sm:w-3/6 border-r border-r-gray-500 text-left">
                               <div>
-                                 <div className="w-1/2 float-left">-ali</div>
-                                 <div className="w-1/2 float-right text-gray-400">
-                                    {new Date().toLocaleString()}
+                                 <p>Test Konu</p>
+                              </div>
+                              <div className="my-1">
+                                 <span className="text-xs">Test Konu hakkında açıklama</span>
+                              </div>
+                              <div className="childs text-xs">
+                                 <div className="inline-block mr-4">
+                                    <div className="flex items-center">
+                                       <GoFileDirectoryFill className="mr-1.5 text-rose-400 dark:text-violet-400" />
+                                       <h1>A</h1>
+                                    </div>
+                                 </div>
+                                 <div className="inline-block mr-4">
+                                    <div className="flex items-center">
+                                       <GoFileDirectoryFill className="mr-1.5 text-rose-400 dark:text-violet-400" />
+                                       <h1>A</h1>
+                                    </div>
+                                 </div>
+                                 <div className="inline-block mr-4">
+                                    <div className="flex items-center">
+                                       <GoFileDirectoryFill className="mr-1.5 text-rose-400 dark:text-violet-400" />
+                                       <h1>A</h1>
+                                    </div>
                                  </div>
                               </div>
                            </li>
-                           <li className="px-3 max-sm:hidden border-r border-r-gray-500 text-center">
-                              <div>100 / 200</div>
+                           <li className="table-cell align-middle px-3 max-sm:hidden border-r border-r-gray-500 text-left overflow-hidden whitespace-nowrap text-ellipsis">
+                              <div className="mb-2">x Konusunda yeni mesaj</div>
+                              <div>
+                                 <div className="w-1/2 float-left">-ali</div>
+                                 <div className="w-1/2 float-right text-gray-400">
+                                    {new Date().toLocaleString(undefined, {
+                                       hour: 'numeric',
+                                       minute: 'numeric',
+                                       day: 'numeric',
+                                       month: 'numeric',
+                                       year: 'numeric',
+                                    })}
+                                 </div>
+                              </div>
+                           </li>
+                           <li className="table-cell align-middle px-3 max-sm:hidden border-r border-r-gray-500 text-center">
+                              <div className="flex items-center justify-center">
+                                 <span>100</span>
+                                 <PiDotOutlineFill
+                                    className="text-rose-400 dark:text-violet-400"
+                                    size={'2rem'}
+                                 />
+                                 <span>200</span>
+                              </div>
                            </li>
                         </ul>
                      </li>
