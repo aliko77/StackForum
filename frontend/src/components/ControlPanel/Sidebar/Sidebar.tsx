@@ -14,7 +14,7 @@ export const Sidebar: FC = () => {
       <>
          <aside className="sidebar w-full sm:w-[240px]">
             <div className="p-3 flex justify-between items-center bg-night-900 rounded-t border-b border-b-gray-500">
-               <h1 className="text-rose-400 dark:text-violet-500 font-semibold uppercase">
+               <h1 className="text-secondary-400 dark:text-primary-500 font-semibold uppercase">
                   Kontrol Paneli
                </h1>
                <button

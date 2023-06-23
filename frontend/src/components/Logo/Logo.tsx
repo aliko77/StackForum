@@ -13,7 +13,6 @@ export const Logo: FC<LogoProps> = ({ noText, noRedirect, hw = '8' }) => {
    const _ = (): ReactNode => {
       const logoClasses = classNames(
          'block',
-         'font-mono',
          'text-md',
          'sm:text-xl',
          'dark:text-gray-100',
@@ -36,8 +35,7 @@ export const Logo: FC<LogoProps> = ({ noText, noRedirect, hw = '8' }) => {
          <div className="flex space-x-2 items-center">
             <img src={StackLogo} alt="Logo" className={imgClasses} />
             <h1 className={logoClasses}>
-               <span>Stack</span>
-               <span className="font-semibold ml-0.5">Forum</span>
+               <span>StackForum</span>
             </h1>
          </div>
       );
@@ -48,7 +46,7 @@ export const Logo: FC<LogoProps> = ({ noText, noRedirect, hw = '8' }) => {
    }
    return (
       <Link
-         className="rounded focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-violet-500"
+         className="rounded focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-primary-500"
          to="/"
       >
          {_()}

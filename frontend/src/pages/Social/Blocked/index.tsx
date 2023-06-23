@@ -122,7 +122,7 @@ const Blocked: FC = () => {
                      </div>
                   )}
                   <table className="w-full whitespace-nowrap text-sm text-left text-gray-500 dark:text-gray-400">
-                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-900 dark:text-violet-400">
+                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-900 dark:text-primary-400">
                         <tr>
                            <th scope="col" className="p-3">
                               Kullanıcı
@@ -173,7 +173,7 @@ const Blocked: FC = () => {
                                  <span
                                     data-blocked_user={record.username}
                                     onClick={handleUnBlock}
-                                    className="cursor-pointer font-medium text-rose-600 dark:text-violet-500 hover:underline"
+                                    className="cursor-pointer font-medium text-secondary-600 dark:text-primary-500 hover:underline"
                                  >
                                     Kaldır
                                  </span>

@@ -7,14 +7,14 @@ export const HeaderBottom: FC = () => {
          <div className="container mx-auto max-sm:px-4">
             <div className="flex flex-auto flex-row space-x-3 items-center overflow-auto no-scrollbar">
                <NavLink to="/profil">
-                  <div className="flex items-center text-sm text-gray-700 dark:text-gray-300 hover:text-rose-500 dark:hover:text-violet-500">
+                  <div className="flex items-center text-sm text-gray-700 dark:text-gray-300 hover:text-secondary-500 dark:hover:text-primary-500">
                      <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
                         strokeWidth={1.5}
                         stroke="currentColor"
-                        className="w-5 h-5 text-rose-500 dark:text-violet-500"
+                        className="w-5 h-5 text-secondary-500 dark:text-primary-500"
                      >
                         <path
                            strokeLinecap="round"
@@ -26,14 +26,14 @@ export const HeaderBottom: FC = () => {
                   </div>
                </NavLink>
                <NavLink to="/kontrol-paneli">
-                  <div className="flex items-center text-sm text-gray-700 dark:text-gray-300 hover:text-rose-500 dark:hover:text-violet-500">
+                  <div className="flex items-center text-sm text-gray-700 dark:text-gray-300 hover:text-secondary-500 dark:hover:text-primary-500">
                      <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
                         strokeWidth={1.5}
                         stroke="currentColor"
-                        className="w-5 h-5 text-rose-500 dark:text-violet-500"
+                        className="w-5 h-5 text-secondary-500 dark:text-primary-500"
                      >
                         <path
                            strokeLinecap="round"
@@ -45,14 +45,14 @@ export const HeaderBottom: FC = () => {
                   </div>
                </NavLink>
                <div>
-                  <div className="flex items-center text-sm text-gray-700 dark:text-gray-300 hover:text-rose-500 dark:hover:text-violet-500">
+                  <div className="flex items-center text-sm text-gray-700 dark:text-gray-300 hover:text-secondary-500 dark:hover:text-primary-500">
                      <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
                         strokeWidth={1.5}
                         stroke="currentColor"
-                        className="w-5 h-5 text-rose-500 dark:text-violet-500"
+                        className="w-5 h-5 text-secondary-500 dark:text-primary-500"
                      >
                         <path
                            strokeLinecap="round"
@@ -64,14 +64,14 @@ export const HeaderBottom: FC = () => {
                   </div>
                </div>
                <div>
-                  <div className="flex items-center text-sm text-gray-700 dark:text-gray-300 hover:text-rose-500 dark:hover:text-violet-500">
+                  <div className="flex items-center text-sm text-gray-700 dark:text-gray-300 hover:text-secondary-500 dark:hover:text-primary-500">
                      <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
                         strokeWidth={1.5}
                         stroke="currentColor"
-                        className="w-5 h-5 text-rose-500 dark:text-violet-500"
+                        className="w-5 h-5 text-secondary-500 dark:text-primary-500"
                      >
                         <path
                            strokeLinecap="round"
@@ -83,14 +83,14 @@ export const HeaderBottom: FC = () => {
                   </div>
                </div>
                <div>
-                  <div className="flex items-center text-sm text-gray-700 dark:text-gray-300 hover:text-rose-500 dark:hover:text-violet-500">
+                  <div className="flex items-center text-sm text-gray-700 dark:text-gray-300 hover:text-secondary-500 dark:hover:text-primary-500">
                      <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
                         strokeWidth={1.5}
                         stroke="currentColor"
-                        className="w-5 h-5 text-rose-500 dark:text-violet-500"
+                        className="w-5 h-5 text-secondary-500 dark:text-primary-500"
                      >
                         <path
                            strokeLinecap="round"

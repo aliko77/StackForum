@@ -6,16 +6,15 @@ type Props = {
 };
 
 export const PageLoading: FC<Props> = ({ message }) => {
-   const circleCommonClasses = 'h-5 w-5 bg-violet-600 rounded-full';
+   const circleCommonClasses = 'h-5 w-5 bg-primary-600 rounded-full';
 
    return (
       <div className="bg-white dark:bg-night-800 h-screen">
          <div className="flex justify-center items-center my-20">
             <Logo noRedirect noText />
             <div className="ml-2">
-               <h1 className="text-xl dark:text-gray-100 font-mono text-center">
-                  <span>Stack</span>
-                  <span className="font-semibold">Forum</span>
+               <h1 className="text-xl dark:text-gray-100 text-center">
+                  <span>StackForum</span>
                </h1>
             </div>
          </div>

@@ -92,7 +92,7 @@ const Login: FC = () => {
                            <div className="flex justify-end my-1.5">
                               <NavLink
                                  to="/auth/password/forgot"
-                                 className="text-sm font-medium text-rose-500 hover:underline dark:text-violet-400"
+                                 className="text-sm font-medium text-secondary-500 hover:underline dark:text-primary-400"
                               >
                                  Şifreni mi unuttun?
                               </NavLink>
@@ -109,7 +109,7 @@ const Login: FC = () => {
                Hesabın yok mu ?
                <NavLink
                   to="/register"
-                  className="ml-1 font-medium text-rose-500 hover:underline dark:text-violet-400"
+                  className="ml-1 font-medium text-secondary-500 hover:underline dark:text-primary-400"
                >
                   Kayıt ol
                </NavLink>

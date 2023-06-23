@@ -27,13 +27,13 @@ const Button: FC<ElementProps> = ({
 
    const colorClasses = {
       violet:
-         'bg-violet-500 hover:bg-violet-600 disabled:bg-violet-600 ring-violet-600 text-gray-100',
-      rose: 'bg-rose-500 hover:bg-rose-600 disabled:bg-rose-600 ring-rose-600 text-gray-100',
+         'bg-primary-500 hover:bg-primary-600 disabled:bg-primary-600 ring-primary-600 text-gray-100',
+      rose: 'bg-secondary-500 hover:bg-secondary-600 disabled:bg-secondary-600 ring-secondary-600 text-gray-100',
    };
    const darkColorClasses = {
       violet:
-         'dark:bg-violet-500 dark:hover:bg-violet-600 dark:disabled:bg-violet-600 dark:ring-violet-600',
-      rose: 'dark:bg-rose-500 dark:hover:bg-rose-600 dark:disabled:bg-rose-600 dark:ring-rose-600',
+         'dark:bg-primary-500 dark:hover:bg-primary-600 dark:disabled:bg-primary-600 dark:ring-primary-600',
+      rose: 'dark:bg-secondary-500 dark:hover:bg-secondary-600 dark:disabled:bg-secondary-600 dark:ring-secondary-600',
    };
 
    const commonClasses =

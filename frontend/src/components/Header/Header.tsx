@@ -11,14 +11,14 @@ export const Header: FC = () => {
    const { user } = useAuth();
 
    return (
-      <header className="sticky top-0 shadow z-[999] border-t-4 border-t-rose-400 dark:border-t-violet-700">
-         <div className="bg-white dark:bg-night-900 border-b border-b-rose-400 dark:border-b-violet-500">
+      <header className="sticky top-0 shadow z-[999] border-t-4 border-t-secondary-400 dark:border-t-primary-700">
+         <div className="bg-white dark:bg-night-900 border-b border-b-secondary-400 dark:border-b-primary-500">
             <div className="h-16 p-3 sm:max-w-7xl mx-auto flex flex-row items-center justify-between">
                <Logo />
                <div>
                   <div className="flex justify-center items-center">
                      <div className="p-1.5 mr-2 bg-white dark:bg-night-800 shadow rounded-full">
-                        <div className="text-gray-500 hover:text-rose-400 dark:text-gray-400 dark:hover:text-violet-500">
+                        <div className="text-gray-500 hover:text-secondary-400 dark:text-gray-400 dark:hover:text-primary-500">
                            <svg
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
@@ -41,7 +41,7 @@ export const Header: FC = () => {
                               <ThemeSwitcher />
                            </div>
                            <div className="p-1.5 mx-2 bg-white dark:bg-night-800 shadow rounded-full">
-                              <div className="text-gray-500 hover:text-rose-400 dark:text-gray-400 dark:hover:text-violet-500">
+                              <div className="text-gray-500 hover:text-secondary-400 dark:text-gray-400 dark:hover:text-primary-500">
                                  <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"

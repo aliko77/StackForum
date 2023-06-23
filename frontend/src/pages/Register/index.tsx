@@ -54,7 +54,7 @@ const Register: FC = () => {
          </div>
          <div className="border rounded-sm px-3 pt-3 bg-white dark:text-gray-100 dark:bg-night-900 dark:border-gray-500">
             <div className="flex justify-center mb-3">
-               <h1 className="font-semibold font-mono dark:text-gray-100 text-rose-600">
+               <h1 className="font-semibold dark:text-gray-100 text-secondary-600">
                   Kayıt Ol
                </h1>
             </div>
@@ -144,7 +144,7 @@ const Register: FC = () => {
                Bir hesabın var mı ?
                <NavLink
                   to="/login"
-                  className="ml-1 font-medium text-rose-500 hover:underline dark:text-violet-400"
+                  className="ml-1 font-medium text-secondary-500 hover:underline dark:text-primary-400"
                >
                   Giriş yap
                </NavLink>

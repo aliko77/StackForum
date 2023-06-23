@@ -1,13 +1,14 @@
+import colors from 'tailwindcss/colors';
+
 /** @type {import('tailwindcss').Config} */
 export default {
    content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
    darkMode: 'class',
    theme: {
       extend: {
-         outlineColor: {
-            white12: 'rgba(255, 255, 255, 0.12)',
-         },
          colors: {
+            primary: colors.violet,
+            secondary: colors.rose,
             night: {
                900: '#272838',
                800: '#36384D',

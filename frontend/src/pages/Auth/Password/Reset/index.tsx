@@ -110,7 +110,7 @@ const PasswordReset: FC = () => {
                   )}
                </Formik>
                <div className="mt-4 text-sm text-gray-600 items-center flex justify-end">
-                  <p className="dark:text-gray-200 hover:text-rose-600 dark:hover:text-violet-400 cursor-pointer">
+                  <p className="dark:text-gray-200 hover:text-secondary-600 dark:hover:text-primary-400 cursor-pointer">
                      Bir sorun mu var?
                   </p>
                </div>

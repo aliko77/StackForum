@@ -4,8 +4,8 @@
 @tailwind utilities;
 
 :root {
-   --primary: rgb(54, 56, 77);
-   --secondary: #a78bfa;
+   --primary: #36384d;
+   --secondary: #a78bfa; /* Violet 400 */
 }
 
 * {

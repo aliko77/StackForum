@@ -3,7 +3,7 @@ import { FC } from 'react';
 
 export const Footer: FC = () => {
    return (
-      <footer className="bg-white dark:bg-night-900 border-t border-t-rose-400 dark:border-t-violet-500">
+      <footer className="bg-white dark:bg-night-900 border-t border-t-secondary-400 dark:border-t-primary-500">
          <div className="w-full p-4">
             <div className="inline-block">
                <Logo />

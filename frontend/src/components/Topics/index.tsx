@@ -52,7 +52,7 @@ export const Topics: FC = () => {
                                        child.friends.map((friend, friendKey) => (
                                           <div key={friendKey} className="inline-block mr-4">
                                              <div className="flex items-center">
-                                                <GoFileDirectoryFill className="mr-1.5 text-rose-400 dark:text-violet-400" />
+                                                <GoFileDirectoryFill className="mr-1.5 text-secondary-400 dark:text-primary-400" />
                                                 <h1>{friend}</h1>
                                              </div>
                                           </div>
@@ -81,7 +81,7 @@ export const Topics: FC = () => {
                                  </div>
                                  <div>
                                     <RxDotFilled
-                                       className="mx-auto text-rose-400 dark:text-violet-400"
+                                       className="mx-auto text-secondary-400 dark:text-primary-400"
                                        size="1.25rem"
                                     />
                                  </div>

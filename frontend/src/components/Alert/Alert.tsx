@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 export enum eColors {
-   Error = 'text-rose-600 dark:text-violet-400',
+   Error = 'text-secondary-600 dark:text-primary-400',
    Success = 'text-green-700 dark:text-green-500',
    None = '',
 }
