@@ -14,56 +14,56 @@ export const HeaderBottom: FC = () => {
          <div className="container mx-auto max-sm:px-4">
             <div className="flex flex-auto flex-row space-x-3 items-center overflow-auto no-scrollbar">
                <NavLink to="/profil">
-                  <div className="flex items-center text-sm text-gray-700 dark:text-gray-300">
+                  <div className="flex items-center text-sm text-gray-800 dark:text-gray-300">
                      <HiOutlineUserCircle
                         className="text-secondary-500 dark:text-primary-500"
                         size="20px"
                      />
-                     <span className="mx-1.5 hover:text-secondary-500 dark:hover:text-primary-500">
+                     <span className="mx-1.5 hover:text-secondary-600 dark:hover:text-primary-500">
                         Profilim
                      </span>
                   </div>
                </NavLink>
                <NavLink to="/kontrol-paneli">
-                  <div className="flex items-center text-sm text-gray-700 dark:text-gray-300">
+                  <div className="flex items-center text-sm text-gray-800 dark:text-gray-300">
                      <HiOutlineCog
                         className="text-secondary-500 dark:text-primary-500"
                         size="20px"
                      />
-                     <span className="mx-1.5 hover:text-secondary-500 dark:hover:text-primary-500">
+                     <span className="mx-1.5 hover:text-secondary-600 dark:hover:text-primary-500">
                         Panelim
                      </span>
                   </div>
                </NavLink>
                <div>
-                  <div className="flex items-center text-sm text-gray-700 dark:text-gray-300">
+                  <div className="flex items-center text-sm text-gray-800 dark:text-gray-300">
                      <HiOutlineArrowTrendingUp
                         className="text-secondary-500 dark:text-primary-500"
                         size="20px"
                      />
-                     <span className="mx-1.5 hover:text-secondary-500 dark:hover:text-primary-500">
+                     <span className="mx-1.5 hover:text-secondary-600 dark:hover:text-primary-500">
                         Popüler Konular
                      </span>
                   </div>
                </div>
                <div>
-                  <div className="flex items-center text-sm text-gray-700 dark:text-gray-300 hover:text-secondary-500 dark:hover:text-primary-500">
+                  <div className="flex items-center text-sm text-gray-800 dark:text-gray-300 hover:text-secondary-600 dark:hover:text-primary-500">
                      <HiOutlineNewspaper
                         className="text-secondary-500 dark:text-primary-500"
                         size="20px"
                      />
-                     <span className="mx-1.5 hover:text-secondary-500 dark:hover:text-primary-500">
+                     <span className="mx-1.5 hover:text-secondary-600 dark:hover:text-primary-500">
                         Yeni Konular
                      </span>
                   </div>
                </div>
                <div>
-                  <div className="flex items-center text-sm text-gray-700 dark:text-gray-300 hover:text-secondary-500 dark:hover:text-primary-500">
+                  <div className="flex items-center text-sm text-gray-800 dark:text-gray-300 hover:text-secondary-600 dark:hover:text-primary-500">
                      <HiOutlineChatBubbleBottomCenterText
                         className="text-secondary-500 dark:text-primary-500"
                         size="20px"
                      />
-                     <span className="mx-1.5 hover:text-secondary-500 dark:hover:text-primary-500">
+                     <span className="mx-1.5 hover:text-secondary-600 dark:hover:text-primary-500">
                         Yeni Mesajlar
                      </span>
                   </div>
