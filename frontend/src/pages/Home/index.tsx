@@ -63,7 +63,7 @@ const Home: FC = () => {
                                     </li>
                                     <li className="table-cell align-middle px-3 max-sm:hidden border-r border-r-gray-500 text-left text-[13px]">
                                        <div className="mb-2 overflow-hidden whitespace-nowrap text-ellipsis">
-                                          <span title="x Konusunda yeni mesaj">
+                                          <span title={child.last_message.topic_title}>
                                              {child.last_message.topic_title}
                                           </span>
                                        </div>

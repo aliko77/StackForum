@@ -6,7 +6,8 @@ export const homeTopics = [
             title: 'Php',
             description: 'Php hakkında her şey.',
             last_message: {
-               topic_title: 'Php hakkında bir soru.',
+               topic_title:
+                  'Php hakkında bir soru. Php hakkında bir soru. Php hakkında bir soru. Php hakkında bir soru.',
                user: '-ali',
                date: '23.06.2023 18:41',
             },
@@ -20,7 +21,7 @@ export const homeTopics = [
             description: 'JavaScript hakkında her şey.',
             last_message: {
                topic_title: 'React hakkında bir soru.',
-               user: '-ali',
+               user: '-ahmetül mehmedül velicanu semeveri çayı kahvedül kitaplı',
                date: '23.06.2023 18:41',
             },
             details: {
