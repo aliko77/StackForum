@@ -1,4 +1,5 @@
 import { Logo } from 'components/Logo';
+import { COMPANY_NAME } from 'config';
 import { FC } from 'react';
 
 type Props = {
@@ -14,7 +15,7 @@ export const PageLoading: FC<Props> = ({ message }) => {
             <Logo noRedirect noText />
             <div className="ml-2">
                <h1 className="text-xl dark:text-gray-100 text-center">
-                  <span>StackForum</span>
+                  <span>{COMPANY_NAME}</span>
                </h1>
             </div>
          </div>

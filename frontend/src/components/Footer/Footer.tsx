@@ -1,4 +1,5 @@
 import { Logo } from 'components/Logo';
+import { COMPANY_NAME } from 'config';
 import { FC } from 'react';
 
 export const Footer: FC = () => {
@@ -10,7 +11,7 @@ export const Footer: FC = () => {
             </div>
             <hr className="my-6 border-gray-300 dark:border-gray-600" />
             <span className="block text-sm text-gray-500 text-center dark:text-gray-400">
-               © 2023 StackForum™. Tüm hakları saklıdır.
+               © 2023 {COMPANY_NAME}™. Tüm hakları saklıdır.
             </span>
          </div>
       </footer>
