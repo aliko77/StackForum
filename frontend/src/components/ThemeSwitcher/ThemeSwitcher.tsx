@@ -8,7 +8,7 @@ export const ThemeSwitcher: FC = () => {
    return (
       <>
          <button
-            className="hidden dark:flex dark:text-zinc-400 dark:hover:text-primary-500 focus:outline-none"
+            className="hidden dark:flex dark:text-gray-400 dark:hover:text-primary-500 focus:outline-none"
             onClick={() => {
                setTheme('light');
             }}
@@ -16,7 +16,7 @@ export const ThemeSwitcher: FC = () => {
             <BsMoonStars size="20px" />
          </button>
          <button
-            className="dark:hidden flex text-zinc-500 hover:text-secondary-500 focus:outline-none"
+            className="dark:hidden flex text-gray-500 hover:text-secondary-500 focus:outline-none"
             onClick={() => {
                setTheme('dark');
             }}
