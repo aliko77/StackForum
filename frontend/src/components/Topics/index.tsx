@@ -12,19 +12,19 @@ export const Topics: FC = () => {
             <Disclosure key={key} defaultOpen>
                <ul>
                   <li className="header">
-                     <ul className="text-sm table table-fixed w-full h-10 leading-10 bg-rose-400 dark:bg-night-900 border border-b-0 border-rose-500 dark:border-gray-500 rounded-t text-white dark:text-white/80">
-                        <li className="table-cell align-middle font-semibold overflow-hidden whitespace-nowrap text-ellipsis relative w-16 border-r border-rose-500 dark:border-gray-500">
+                     <ul className="text-sm table table-fixed w-full h-10 leading-10 bg-secondary-400 dark:bg-night-900 border border-b-0 border-secondary-500 dark:border-gray-500 rounded-t text-white dark:text-white/80">
+                        <li className="table-cell align-middle font-semibold overflow-hidden whitespace-nowrap text-ellipsis relative w-16 border-r border-secondary-500 dark:border-gray-500">
                            <Disclosure.Button className="w-full focus:outline-none flex items-center justify-center">
                               <GoArrowDown size={'20px'} />
                            </Disclosure.Button>
                         </li>
-                        <li className="table-cell align-middle font-semibold md:w-3/6 px-3 border-r border-rose-500 dark:border-gray-500 text-left">
+                        <li className="table-cell align-middle font-semibold md:w-3/6 px-3 border-r border-secondary-500 dark:border-gray-500 text-left">
                            {topic.main_topic_header}
                         </li>
-                        <li className="max-md:hidden table-cell align-middle font-semibold px-2 bg-rose-600 dark:bg-night-600 border-r border-rose-500 dark:border-gray-500 text-center">
+                        <li className="max-md:hidden table-cell align-middle font-semibold px-2 bg-secondary-600 dark:bg-night-600 border-r border-secondary-500 dark:border-gray-500 text-center">
                            Son Mesaj
                         </li>
-                        <li className="max-md:hidden table-cell align-middle font-semibold px-2 bg-rose-600 dark:bg-night-600 text-center">
+                        <li className="max-md:hidden table-cell align-middle font-semibold px-2 bg-secondary-600 dark:bg-night-600 text-center">
                            Konu / Mesaj
                         </li>
                      </ul>
@@ -35,12 +35,12 @@ export const Topics: FC = () => {
                            <Disclosure.Panel
                               key={childKey}
                               as={'ul'}
-                              className="table table-fixed w-full bg-gray-200 dark:bg-night-800 border-b border-x border-rose-500 dark:border-gray-500 text-black dark:text-white/80 text-sm"
+                              className="table table-fixed w-full bg-gray-200 dark:bg-night-800 border-b border-x border-secondary-500 dark:border-gray-500 text-black dark:text-white/80 text-sm"
                            >
-                              <li className="table-cell align-middle w-16 text-gray-600 dark:text-gray-400 py-4 border-r border-rose-500 dark:border-gray-500">
+                              <li className="table-cell align-middle w-16 text-gray-600 dark:text-gray-400 py-4 border-r border-secondary-500 dark:border-gray-500">
                                  <PiChatsLight className="mx-auto" size={'2rem'} />
                               </li>
-                              <li className="table-cell align-middle px-3 py-1.5 md:w-3/6 border-r border-rose-500 dark:border-gray-500 text-left">
+                              <li className="table-cell align-middle px-3 py-1.5 md:w-3/6 border-r border-secondary-500 dark:border-gray-500 text-left">
                                  <div className="mb-1">
                                     <p>{child.title}</p>
                                  </div>
@@ -59,7 +59,7 @@ export const Topics: FC = () => {
                                        ))}
                                  </div>
                               </li>
-                              <li className="max-md:hidden table-cell align-middle px-3 border-r border-rose-500 dark:border-gray-500 text-left text-[13px]">
+                              <li className="max-md:hidden table-cell align-middle px-3 border-r border-secondary-500 dark:border-gray-500 text-left text-[13px]">
                                  <div className="mb-2 overflow-hidden whitespace-nowrap text-ellipsis">
                                     <span title={child.last_message.topic_title}>
                                        {child.last_message.topic_title}

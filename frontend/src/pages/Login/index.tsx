@@ -35,6 +35,9 @@ const Login: FC = () => {
             <Logo noRedirect />
          </div>
          <div className="border rounded-sm px-3 pt-3 bg-white dark:text-gray-100 dark:bg-night-900 dark:border-gray-500">
+            <div className="mb-3">
+               <h1 className="font-semibold text-secondary-500 dark:text-primary-400">Giriş Yap</h1>
+            </div>
             <Formik
                validationSchema={validationSchema}
                initialValues={InitialState}

@@ -53,12 +53,9 @@ const Register: FC = () => {
             <Logo />
          </div>
          <div className="border rounded-sm px-3 pt-3 bg-white dark:text-gray-100 dark:bg-night-900 dark:border-gray-500">
-            <div className="flex justify-center mb-3">
-               <h1 className="font-semibold dark:text-gray-100 text-secondary-600">
-                  Kayıt Ol
-               </h1>
+            <div className="mb-3">
+               <h1 className="font-semibold text-secondary-500 dark:text-primary-400">Kayıt Ol</h1>
             </div>
-            <hr className="mb-4 border-gray-300 dark:border-gray-500" />
             <Formik
                validationSchema={validationSchema}
                initialValues={initialValues}
