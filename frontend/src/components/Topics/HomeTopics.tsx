@@ -5,7 +5,7 @@ import { GoFileDirectoryFill, GoArrowDown } from 'react-icons/go';
 import { homeTopics } from 'fake-api';
 import { Disclosure } from '@headlessui/react';
 
-export const Topics: FC = () => {
+export const HomeTopics: FC = () => {
    return (
       <>
          {homeTopics.map((topic, key) => (
