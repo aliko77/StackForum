@@ -14,8 +14,8 @@ export const Sidebar: FC = () => {
    return (
       <>
          <aside className="sidebar w-full sm:w-[240px]">
-            <div className="p-3 flex justify-between items-center bg-night-900 rounded-t border-b border-b-gray-500">
-               <h1 className="text-secondary-400 dark:text-primary-500 font-semibold uppercase">
+            <div className="p-3 flex justify-between items-center  bg-gray-200 dark:bg-night-900 rounded-t border-b border-b-gray-500">
+               <h1 className="text-secondary-500 dark:text-primary-400 font-500 uppercase">
                   Kontrol Paneli
                </h1>
                <button

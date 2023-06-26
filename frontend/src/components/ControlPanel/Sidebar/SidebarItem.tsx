@@ -47,7 +47,7 @@ export const SidebarItem: FC<Props> = ({ item }) => {
                            className="text-secondary-500 dark:text-primary-400"
                            size="16px"
                         />
-                        <span className="text-sm font-medium text-gray-900 dark:text-primary-400">
+                        <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
                            {item.name}
                         </span>
                      </NavLink>

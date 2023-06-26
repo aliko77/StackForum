@@ -34,7 +34,7 @@ const ScrollButton: FC = () => {
             'bottom-4',
             'right-4',
             'bg-secondary-500 dark:bg-primary-500',
-            'text-white',
+            'text-gray-100',
             'p-3',
             'rounded-full',
             'focus:outline-none',

@@ -8,7 +8,7 @@ const ControlPanel = () => {
       <ControlPanelLayout>
          <div className="w-full mb-4">
             <div className="bg-night-900 p-2 rounded-t">
-               <p className="text-base font-semibold tracking-wide text-gray-100">
+               <p className="text-base font-500 tracking-wide text-primary-500">
                   Açtığınız Konular
                </p>
             </div>
@@ -16,9 +16,7 @@ const ControlPanel = () => {
          </div>
          <div className="w-full">
             <div className="bg-night-900 p-2 rounded-t">
-               <p className="text-base font-semibold tracking-wide text-gray-100">
-                  Son Mesajlarınız
-               </p>
+               <p className="text-base font-500 tracking-wide text-primary-500">Son Mesajlarınız</p>
             </div>
             <Topics topics={Topics_i_answered} />
          </div>

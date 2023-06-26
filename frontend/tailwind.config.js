@@ -7,8 +7,8 @@ export default {
    theme: {
       extend: {
          colors: {
-            primary: colors.violet,
-            secondary: colors.rose,
+            primary: colors.orange,
+            secondary: colors.orange,
             night: {
                900: '#272838',
                800: '#36384D',

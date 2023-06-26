@@ -12,7 +12,7 @@ export const HomeTopics: FC = () => {
             <Disclosure key={key} defaultOpen>
                <ul>
                   <li className="header">
-                     <ul className="text-sm table table-fixed w-full h-10 leading-10 bg-secondary-400 dark:bg-night-900 border border-b-0 border-secondary-500 dark:border-gray-500 rounded-t text-white dark:text-white/80">
+                     <ul className="text-sm table table-fixed w-full h-10 leading-10 bg-secondary-400 dark:bg-night-900 border border-b-0 border-secondary-500 dark:border-gray-500 rounded-t text-gray-100 dark:text-gray-100/80">
                         <li className="table-cell align-middle font-semibold overflow-hidden whitespace-nowrap text-ellipsis relative w-16 border-r border-secondary-500 dark:border-gray-500">
                            <Disclosure.Button className="w-full focus:outline-none flex items-center justify-center">
                               <GoArrowDown size={'20px'} />
@@ -35,7 +35,7 @@ export const HomeTopics: FC = () => {
                            <Disclosure.Panel
                               key={childKey}
                               as={'ul'}
-                              className="table table-fixed w-full bg-gray-200 dark:bg-night-800 border-b border-x border-secondary-500 dark:border-gray-500 text-black dark:text-white/80 text-sm"
+                              className="table table-fixed w-full bg-gray-200 dark:bg-night-800 border-b border-x border-secondary-500 dark:border-gray-500 text-black dark:text-gray-100/80 text-sm"
                            >
                               <li className="table-cell align-middle w-16 text-gray-600 dark:text-gray-400 py-4 border-r border-secondary-500 dark:border-gray-500">
                                  <PiChatsLight className="mx-auto" size={'2rem'} />
