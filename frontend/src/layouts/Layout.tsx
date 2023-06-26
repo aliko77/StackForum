@@ -1,5 +1,6 @@
 import { Footer } from 'components/Footer';
 import { Header } from 'components/Header';
+import ScrollButton from 'components/ScrollButton';
 import { AuthProvider } from 'contexts';
 import UseColorScheme from 'hooks/useColorScheme';
 import { useTheme } from 'hooks/useTheme';
@@ -26,6 +27,7 @@ const Layout = ({ children }: ReactChildrenProps) => {
                <Header />
                <StrictMode>
                   <main className="content bg-white dark:bg-night-700">{children}</main>
+                  <ScrollButton />
                </StrictMode>
                <Footer />
             </PersistLogin>
