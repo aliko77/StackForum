@@ -2,13 +2,13 @@ import { FC } from 'react';
 import { PiChatsLight } from 'react-icons/pi';
 import { RxDotFilled } from 'react-icons/rx';
 import { GoFileDirectoryFill, GoArrowDown } from 'react-icons/go';
-import { homeTopics } from 'fake-api';
+import { HomeTopics as topics } from 'fake-api';
 import { Disclosure } from '@headlessui/react';
 
 export const HomeTopics: FC = () => {
    return (
       <>
-         {homeTopics.map((topic, key) => (
+         {topics.map((topic, key) => (
             <Disclosure key={key} defaultOpen>
                <ul>
                   <li className="header">

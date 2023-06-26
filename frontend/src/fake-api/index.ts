@@ -1,2 +1,2 @@
-export { homeTopics } from './homeTopics';
-export { topics } from './topics';
+export { HomeTopics } from './HomeTopics';
+export { Topics_i_answered } from './Topices_i_answered';

@@ -1,16 +1,26 @@
 import ControlPanelLayout from 'layouts/ControlPanel';
 import { Topics } from 'components/Topics';
+import { Topics_i_answered } from 'fake-api/Topices_i_answered';
+import { Topices_i_created } from 'fake-api/Topices_i_created';
 
 const ControlPanel = () => {
    return (
       <ControlPanelLayout>
+         <div className="w-full mb-4">
+            <div className="bg-night-900 p-2 rounded-t">
+               <p className="text-base font-semibold tracking-wide text-gray-100">
+                  Açtığınız Konular
+               </p>
+            </div>
+            <Topics topics={Topices_i_created} />
+         </div>
          <div className="w-full">
             <div className="bg-night-900 p-2 rounded-t">
                <p className="text-base font-semibold tracking-wide text-gray-100">
                   Son Mesajlarınız
                </p>
             </div>
-            <Topics />
+            <Topics topics={Topics_i_answered} />
          </div>
       </ControlPanelLayout>
    );
