@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { Logo } from 'components/Logo';
 import { COMPANY_NAME } from 'config';
 import { FC } from 'react';
@@ -22,9 +23,9 @@ export const PageLoading: FC<Props> = ({ message }) => {
          <div>
             <div>{message && <h1>{message}</h1>}</div>
             <div className="flex justify-center">
-               <div className={`${circleCommonClasses} mr-1 animate-bounce`}></div>
-               <div className={`${circleCommonClasses} mr-1 animate-bounce200`}></div>
-               <div className={`${circleCommonClasses} animate-bounce400`}></div>
+               <div className={classNames(circleCommonClasses, 'mr-1', 'animate-bounce')}></div>
+               <div className={classNames(circleCommonClasses, 'mr-1', 'animate-bounce200')}></div>
+               <div className={classNames(circleCommonClasses, 'animate-bounce400')}></div>
             </div>
          </div>
       </div>

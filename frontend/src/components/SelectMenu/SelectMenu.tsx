@@ -1,4 +1,5 @@
 import { Listbox } from '@headlessui/react';
+import classNames from 'classnames';
 import { HiCheck, HiOutlineChevronUpDown } from 'react-icons/hi2';
 
 export type CustomDropdownOption<T> = {
@@ -30,24 +31,47 @@ export const SelectMenu = <T,>(props: CustomDropdownProps<T>) => {
                      key={i}
                      value={option.value}
                      className={({ active }) =>
-                        `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                           active
-                              ? 'bg-secondary-200 text-secondary-800 dark:bg-primary-300 dark:text-primary-800'
-                              : 'text-gray-900 dark:text-gray-100'
-                        }`
+                        classNames(
+                           'relative',
+                           'cursor-default',
+                           'select-none',
+                           'py-2',
+                           'pl-10',
+                           'pr-4',
+                           {
+                              'bg-secondary-200': active,
+                              'text-secondary-800': active,
+                              'dark:bg-primary-300': active,
+                              'dark:text-primary-800': active,
+                              'text-gray-900': !active,
+                              'dark:text-gray-100': !active,
+                           },
+                        )
                      }
                   >
                      {({ selected }) => (
                         <>
                            <span
-                              className={`block truncate ${
-                                 selected ? 'font-medium' : 'font-normal'
-                              }`}
+                              className={classNames('block', 'truncate', {
+                                 'font-medium': selected,
+                                 'font-normal': !selected,
+                              })}
                            >
                               {option.label}
                            </span>
                            {selected ? (
-                              <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-secondary-600 dark:text-primary-500">
+                              <span
+                                 className={classNames(
+                                    'absolute',
+                                    'inset-y-0',
+                                    'left-0',
+                                    'flex',
+                                    'items-center',
+                                    'pl-3',
+                                    'text-secondary-600',
+                                    'dark:text-primary-500',
+                                 )}
+                              >
                                  <HiCheck size="20px" />
                               </span>
                            ) : null}

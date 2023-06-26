@@ -3,6 +3,7 @@ import { ItemProps } from './items';
 import { Disclosure } from '@headlessui/react';
 import { NavLink } from 'react-router-dom';
 import { HiArrowRight, HiChevronUp } from 'react-icons/hi2';
+import classNames from 'classnames';
 
 type Props = {
    item: ItemProps;
@@ -11,7 +12,7 @@ type Props = {
 export const SidebarItem: FC<Props> = ({ item }) => {
    return (
       <Disclosure defaultOpen>
-         <div className={`${item.name.toLowerCase()}`}>
+         <div>
             <Disclosure.Button className="w-full focus:outline-none">
                <div className="header bg-gray-100 dark:bg-night-900 px-4 py-2.5 flex justify-between items-center">
                   <span className="text-sm text-gray-900 dark:text-gray-100 uppercase font-medium">
@@ -27,8 +28,19 @@ export const SidebarItem: FC<Props> = ({ item }) => {
                         to={item.link}
                         end
                         className={({ isActive }) =>
-                           `px-4 py-2 flex items-center space-x-2 hover:bg-gray-300 dark:hover:bg-gray-900
-                           ${isActive && 'bg-gray-300 dark:bg-gray-900'}`
+                           classNames(
+                              'px-4',
+                              'py-2',
+                              'flex',
+                              'items-center',
+                              'space-x-2',
+                              'hover:bg-gray-300',
+                              'dark:hover:bg-gray-900',
+                              {
+                                 'bg-gray-300': isActive,
+                                 'dark:bg-gray-900': isActive,
+                              },
+                           )
                         }
                      >
                         <HiArrowRight

@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { FC } from 'react';
 import { HiOutlineInformationCircle } from 'react-icons/hi2';
 
@@ -15,7 +16,20 @@ type AlertProps = {
 export const Alert: FC<AlertProps> = ({ text, color = eColors.Success }) => {
    return (
       <div
-         className={`flex p-4 mb-4 text-center text-sm ${color} border border-gray-300 dark:border-night-700 rounded-lg bg-gray-100 dark:bg-gray-900`}
+         className={classNames(
+            'flex',
+            'p-4',
+            'mb-4',
+            'text-center',
+            'text-sm',
+            color,
+            'border',
+            'border-gray-300',
+            'dark:border-night-700',
+            'rounded-lg',
+            'bg-gray-100',
+            'dark:bg-gray-900',
+         )}
          role="alert"
       >
          <span className="sr-only">Info</span>

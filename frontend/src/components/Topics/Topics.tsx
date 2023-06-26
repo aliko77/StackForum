@@ -9,7 +9,7 @@ export const Topics: FC = () => {
          {topics.map((topic, key) => (
             <ul key={key}>
                <li>
-                  <ol className="table table-fixed w-full h-14 bg-gray-200 dark:bg-night-800 border-b border-x border-secondary-500 dark:border-gray-600 text-sm">
+                  <ol className="table table-fixed w-full h-16 bg-gray-200 dark:bg-night-800 border-b border-x border-secondary-500 dark:border-gray-600 text-sm">
                      <li className="max-md:hidden table-cell align-middle w-12 text-gray-600 dark:text-gray-400 border-r border-secondary-500 dark:border-gray-600">
                         <PiChatsLight className="mx-auto" size={'2rem'} />
                      </li>
