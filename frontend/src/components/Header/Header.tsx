@@ -66,12 +66,12 @@ export const Header: FC = () => {
                         <>
                            <div className="max-sm:hidden mx-1">
                               <NavLink to="/login">
-                                 <Button dark="secondary">Giriş Yap</Button>
+                                 <Button color="purple">Giriş Yap</Button>
                               </NavLink>
                            </div>
                            <div className="max-sm:hidden ml-1">
                               <NavLink to="/register">
-                                 <Button color="primary">Kayıt Ol</Button>
+                                 <Button>Kayıt Ol</Button>
                               </NavLink>
                            </div>
                            <div className="hidden max-sm:block fixed bottom-0 left-0 bg-gray-100 dark:bg-night-900 w-full shadow">

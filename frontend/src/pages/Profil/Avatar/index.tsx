@@ -109,7 +109,7 @@ const Avatar: FC = () => {
                      <div className="mt-4">
                         <div className="flex justify-start space-x-4">
                            <div>
-                              <Button onClick={handleRemoveAvatar} color="primary" dark="secondary">
+                              <Button onClick={handleRemoveAvatar}>
                                  <span>Kaldır</span>
                                  <div className="ml-2">
                                     <HiOutlineTrash size="20px" />
