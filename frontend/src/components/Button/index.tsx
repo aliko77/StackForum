@@ -2,7 +2,30 @@ import classNames from 'classnames';
 import { ButtonHTMLAttributes, FC } from 'react';
 
 type ElementSize = 'small' | 'medium' | 'large';
-type ElementColor = 'primary' | 'secondary';
+type ElementColor =
+   | 'primary'
+   | 'secondary'
+   | 'state'
+   | 'gray'
+   | 'zinc'
+   | 'neutral'
+   | 'stone'
+   | 'red'
+   | 'orange'
+   | 'amber'
+   | 'yellow'
+   | 'lime'
+   | 'green'
+   | 'emerald'
+   | 'teal'
+   | 'cyan'
+   | 'sky'
+   | 'blue'
+   | 'indigo'
+   | 'violet'
+   | 'purple'
+   | 'fuchsia'
+   | 'pink';
 
 type ElementProps = ButtonHTMLAttributes<HTMLButtonElement> & {
    size?: ElementSize;
@@ -25,26 +48,19 @@ const Button: FC<ElementProps> = ({
       large: 'px-6 py-3',
    };
 
-   const colorClasses = {
-      primary:
-         'bg-primary-500 hover:bg-primary-600 disabled:bg-primary-600 ring-primary-600 text-gray-100',
-      secondary: 'bg-secondary-500 hover:bg-secondary-600 disabled:bg-secondary-600 ring-secondary-600 text-gray-100',
-   };
-   const darkColorClasses = {
-      primary:
-         'dark:bg-primary-500 dark:hover:bg-primary-600 dark:disabled:bg-primary-600 dark:ring-primary-600',
-      secondary: 'dark:bg-secondary-500 dark:hover:bg-secondary-600 dark:disabled:bg-secondary-600 dark:ring-secondary-600',
-   };
+   const colorClasses = (color: ElementColor) =>
+      `bg-${color}-600 hover:bg-${color}-700 disabled:bg-${color}-700 ring-${color}-700 text-gray-100`;
+   const darkColorClasses = (dark: ElementColor) =>
+      `dark:bg-${dark}-600 dark:hover:bg-${dark}-700 dark:disabled:bg-${dark}-700 dark:ring-${dark}-700`;
 
    const commonClasses =
       'w-full flex items-center justify-center rounded-sm outline-none focus:ring-1 text-sm whitespace-nowrap uppercase';
-
    // Buttonun tüm sınıflarını birleştiren fonksiyon
    const buttonClasses = classNames(
       commonClasses,
       sizeClasses[size],
-      colorClasses[color],
-      darkColorClasses[dark],
+      colorClasses(color),
+      darkColorClasses(dark),
    );
 
    return (
