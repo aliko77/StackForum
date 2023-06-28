@@ -20,6 +20,7 @@ SECRET_KEY = 'django-insecure-gacefy7x^b9gux^ell_*az_++r9^zr*x$qk_((+qf4gs4p&_k0
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    '127.0.0.1',
     'localhost',
     'api.alikoc.dev'
 ]
@@ -27,6 +28,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
