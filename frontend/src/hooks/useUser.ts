@@ -3,7 +3,7 @@ import { AxiosError } from 'axios';
 import { useAuth } from 'hooks/useAuth';
 import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
 import { useState } from 'react';
-import { BlockedUsersProps, FriendsProps, LoginRecordProps, ProfileProps, UserProps } from 'types';
+import { BlockedUsersProps, FriendsProps, LoginRecordsProps, ProfileProps, UserProps } from 'types';
 
 type AccountVerifyProps = {
    vcode: string;
@@ -265,7 +265,7 @@ export default function useUser() {
       }
    };
 
-   const getLastLoginRecords = async (): Promise<LoginRecordProps> => {
+   const getLastLoginRecords = async (): Promise<LoginRecordsProps> => {
       setErrors(null);
       try {
          const { data, status } = await axiosPrivate.get('/user/last-login-records/');

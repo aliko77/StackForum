@@ -15,8 +15,8 @@ User = get_user_model()
 
 class ProfileSerializer(ModelSerializer):
     avatar = SerializerMethodField(method_name="get_avatar")
-    
-    
+
+
     class Meta:
         model = Profile
         exclude = ['id', 'user', 'created_at', 'updated_at']

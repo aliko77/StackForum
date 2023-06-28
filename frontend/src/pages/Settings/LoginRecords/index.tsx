@@ -2,13 +2,13 @@ import { LoadSpinner } from 'components/LoadSpinner';
 import useUser from 'hooks/useUser';
 import ControlPanelLayout from 'layouts/ControlPanel';
 import { FC, useEffect, useState } from 'react';
-import { LoginRecordProps } from 'types';
+import { LoginRecordsProps } from 'types';
 import { parseDateTimeToString } from 'utils';
 import { HiOutlineComputerDesktop } from 'react-icons/hi2';
 
 const LoginLogs: FC = () => {
    const { getLastLoginRecords } = useUser();
-   const [records, setRecords] = useState<LoginRecordProps>([]);
+   const [records, setRecords] = useState<LoginRecordsProps>([]);
    const [ready, setReady] = useState<boolean>(false);
 
    useEffect(() => {

@@ -8,6 +8,17 @@ export type KeyValue = {
    [key: string]: unknown;
 };
 
+export type UserProps = {
+   id: number;
+   email: string;
+   username: string;
+   is_active: boolean;
+   is_verified: boolean;
+   last_login: string;
+   date_joined: string;
+   profile?: ProfileProps;
+};
+
 export type ProfileProps = {
    dob?: string;
    dob_privacy?: string;
@@ -27,18 +38,7 @@ export type ProfileProps = {
    allow_messages?: string;
 };
 
-export type UserProps = {
-   id: number;
-   email: string;
-   username: string;
-   is_active: boolean;
-   is_verified: boolean;
-   last_login: string;
-   date_joined: string;
-   profile?: ProfileProps;
-};
-
-export type LoginRecordProps = {
+export type LoginRecordsProps = {
    ip_address: string;
    login_time: string;
    browser: string;
