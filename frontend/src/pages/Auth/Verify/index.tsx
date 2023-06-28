@@ -30,6 +30,7 @@ const AuthVerify: FC = () => {
          await Toast.fire({
             title: 'Hesabınız Doğrulandı',
             icon: 'success',
+            timer: 3000,
          });
       }
       setIsSubmitting(false);
@@ -56,7 +57,7 @@ const AuthVerify: FC = () => {
             <div className="max-w-sm mx-auto md:max-w-lg">
                <div className="w-full">
                   <div className="text-gray-800 dark:text-gray-100 border dark:border-gray-600 dark:bg-night-900 rounded-sm text-center flex flex-col justify-center">
-                     <div className="my-4">
+                     <div className="my-4 mx-auto">
                         <Logo noRedirect />
                      </div>
                      <h1 className="text-2xl font-semibold">Hesap Doğrulama</h1>

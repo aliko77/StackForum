@@ -15,7 +15,7 @@ export const PrivateRoute = ({ children }: IPrivateRoute) => {
 
    if (!accessToken) {
       return <Navigate to="/login/" state={nav_state} replace />;
-   } else if (!user?.is_verified) {
+   } else if (!location.pathname.includes('auth/verify') && !user?.is_verified) {
       return <Navigate to="/auth/verify/" state={nav_state} replace />;
    }
    return children;
