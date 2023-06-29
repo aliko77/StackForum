@@ -9,6 +9,7 @@ import { Avatar, StatusIcon } from 'components/Profile';
 import { HiOutlineHome, HiOutlineMegaphone } from 'react-icons/hi2';
 import { BsChatRightDots, BsPersonCheck, BsPersonPlus } from 'react-icons/bs';
 import classNames from 'classnames';
+import { TbShieldLock } from 'react-icons/tb';
 
 export const Header: FC = () => {
    const { user } = useAuth();
@@ -37,6 +38,14 @@ export const Header: FC = () => {
                                  size="20px"
                               />
                            </div>
+                           {user && (
+                              <div className="p-2 mx-1 max-sm:ml-2 bg-white dark:bg-night-800 border border-secondary-500 dark:border-primary-500 shadow rounded-full">
+                                 <TbShieldLock
+                                    className="text-gray-500 hover:text-secondary-400 dark:text-gray-400 dark:hover:text-primary-500"
+                                    size="20px"
+                                 />
+                              </div>
+                           )}
                            <div className="hidden sm:block mx-4">
                               <div className="flex items-center justify-center whitespace-nowrap">
                                  <div className="mr-4">
