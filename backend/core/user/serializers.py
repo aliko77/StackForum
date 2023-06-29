@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
 from django.utils.http import urlsafe_base64_decode
@@ -34,12 +35,17 @@ class ProfileSerializer(ModelSerializer):
 class UserSerializer(ModelSerializer):
     email = EmailField(required=False)
     profile = ProfileSerializer()
+    auth_groups = SerializerMethodField(method_name="get_auth_groups")
     
+    @staticmethod
+    def get_auth_groups(instance):
+        groups = Group.objects.filter(user=instance)
+        return [group.name for group in groups]
     
     class Meta:
         model = User
         fields = ['id', 'email', 'username', 'is_active',
-                  'is_verified', 'date_joined', 'last_login', 'profile']
+                  'is_verified', 'date_joined', 'last_login', 'profile', 'auth_groups']
         read_only_fields = ['date_joined', 'last_login']
 
 

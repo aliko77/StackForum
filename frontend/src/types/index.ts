@@ -17,6 +17,7 @@ export type UserProps = {
    last_login: string;
    date_joined: string;
    profile?: ProfileProps;
+   auth_groups: Array<string>;
 };
 
 export type ProfileProps = {
