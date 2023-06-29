@@ -83,8 +83,8 @@ const ProfilEdit: FC = () => {
                               Zorunlu Bilgiler
                            </p>
                         </div>
-                        {errors && <FormErrors errors={errors} />}
                         <div className="px-4 py-4 bg-gray-200 dark:bg-night-800">
+                           {errors && <FormErrors errors={errors} />}
                            <div className="mb-4">
                               <fieldset id="email-password">
                                  <legend className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">

@@ -67,9 +67,9 @@ export default function useUser() {
    const [errors, setErrors] = useState<null | string[]>(null);
 
    const getUser = async (): Promise<UserProps | boolean> => {
-      setErrors(null);
       try {
          const { data } = await axiosPrivate.get('/user/@me');
+         setErrors(null);
          setUser(data);
          return data;
       } catch (error) {
@@ -81,12 +81,12 @@ export default function useUser() {
    };
 
    const accountVerify = async ({ email, vcode }: AccountVerifyProps): Promise<boolean> => {
-      setErrors(null);
       try {
          const { data, status } = await axiosPrivate.post('/user/verify/', {
             activation_code: vcode,
             email: email,
          });
+         setErrors(null);
          setUser((prevState) => {
             if (!prevState) return undefined;
             return {
@@ -104,11 +104,11 @@ export default function useUser() {
    };
 
    const accountVerifyResend = async (): Promise<boolean> => {
-      setErrors(null);
       try {
          const { status } = await axiosPrivate.post('/user/verify/resend/', {
             email: user?.email,
          });
+         setErrors(null);
          return status === 200 ? true : false;
       } catch (error) {
          error instanceof AxiosError &&
@@ -119,7 +119,6 @@ export default function useUser() {
    };
 
    const register = async (data: RegisterProps): Promise<boolean> => {
-      setErrors(null);
       try {
          const { status } = await axiosService.post('/auth/register/', {
             username: data.username,
@@ -127,6 +126,7 @@ export default function useUser() {
             password: data.password,
             confirm_password: data.confirm_password,
          });
+         setErrors(null);
          return status === 201 ? true : false;
       } catch (error) {
          error instanceof AxiosError &&
@@ -137,9 +137,9 @@ export default function useUser() {
    };
 
    const updateProfile = async (profile: ProfileProps): Promise<boolean> => {
-      setErrors(null);
       try {
          const { data, status } = await axiosPrivate.post('/user/profile/update/', profile);
+         setErrors(null);
          setUser((prevState) => {
             if (!prevState) return undefined;
             return {
@@ -157,9 +157,9 @@ export default function useUser() {
    };
 
    const deleteAvatar = async (): Promise<boolean> => {
-      setErrors(null);
       try {
          const { data, status } = await axiosPrivate.post('/user/avatar/delete/');
+         setErrors(null);
          setUser((prevState) => {
             if (!prevState) return undefined;
             return {
@@ -180,7 +180,6 @@ export default function useUser() {
    };
 
    const updateAvatar = async (avatar: AvatarProps): Promise<boolean> => {
-      setErrors(null);
       try {
          const formData = new FormData();
          formData.append('avatar', avatar);
@@ -189,6 +188,7 @@ export default function useUser() {
                'Content-Type': 'multipart/form-data',
             },
          });
+         setErrors(null);
          setUser((prevState) => {
             if (!prevState) return undefined;
             return {
@@ -209,9 +209,9 @@ export default function useUser() {
    };
 
    const changePassword = async (passwords: ChangePasswordProps): Promise<boolean> => {
-      setErrors(null);
       try {
          const { status } = await axiosPrivate.post('/user/password/change/', passwords);
+         setErrors(null);
          if (status === 200) {
             logout();
             return true;
@@ -226,9 +226,9 @@ export default function useUser() {
    };
 
    const changeEmail = async (emails: ChangeEmailProps): Promise<boolean> => {
-      setErrors(null);
       try {
          const { status } = await axiosPrivate.post('/user/email/change/', emails);
+         setErrors(null);
          if (status === 200) {
             logout();
             return true;
@@ -243,9 +243,9 @@ export default function useUser() {
    };
 
    const updateSignature = async (signature: SignatureProps): Promise<boolean> => {
-      setErrors(null);
       try {
          const { data, status } = await axiosPrivate.post('/user/signature/update/', signature);
+         setErrors(null);
          setUser((prevState) => {
             if (!prevState) return undefined;
             return {
@@ -266,11 +266,10 @@ export default function useUser() {
    };
 
    const getLastLoginRecords = async (): Promise<LoginRecordsProps> => {
-      setErrors(null);
       try {
          const { data, status } = await axiosPrivate.get('/user/last-login-records/');
-         if (status === 200) return data;
-         return [];
+         setErrors(null);
+         return status === 200 ? data : [];
       } catch (error) {
          error instanceof AxiosError &&
             error.response?.status !== 500 &&
@@ -281,10 +280,9 @@ export default function useUser() {
 
    const getBlockedUsers = async (): Promise<BlockedUsersProps> => {
       try {
-         setErrors(null);
          const { data, status } = await axiosPrivate.get('/user/blocked-users/');
-         if (status === 200) return data;
-         return [];
+         setErrors(null);
+         return status === 200 ? data : [];
       } catch (error) {
          error instanceof AxiosError &&
             error.response?.status !== 500 &&
@@ -296,12 +294,12 @@ export default function useUser() {
    const blockUserByUsername = async (
       username: BlockedUserProps,
    ): Promise<BlockedUserReturnProps> => {
-      setErrors(null);
       try {
          const { data, status } = await axiosPrivate.post(
             '/user/block-user-by-username/',
             username,
          );
+         setErrors(null);
          return status === 200 ? data : false;
       } catch (error) {
          error instanceof AxiosError &&
@@ -314,12 +312,12 @@ export default function useUser() {
    const unBlockUserByUsername = async (
       username: BlockedUserProps,
    ): Promise<BlockedUserProps | boolean> => {
-      setErrors(null);
       try {
          const { data, status } = await axiosPrivate.post(
             '/user/unblock-user-by-username/',
             username,
          );
+         setErrors(null);
          return status === 200 ? data : false;
       } catch (error) {
          error instanceof AxiosError &&
@@ -331,8 +329,8 @@ export default function useUser() {
 
    const getUserFriends = async (): Promise<FriendsProps> => {
       try {
-         setErrors(null);
          const { data, status } = await axiosPrivate.get('/user/friends/');
+         setErrors(null);
          if (status === 200) return data;
          return [];
       } catch (error) {
@@ -344,12 +342,12 @@ export default function useUser() {
    };
 
    const addFriendByUsername = async (username: FriendProps): Promise<FriendReturnProps> => {
-      setErrors(null);
       try {
          const { data, status } = await axiosPrivate.post(
             '/user/add-friend-by-username/',
             username,
          );
+         setErrors(null);
          return status === 200 ? data : false;
       } catch (error) {
          error instanceof AxiosError &&
@@ -360,12 +358,12 @@ export default function useUser() {
    };
 
    const removeFriendByUsername = async (username: FriendProps): Promise<FriendProps | boolean> => {
-      setErrors(null);
       try {
          const { data, status } = await axiosPrivate.post(
             '/user/remove-friend-by-username/',
             username,
          );
+         setErrors(null);
          return status === 200 ? data : false;
       } catch (error) {
          error instanceof AxiosError &&

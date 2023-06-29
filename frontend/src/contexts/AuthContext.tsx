@@ -1,9 +1,8 @@
-import { Dispatch, SetStateAction, createContext, useMemo, useState, useEffect } from 'react';
+import { Dispatch, SetStateAction, createContext, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { axiosService } from 'api/axios/axios';
 import { setAxiosPrivateHeaders, useAxiosPrivate } from 'hooks/useAxiosPrivate';
 import { ReactChildrenProps, UserProps } from 'types';
-import { User_info } from 'fake-api/User_info';
 
 type LoginFunctionProps = {
    (email: string, password: string): Promise<void>;
@@ -30,14 +29,6 @@ export const AuthProvider = ({ children }: ReactChildrenProps) => {
    const [user, setUser] = useState<UserProps>();
    const [accessToken, setAccessToken] = useState<string>();
    const [csrfToken, setCsrfToken] = useState<string>();
-
-   useEffect(() => {
-      if (import.meta.env.VITE_FAKE_API === 'true') {
-         setUser(User_info);
-         setAccessToken('1');
-         setCsrfToken('1');
-      }
-   }, []);
 
    const login: LoginFunctionProps = async (email, password) => {
       const { data, headers } = await axiosService.post('/auth/token/', {
