@@ -9,7 +9,7 @@ export type KeyValue = {
 };
 
 export type UserProps = {
-   id: number;
+   id: string;
    email: string;
    username: string;
    is_active: boolean;
