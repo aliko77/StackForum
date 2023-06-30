@@ -10,6 +10,7 @@ import { HiOutlineAdjustmentsHorizontal } from 'react-icons/hi2';
 import { TbClockPin, TbEdit, TbShieldCheck } from 'react-icons/tb';
 import { MdOutlineCameraswitch } from 'react-icons/md';
 import { PiSignatureDuotone } from 'react-icons/pi';
+import { BsStars } from 'react-icons/bs';
 
 export const HeaderPopOver = () => {
    const { user } = useAuth();
@@ -42,6 +43,17 @@ export const HeaderPopOver = () => {
                            <div className="text-sm text-gray-900 dark:text-gray-100 font-semibold">
                               {user?.username}
                            </div>
+                           {user?.auth_groups && (
+                              <div className="flex my-1">
+                                 <BsStars
+                                    className="text-secondary-500 dark:text-primary-500"
+                                    size="16px"
+                                 />
+                                 <div className="mx-2 text-sm text-secondary-500 dark:text-primary-500 italic font-semibold">
+                                    [ {user?.auth_groups[0]} ]
+                                 </div>
+                              </div>
+                           )}
                            <div className="text-xs flex items-center mt-1">
                               <div className="text-gray-500 dark:text-gray-100 mr-1">
                                  <TbClockPin size="16px" />

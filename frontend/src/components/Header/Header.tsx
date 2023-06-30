@@ -9,8 +9,8 @@ import { Avatar, StatusIcon } from 'components/Profile';
 import { HiOutlineHome, HiOutlineMegaphone } from 'react-icons/hi2';
 import { BsChatRightDots, BsPersonCheck, BsPersonPlus } from 'react-icons/bs';
 import classNames from 'classnames';
-import { TbShieldLock } from 'react-icons/tb';
 import PERMISSIONS from 'permissions/Permissions';
+import { AdminPopover } from 'components/AdminPopover';
 
 export const Header: FC = () => {
    const { user } = useAuth();
@@ -28,7 +28,7 @@ export const Header: FC = () => {
                            size="20px"
                         />
                      </div>
-                     <div className="p-2 mx-1 max-sm:mr-0 bg-white dark:bg-night-800 border dark:border-gray-500 shadow rounded-full">
+                     <div className="p-2 mx-1 bg-white dark:bg-night-800 border dark:border-gray-500 shadow rounded-full">
                         <ThemeSwitcher />
                      </div>
                      {user && (
@@ -40,11 +40,8 @@ export const Header: FC = () => {
                               />
                            </div>
                            {user.auth_groups.includes(PERMISSIONS.COMA) && (
-                              <div className="p-2 mx-1 max-sm:ml-2 bg-white dark:bg-night-800 border border-secondary-500 dark:border-primary-500 shadow rounded-full">
-                                 <TbShieldLock
-                                    className="text-gray-500 hover:text-secondary-400 dark:text-gray-400 dark:hover:text-primary-500"
-                                    size="20px"
-                                 />
+                              <div className="mx-1">
+                                 <AdminPopover />
                               </div>
                            )}
                            <div className="hidden sm:block mx-4">
