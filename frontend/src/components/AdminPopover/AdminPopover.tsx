@@ -2,8 +2,7 @@ import { Popover, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 import { TbShieldLock } from 'react-icons/tb';
-import { BsCardHeading, BsStars } from 'react-icons/bs';
-import { Avatar } from 'components/Profile';
+import { BsCardHeading } from 'react-icons/bs';
 import { useAuth } from 'hooks/useAuth';
 
 export const AdminPopover = () => {
