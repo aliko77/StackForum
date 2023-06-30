@@ -1,22 +1,45 @@
 from django.urls import path
-from rest_framework.routers import SimpleRouter
 
 from .views import UserVerifyView, UserVerifyResendView, \
-    PasswordForgotView, PasswordResetView
-from .viewsets import UserViewSet
+    PasswordForgotView, PasswordResetView, \
+    UserMeView, ProfileUpdateView, \
+    ProfileAvatarUpdateView, ProfileAvatarDeleteView, \
+    UserChangePasswordView, UserChangeEmailView, \
+    ProfileSignatureUpdateView, \
+    UserLastLoginRecordsView, \
+    UserBlockUserView, \
+    UserFriendsView
 
-
-routes = SimpleRouter()
-
-routes.register(prefix='', viewset=UserViewSet, basename='user')
+# routes.register(prefix='', viewset=UserViewSet, basename='user')
 
 urlpatterns = [
+    # Kullanıcın etkinlikleri
+    path('@me/', UserMeView.as_view(), name='me-info'),
+    # Profil etkinlikleri
+    path('profile/update/', ProfileUpdateView.as_view(), name='profile-update'),
+    path('avatar/update/', ProfileAvatarUpdateView.as_view(), name='profile-avatar-update'),
+    path('avatar/delete/', ProfileAvatarDeleteView.as_view(), name='profile-avatar-delete'),
+    path('signature/update/', ProfileSignatureUpdateView.as_view(), name='profile-signature-update'),
+    path('password/change/', UserChangePasswordView.as_view(), name='user-change-password'),
+    path('email/change/', UserChangeEmailView.as_view(), name='user-change-email'),
+    
+    # Son Giriş etkinlikleri
+    path('last-login-records/', UserLastLoginRecordsView.as_view(), name='user-last-login-records-list'),
+    
+    # Kullanıcı Engelleme etkinlikleri
+    path('blocked-users/', UserBlockUserView.as_view(), name='user-block-user'),
+    
+    # Kullanıcı Arkadaşlar etkinlikleri
+    path('friends/', UserFriendsView.as_view(), name='user-friends'),
+    
+    
+    # Hesap doğrulama
     path('verify/', UserVerifyView.as_view(), name='verify'),
     path(
         'verify/resend/', UserVerifyResendView.as_view(),
         name='verify-resend'
     ),
+    # Şifre etkinlikleri
     path('password/reset/', PasswordResetView.as_view(), name='password-reset'),
     path('password/forgot/', PasswordForgotView.as_view(), name='password-forgot'),
-    *routes.urls
 ]
