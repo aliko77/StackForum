@@ -2,7 +2,7 @@ export const Topices_i_created = [
    {
       author: {
          name: '-ali',
-         profile_photo: 'http://localhost:8000/media/profile_pictures/jfm_20230604125503.jpg',
+         profile_photo: 'http://localhost:8000/media/profile_pictures/ali_20230630145709.jpg',
       },
       topic_title: 'Test Konu (FakeAPI)',
       icon: 'default',

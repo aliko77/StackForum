@@ -3,6 +3,7 @@ import { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 import { TbShieldLock } from 'react-icons/tb';
 import { BsCardHeading } from 'react-icons/bs';
+import { FaUserShield } from 'react-icons/fa';
 import { useAuth } from 'hooks/useAuth';
 
 export const AdminPopover = () => {
@@ -27,12 +28,15 @@ export const AdminPopover = () => {
          >
             <Popover.Panel className="z-10 absolute w-screen -right-14 sm:right-0 mt-3 sm:w-[380px] sm:rounded-t shadow bg-white dark:bg-night-900 border border-gray-300 dark:border-gray-600 whitespace-nowrap">
                <div className="overflow-hidden">
-                  <div className="relative flex flex-row flex-wrap h-full w-full m-0 float-none">
-                     <div className="w-full border-y border-gray-300 h-10 leading-10 text-sm font-500 text-center px-4">
-                        <span className="text-gray-900 dark:text-gray-100">Admin Panel</span>
+                  <div className="relative flex flex-wrap h-full w-full m-0 float-none">
+                     <div className="w-full border-b border-gray-300 h-10 leading-10 text-sm font-500 text-center px-4">
+                        <div className="flex items-center justify-center space-x-3 text-gray-900 dark:text-gray-100">
+                           <FaUserShield size="20px" />
+                           <p>Admin Panel</p>
+                        </div>
                      </div>
                      <div className="w-full text-sm">
-                        <Popover.Button as={NavLink} to="/admin/ana-konu-basliklari/">
+                        <Popover.Button as={NavLink} to="/admin/ana-konu-basliklari">
                            <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600 bg-white hover:bg-gray-200 dark:bg-night-800 dark:hover:bg-gray-900 dark:text-gray-100 dark:hover:text-primary-400">
                               <div>
                                  <BsCardHeading

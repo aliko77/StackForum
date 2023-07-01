@@ -39,7 +39,8 @@ export const Header: FC = () => {
                                  size="20px"
                               />
                            </div>
-                           {user.auth_groups.includes(PERMISSIONS.COMA) && (
+                           {(user.auth_groups.includes(PERMISSIONS.COMA) ||
+                              user.auth_groups.includes(PERMISSIONS.MOD)) && (
                               <div className="mx-1">
                                  <AdminPopover />
                               </div>

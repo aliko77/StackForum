@@ -1,11 +1,11 @@
 type PermissionsProps = {
-   COMA: string;
+   COMA: 'COMA';
+   MOD: 'MOD';
 };
 
-const DEFAULT_VALUE = null;
-
 const PERMISSIONS = {
-   COMA: import.meta.env.VITE_APP_PERMISSIONS_COMA || DEFAULT_VALUE,
+   COMA: 'COMA',
+   MOD: 'MOD',
 } as PermissionsProps;
 
 export default PERMISSIONS;

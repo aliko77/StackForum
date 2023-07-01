@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { PageLoading } from 'components/PageLoading';
 import { GuestRoute, PrivateRoute } from 'routes/GuardRoutes';
 import Layout from 'layouts/Layout';
+import { admin_routes } from './AdminRouter';
 
 const Login = lazy(() => import('pages/Login'));
 const Register = lazy(() => import('pages/Register'));
@@ -23,7 +24,7 @@ const SocialFriends = lazy(() => import('pages/Social/Friends'));
 //404
 const PageNotFound = lazy(() => import('pages/PageNotFound'));
 
-type RouteProps = {
+export type RouteProps = {
    path: string;
    element: ReactNode;
 };
@@ -92,6 +93,7 @@ const routes: RouteProps[] = [
       path: 'sosyal/arkadaslar/',
       element: getRouteElement(() => <PrivateRoute>{<SocialFriends />}</PrivateRoute>),
    },
+   ...admin_routes,
    { path: '*', element: getRouteElement(PageNotFound) },
 ];
 

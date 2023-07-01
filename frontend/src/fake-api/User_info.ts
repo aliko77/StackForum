@@ -7,7 +7,7 @@ export const User_info = {
    date_joined: '2023-06-03T18:49:57.010314+03:00',
    last_login: '2023-06-29T10:52:45.551830+03:00',
    profile: {
-      avatar: 'http://localhost:8000/media/profile_pictures/jfm_20230604125503.jpg',
+      avatar: 'http://localhost:8000/media/profile_pictures/ali_20230630145709.jpg',
       dob: '2002-11-09',
       dob_privacy: 'age',
       city: 'Ankara',
