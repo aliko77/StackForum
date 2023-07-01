@@ -17,6 +17,7 @@ export type UserProps = {
    last_login: string;
    date_joined: string;
    profile?: ProfileProps;
+   is_staff: boolean;
    auth_groups: Array<string>;
 };
 

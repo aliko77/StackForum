@@ -43,7 +43,7 @@ export const HeaderPopOver = () => {
                            <div className="text-sm text-gray-900 dark:text-gray-100 font-semibold">
                               {user?.username}
                            </div>
-                           {user?.auth_groups && (
+                           {user && user.auth_groups.length > 0 && (
                               <div className="flex my-1">
                                  <BsStars
                                     className="text-secondary-500 dark:text-primary-500"

@@ -5,18 +5,15 @@ import Layout from 'layouts/Layout';
 import { Authorization, PrivateRoute } from './GuardRoutes';
 import MainTopics from 'pages/Admin/MainTopics';
 import PERMISSIONS from 'permissions/Permissions';
-import AdminPanel from 'layouts/AdminPanel';
 import AdminHome from 'pages/Admin';
 
-const getAdminRouteElement = (Component: ElementType, permissions?: string[]): ReactElement => (
+const getAdminRouteElement = (Component: ElementType, permissions: string[] = []): ReactElement => (
    <Suspense fallback={<PageLoading />}>
       <Layout>
          <PrivateRoute>
-            <AdminPanel>
-               <Authorization permissions={permissions}>
-                  <Component />
-               </Authorization>
-            </AdminPanel>
+            <Authorization permissions={permissions}>
+               <Component />
+            </Authorization>
          </PrivateRoute>
       </Layout>
    </Suspense>
@@ -24,11 +21,11 @@ const getAdminRouteElement = (Component: ElementType, permissions?: string[]): R
 
 export const admin_routes: RouteProps[] = [
    {
-      path: 'admin/',
-      element: getAdminRouteElement(() => <AdminHome />, [PERMISSIONS.MOD]),
+      path: 'admin/dashboard/',
+      element: getAdminRouteElement(() => <AdminHome />),
    },
    {
       path: 'admin/ana-konu-basliklari/',
-      element: getAdminRouteElement(() => <MainTopics />),
+      element: getAdminRouteElement(() => <MainTopics />, [PERMISSIONS.MOD]),
    },
 ];

@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { TbShieldLock } from 'react-icons/tb';
 import { BsCardHeading } from 'react-icons/bs';
 import { FaUserShield } from 'react-icons/fa';
+import { RiDashboard3Line } from 'react-icons/ri';
 import { useAuth } from 'hooks/useAuth';
 
 export const AdminPopover = () => {
@@ -36,6 +37,19 @@ export const AdminPopover = () => {
                         </div>
                      </div>
                      <div className="w-full text-sm">
+                        <Popover.Button as={NavLink} to="/admin/dashboard">
+                           <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600 bg-white hover:bg-gray-200 dark:bg-night-800 dark:hover:bg-gray-900 dark:text-gray-100 dark:hover:text-primary-400">
+                              <div>
+                                 <RiDashboard3Line
+                                    className="text-secondary-500 dark:text-primary-400"
+                                    size="20px"
+                                 />
+                              </div>
+                              <div>
+                                 <span>Dashboard</span>
+                              </div>
+                           </div>
+                        </Popover.Button>
                         <Popover.Button as={NavLink} to="/admin/ana-konu-basliklari">
                            <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600 bg-white hover:bg-gray-200 dark:bg-night-800 dark:hover:bg-gray-900 dark:text-gray-100 dark:hover:text-primary-400">
                               <div>

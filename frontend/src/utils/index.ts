@@ -31,3 +31,7 @@ export const Toast = withReactContent(Swal).mixin({
 });
 
 export const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+export function hasMatchingElements<T>(search: T[], find: T[]): boolean {
+   return search.some((element) => find.includes(element));
+}

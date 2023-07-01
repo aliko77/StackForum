@@ -9,7 +9,7 @@ type LoginFunctionProps = {
 };
 
 type AuthContextProps = {
-   user: UserProps | undefined;
+   user?: UserProps;
    setUser: Dispatch<SetStateAction<UserProps | undefined>>;
    accessToken?: string;
    setAccessToken: Dispatch<SetStateAction<string | undefined>>;

@@ -11,6 +11,7 @@ import { BsChatRightDots, BsPersonCheck, BsPersonPlus } from 'react-icons/bs';
 import classNames from 'classnames';
 import PERMISSIONS from 'permissions/Permissions';
 import { AdminPopover } from 'components/AdminPopover';
+import { hasMatchingElements } from 'utils';
 
 export const Header: FC = () => {
    const { user } = useAuth();
@@ -39,8 +40,11 @@ export const Header: FC = () => {
                                  size="20px"
                               />
                            </div>
-                           {(user.auth_groups.includes(PERMISSIONS.COMA) ||
-                              user.auth_groups.includes(PERMISSIONS.MOD)) && (
+                           {(user.is_staff ||
+                              hasMatchingElements(user.auth_groups, [
+                                 PERMISSIONS.COMA,
+                                 PERMISSIONS.MOD,
+                              ])) && (
                               <div className="mx-1">
                                  <AdminPopover />
                               </div>

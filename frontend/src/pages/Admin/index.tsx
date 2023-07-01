@@ -1,9 +1,12 @@
+import AdminPanel from 'layouts/AdminPanel';
 import { FC } from 'react';
 
 const Admin: FC = () => {
    return (
       <>
-         <div>Admin</div>
+         <AdminPanel>
+            <div>Admin</div>
+         </AdminPanel>
       </>
    );
 };
