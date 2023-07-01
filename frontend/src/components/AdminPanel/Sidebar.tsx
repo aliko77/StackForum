@@ -16,7 +16,7 @@ export const Sidebar: FC = () => {
       <>
          <aside className="sidebar w-full sm:w-[240px]">
             <div className="p-3 flex justify-between items-center  bg-gray-200 dark:bg-night-900 rounded-t border-b border-b-gray-500">
-               <NavLink to={'/admin'}>
+               <NavLink to={'/admin/dashboard'}>
                   <h1 className="text-secondary-500 dark:text-primary-400 font-500 uppercase">
                      Admin Paneli
                   </h1>

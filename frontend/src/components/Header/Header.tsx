@@ -41,10 +41,7 @@ export const Header: FC = () => {
                               />
                            </div>
                            {(user.is_staff ||
-                              hasMatchingElements(user.auth_groups, [
-                                 PERMISSIONS.COMA,
-                                 PERMISSIONS.MOD,
-                              ])) && (
+                              hasMatchingElements(user.auth_groups, [PERMISSIONS.MOD])) && (
                               <div className="mx-1">
                                  <AdminPopover />
                               </div>

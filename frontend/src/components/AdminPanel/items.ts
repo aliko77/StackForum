@@ -1,6 +1,9 @@
+import PERMISSIONS from 'permissions/Permissions';
+
 type SubItemProps = {
    name: string;
    link: string;
+   permissions: string[];
 };
 
 export type ItemProps = {
@@ -17,6 +20,7 @@ export const items: ItemProps[] = [
          {
             name: 'Ana Konu Başlıkları',
             link: '/admin/ana-konu-basliklari',
+            permissions: [PERMISSIONS.MOD],
          },
       ],
    },
