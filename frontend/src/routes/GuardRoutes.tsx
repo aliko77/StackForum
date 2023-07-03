@@ -29,15 +29,11 @@ export const GuestRoute = ({ children }: PrivateRouteProps) => {
 };
 
 export const Authorization = ({ permissions, children }: AuthorizationProps) => {
-   const { user } = useAuth();
+   const { user, isAllow } = useAuth();
    const location = useLocation();
 
    if (user) {
-      const userpermission = user.auth_groups;
-      const isAllowed =
-         user.is_staff ||
-         (userpermission.length > 0 &&
-            permissions?.some((allowed) => userpermission.includes(allowed)));
+      const isAllowed = isAllow(permissions);
       return isAllowed ? children : <Unauthorized />;
    }
    return <Navigate to="/login" state={{ path: location.pathname }} replace />;

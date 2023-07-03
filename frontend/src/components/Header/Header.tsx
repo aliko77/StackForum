@@ -39,7 +39,7 @@ export const Header: FC = () => {
                                  size="20px"
                               />
                            </div>
-                           {isAllow([PERMISSIONS.MOD]) && (
+                           {isAllow([PERMISSIONS.MOD, PERMISSIONS.COMA]) && (
                               <div className="mx-1">
                                  <AdminPopover />
                               </div>
