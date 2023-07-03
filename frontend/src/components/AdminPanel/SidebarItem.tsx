@@ -4,7 +4,6 @@ import { Disclosure } from '@headlessui/react';
 import { NavLink } from 'react-router-dom';
 import { HiArrowRight, HiChevronUp } from 'react-icons/hi2';
 import classNames from 'classnames';
-import { hasMatchingElements } from 'utils';
 import { useAuth } from 'hooks/useAuth';
 
 type Props = {
@@ -12,7 +11,7 @@ type Props = {
 };
 
 export const SidebarItem: FC<Props> = ({ item }) => {
-   const { user } = useAuth();
+   const { isAllow } = useAuth();
    return (
       <Disclosure defaultOpen>
          <div>
@@ -27,8 +26,7 @@ export const SidebarItem: FC<Props> = ({ item }) => {
             <Disclosure.Panel className="w-full bg-gray-200 dark:bg-night-800" as="ul">
                {item.sublinks?.map(
                   (item, index) =>
-                     user &&
-                     (user.is_staff || hasMatchingElements(user.auth_groups, item.permissions)) && (
+                     isAllow(item.permissions) && (
                         <li key={index} className="border-b border-gray-300 dark:border-gray-500">
                            <NavLink
                               to={item.link}

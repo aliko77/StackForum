@@ -17,6 +17,7 @@ type AuthContextProps = {
    setCsrfToken: Dispatch<SetStateAction<string | undefined>>;
    login: LoginFunctionProps;
    logout: () => void;
+   isAllow: (perms: string[]) => boolean;
 };
 
 export const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
@@ -60,9 +61,16 @@ export const AuthProvider = ({ children }: ReactChildrenProps) => {
       }
    };
 
+   const isAllow = (perms: string[]) => {
+      if (!user) return false;
+      if (user.is_staff) return true;
+      return perms.some((element) => user.auth_groups.includes(element));
+   };
+
    const value = useMemo(() => {
       return {
          user,
+         isAllow,
          setUser,
          accessToken,
          setAccessToken,
