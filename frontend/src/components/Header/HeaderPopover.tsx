@@ -1,5 +1,4 @@
 import { Popover, Transition } from '@headlessui/react';
-import Button from 'components/Button';
 import { LogoutButton } from 'components/LogoutButton';
 import { Avatar, StatusIcon } from 'components/Profile';
 import { useAuth } from 'hooks/useAuth';
@@ -126,7 +125,7 @@ export const HeaderPopOver = () => {
                            </div>
                         </Popover.Button>
                         <Popover.Button as={NavLink} to="/profil/imza/">
-                           <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600 bg-white hover:bg-gray-200 dark:bg-night-800 dark:hover:bg-gray-900 dark:text-gray-100 dark:hover:text-primary-400">
+                           <div className="p-3 flex items-center space-x-3 bg-white hover:bg-gray-200 dark:bg-night-800 dark:hover:bg-gray-900 dark:text-gray-100 dark:hover:text-primary-400">
                               <div className="text-gray-900 dark:text-gray-400">
                                  <PiSignatureDuotone
                                     className="text-secondary-500 dark:text-primary-400"
@@ -138,18 +137,6 @@ export const HeaderPopOver = () => {
                               </div>
                            </div>
                         </Popover.Button>
-                     </div>
-                     <div className="w-full">
-                        <div className="py-2 px-1 flex justify-evenly">
-                           <div>
-                              <Button>Abonelikler</Button>
-                           </div>
-                           <div>
-                              <Popover.Button as={NavLink} to="/sosyal/arkadaslar/">
-                                 <Button>Sosyal Ağ</Button>
-                              </Popover.Button>
-                           </div>
-                        </div>
                      </div>
                   </div>
                </div>

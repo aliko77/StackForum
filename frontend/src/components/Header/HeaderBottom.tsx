@@ -1,12 +1,11 @@
 import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
-   HiOutlineArrowTrendingUp,
    HiOutlineChatBubbleBottomCenterText,
    HiOutlineCog,
-   HiOutlineNewspaper,
    HiOutlineUserCircle,
 } from 'react-icons/hi2';
+import { RiQuestionnaireLine } from 'react-icons/ri';
 
 export const HeaderBottom: FC = () => {
    return (
@@ -36,24 +35,13 @@ export const HeaderBottom: FC = () => {
                   </div>
                </NavLink>
                <div>
-                  <div className="flex items-center text-sm text-gray-800 dark:text-gray-300">
-                     <HiOutlineArrowTrendingUp
-                        className="text-secondary-500 dark:text-primary-500"
-                        size="20px"
-                     />
-                     <span className="mx-1.5 hover:text-secondary-600 dark:hover:text-primary-500">
-                        Popüler Konular
-                     </span>
-                  </div>
-               </div>
-               <div>
                   <div className="flex items-center text-sm text-gray-800 dark:text-gray-300 hover:text-secondary-600 dark:hover:text-primary-500">
-                     <HiOutlineNewspaper
+                     <RiQuestionnaireLine
                         className="text-secondary-500 dark:text-primary-500"
                         size="20px"
                      />
                      <span className="mx-1.5 hover:text-secondary-600 dark:hover:text-primary-500">
-                        Yeni Konular
+                        Sorular
                      </span>
                   </div>
                </div>
@@ -64,7 +52,7 @@ export const HeaderBottom: FC = () => {
                         size="20px"
                      />
                      <span className="mx-1.5 hover:text-secondary-600 dark:hover:text-primary-500">
-                        Yeni Mesajlar
+                        Başlıklar
                      </span>
                   </div>
                </div>

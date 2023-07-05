@@ -50,7 +50,7 @@ export const AdminPopover = () => {
                               </div>
                            </div>
                         </Popover.Button>
-                        <Popover.Button as={NavLink} to="/admin/ana-konu-basliklari">
+                        <Popover.Button as={NavLink} to="/admin/konu-etiketleri">
                            <div className="p-3 flex items-center space-x-3 border-b border-gray-300 dark:border-gray-600 bg-white hover:bg-gray-200 dark:bg-night-800 dark:hover:bg-gray-900 dark:text-gray-100 dark:hover:text-primary-400">
                               <div>
                                  <BsCardHeading
@@ -59,7 +59,7 @@ export const AdminPopover = () => {
                                  />
                               </div>
                               <div>
-                                 <span>Ana Konu Başlıkları</span>
+                                 <span>Konu Etiketleri</span>
                               </div>
                            </div>
                         </Popover.Button>

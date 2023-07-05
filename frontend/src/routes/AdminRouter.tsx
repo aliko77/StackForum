@@ -25,7 +25,7 @@ export const admin_routes: RouteProps[] = [
       element: getAdminRouteElement(() => <AdminHome />, [PERMISSIONS.COMA]),
    },
    {
-      path: 'admin/ana-konu-basliklari/',
+      path: 'admin/konu-etiketleri/',
       element: getAdminRouteElement(() => <MainTopics />, [PERMISSIONS.COMA, PERMISSIONS.MOD]),
    },
 ];

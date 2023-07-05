@@ -9,7 +9,7 @@ const ControlPanel = () => {
          <div className="w-full mb-4">
             <div className="bg-night-900 p-2 rounded-t">
                <p className="text-base font-500 tracking-wide text-primary-500">
-                  Açtığınız Konular
+                  Sorduğunuz Sorular
                </p>
             </div>
             <Topics topics={Topices_i_created} />
