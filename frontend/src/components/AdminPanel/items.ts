@@ -18,8 +18,8 @@ export const items: ItemProps[] = [
       submenu: true,
       sublinks: [
          {
-            name: 'Ana Konu Başlıkları',
-            link: '/admin/ana-konu-basliklari',
+            name: 'Konu Etiketleri',
+            link: '/admin/konu-etiketleri',
             permissions: [PERMISSIONS.MOD],
          },
       ],

@@ -21,9 +21,9 @@ export const SidebarItem: FC<Props> = ({ item }) => {
                   <HiChevronUp className="text-secondary-500 dark:text-primary-400" size="16px" />
                </div>
             </Disclosure.Button>
-            <Disclosure.Panel className="w-full bg-gray-200 dark:bg-night-800" as="ul">
+            <Disclosure.Panel className="w-full" as="ul">
                {item.sublinks?.map((item, index) => (
-                  <li key={index} className="border-b border-gray-300 dark:border-gray-500">
+                  <li key={index}>
                      <NavLink
                         to={item.link}
                         end
@@ -35,10 +35,11 @@ export const SidebarItem: FC<Props> = ({ item }) => {
                               'items-center',
                               'space-x-2',
                               'hover:bg-gray-300',
-                              'dark:hover:bg-gray-900',
+                              'dark:hover:bg-night-600',
                               {
                                  'bg-gray-300': isActive,
-                                 'dark:bg-gray-900': isActive,
+                                 'dark:bg-night-600': isActive,
+                                 'border-r-2 border-secondary-500 dark:border-primary-500': isActive,
                               },
                            )
                         }

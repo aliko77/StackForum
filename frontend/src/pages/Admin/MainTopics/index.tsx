@@ -7,16 +7,16 @@ import { Form, Formik } from 'formik';
 import { useMainTopics } from 'hooks/Admin/useMainTopics';
 import AdminPanel from 'layouts/AdminPanel';
 import { FC, useEffect, useState } from 'react';
-import { MainTopicHeaderProps } from 'types/Admin';
+import { TagNameProps } from 'types/Admin';
 import { Toast } from 'utils';
 import { object, string } from 'yup';
 
 const MainTopics: FC = () => {
    const { errors, isLoading, getMainTopicsHeaders } = useMainTopics();
-   const [records, setRecords] = useState<MainTopicHeaderProps[]>([]);
+   const [records, setRecords] = useState<TagNameProps[]>([]);
 
    const validationSchema = object({
-      topic_header: string().required('Bu alan zorunludur.'),
+      tag_name: string().required('Bu alan zorunludur.'),
    });
 
    useEffect(() => {
@@ -32,7 +32,7 @@ const MainTopics: FC = () => {
          <AdminPanel>
             <div className="bg-night-900 p-2 rounded-t">
                <p className="text-base font-semibold tracking-wide text-gray-100">
-                  Ana Konu Başlıkları
+                  Konu Etiketleri
                </p>
             </div>
             <div className="p-4 bg-gray-200 dark:bg-night-800">
@@ -43,14 +43,14 @@ const MainTopics: FC = () => {
                )}
                <div className="mb-4">
                   <Formik
-                     initialValues={{ topic_header: '' }}
+                     initialValues={{ tag_name: '' }}
                      validationSchema={validationSchema}
                      onSubmit={async (values, { resetForm }) => {
                         console.log(values);
 
                         resetForm();
                         Toast.fire({
-                           title: `Konu Başlığı Eklendi`,
+                           title: `Etiket Eklendi`,
                            icon: 'success',
                            timer: 2000,
                         });
@@ -67,20 +67,20 @@ const MainTopics: FC = () => {
                            <fieldset id="main-topics">
                               <legend className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">
                                  <p className="font-medium text-gray-900 dark:text-gray-100">
-                                    Yeni Konu Başlığı Ekle
+                                    Yeni Etiket Ekle
                                  </p>
                               </legend>
                               <div className="ml-4">
                                  <Field
-                                    label="Konu Başlığı"
+                                    label="Etiket"
                                     type="text"
-                                    id="topic_header"
-                                    name="topic_header"
-                                    placeholder="Konu başlığını giriniz."
+                                    id="tag_name"
+                                    name="tag_name"
+                                    placeholder="Etiketi giriniz."
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    value={values.topic_header}
-                                    errorMessage={formikErrors.topic_header}
+                                    value={values.tag_name}
+                                    errorMessage={formikErrors.tag_name}
                                  />
                                  <div className="mt-4">
                                     <div className="w-full sm:max-w-[8rem]">
@@ -107,10 +107,8 @@ const MainTopics: FC = () => {
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-900 dark:text-primary-400">
                            <tr>
                               <th scope="col" className="p-3">
-                                 Konu Başlığı
+                                 Etiket
                               </th>
-                              <th className="p-3">Alt Başlıklar</th>
-                              <th className="p-3">Açılan Konular</th>
                               <th className="p-3">Oluşturan</th>
                               <th className="p-3">Etkileşimler</th>
                            </tr>
@@ -124,8 +122,6 @@ const MainTopics: FC = () => {
                                  >
                                     #
                                  </th>
-                                 <td className="p-3">#</td>
-                                 <td className="p-3">#</td>
                                  <td className="p-3">#</td>
                                  <td className="p-3">#</td>
                               </tr>
@@ -143,23 +139,7 @@ const MainTopics: FC = () => {
                                     className="p-3 font-medium text-gray-900 dark:text-gray-100"
                                  >
                                     <div className="max-w-xs overflow-hidden text-ellipsis">
-                                       <span>{record.header}</span>
-                                    </div>
-                                 </td>
-                                 <td
-                                    scope="row"
-                                    className="p-3 font-medium text-gray-900 dark:text-gray-100"
-                                 >
-                                    <div className="max-w-xs overflow-hidden text-ellipsis">
-                                       <span>{record.total_subtopic_header}</span>
-                                    </div>
-                                 </td>
-                                 <td
-                                    scope="row"
-                                    className="p-3 font-medium text-gray-900 dark:text-gray-100"
-                                 >
-                                    <div className="max-w-xs overflow-hidden text-ellipsis">
-                                       <span>{record.total_opened_topics}</span>
+                                       <span>{record.name}</span>
                                     </div>
                                  </td>
                                  <td
@@ -172,7 +152,7 @@ const MainTopics: FC = () => {
                                  </td>
                                  <td className="p-3">
                                     <span
-                                       data-topic_header={record.header}
+                                       data-topic_header={record.name}
                                        // onClick={handleUnBlock}
                                        className="cursor-pointer font-medium text-secondary-600 dark:text-primary-500 hover:underline"
                                     >

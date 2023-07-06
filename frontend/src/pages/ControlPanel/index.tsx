@@ -1,5 +1,5 @@
 import ControlPanelLayout from 'layouts/ControlPanel';
-import { Topics } from 'components/Topics';
+import { Topics } from 'components/Questions';
 import { Topics_i_answered } from 'fake-api/Topices_i_answered';
 import { Topices_i_created } from 'fake-api/Topices_i_created';
 
