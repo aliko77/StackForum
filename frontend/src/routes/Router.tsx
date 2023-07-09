@@ -4,6 +4,7 @@ import { PageLoading } from 'components/PageLoading';
 import { GuestRoute, PrivateRoute } from 'routes/GuardRoutes';
 import Layout from 'layouts/Layout';
 import { admin_routes } from './AdminRouter';
+import { TopicTags } from 'pages/TopicTags';
 
 const Login = lazy(() => import('pages/Login'));
 const Register = lazy(() => import('pages/Register'));
@@ -92,6 +93,10 @@ const routes: RouteProps[] = [
    {
       path: 'sosyal/arkadaslar/',
       element: getRouteElement(() => <PrivateRoute>{<SocialFriends />}</PrivateRoute>),
+   },
+   {
+      path: 'etiketler/',
+      element: getRouteElement(TopicTags),
    },
    ...admin_routes,
    { path: '*', element: getRouteElement(PageNotFound) },

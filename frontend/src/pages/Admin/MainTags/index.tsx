@@ -11,7 +11,7 @@ import { TagNameProps } from 'types/Admin';
 import { Toast } from 'utils';
 import { object, string } from 'yup';
 
-const MainTopics: FC = () => {
+const MainTags: FC = () => {
    const { errors, isLoading, getMainTopicsHeaders } = useMainTopics();
    const [records, setRecords] = useState<TagNameProps[]>([]);
 
@@ -95,7 +95,7 @@ const MainTopics: FC = () => {
                </div>
                <div id="main-topics" className="overflow-auto">
                   <div className="w-full border-b pb-1 border-gray-400 dark:border-gray-500">
-                     <p className="font-medium text-gray-900 dark:text-gray-100">Konu Başlıkları</p>
+                     <p className="font-medium text-gray-900 dark:text-gray-100">Konu Etiketleri</p>
                   </div>
                   <div>
                      {!isLoading && (
@@ -171,4 +171,4 @@ const MainTopics: FC = () => {
    );
 };
 
-export default MainTopics;
+export default MainTags;

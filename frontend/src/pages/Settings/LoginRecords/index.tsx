@@ -25,7 +25,7 @@ const LoginLogs: FC = () => {
          <div className="w-full">
             <div className="bg-night-900 p-2 rounded-t">
                <p className="text-base font-semibold tracking-wide text-gray-100">
-                  Son Giriş Kaydı
+                  Son Giriş Kayıtları / Son 10
                </p>
             </div>
             <div className="bg-gray-200 dark:bg-night-800">

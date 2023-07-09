@@ -200,7 +200,7 @@ class UserLastLoginRecordsView(APIView):
     def get(self, request):
         user = self.request.user
         last_logins = UserLoginRecords.objects.filter(
-            user=user).order_by('-login_time')
+            user=user).order_by('-login_time')[:10]
         serializer = self.serializer_class(last_logins, many=True)
         return Response(serializer.data)
     

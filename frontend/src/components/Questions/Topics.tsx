@@ -47,7 +47,7 @@ export const Topics: FC<{ topics: TopicProps[] }> = ({ topics }) => {
                            {topic.last_activity.sender.name}
                         </div>
                      </li>
-                     <li className="max-md:hidden w-[160px] table-cell align-middle px-3 border-r border-secondary-500 dark:border-gray-600 text-center">
+                     <li className="max-md:hidden w-[160px] table-cell align-middle px-3 dark:border-gray-600 text-center">
                         <div className="mb-1 text-gray-700 font-semibold dark:text-gray-400">
                            Ana Konu
                         </div>
