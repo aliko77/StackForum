@@ -1,13 +1,15 @@
-import { ChangeEvent, FC, KeyboardEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
 import classNames from 'classnames';
 import { TopicTagProps } from 'types';
 import { TopicTags as rTopicTags } from 'fake-api/TopicTags';
 import { LoadSpinner } from 'components/LoadSpinner';
+import useDebounce from 'hooks/useDebounce';
 
 type sortingTypes = 'popular' | 'new';
 
 export const TopicTags: FC = () => {
+   const { debounce } = useDebounce();
    const [searchString, setSearchString] = useState<string>('');
    const [sorting, setSorting] = useState<sortingTypes>('popular');
    const [tag_records, setTag_records] = useState<TopicTagProps[] | null>(null);
@@ -18,11 +20,11 @@ export const TopicTags: FC = () => {
    }, []);
 
    useEffect(() => {
-      if (sorting === 'popular') {
-         const sortedTags = [...def_tag_records].sort((a, b) => b.total_Q - a.total_Q);
+      if (sorting === 'popular' && tag_records) {
+         const sortedTags = [...tag_records].sort((a, b) => b.total_Q - a.total_Q);
          setTag_records(sortedTags);
-      } else if (sorting === 'new') {
-         const sortedTags = [...def_tag_records].sort((a, b) => {
+      } else if (sorting === 'new' && tag_records) {
+         const sortedTags = [...tag_records].sort((a, b) => {
             const dateA = new Date(a.created_at).getTime();
             const dateB = new Date(b.created_at).getTime();
             return dateB - dateA;
@@ -31,21 +33,22 @@ export const TopicTags: FC = () => {
       }
    }, [sorting]);
 
-   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-      setSearchString(event.target.value);
-   };
-
-   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-      if (event.key === 'Enter') {
-         if (searchString.length > 0) {
-            const filteredTags = def_tag_records.filter((tag) =>
-               tag.name.toLowerCase().includes(searchString.toLowerCase()),
-            );
-            setTag_records(filteredTags);
-         } else {
-            setTag_records(def_tag_records);
-         }
+   const handleSearch = debounce((value) => {
+      if (searchString.length > 0) {
+         const filteredTags = def_tag_records.filter((tag) =>
+            tag.name.toLowerCase().includes(value.toLowerCase()),
+         );
+         setTag_records(filteredTags);
+      } else {
+         setTag_records(def_tag_records);
       }
+      setSorting('popular');
+   }, 500);
+
+   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+      const { value } = event.target;
+      setSearchString(value);
+      handleSearch(value); // debounce işlemi burada tetikleniyor
    };
 
    return (
@@ -64,12 +67,10 @@ export const TopicTags: FC = () => {
                      </div>
                      <input
                         type="text"
-                        name="tag-search"
-                        id="tag-search"
                         placeholder="Etikete göre ara"
                         className="block w-full pl-10 p-2 text-sm outline-none disabled:bg-gray-300 disabled:dark:bg-gray-800 bg-gray-50 dark:bg-night-700 border border-gray-300 text-gray-900 rounded-sm focus:ring-secondary-500 focus:border-secondary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-100 placeholder:text-sm"
+                        value={searchString}
                         onChange={handleChange}
-                        onKeyDown={handleKeyDown}
                      />
                   </div>
                </div>

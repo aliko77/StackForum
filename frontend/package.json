@@ -35,7 +35,6 @@
       "@typescript-eslint/parser": "^5.57.1",
       "@vitejs/plugin-react": "^4.0.0",
       "autoprefixer": "^10.4.14",
-      "cz-conventional-changelog": "^3.3.0",
       "eslint": "^8.42.0",
       "eslint-config-prettier": "^8.8.0",
       "eslint-config-standard-with-typescript": "^34.0.1",
@@ -51,10 +50,5 @@
       "typescript": "^5.0.4",
       "vite": "^4.3.2",
       "vite-tsconfig-paths": "^4.2.0"
-   },
-   "config": {
-      "commitizen": {
-         "path": "./node_modules/cz-conventional-changelog"
-      }
    }
 }
