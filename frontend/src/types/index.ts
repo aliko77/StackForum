@@ -59,3 +59,11 @@ export type FriendsProps = {
    avatar: string;
    friendship_at: string;
 }[];
+
+export type TopicTagProps = {
+   name: string;
+   description: string;
+   total_Q: number;
+   new_total_Q: number;
+   created_at: string;
+};

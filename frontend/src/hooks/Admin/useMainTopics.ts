@@ -1,13 +1,13 @@
 import { axiosPrivate } from 'api/axios';
 import { AxiosError } from 'axios';
 import { useState } from 'react';
-import { MainTopicHeaderProps } from 'types/Admin';
+import { TagNameProps } from 'types/Admin';
 
 export const useMainTopics = () => {
    const [errors, setErrors] = useState<null | string[]>(null);
    const [isLoading, setIsLoading] = useState<boolean>(false);
 
-   const getMainTopicsHeaders = async (): Promise<MainTopicHeaderProps[]> => {
+   const getMainTopicsHeaders = async (): Promise<TagNameProps[]> => {
       try {
          setIsLoading(false);
          setIsLoading(true);

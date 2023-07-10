@@ -9,6 +9,7 @@ export default {
          colors: {
             primary: colors.orange,
             secondary: colors.orange,
+            tertiary: colors.violet,
             night: {
                900: '#272838',
                800: '#36384D',

@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { PiChatsLight } from 'react-icons/pi';
 import { RxDotFilled } from 'react-icons/rx';
 import { GoFileDirectoryFill } from 'react-icons/go';
 import { HomeTopics as topics } from 'fake-api';
