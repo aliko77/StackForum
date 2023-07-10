@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'core',
     'core.auth',
     'core.user',
+    'core.topic_tags',
 ]
 
 MIDDLEWARE = [
