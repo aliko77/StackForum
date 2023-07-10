@@ -7,6 +7,7 @@ import { useTheme } from 'hooks/useTheme';
 import { StrictMode, useEffect } from 'react';
 import { PersistLogin } from 'routes/PersistLogin';
 import { ReactChildrenProps } from 'types';
+import background_dot from 'assets/images/dots.png';
 
 const Layout = ({ children }: ReactChildrenProps) => {
    const { theme } = useTheme();
@@ -26,7 +27,15 @@ const Layout = ({ children }: ReactChildrenProps) => {
             <PersistLogin>
                <Header />
                <StrictMode>
-                  <main className="content bg-white dark:bg-night-700">{children}</main>
+                  <main
+                     className="content bg-white dark:bg-night-700"
+                     style={{
+                        backgroundImage: `url(${background_dot})`,
+                        backgroundSize: 'contain',
+                     }}
+                  >
+                     {children}
+                  </main>
                   <ScrollButton />
                </StrictMode>
                <Footer />
