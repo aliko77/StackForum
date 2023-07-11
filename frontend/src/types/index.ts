@@ -66,4 +66,5 @@ export type TopicTagProps = {
    total_Q: number;
    new_total_Q: number;
    created_at: string;
+   creator: string;
 };

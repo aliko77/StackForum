@@ -4,27 +4,28 @@ import { Field } from 'components/Field';
 import { FormErrors } from 'components/FormErrors';
 import { LoadSpinner } from 'components/LoadSpinner';
 import { Form, Formik } from 'formik';
-import { useMainTopics } from 'hooks/Admin/useMainTopics';
+import { useTopicTags } from 'hooks/useTopicTags';
 import AdminPanel from 'layouts/AdminPanel';
 import { FC, useEffect, useState } from 'react';
-import { TagNameProps } from 'types/Admin';
+import { TopicTagProps } from 'types';
 import { Toast } from 'utils';
 import { object, string } from 'yup';
 
-const MainTags: FC = () => {
-   const { errors, isLoading, getMainTopicsHeaders } = useMainTopics();
-   const [records, setRecords] = useState<TagNameProps[]>([]);
+const TopicTags: FC = () => {
+   const { errors, isLoading, getTopicTags, addTopicTag } = useTopicTags();
+   const [records, setRecords] = useState<TopicTagProps[]>([]);
 
    const validationSchema = object({
-      tag_name: string().required('Bu alan zorunludur.'),
+      name: string().required('Bu alan zorunludur.'),
+      description: string().required('Bu alan zorunludur.'),
    });
 
    useEffect(() => {
-      const retrieveMainTopics = async () => {
-         const topics = await getMainTopicsHeaders();
+      const retrieveTopicTags = async () => {
+         const topics = await getTopicTags();
          setRecords(topics);
       };
-      retrieveMainTopics();
+      retrieveTopicTags();
    }, []);
 
    return (
@@ -43,17 +44,19 @@ const MainTags: FC = () => {
                )}
                <div className="mb-4">
                   <Formik
-                     initialValues={{ tag_name: '' }}
+                     initialValues={{ name: '', description: '' }}
                      validationSchema={validationSchema}
                      onSubmit={async (values, { resetForm }) => {
-                        console.log(values);
-
-                        resetForm();
-                        Toast.fire({
-                           title: `Etiket Eklendi`,
-                           icon: 'success',
-                           timer: 2000,
-                        });
+                        const data = await addTopicTag(values);
+                        if (typeof data === 'object') {
+                           resetForm();
+                           setRecords([data, ...records]);
+                           Toast.fire({
+                              title: `Etiket Eklendi`,
+                              icon: 'success',
+                              timer: 2000,
+                           });
+                        }
                      }}
                   >
                      {({
@@ -71,18 +74,33 @@ const MainTags: FC = () => {
                                  </p>
                               </legend>
                               <div className="ml-4">
-                                 <Field
-                                    label="Etiket"
-                                    type="text"
-                                    id="tag_name"
-                                    name="tag_name"
-                                    placeholder="Etiketi giriniz."
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    value={values.tag_name}
-                                    errorMessage={formikErrors.tag_name}
-                                 />
-                                 <div className="mt-4">
+                                 <div className="mb-3">
+                                    <Field
+                                       label="Etiket"
+                                       type="text"
+                                       id="name"
+                                       name="name"
+                                       placeholder="Etiketi giriniz."
+                                       onChange={handleChange}
+                                       onBlur={handleBlur}
+                                       value={values.name}
+                                       errorMessage={formikErrors.name}
+                                    />
+                                 </div>
+                                 <div className="mb-3">
+                                    <Field
+                                       label="Açıklama"
+                                       type="text"
+                                       id="description"
+                                       name="description"
+                                       placeholder="Etiketi giriniz."
+                                       onChange={handleChange}
+                                       onBlur={handleBlur}
+                                       value={values.description}
+                                       errorMessage={formikErrors.description}
+                                    />
+                                 </div>
+                                 <div className="mt-3">
                                     <div className="w-full sm:max-w-[8rem]">
                                        <Button type="submit">Kaydet</Button>
                                     </div>
@@ -109,6 +127,7 @@ const MainTags: FC = () => {
                               <th scope="col" className="p-3">
                                  Etiket
                               </th>
+                              <th className="p-3">Açıklama</th>
                               <th className="p-3">Oluşturan</th>
                               <th className="p-3">Etkileşimler</th>
                            </tr>
@@ -122,6 +141,7 @@ const MainTags: FC = () => {
                                  >
                                     #
                                  </th>
+                                 <td className="p-3">#</td>
                                  <td className="p-3">#</td>
                                  <td className="p-3">#</td>
                               </tr>
@@ -147,15 +167,19 @@ const MainTags: FC = () => {
                                     className="p-3 font-medium text-gray-900 dark:text-gray-100"
                                  >
                                     <div className="max-w-xs overflow-hidden text-ellipsis">
-                                       <span>{record.creator.username}</span>
+                                       <span>{record.description}</span>
+                                    </div>
+                                 </td>
+                                 <td
+                                    scope="row"
+                                    className="p-3 font-medium text-gray-900 dark:text-gray-100"
+                                 >
+                                    <div className="max-w-xs overflow-hidden text-ellipsis">
+                                       <span>{record.creator}</span>
                                     </div>
                                  </td>
                                  <td className="p-3">
-                                    <span
-                                       data-topic_header={record.name}
-                                       // onClick={handleUnBlock}
-                                       className="cursor-pointer font-medium text-secondary-600 dark:text-primary-500 hover:underline"
-                                    >
+                                    <span className="cursor-pointer font-medium text-secondary-600 dark:text-primary-500 hover:underline">
                                        Kaldır
                                     </span>
                                  </td>
@@ -171,4 +195,4 @@ const MainTags: FC = () => {
    );
 };
 
-export default MainTags;
+export default TopicTags;

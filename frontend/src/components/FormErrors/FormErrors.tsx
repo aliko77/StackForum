@@ -17,7 +17,7 @@ export const FormErrors: FC<FormErrorProps> = ({ errors }) => {
                   >
                      <HiOutlineInformationCircle size="1.5rem" />
                      <span className="sr-only">Info</span>
-                     <div className="flex flex-col mx-2">
+                     <div className="flex flex-col mx-2 justify-center">
                         <div>
                            <span>{value}</span>
                         </div>

@@ -2,21 +2,27 @@ import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
 import classNames from 'classnames';
 import { TopicTagProps } from 'types';
-import { TopicTags as rTopicTags } from 'fake-api/TopicTags';
 import { LoadSpinner } from 'components/LoadSpinner';
 import useDebounce from 'hooks/useDebounce';
+import { useTopicTags } from 'hooks/useTopicTags';
 
 type sortingTypes = 'popular' | 'new';
 
 export const TopicTags: FC = () => {
    const { debounce } = useDebounce();
+   const { getTopicTags, isLoading } = useTopicTags();
    const [searchString, setSearchString] = useState<string>('');
    const [sorting, setSorting] = useState<sortingTypes>('popular');
+   const [def_tag_records, setDef_tag_records] = useState<TopicTagProps[]>([]);
    const [tag_records, setTag_records] = useState<TopicTagProps[] | null>(null);
-   const def_tag_records: TopicTagProps[] = rTopicTags;
 
    useEffect(() => {
-      setTag_records(def_tag_records.sort((a, b) => b.total_Q - a.total_Q));
+      const retrieveTopicTags = async () => {
+         const topics: TopicTagProps[] = await getTopicTags();
+         setDef_tag_records(topics);
+         setTag_records(topics.sort((a, b) => b.total_Q - a.total_Q));
+      };
+      retrieveTopicTags();
    }, []);
 
    useEffect(() => {
@@ -48,7 +54,7 @@ export const TopicTags: FC = () => {
    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
       const { value } = event.target;
       setSearchString(value);
-      handleSearch(value); // debounce işlemi burada tetikleniyor
+      handleSearch(value);
    };
 
    return (
@@ -113,7 +119,7 @@ export const TopicTags: FC = () => {
                </div>
             </div>
             <div className="my-4">
-               {!tag_records && (
+               {!isLoading && (
                   <div>
                      <LoadSpinner />
                   </div>

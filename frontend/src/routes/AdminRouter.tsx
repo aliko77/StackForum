@@ -3,7 +3,7 @@ import { RouteProps } from './Router';
 import { PageLoading } from 'components/PageLoading';
 import Layout from 'layouts/Layout';
 import { Authorization, PrivateRoute } from './GuardRoutes';
-import MainTopics from 'pages/Admin/MainTags';
+import MainTopics from 'pages/Admin/TopicTags';
 import PERMISSIONS from 'permissions/Permissions';
 import AdminHome from 'pages/Admin';
 
