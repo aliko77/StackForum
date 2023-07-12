@@ -3,6 +3,7 @@ import Button from 'components/Button';
 import { Field } from 'components/Field';
 import { FormErrors } from 'components/FormErrors';
 import { LoadSpinner } from 'components/LoadSpinner';
+import Pagination from 'components/Pagination';
 import { Form, Formik } from 'formik';
 import { useTopicTags } from 'hooks/useTopicTags';
 import AdminPanel from 'layouts/AdminPanel';
@@ -12,9 +13,10 @@ import { NavLink } from 'react-router-dom';
 import { TopicTagProps } from 'types';
 import { Toast } from 'utils';
 import { object, string } from 'yup';
+
 const TopicTags: FC = () => {
    const { errors, isLoading, getTopicTags, addTopicTag } = useTopicTags();
-   const [records, setRecords] = useState<TopicTagProps[]>([]);
+   const [records, setRecords] = useState<TopicTagProps[] | undefined>([]);
 
    const validationSchema = object({
       name: string().required('Bu alan zorunludur.'),
@@ -23,8 +25,8 @@ const TopicTags: FC = () => {
 
    useEffect(() => {
       const retrieveTopicTags = async () => {
-         const topics = await getTopicTags();
-         setRecords(topics);
+         const response = await getTopicTags();
+         setRecords(response);
       };
       retrieveTopicTags();
    }, []);
@@ -47,7 +49,7 @@ const TopicTags: FC = () => {
                      validationSchema={validationSchema}
                      onSubmit={async (values, { resetForm }) => {
                         const data = await addTopicTag(values);
-                        if (typeof data === 'object') {
+                        if (typeof data === 'object' && records) {
                            resetForm();
                            setRecords([data, ...records]);
                            Toast.fire({
@@ -133,7 +135,7 @@ const TopicTags: FC = () => {
                         </tr>
                      </thead>
                      <tbody>
-                        {records.length == 0 && (
+                        {records?.length == 0 && (
                            <tr className="border-b bg-gray-200 dark:bg-night-900 dark:border-gray-700">
                               <th
                                  scope="row"
@@ -146,7 +148,7 @@ const TopicTags: FC = () => {
                               <td className="p-3">#</td>
                            </tr>
                         )}
-                        {records.map((record, index) => (
+                        {records?.map((record, index) => (
                            <tr
                               key={index}
                               className={classNames('border-b', 'dark:border-b-gray-700', {
@@ -192,6 +194,7 @@ const TopicTags: FC = () => {
                         ))}
                      </tbody>
                   </table>
+                  <Pagination count={8} />
                </div>
             </div>
          </div>

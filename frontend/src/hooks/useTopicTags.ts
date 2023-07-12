@@ -9,12 +9,19 @@ type addTopicTagProps = {
    description: string;
 };
 
+// type getTopicTagsProps = {
+//    count: number;
+//    next: string | null;
+//    previous: string | null;
+//    results: TopicTagProps[];
+// };
+
 export const useTopicTags = () => {
    const axiosPrivate = useAxiosPrivate();
    const [errors, setErrors] = useState<null | string[]>(null);
    const [isLoading, setIsLoading] = useState<boolean>(false);
 
-   const getTopicTags = async (): Promise<TopicTagProps[]> => {
+   const getTopicTags = async (): Promise<TopicTagProps[] | undefined> => {
       try {
          setIsLoading(true);
          const { data, status } = await axiosService.get('/topic-tags/');
@@ -24,7 +31,7 @@ export const useTopicTags = () => {
          error instanceof AxiosError &&
             error.response?.status !== 500 &&
             setErrors(error.response?.data);
-         return [];
+         return undefined;
       } finally {
          setIsLoading(false);
       }

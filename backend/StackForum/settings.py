@@ -154,12 +154,18 @@ CORS_ALLOWED_ORIGINS = [
     'https://alikoc.dev',
 ]
 CSRF_COOKIE_DOMAIN = None
-CORS_ALLOW_CREDENTIALS = True  # CORS isteklerinde kullanıcı kimlik bilgileri gönderilmesine izin verir
-CSRF_COOKIE_HTTPONLY = True  # CSRF cookie'sine JavaScript tarafından erişimi devre dışı bırakır
-CSRF_COOKIE_SECURE = False  # CSRF cookie'sini sadece HTTPS üzerinden iletilmesini sağlar
-SESSION_COOKIE_SECURE = False  # Oturum cookie'sini sadece HTTPS üzerinden iletilmesini sağlar
-CSRF_COOKIE_SAMESITE = 'Lax'  # CSRF cookie'sini yalnızca aynı site üzerindeki isteklere gönderir
-SESSION_COOKIE_SAMESITE = 'Lax'  # Oturum cookie'sini yalnızca aynı site üzerindeki isteklere gönderir
+# CORS isteklerinde kullanıcı kimlik bilgileri gönderilmesine izin verir
+CORS_ALLOW_CREDENTIALS = True
+# CSRF cookie'sine JavaScript tarafından erişimi devre dışı bırakır
+CSRF_COOKIE_HTTPONLY = True
+# CSRF cookie'sini sadece HTTPS üzerinden iletilmesini sağlar
+CSRF_COOKIE_SECURE = False
+# Oturum cookie'sini sadece HTTPS üzerinden iletilmesini sağlar
+SESSION_COOKIE_SECURE = False
+# CSRF cookie'sini yalnızca aynı site üzerindeki isteklere gönderir
+CSRF_COOKIE_SAMESITE = 'Lax'
+# Oturum cookie'sini yalnızca aynı site üzerindeki isteklere gönderir
+SESSION_COOKIE_SAMESITE = 'Lax'
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:5173',  # React uygulamasının yerel adresi
     'https://alikoc.dev',
@@ -168,7 +174,7 @@ CSRF_TRUSTED_ORIGINS = [
 CORS_EXPOSE_HEADERS = [
     'Content-Type',
     'Authorization',  # İsteğe bağlı olarak, kullanıcının yetkilendirme bilgilerini alabilirsiniz
-    'x-csrftoken', # csrftoken
+    'x-csrftoken',  # csrftoken
 ]
 
 SIMPLE_JWT = {
@@ -203,8 +209,9 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny'
-    ]
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
 }
 
 PROFILE_AVATAR_FILE = 'profile_pictures/default.jpg'
-AVATAR_MAX_FILE_SIZE = 3 * 1024 * 1024 # 3MB
+AVATAR_MAX_FILE_SIZE = 3 * 1024 * 1024  # 3MB
