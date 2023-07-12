@@ -22,6 +22,10 @@ class Tag(models.Model):
         db_table = "topic_tag"
         ordering = ['-created_at']
 
+    def save(self, *args, **kwargs):
+        self.name = self.name.lower().replace(' ', '-')
+        return super(Tag, self).save(*args, **kwargs)
+
     def __str__(self):
         return self.name
 
@@ -37,6 +41,10 @@ class TagSynonym(models.Model):
         verbose_name = "Etiket Eşanlamı"
         verbose_name_plural = "Etiket Eşanlamları"
         db_table = "topic_tag_synonym"
+
+    def save(self, *args, **kwargs):
+        self.name = self.name.lower()
+        return super(User, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name

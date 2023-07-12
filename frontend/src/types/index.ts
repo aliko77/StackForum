@@ -61,6 +61,7 @@ export type FriendsProps = {
 }[];
 
 export type TopicTagProps = {
+   id: number;
    name: string;
    description: string;
    total_Q: number;

@@ -7,12 +7,13 @@ import { Form, Formik } from 'formik';
 import { useTopicTags } from 'hooks/useTopicTags';
 import AdminPanel from 'layouts/AdminPanel';
 import { FC, useEffect, useState } from 'react';
+import { AiFillDelete, AiOutlineEdit } from 'react-icons/ai';
+import { NavLink } from 'react-router-dom';
 import { TopicTagProps } from 'types';
 import { Toast } from 'utils';
 import { object, string } from 'yup';
-
 const TopicTags: FC = () => {
-   const { errors, isLoading, getTopicTags, addTopicTag } = useTopicTags();
+   const { errors, isLoading, getTopicTags, addTopicTag, destroyTopicTag } = useTopicTags();
    const [records, setRecords] = useState<TopicTagProps[]>([]);
 
    const validationSchema = object({
@@ -28,21 +29,33 @@ const TopicTags: FC = () => {
       retrieveTopicTags();
    }, []);
 
+   const handleRemoveTag = async (tag: TopicTagProps) => {
+      if (!confirm(`Kaldırılacak ? ${tag.name}`)) return;
+      const status = await destroyTopicTag(tag);
+      if (status) {
+         const updatedRecords = records.filter((record) => record.name !== tag.name);
+         setRecords(updatedRecords);
+         Toast.fire({
+            title: `Etiket Kaldırıldı`,
+            icon: 'success',
+            timer: 2000,
+         });
+      }
+   };
+
    return (
-      <>
-         <AdminPanel>
-            <div className="bg-night-900 p-2 rounded-t">
-               <p className="text-base font-semibold tracking-wide text-gray-100">
-                  Konu Etiketleri
-               </p>
-            </div>
-            <div className="p-4 bg-gray-200 dark:bg-night-800">
-               {errors && (
-                  <div>
-                     <FormErrors errors={errors} />
-                  </div>
-               )}
-               <div className="mb-4">
+      <AdminPanel>
+         <div className="bg-night-900 p-2 rounded-t">
+            <p className="text-base font-semibold tracking-wide text-gray-100">Konu Etiketleri</p>
+         </div>
+         <div className="p-4 bg-gray-200 dark:bg-night-800">
+            {errors && (
+               <div>
+                  <FormErrors errors={errors} />
+               </div>
+            )}
+            <div className="mb-4">
+               <div>
                   <Formik
                      initialValues={{ name: '', description: '' }}
                      validationSchema={validationSchema}
@@ -67,7 +80,7 @@ const TopicTags: FC = () => {
                         errors: formikErrors,
                      }) => (
                         <Form noValidate onSubmit={handleSubmit}>
-                           <fieldset id="main-topics">
+                           <fieldset id="topic-tags ">
                               <legend className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">
                                  <p className="font-medium text-gray-900 dark:text-gray-100">
                                     Yeni Etiket Ekle
@@ -76,7 +89,7 @@ const TopicTags: FC = () => {
                               <div className="ml-4">
                                  <div className="mb-3">
                                     <Field
-                                       label="Etiket"
+                                       label="İsim"
                                        type="text"
                                        id="name"
                                        name="name"
@@ -102,7 +115,7 @@ const TopicTags: FC = () => {
                                  </div>
                                  <div className="mt-3">
                                     <div className="w-full sm:max-w-[8rem]">
-                                       <Button type="submit">Kaydet</Button>
+                                       <Button type="submit">Ekle</Button>
                                     </div>
                                  </div>
                               </div>
@@ -111,88 +124,100 @@ const TopicTags: FC = () => {
                      )}
                   </Formik>
                </div>
-               <div id="main-topics" className="overflow-auto">
-                  <div className="w-full border-b pb-1 border-gray-400 dark:border-gray-500">
-                     <p className="font-medium text-gray-900 dark:text-gray-100">Konu Etiketleri</p>
-                  </div>
-                  <div>
-                     {!isLoading && (
-                        <div className="mt-4">
-                           <LoadSpinner />
-                        </div>
-                     )}
-                     <table className="w-full whitespace-nowrap text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-900 dark:text-primary-400">
-                           <tr>
-                              <th scope="col" className="p-3">
-                                 Etiket
-                              </th>
-                              <th className="p-3">Açıklama</th>
-                              <th className="p-3">Oluşturan</th>
-                              <th className="p-3">Etkileşimler</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           {records.length == 0 && (
-                              <tr className="border-b bg-gray-200 dark:bg-night-900 dark:border-gray-700">
-                                 <th
-                                    scope="row"
-                                    className="p-3 font-medium text-gray-900 dark:text-gray-100"
-                                 >
-                                    #
-                                 </th>
-                                 <td className="p-3">#</td>
-                                 <td className="p-3">#</td>
-                                 <td className="p-3">#</td>
-                              </tr>
-                           )}
-                           {records.map((record, index) => (
-                              <tr
-                                 key={index}
-                                 className={classNames('border-b', 'dark:border-b-gray-700', {
-                                    'bg-gray-200 dark:bg-night-900': index % 2 == 0,
-                                    'bg-gray-100 dark:bg-night-700': index % 2 != 0,
-                                 })}
+            </div>
+            <div id="topic-tags" className="overflow-auto">
+               <div className="w-full border-b pb-1 border-gray-400 dark:border-gray-500">
+                  <p className="font-medium text-gray-900 dark:text-gray-100">Konu Etiketleri</p>
+               </div>
+               <div>
+                  {isLoading && (
+                     <div className="mt-4">
+                        <LoadSpinner />
+                     </div>
+                  )}
+                  <table className="w-full whitespace-nowrap text-sm text-left text-gray-500 dark:text-gray-400">
+                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-900 dark:text-primary-400">
+                        <tr>
+                           <th scope="col" className="p-3">
+                              Etiket
+                           </th>
+                           <th className="p-3">Açıklama</th>
+                           <th className="p-3">Oluşturan</th>
+                           <th className="p-3">Etkileşimler</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        {records.length == 0 && (
+                           <tr className="border-b bg-gray-200 dark:bg-night-900 dark:border-gray-700">
+                              <th
+                                 scope="row"
+                                 className="p-3 font-medium text-gray-900 dark:text-gray-100"
                               >
-                                 <td
-                                    scope="row"
-                                    className="p-3 font-medium text-gray-900 dark:text-gray-100"
+                                 #
+                              </th>
+                              <td className="p-3">#</td>
+                              <td className="p-3">#</td>
+                              <td className="p-3">#</td>
+                           </tr>
+                        )}
+                        {records.map((record, index) => (
+                           <tr
+                              key={index}
+                              className={classNames('border-b', 'dark:border-b-gray-700', {
+                                 'bg-gray-200 dark:bg-night-900': index % 2 == 0,
+                                 'bg-gray-100 dark:bg-night-700': index % 2 != 0,
+                              })}
+                           >
+                              <td
+                                 scope="row"
+                                 className="p-3 font-medium text-gray-900 dark:text-gray-100"
+                              >
+                                 <div className="max-w-xs overflow-hidden text-ellipsis">
+                                    <span>{record.name}</span>
+                                 </div>
+                              </td>
+                              <td
+                                 scope="row"
+                                 className="p-3 font-medium text-gray-900 dark:text-gray-100"
+                              >
+                                 <div className="max-w-xs overflow-hidden text-ellipsis">
+                                    <span>{record.description}</span>
+                                 </div>
+                              </td>
+                              <td
+                                 scope="row"
+                                 className="p-3 font-medium text-gray-900 dark:text-gray-100"
+                              >
+                                 <div className="max-w-xs overflow-hidden text-ellipsis">
+                                    <span>{record.creator}</span>
+                                 </div>
+                              </td>
+                              <td className="p-3 flex space-x-2">
+                                 <button
+                                    onClick={() => handleRemoveTag(record)}
+                                    className="bg-night-700 p-1 rounded cursor-pointer font-medium text-secondary-600 dark:text-primary-500 hover:underline"
                                  >
-                                    <div className="max-w-xs overflow-hidden text-ellipsis">
-                                       <span>{record.name}</span>
-                                    </div>
-                                 </td>
-                                 <td
-                                    scope="row"
-                                    className="p-3 font-medium text-gray-900 dark:text-gray-100"
-                                 >
-                                    <div className="max-w-xs overflow-hidden text-ellipsis">
-                                       <span>{record.description}</span>
-                                    </div>
-                                 </td>
-                                 <td
-                                    scope="row"
-                                    className="p-3 font-medium text-gray-900 dark:text-gray-100"
-                                 >
-                                    <div className="max-w-xs overflow-hidden text-ellipsis">
-                                       <span>{record.creator}</span>
-                                    </div>
-                                 </td>
-                                 <td className="p-3">
-                                    <span className="cursor-pointer font-medium text-secondary-600 dark:text-primary-500 hover:underline">
-                                       Kaldır
-                                    </span>
-                                 </td>
-                              </tr>
-                           ))}
-                        </tbody>
-                     </table>
-                  </div>
+                                    <AiFillDelete size="20px" />
+                                 </button>
+                                 <NavLink to={`/admin/konu-etiketleri/${record.id}`}>
+                                    <button
+                                       title="Düzenle"
+                                       className="bg-night-700 p-1 rounded cursor-pointer font-medium text-secondary-600 dark:text-primary-500 hover:underline"
+                                    >
+                                       <AiOutlineEdit size="20px" />
+                                    </button>
+                                 </NavLink>
+                              </td>
+                           </tr>
+                        ))}
+                     </tbody>
+                  </table>
                </div>
             </div>
-         </AdminPanel>
-      </>
+         </div>
+      </AdminPanel>
    );
 };
 
 export default TopicTags;
+export { TopicTagDetail } from './detail';

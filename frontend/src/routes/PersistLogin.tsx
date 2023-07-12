@@ -8,7 +8,7 @@ import { useRefreshToken } from 'hooks/useRefreshToken';
 export const PersistLogin = ({ children }: ReactChildrenProps) => {
    const refresh = useRefreshToken();
    const { accessToken } = useAuth();
-   const [loading, setLoading] = useState(true);
+   const [isLoading, setIsLoading] = useState(true);
    const [userLoaded, setUserLoaded] = useState(false);
    const { getUser } = useUser();
 
@@ -20,11 +20,11 @@ export const PersistLogin = ({ children }: ReactChildrenProps) => {
             const data = await refresh();
             data?.code && setUserLoaded(true);
          } finally {
-            isMounted && setLoading(false);
+            isMounted && setIsLoading(false);
          }
       }
 
-      !accessToken ? TokenCheck() : setLoading(false);
+      !accessToken ? TokenCheck() : setIsLoading(false);
 
       return () => {
          isMounted = false;
@@ -39,5 +39,5 @@ export const PersistLogin = ({ children }: ReactChildrenProps) => {
       accessToken && !userLoaded && _getUser();
    }, [accessToken]);
 
-   return <>{userLoaded && !loading ? children : <PageLoading />}</>;
+   return <>{userLoaded && !isLoading ? children : <PageLoading />}</>;
 };

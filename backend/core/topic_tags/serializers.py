@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer, SerializerMethodField, StringRelatedField
-from rest_framework.exceptions import PermissionDenied
+from rest_framework.exceptions import PermissionDenied, ValidationError
 from .models import Tag
 import random
 
@@ -11,7 +11,7 @@ class TagSerializer(ModelSerializer):
 
     class Meta:
         model = Tag
-        fields = ['name', 'description', 'synonym',
+        fields = ['id', 'name', 'description', 'synonym',
                   'creator', 'total_Q', 'new_total_Q', 'created_at']
         extra_kwargs = {
             'creator': {'required': False}
@@ -23,10 +23,14 @@ class TagSerializer(ModelSerializer):
     def get_new_total_Q(self, obj):
         return 1
 
-    def create(self, validated_data):
+    def validate(self, attrs):
+        attrs = super().validate(attrs)
         user = self.context['request'].user
-        if (not user.is_superuser or not user.is_staff) and not user.groups.filter(name='MOD').exists():
-            raise PermissionDenied(
-                'Bu eylemi gerçekleştirme izniniz yok.')
-        validated_data['creator'] = user
-        return super().create(validated_data)
+        if 'name' in attrs:
+            name = attrs['name'].replace(' ', '')
+            attrs['name'] = name.lower()
+            if Tag.objects.filter(name=name).exists():
+                raise ValidationError(
+                    'Bu name alanına sahip Konu/Soru Etiketi zaten mevcut.')
+            attrs['creator'] = user
+        return attrs

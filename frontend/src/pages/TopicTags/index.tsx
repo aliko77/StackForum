@@ -119,7 +119,7 @@ export const TopicTags: FC = () => {
                </div>
             </div>
             <div className="my-4">
-               {!isLoading && (
+               {isLoading && (
                   <div>
                      <LoadSpinner />
                   </div>
@@ -136,7 +136,7 @@ export const TopicTags: FC = () => {
                            key={key}
                            className="bg-white dark:bg-night-700 border rounded border-gray-300 dark:border-gray-500 p-2.5 flex flex-col justify-between"
                         >
-                           <div className="mb-2.5 w-full max-w-min text-xs font-500 text-tertiary-700 dark:text-primary-100 bg-tertiary-300 dark:bg-night-900 p-0.5 px-1.5 rounded-sm">
+                           <div className="mb-2.5 whitespace-nowrap w-full max-w-min text-xs font-500 text-tertiary-700 dark:text-primary-100 bg-tertiary-300 dark:bg-night-900 p-0.5 px-1.5 rounded-sm">
                               {tag.name}
                            </div>
                            <div className="text-[13px] mb-2.5 overflow-hidden text-ellipsis dark:text-gray-200">
