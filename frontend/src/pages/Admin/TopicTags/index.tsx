@@ -7,13 +7,13 @@ import { Form, Formik } from 'formik';
 import { useTopicTags } from 'hooks/useTopicTags';
 import AdminPanel from 'layouts/AdminPanel';
 import { FC, useEffect, useState } from 'react';
-import { AiFillDelete, AiOutlineEdit } from 'react-icons/ai';
+import { AiOutlineEdit } from 'react-icons/ai';
 import { NavLink } from 'react-router-dom';
 import { TopicTagProps } from 'types';
 import { Toast } from 'utils';
 import { object, string } from 'yup';
 const TopicTags: FC = () => {
-   const { errors, isLoading, getTopicTags, addTopicTag, destroyTopicTag } = useTopicTags();
+   const { errors, isLoading, getTopicTags, addTopicTag } = useTopicTags();
    const [records, setRecords] = useState<TopicTagProps[]>([]);
 
    const validationSchema = object({
@@ -28,20 +28,6 @@ const TopicTags: FC = () => {
       };
       retrieveTopicTags();
    }, []);
-
-   const handleRemoveTag = async (tag: TopicTagProps) => {
-      if (!confirm(`Kaldırılacak ? ${tag.name}`)) return;
-      const status = await destroyTopicTag(tag);
-      if (status) {
-         const updatedRecords = records.filter((record) => record.name !== tag.name);
-         setRecords(updatedRecords);
-         Toast.fire({
-            title: `Etiket Kaldırıldı`,
-            icon: 'success',
-            timer: 2000,
-         });
-      }
-   };
 
    return (
       <AdminPanel>
@@ -106,7 +92,7 @@ const TopicTags: FC = () => {
                                        type="text"
                                        id="description"
                                        name="description"
-                                       placeholder="Etiketi giriniz."
+                                       placeholder="Açıklamayı giriniz."
                                        onChange={handleChange}
                                        onBlur={handleBlur}
                                        value={values.description}
@@ -164,8 +150,8 @@ const TopicTags: FC = () => {
                            <tr
                               key={index}
                               className={classNames('border-b', 'dark:border-b-gray-700', {
-                                 'bg-gray-200 dark:bg-night-900': index % 2 == 0,
-                                 'bg-gray-100 dark:bg-night-700': index % 2 != 0,
+                                 'bg-gray-100 dark:bg-night-900': index % 2 == 0,
+                                 'bg-gray-50 dark:bg-night-700': index % 2 != 0,
                               })}
                            >
                               <td
@@ -192,17 +178,11 @@ const TopicTags: FC = () => {
                                     <span>{record.creator}</span>
                                  </div>
                               </td>
-                              <td className="p-3 flex space-x-2">
-                                 <button
-                                    onClick={() => handleRemoveTag(record)}
-                                    className="bg-night-700 p-1 rounded cursor-pointer font-medium text-secondary-600 dark:text-primary-500 hover:underline"
-                                 >
-                                    <AiFillDelete size="20px" />
-                                 </button>
+                              <td className="p-3">
                                  <NavLink to={`/admin/konu-etiketleri/${record.id}`}>
                                     <button
                                        title="Düzenle"
-                                       className="bg-night-700 p-1 rounded cursor-pointer font-medium text-secondary-600 dark:text-primary-500 hover:underline"
+                                       className="bg-white dark:bg-night-800 border border-gray-400 dark:border-gray-600 shadow p-1 rounded cursor-pointer font-medium text-secondary-600 dark:text-primary-500 hover:underline"
                                     >
                                        <AiOutlineEdit size="20px" />
                                     </button>

@@ -27,6 +27,7 @@ export const Toast = withReactContent(Swal).mixin({
    customClass: {
       popup: '!bg-night-900 text-gray-100',
       timerProgressBar: 'bg-gray-600',
+      title: '!text-sm',
    },
 });
 

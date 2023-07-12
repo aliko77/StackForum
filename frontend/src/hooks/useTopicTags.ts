@@ -65,17 +65,40 @@ export const useTopicTags = () => {
       }
    };
 
-   const getTopicTag = async (id: string): Promise<TopicTagProps | null> => {
+   const getTopicTag = async (id: string): Promise<TopicTagProps | undefined> => {
       try {
          setIsLoading(true);
          const { data, status } = await axiosPrivate.get(`/topic-tags/${id}/`);
          setErrors(null);
-         return status === 200 ? data : null;
+         return status === 200 ? data : undefined;
+      } catch (error) {
+         if (error instanceof AxiosError) {
+            error.response?.status !== 500 && setErrors(error.response?.data);
+         }
+         return undefined;
+      } finally {
+         setIsLoading(false);
+      }
+   };
+
+   const editTopicTag = async (
+      id: number,
+      updatedData: {
+         name: string | undefined;
+         description: string | undefined;
+      },
+   ): Promise<TopicTagProps | boolean> => {
+      try {
+         setIsLoading(true);
+         const { data, status } = await axiosPrivate.patch(`/topic-tags/${id}/`, updatedData);
+         setErrors(null);
+         setIsLoading(false);
+         return status === 200 ? data : false;
       } catch (error) {
          error instanceof AxiosError &&
             error.response?.status !== 500 &&
             setErrors(error.response?.data);
-         return null;
+         return false;
       } finally {
          setIsLoading(false);
       }
@@ -88,5 +111,6 @@ export const useTopicTags = () => {
       addTopicTag,
       destroyTopicTag,
       getTopicTag,
+      editTopicTag,
    };
 };

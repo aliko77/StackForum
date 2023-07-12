@@ -18,7 +18,7 @@ class TagSerializer(ModelSerializer):
         }
 
     def get_total_Q(self, obj):
-        return random.randint(50, 100)
+        return random.randint(10, 50)
 
     def get_new_total_Q(self, obj):
         return 1
@@ -29,8 +29,8 @@ class TagSerializer(ModelSerializer):
         if 'name' in attrs:
             name = attrs['name'].replace(' ', '')
             attrs['name'] = name.lower()
-            if Tag.objects.filter(name=name).exists():
+            if self.instance and self.instance.name != name and Tag.objects.filter(name=name).exists():
                 raise ValidationError(
                     'Bu name alanına sahip Konu/Soru Etiketi zaten mevcut.')
-            attrs['creator'] = user
+        attrs['creator'] = user
         return attrs

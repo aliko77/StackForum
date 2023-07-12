@@ -30,7 +30,6 @@ export const SidebarItem: FC<Props> = ({ item }) => {
                         <li key={index} className="border-b border-gray-300 dark:border-gray-500">
                            <NavLink
                               to={item.link}
-                              end
                               className={({ isActive }) =>
                                  classNames(
                                     'px-4',

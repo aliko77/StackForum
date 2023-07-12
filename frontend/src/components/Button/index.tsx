@@ -11,6 +11,7 @@ type ElementColor =
    | 'green'
    | 'cyan'
    | 'blue'
+   | 'sky'
    | 'purple';
 
 type ElementProps = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -89,6 +90,12 @@ const Button: FC<ElementProps> = ({
             hoverBgColor = 'hover:bg-purple-700';
             disabledBgColor = 'disabled:bg-purple-700';
             ringColor = 'ring-purple-700';
+            break;
+         case 'sky':
+            bgColor = 'bg-sky-600';
+            hoverBgColor = 'hover:bg-sky-700';
+            disabledBgColor = 'disabled:bg-sky-700';
+            ringColor = 'ring-sky-700';
             break;
          default:
             bgColor = '';
