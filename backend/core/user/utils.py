@@ -52,7 +52,7 @@ def SendPasswordResetEmail(user):
     
     mail_subject = "Şifre Sıfırlama İsteği"
     uid = urlsafe_base64_encode(force_bytes(user.pk))
-    url = f'{settings.REACT_APP_URL}/auth/password/reset/{uid}/{token}'
+    url = f'{settings.REACT_APP_URL}/user/password/reset/{uid}/{token}'
     
     message = render_to_string(
         "email/password-reset.html", {

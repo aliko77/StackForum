@@ -42,7 +42,7 @@ const PasswordForgot: FC = () => {
                      setMessage(null);
                      setErrors(null);
                      try {
-                        const { data } = await axiosService.post('/auth/password/forgot/', {
+                        const { data } = await axiosService.post('/user/password/forgot/', {
                            email: values.email,
                         });
                         const { status } = data;

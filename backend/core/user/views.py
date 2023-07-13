@@ -7,6 +7,8 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.exceptions import AuthenticationFailed
+
 
 from .utils import SendVerificationEmail
 from .serializers import VerifySerializer, VerifyResendSerializer, \
@@ -24,6 +26,16 @@ User = get_user_model()
 class UserMeView(APIView):
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
+    
+    def handle_exception(self, exc):
+        if isinstance(exc, AuthenticationFailed):
+            response = Response({'detail': 'Kullanıcı bulunamadı.'}, status=401)
+            response.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE'])
+            response.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'])
+            response.delete_cookie("csrftoken")
+            response["x-csrftoken"] = None
+            return response
+        return super().handle_exception(exc)
     
     def get(self, request) -> Response:
         serializer = self.serializer_class(self.request.user)
