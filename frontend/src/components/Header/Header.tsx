@@ -72,12 +72,12 @@ export const Header: FC = () => {
                      {!user && (
                         <>
                            <div className="max-sm:hidden mx-1">
-                              <NavLink to="/login">
+                              <NavLink to="/login/">
                                  <Button color="purple">Giriş Yap</Button>
                               </NavLink>
                            </div>
                            <div className="max-sm:hidden ml-1">
-                              <NavLink to="/register">
+                              <NavLink to="/register/">
                                  <Button>Kayıt Ol</Button>
                               </NavLink>
                            </div>
@@ -104,7 +104,7 @@ export const Header: FC = () => {
                                     </span>
                                  </NavLink>
                                  <NavLink
-                                    to="/login"
+                                    to="/login/"
                                     className={({ isActive }) =>
                                        classNames(
                                           'flex flex-col items-center justify-center py-2 border-t border-white dark:border-gray-900',
@@ -124,7 +124,7 @@ export const Header: FC = () => {
                                     </span>
                                  </NavLink>
                                  <NavLink
-                                    to="/register"
+                                    to="/register/"
                                     className={({ isActive }) =>
                                        classNames(
                                           'flex flex-col items-center justify-center py-2 border-t border-white dark:border-gray-900',

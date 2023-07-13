@@ -40,8 +40,8 @@ const getRouteElement = (Component: ElementType): ReactElement => (
 
 const routes: RouteProps[] = [
    { path: '/', element: getRouteElement(Home) },
-   { path: 'login/', element: getRouteElement(() => <GuestRoute>{<Login />}</GuestRoute>) },
-   { path: 'register/', element: getRouteElement(() => <GuestRoute>{<Register />}</GuestRoute>) },
+   { path: 'login/', element: getRouteElement(Login) },
+   { path: 'register/', element: getRouteElement(Register) },
    {
       path: 'auth/password/forgot/',
       element: getRouteElement(() => <GuestRoute>{<PasswordForgot />}</GuestRoute>),

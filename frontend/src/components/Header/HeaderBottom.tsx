@@ -12,7 +12,7 @@ export const HeaderBottom: FC = () => {
       <div className="bg-white dark:bg-night-900 p-3 flex flex-auto">
          <div className="container mx-auto">
             <div className="flex flex-auto flex-row space-x-3 px-4 items-center overflow-auto no-scrollbar">
-               <NavLink to="/profil">
+               <NavLink to="/profil/">
                   <div className="flex items-center text-sm text-gray-800 dark:text-gray-300">
                      <HiOutlineUserCircle
                         className="text-secondary-500 dark:text-primary-500"
@@ -23,7 +23,7 @@ export const HeaderBottom: FC = () => {
                      </span>
                   </div>
                </NavLink>
-               <NavLink to="/kontrol-paneli">
+               <NavLink to="/kontrol-paneli/">
                   <div className="flex items-center text-sm text-gray-800 dark:text-gray-300">
                      <HiOutlineCog
                         className="text-secondary-500 dark:text-primary-500"

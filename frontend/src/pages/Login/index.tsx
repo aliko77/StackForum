@@ -1,8 +1,8 @@
 import { Formik } from 'formik';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { object, string } from 'yup';
 import { useAuth } from 'hooks/useAuth';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { AxiosError } from 'axios';
 import { Logo } from 'components/Logo';
 import { Alert, eColors } from 'components/Alert';
@@ -26,8 +26,21 @@ const validationSchema = object({
 });
 
 const Login: FC = () => {
-   const { login } = useAuth();
+   const [searchParams] = useSearchParams();
+   const { login, user, accessToken } = useAuth();
    const [message, setMessage] = useState<null | string>(null);
+   const navigate = useNavigate();
+   const location = useLocation();
+
+   useEffect(() => {
+      if (accessToken || user) {
+         navigate('/');
+      } else {
+         if (searchParams.has('registered')) {
+            setMessage('Başarıyla kayıt oldunuz.\nGiriş yapabilirsiniz.');
+         }
+      }
+   }, []);
 
    return (
       <div className="mx-auto w-full max-w-sm p-3 sm:my-20 my-10">
@@ -44,7 +57,7 @@ const Login: FC = () => {
                onSubmit={async (values) => {
                   setMessage(null);
                   try {
-                     await login(values.email, values.password);
+                     await login(values.email, values.password, location.state);
                   } catch (error: unknown) {
                      if (error instanceof AxiosError) {
                         const responseData = error.response?.data;
@@ -94,7 +107,7 @@ const Login: FC = () => {
                            />
                            <div className="flex justify-end my-1.5">
                               <NavLink
-                                 to="/auth/password/forgot"
+                                 to="/auth/password/forgot/"
                                  className="text-sm font-medium text-secondary-500 hover:underline dark:text-primary-400"
                               >
                                  Şifreni mi unuttun?
@@ -111,7 +124,7 @@ const Login: FC = () => {
             <p className="text-end text-sm text-gray-500 dark:text-gray-400 my-2">
                Hesabın yok mu ?
                <NavLink
-                  to="/register"
+                  to="/register/"
                   className="ml-1 font-medium text-secondary-500 hover:underline dark:text-primary-400"
                >
                   Kayıt ol

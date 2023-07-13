@@ -94,7 +94,7 @@ const PasswordForgot: FC = () => {
                   )}
                </Formik>
                <div className="mt-4 text-sm text-gray-600 items-center flex justify-between">
-                  <NavLink to="/login" className="flex items-center">
+                  <NavLink to="/login/" className="flex items-center">
                      <div className="text-gray-800 dark:text-gray-200 hover:text-secondary-600 dark:hover:text-primary-400 inline-flex items-center">
                         <BsArrowLeft className="mr-2" size="20px" />
                         Geri

@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { Formik } from 'formik';
 import { object, string, ref } from 'yup';
 import { Logo } from 'components/Logo';
@@ -6,9 +6,9 @@ import { FormErrors } from 'components/FormErrors';
 import { LoadSpinner } from 'components/LoadSpinner';
 import Button from 'components/Button';
 import { Field } from 'components/Field';
-import { NavLink } from 'react-router-dom';
-import { Alert } from 'components/Alert';
+import { NavLink, useNavigate } from 'react-router-dom';
 import useUser from 'hooks/useUser';
+import { useAuth } from 'hooks/useAuth';
 
 type RegisterFormProps = {
    username: string;
@@ -44,8 +44,15 @@ const initialValues: RegisterFormProps = {
 };
 
 const Register: FC = () => {
+   const { accessToken, user } = useAuth();
    const { register, errors } = useUser();
-   const [message, setMessage] = useState<null | string>(null);
+   const navigate = useNavigate();
+
+   useEffect(() => {
+      if (accessToken || user) {
+         navigate('/');
+      }
+   }, []);
 
    return (
       <div className="mx-auto w-full max-w-sm p-3 sm:my-20 my-10">
@@ -59,11 +66,10 @@ const Register: FC = () => {
             <Formik
                validationSchema={validationSchema}
                initialValues={initialValues}
-               onSubmit={async (values: RegisterFormProps, { resetForm }): Promise<void> => {
+               onSubmit={async (values: RegisterFormProps): Promise<void> => {
                   const status = await register(values);
                   if (status) {
-                     setMessage('Başarıyla kayıt oldunuz.');
-                     resetForm();
+                     navigate('/login/?registered');
                   }
                }}
             >
@@ -77,7 +83,6 @@ const Register: FC = () => {
                }) => (
                   <div>
                      {errors && <FormErrors errors={errors} />}
-                     {message && <Alert text={message} />}
                      {isSubmitting && <LoadSpinner />}
                      <form noValidate onSubmit={handleSubmit} className="space-y-4">
                         <div>
@@ -140,7 +145,7 @@ const Register: FC = () => {
             <p className="text-end text-sm text-gray-500 dark:text-gray-400 my-2">
                Bir hesabın var mı ?
                <NavLink
-                  to="/login"
+                  to="/login/"
                   className="ml-1 font-medium text-secondary-500 hover:underline dark:text-primary-400"
                >
                   Giriş yap

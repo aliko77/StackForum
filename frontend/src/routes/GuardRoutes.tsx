@@ -12,9 +12,8 @@ type AuthorizationProps = {
 
 export const PrivateRoute = ({ children }: PrivateRouteProps) => {
    const { accessToken, user } = useAuth();
-   const location = useLocation();
 
-   if (!accessToken) {
+   if (!accessToken || !user) {
       return <Navigate to="/login/" state={{ path: location.pathname }} replace />;
    } else if (!location.pathname.includes('auth/verify') && user && !user.is_verified) {
       return <Navigate to="/auth/verify/" state={{ path: location.pathname }} replace />;
@@ -23,18 +22,18 @@ export const PrivateRoute = ({ children }: PrivateRouteProps) => {
 };
 
 export const GuestRoute = ({ children }: PrivateRouteProps) => {
-   const { accessToken } = useAuth();
+   const { accessToken, user } = useAuth();
 
-   return accessToken ? <Navigate to="/" replace /> : children;
+   return accessToken || user ? <Navigate to="/" replace /> : children;
 };
 
 export const Authorization = ({ permissions, children }: AuthorizationProps) => {
-   const { user, isAllow } = useAuth();
+   const { accessToken, user, isAllow } = useAuth();
    const location = useLocation();
 
-   if (user) {
+   if (user && accessToken) {
       const isAllowed = isAllow(permissions);
       return isAllowed ? children : <Unauthorized />;
    }
-   return <Navigate to="/login" state={{ path: location.pathname }} replace />;
+   return <Navigate to="/login/" state={{ path: location.pathname }} replace />;
 };

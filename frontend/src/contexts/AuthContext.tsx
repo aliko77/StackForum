@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction, createContext, useMemo, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { axiosService } from 'api/axios/axios';
 import { setAxiosPrivateHeaders, useAxiosPrivate } from 'hooks/useAxiosPrivate';
 import { ReactChildrenProps, UserProps } from 'types';
 
 type LoginFunctionProps = {
-   (email: string, password: string): Promise<void>;
+   (email: string, password: string, state?: { path: string }): Promise<void>;
 };
 
 type AuthContextProps = {
@@ -25,13 +25,13 @@ export const AuthContext = createContext<AuthContextProps>({} as AuthContextProp
 export const AuthProvider = ({ children }: ReactChildrenProps) => {
    const navigate = useNavigate();
    const axiosPrivateI = useAxiosPrivate();
-   const location = useLocation();
 
    const [user, setUser] = useState<UserProps>();
    const [accessToken, setAccessToken] = useState<string>();
    const [csrfToken, setCsrfToken] = useState<string>();
+   const [searchParams] = useSearchParams();
 
-   const login: LoginFunctionProps = async (email, password) => {
+   const login: LoginFunctionProps = async (email, password, state) => {
       const { data, headers } = await axiosService.post('/auth/token/', {
          email: email,
          password: password,
@@ -43,8 +43,10 @@ export const AuthProvider = ({ children }: ReactChildrenProps) => {
       setCsrfToken(xcsrfToken);
       setUser(_user);
 
-      if (location.state.from) {
-         navigate(location.state.from);
+      if (state) {
+         navigate(state.path);
+      } else if (searchParams.has('registered')) {
+         navigate('/auth/verify');
       } else {
          navigate('/');
       }

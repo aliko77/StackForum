@@ -14,6 +14,10 @@ type AlertProps = {
 };
 
 export const Alert: FC<AlertProps> = ({ text, color = eColors.Success }) => {
+   const sentences = text.split('\n');
+
+   const messageContent = sentences.map((sentence, index) => <p key={index}>{sentence}</p>);
+
    return (
       <div
          className={classNames(
@@ -33,8 +37,8 @@ export const Alert: FC<AlertProps> = ({ text, color = eColors.Success }) => {
          role="alert"
       >
          <span className="sr-only">Info</span>
-         <HiOutlineInformationCircle size="1.5rem" />
-         <div className="mx-2 my-auto">{text}</div>
+         <HiOutlineInformationCircle size="1.5rem" className="flex-shrink-0 mr-2" />
+         <div className="m-auto">{messageContent}</div>
       </div>
    );
 };
