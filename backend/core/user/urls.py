@@ -1,8 +1,6 @@
 from django.urls import path
 
-from .views import UserVerifyView, UserVerifyResendView, \
-    PasswordForgotView, PasswordResetView, \
-    UserMeView, ProfileUpdateView, \
+from .views import UserMeView, ProfileUpdateView, \
     ProfileAvatarUpdateView, ProfileAvatarDeleteView, \
     UserChangePasswordView, UserChangeEmailView, \
     ProfileSignatureUpdateView, \
@@ -31,15 +29,4 @@ urlpatterns = [
     
     # Kullanıcı Arkadaşlar etkinlikleri
     path('friends/', UserFriendsView.as_view(), name='user-friends'),
-    
-    
-    # Hesap doğrulama
-    path('verify/', UserVerifyView.as_view(), name='verify'),
-    path(
-        'verify/resend/', UserVerifyResendView.as_view(),
-        name='verify-resend'
-    ),
-    # Şifre etkinlikleri
-    path('password/reset/', PasswordResetView.as_view(), name='password-reset'),
-    path('password/forgot/', PasswordForgotView.as_view(), name='password-forgot'),
 ]

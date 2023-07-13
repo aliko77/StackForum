@@ -3,7 +3,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from .models import Profile, User, UserLoginRecords, BlockedUser, Friend
-from .utils import SendVerificationEmail, get_client_ip, get_client_agent
+from .utils import get_client_ip, get_client_agent
+from core.auth.utils import SendVerificationEmail
 
 
 @receiver(post_save, sender=User)

@@ -45,7 +45,7 @@ const PasswordReset: FC = () => {
                      setMessage(null);
                      setErrors(null);
                      try {
-                        const { data } = await axiosService.post('/user/password/reset/', {
+                        const { data } = await axiosService.post('/auth/password/reset/', {
                            uid: uid,
                            token: token,
                            password: values.password,

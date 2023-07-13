@@ -82,7 +82,7 @@ export default function useUser() {
 
    const accountVerify = async ({ email, vcode }: AccountVerifyProps): Promise<boolean> => {
       try {
-         const { data, status } = await axiosPrivate.post('/user/verify/', {
+         const { data, status } = await axiosPrivate.post('/auth/verify/', {
             activation_code: vcode,
             email: email,
          });
@@ -105,7 +105,7 @@ export default function useUser() {
 
    const accountVerifyResend = async (): Promise<boolean> => {
       try {
-         const { status } = await axiosPrivate.post('/user/verify/resend/', {
+         const { status } = await axiosPrivate.post('/auth/verify/resend/', {
             email: user?.email,
          });
          setErrors(null);
@@ -210,7 +210,7 @@ export default function useUser() {
 
    const changePassword = async (passwords: ChangePasswordProps): Promise<boolean> => {
       try {
-         const { status } = await axiosPrivate.post('/user/password/change/', passwords);
+         const { status } = await axiosPrivate.post('/auth/password/change/', passwords);
          setErrors(null);
          if (status === 200) {
             logout();
