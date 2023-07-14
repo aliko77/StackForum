@@ -3,7 +3,7 @@ import { RouteProps } from './Router';
 import { PageLoading } from 'components/PageLoading';
 import Layout from 'layouts/Layout';
 import { Authorization, PrivateRoute } from './GuardRoutes';
-import TopicTags, { TopicTagDetail } from 'pages/Admin/TopicTags';
+import QuestionTags, { QuestionTagDetail } from 'pages/Admin/QuestionTags';
 import PERMISSIONS from 'permissions/Permissions';
 import AdminHome from 'pages/Admin';
 
@@ -26,10 +26,13 @@ export const admin_routes: RouteProps[] = [
    },
    {
       path: 'admin/konu-etiketleri/',
-      element: getAdminRouteElement(() => <TopicTags />, [PERMISSIONS.COMA, PERMISSIONS.MOD]),
+      element: getAdminRouteElement(() => <QuestionTags />, [PERMISSIONS.COMA, PERMISSIONS.MOD]),
    },
    {
       path: 'admin/konu-etiketleri/:id',
-      element: getAdminRouteElement(() => <TopicTagDetail />, [PERMISSIONS.COMA, PERMISSIONS.MOD]),
+      element: getAdminRouteElement(
+         () => <QuestionTagDetail />,
+         [PERMISSIONS.COMA, PERMISSIONS.MOD],
+      ),
    },
 ];

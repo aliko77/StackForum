@@ -1,52 +1,64 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
 import classNames from 'classnames';
-import { TopicTagProps } from 'types';
+import { QuestionTagProps } from 'types';
 import { LoadSpinner } from 'components/LoadSpinner';
 import useDebounce from 'hooks/useDebounce';
-import { useTopicTags } from 'hooks/useTopicTags';
+import { useQuestionTags } from 'hooks/useQuestionTags';
+import Pagination from 'components/Pagination';
 
 type sortingTypes = 'popular' | 'new';
 
-export const TopicTags: FC = () => {
+export const QuestionTags: FC = () => {
    const { debounce } = useDebounce();
-   const { getTopicTags, isLoading } = useTopicTags();
+   const { getQuestionTags, isLoading } = useQuestionTags();
    const [searchString, setSearchString] = useState<string>('');
    const [sorting, setSorting] = useState<sortingTypes>('popular');
-   const [def_tag_records, setDef_tag_records] = useState<TopicTagProps[]>([]);
-   const [tag_records, setTag_records] = useState<TopicTagProps[] | null>(null);
+   const [orgResponse, setOrgResponse] = useState<{
+      count: number;
+      next: string | null;
+      previous: string | null;
+      results: QuestionTagProps[];
+   }>();
+   const [records, setRecords] = useState<QuestionTagProps[] | undefined>([]);
+   const [itemOffset, setItemOffset] = useState<number>(0);
+   const [pageCount, setPageCount] = useState<number>(0);
+   const itemsPerPage = 10;
+
+   const retrieveQuestionTags = async () => {
+      const response = await getQuestionTags(itemsPerPage, itemOffset);
+      if (response) {
+         setOrgResponse(response);
+         setRecords(response.results.sort((a, b) => b.total_Q - a.total_Q));
+      }
+   };
 
    useEffect(() => {
-      const retrieveTopicTags = async () => {
-         const topics: TopicTagProps[] = await getTopicTags();
-         setDef_tag_records(topics);
-         setTag_records(topics.sort((a, b) => b.total_Q - a.total_Q));
-      };
-      retrieveTopicTags();
-   }, []);
+      retrieveQuestionTags();
+   }, [itemOffset]);
 
    useEffect(() => {
-      if (sorting === 'popular' && tag_records) {
-         const sortedTags = [...tag_records].sort((a, b) => b.total_Q - a.total_Q);
-         setTag_records(sortedTags);
-      } else if (sorting === 'new' && tag_records) {
-         const sortedTags = [...tag_records].sort((a, b) => {
+      if (sorting === 'popular' && records) {
+         const sortedTags = [...records].sort((a, b) => b.total_Q - a.total_Q);
+         setRecords(sortedTags);
+      } else if (sorting === 'new' && records) {
+         const sortedTags = [...records].sort((a, b) => {
             const dateA = new Date(a.created_at).getTime();
             const dateB = new Date(b.created_at).getTime();
             return dateB - dateA;
          });
-         setTag_records(sortedTags);
+         setRecords(sortedTags);
       }
    }, [sorting]);
 
    const handleSearch = debounce((value) => {
-      if (searchString.length > 0) {
-         const filteredTags = def_tag_records.filter((tag) =>
+      if (searchString.length > 0 && orgResponse) {
+         const filteredTags = orgResponse.results.filter((tag) =>
             tag.name.toLowerCase().includes(value.toLowerCase()),
          );
-         setTag_records(filteredTags);
-      } else {
-         setTag_records(def_tag_records);
+         setRecords(filteredTags);
+      } else if (orgResponse) {
+         setRecords(orgResponse.results);
       }
       setSorting('popular');
    }, 500);
@@ -55,6 +67,28 @@ export const TopicTags: FC = () => {
       const { value } = event.target;
       setSearchString(value);
       handleSearch(value);
+   };
+
+   useEffect(() => {
+      if (orgResponse && itemsPerPage > itemOffset) {
+         const endOffset = itemOffset + itemsPerPage;
+         const currentItems = orgResponse.results.slice(itemOffset, endOffset);
+         setPageCount(Math.ceil(orgResponse.count / itemsPerPage));
+         setRecords(currentItems);
+      }
+   }, [itemOffset, orgResponse]);
+
+   const handlePageChange = ({ selected }: { selected: number }) => {
+      if (orgResponse) {
+         const pageCount = Math.ceil(orgResponse.count / itemsPerPage);
+         const newOffset = selected * itemsPerPage;
+         const isValidPage = newOffset < orgResponse.count;
+
+         if (isValidPage) {
+            setItemOffset(newOffset);
+            setPageCount(pageCount);
+         }
+      }
    };
 
    return (
@@ -81,7 +115,7 @@ export const TopicTags: FC = () => {
                   </div>
                </div>
                <div>
-                  <div className="flex justify-center items-center text-sm font-500 text-secondary-900 dark:text-primary-100">
+                  <div className="flex justify-center items-center text-sm font-500 text-tertiary-700 dark:text-primary-100">
                      <button
                         onClick={() => {
                            setSorting('popular');
@@ -92,7 +126,7 @@ export const TopicTags: FC = () => {
                            'border-gray-400',
                            'rounded-l',
                            'p-2',
-                           { 'bg-slate-300': sorting == 'popular' },
+                           { 'bg-tertiary-300': sorting == 'popular' },
                            { 'dark:bg-night-900': sorting == 'popular' },
                            { 'dark:bg-night-700': sorting != 'popular' },
                         )}
@@ -108,7 +142,7 @@ export const TopicTags: FC = () => {
                            'border-gray-400',
                            'rounded-r',
                            'p-2',
-                           { 'bg-slate-300': sorting == 'new' },
+                           { 'bg-tertiary-300': sorting == 'new' },
                            { 'dark:bg-night-900': sorting == 'new' },
                            { 'dark:bg-night-700': sorting != 'new' },
                         )}
@@ -120,18 +154,20 @@ export const TopicTags: FC = () => {
             </div>
             <div className="my-4">
                {isLoading && (
-                  <div>
-                     <LoadSpinner />
+                  <div className="relative">
+                     <div className="absolute left-1/2">
+                        <LoadSpinner />
+                     </div>
                   </div>
                )}
-               {tag_records && tag_records.length == 0 && (
+               {records && records.length == 0 && (
                   <p className="text-center text-xl text-gray-600 dark:text-primary-100">
                      Böyle bir etiket bulunamadı.
                   </p>
                )}
                <div className="w-full grid gap-2.5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                  {tag_records &&
-                     tag_records.map((tag, key) => (
+                  {records &&
+                     records.map((tag, key) => (
                         <div
                            key={key}
                            className="bg-white dark:bg-night-700 border rounded border-gray-300 dark:border-gray-500 p-2.5 flex flex-col justify-between"
@@ -154,6 +190,9 @@ export const TopicTags: FC = () => {
                            </div>
                         </div>
                      ))}
+               </div>
+               <div className="w-1/2 mx-auto">
+                  <Pagination pageCount={pageCount} handlePageChange={handlePageChange} />
                </div>
             </div>
          </div>

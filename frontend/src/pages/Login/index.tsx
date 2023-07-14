@@ -35,10 +35,8 @@ const Login: FC = () => {
    useEffect(() => {
       if (accessToken || user) {
          navigate('/');
-      } else {
-         if (searchParams.has('registered')) {
-            setMessage('Başarıyla kayıt oldunuz.\nGiriş yapabilirsiniz.');
-         }
+      } else if (searchParams.has('registered')) {
+         setMessage('Başarıyla kayıt oldunuz.\nGiriş yapabilirsiniz.');
       }
    }, []);
 

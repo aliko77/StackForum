@@ -1,0 +1,29 @@
+- model: core_user.user
+  pk: 3862d1fb-1770-4335-b522-7a59dafc5429
+  fields:
+    password: pbkdf2_sha256$600000$nLzOvX0VyzWQU4FyJXguIC$4v7gQPtyLsgAVP+DMb8A4kujpfTZv0SMvm7f3ve+EVk=
+    username: -ali
+    email: a@gmail.com
+    is_staff: false
+    is_superuser: false
+    is_active: true
+    is_verified: true
+    last_login: 2023-07-14 13:48:27+00:00
+    date_joined: 2023-07-14 13:42:36.774476+00:00
+    groups:
+    - 1
+    user_permissions: []
+- model: core_user.user
+  pk: d4c13c6f-df30-487a-bc9b-31040e7d599b
+  fields:
+    password: pbkdf2_sha256$600000$A7nKnAvpaUCTO27QmVsPq8$pymZqDh3T8JOTTE05ibWUbVFjNPo7EPQjzQsDmHntzo=
+    username: admin@gmail.com
+    email: admin@gmail.com
+    is_staff: true
+    is_superuser: true
+    is_active: true
+    is_verified: true
+    last_login: 2023-07-14 11:13:04.559264+00:00
+    date_joined: 2023-07-14 11:12:33.999989+00:00
+    groups: []
+    user_permissions: []

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import classNames from 'classnames';
 import Button from 'components/Button';
 import { Field } from 'components/Field';
@@ -5,31 +6,64 @@ import { FormErrors } from 'components/FormErrors';
 import { LoadSpinner } from 'components/LoadSpinner';
 import Pagination from 'components/Pagination';
 import { Form, Formik } from 'formik';
-import { useTopicTags } from 'hooks/useTopicTags';
+import { useQuestionTags } from 'hooks/useQuestionTags';
 import AdminPanel from 'layouts/AdminPanel';
 import { FC, useEffect, useState } from 'react';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { NavLink } from 'react-router-dom';
-import { TopicTagProps } from 'types';
+import { QuestionTagProps } from 'types';
 import { Toast } from 'utils';
 import { object, string } from 'yup';
 
-const TopicTags: FC = () => {
-   const { errors, isLoading, getTopicTags, addTopicTag } = useTopicTags();
-   const [records, setRecords] = useState<TopicTagProps[] | undefined>([]);
+const QuestionTags: FC = () => {
+   const { errors, isLoading, getQuestionTags, addQuestionTag } = useQuestionTags();
+   const [orgResponse, setOrgResponse] = useState<{
+      count: number;
+      next: string | null;
+      previous: string | null;
+      results: QuestionTagProps[];
+   }>();
+   const [records, setRecords] = useState<QuestionTagProps[] | undefined>([]);
+   const [itemOffset, setItemOffset] = useState<number>(0);
+   const [pageCount, setPageCount] = useState<number>(0);
+   const itemsPerPage = 5;
 
    const validationSchema = object({
       name: string().required('Bu alan zorunludur.'),
       description: string().required('Bu alan zorunludur.'),
    });
 
+   const retrieveQuestionTags = async () => {
+      const response = await getQuestionTags(itemsPerPage, itemOffset);
+      response && setOrgResponse(response);
+      response && setRecords(response.results);
+   };
+
    useEffect(() => {
-      const retrieveTopicTags = async () => {
-         const response = await getTopicTags();
-         setRecords(response);
-      };
-      retrieveTopicTags();
-   }, []);
+      retrieveQuestionTags();
+   }, [itemOffset]);
+
+   useEffect(() => {
+      if (orgResponse && itemsPerPage > itemOffset) {
+         const endOffset = itemOffset + itemsPerPage;
+         const currentItems = orgResponse.results.slice(itemOffset, endOffset);
+         setPageCount(Math.ceil(orgResponse.count / itemsPerPage));
+         setRecords(currentItems);
+      }
+   }, [itemOffset, orgResponse]);
+
+   const handlePageChange = ({ selected }: { selected: number }) => {
+      if (orgResponse) {
+         const pageCount = Math.ceil(orgResponse.count / itemsPerPage);
+         const newOffset = selected * itemsPerPage;
+         const isValidPage = newOffset < orgResponse.count;
+
+         if (isValidPage) {
+            setItemOffset(newOffset);
+            setPageCount(pageCount);
+         }
+      }
+   };
 
    return (
       <AdminPanel>
@@ -48,7 +82,7 @@ const TopicTags: FC = () => {
                      initialValues={{ name: '', description: '' }}
                      validationSchema={validationSchema}
                      onSubmit={async (values, { resetForm }) => {
-                        const data = await addTopicTag(values);
+                        const data = await addQuestionTag(values);
                         if (typeof data === 'object' && records) {
                            resetForm();
                            setRecords([data, ...records]);
@@ -68,7 +102,7 @@ const TopicTags: FC = () => {
                         errors: formikErrors,
                      }) => (
                         <Form noValidate onSubmit={handleSubmit}>
-                           <fieldset id="topic-tags ">
+                           <fieldset id="question-tags ">
                               <legend className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">
                                  <p className="font-medium text-gray-900 dark:text-gray-100">
                                     Yeni Etiket Ekle
@@ -113,19 +147,22 @@ const TopicTags: FC = () => {
                   </Formik>
                </div>
             </div>
-            <div id="topic-tags" className="overflow-auto">
+            <div id="question-tags" className="overflow-auto">
                <div className="w-full border-b pb-1 border-gray-400 dark:border-gray-500">
                   <p className="font-medium text-gray-900 dark:text-gray-100">Konu Etiketleri</p>
                </div>
                <div>
                   {isLoading && (
-                     <div className="mt-4">
-                        <LoadSpinner />
+                     <div className="relative">
+                        <div className="absolute left-1/2 top-1">
+                           <LoadSpinner />
+                        </div>
                      </div>
                   )}
                   <table className="w-full whitespace-nowrap text-sm text-left text-gray-500 dark:text-gray-400">
                      <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-900 dark:text-primary-400">
                         <tr>
+                           <th className="p-3">ID</th>
                            <th scope="col" className="p-3">
                               Etiket
                            </th>
@@ -137,6 +174,7 @@ const TopicTags: FC = () => {
                      <tbody>
                         {records?.length == 0 && (
                            <tr className="border-b bg-gray-200 dark:bg-night-900 dark:border-gray-700">
+                              <td className="p-3">#</td>
                               <th
                                  scope="row"
                                  className="p-3 font-medium text-gray-900 dark:text-gray-100"
@@ -156,6 +194,14 @@ const TopicTags: FC = () => {
                                  'bg-gray-50 dark:bg-night-700': index % 2 != 0,
                               })}
                            >
+                              <td
+                                 scope="row"
+                                 className="p-3 font-medium text-gray-900 dark:text-gray-100"
+                              >
+                                 <div className="max-w-xs overflow-hidden text-ellipsis">
+                                    <span>{record.id}</span>
+                                 </div>
+                              </td>
                               <td
                                  scope="row"
                                  className="p-3 font-medium text-gray-900 dark:text-gray-100"
@@ -194,7 +240,7 @@ const TopicTags: FC = () => {
                         ))}
                      </tbody>
                   </table>
-                  <Pagination count={8} />
+                  <Pagination pageCount={pageCount} handlePageChange={handlePageChange} />
                </div>
             </div>
          </div>
@@ -202,5 +248,5 @@ const TopicTags: FC = () => {
    );
 };
 
-export default TopicTags;
-export { TopicTagDetail } from './detail';
+export default QuestionTags;
+export { QuestionTagDetail } from './detail';

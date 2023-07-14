@@ -3,22 +3,22 @@ import { Field } from 'components/Field';
 import { FormErrors } from 'components/FormErrors';
 import { LoadSpinner } from 'components/LoadSpinner';
 import { Form, Formik } from 'formik';
-import { useTopicTags } from 'hooks/useTopicTags';
+import { useQuestionTags } from 'hooks/useQuestionTags';
 import AdminPanel from 'layouts/AdminPanel';
 import PageNotFound from 'pages/PageNotFound';
 import { useEffect, useState } from 'react';
 import { AiFillDelete } from 'react-icons/ai';
 import { MdArrowBack } from 'react-icons/md';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
-import { TopicTagProps } from 'types';
+import { QuestionTagProps } from 'types';
 import { Toast } from 'utils';
 import { object, string } from 'yup';
 
-export const TopicTagDetail = () => {
+export const QuestionTagDetail = () => {
    const navigate = useNavigate();
    const { id } = useParams();
-   const { getTopicTag, editTopicTag, destroyTopicTag, errors, isLoading } = useTopicTags();
-   const [tagDetail, setTagDetail] = useState<TopicTagProps | undefined | null>(null);
+   const { getQuestionTag, editQuestionTag, destroyQuestionTag, errors, isLoading } = useQuestionTags();
+   const [tagDetail, setTagDetail] = useState<QuestionTagProps | undefined | null>(null);
    const [initialValues, setInitialValues] = useState<{
       id: number | undefined;
       name: string | undefined;
@@ -30,18 +30,18 @@ export const TopicTagDetail = () => {
    });
 
    useEffect(() => {
-      const retrieveTopicTags = async () => {
+      const retrieveQuestionTags = async () => {
          if (id) {
-            const topic = await getTopicTag(id);
-            setTagDetail(topic);
+            const question = await getQuestionTag(id);
+            setTagDetail(question);
             setInitialValues({
-               id: topic?.id,
-               name: topic?.name,
-               description: topic?.description,
+               id: question?.id,
+               name: question?.name,
+               description: question?.description,
             });
          }
       };
-      retrieveTopicTags();
+      retrieveQuestionTags();
    }, []);
 
    const validationSchema = object({
@@ -51,7 +51,7 @@ export const TopicTagDetail = () => {
 
    let removeTagClickCount = 0;
    let removeTagTimeout: NodeJS.Timeout | null = null;
-   const handleRemoveTag = async (tag: TopicTagProps) => {
+   const handleRemoveTag = async (tag: QuestionTagProps) => {
       if (removeTagClickCount === 0) {
          Toast.fire({
             title: `Kaldırmak için tekrar tıklayın`,
@@ -68,7 +68,7 @@ export const TopicTagDetail = () => {
             removeTagTimeout = null;
          }
          removeTagClickCount = 0;
-         const status = await destroyTopicTag(tag);
+         const status = await destroyQuestionTag(tag);
 
          if (status) {
             navigate('/admin/konu-etiketleri');
@@ -113,7 +113,7 @@ export const TopicTagDetail = () => {
                      validationSchema={validationSchema}
                      onSubmit={async (values) => {
                         if (tagDetail) {
-                           const status = await editTopicTag(tagDetail.id, values);
+                           const status = await editQuestionTag(tagDetail.id, values);
                            if (status) {
                               Toast.fire({
                                  title: `Etiket Düzenlendi`,
@@ -132,7 +132,7 @@ export const TopicTagDetail = () => {
                         errors: formikErrors,
                      }) => (
                         <Form noValidate onSubmit={handleSubmit}>
-                           <fieldset id="topic-tags ">
+                           <fieldset id="question-tags ">
                               <legend className="w-full mb-2 border-b pb-1 border-gray-400 dark:border-gray-500">
                                  <p className="font-medium text-gray-900 dark:text-gray-100">
                                     Yeni Etiket Ekle

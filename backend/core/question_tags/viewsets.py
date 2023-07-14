@@ -4,7 +4,7 @@ from .models import Tag
 from .serializers import TagSerializer
 
 
-class TopicTagViewSet(ModelViewSet):
+class QuestionTagViewSet(ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     permission_classes = [permissions.DjangoModelPermissionsOrAnonReadOnly]

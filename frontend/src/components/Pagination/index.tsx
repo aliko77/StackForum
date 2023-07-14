@@ -3,29 +3,27 @@ import ReactPaginate from 'react-paginate';
 import { FC } from 'react';
 
 interface PaginationProps {
-   count: number;
-   range?: number;
+   pageCount: number;
+   handlePageChange: (selectedItem: { selected: number }) => void;
 }
 
-const Pagination: FC<PaginationProps> = ({ count, range = 3 }) => {
+const Pagination: FC<PaginationProps> = ({ pageCount, handlePageChange }) => {
    return (
       <ReactPaginate
-         className="flex items-center gap-x-1.5 border p-2 border-gray-700 dark:border-gray-400 rounded mt-4"
-         previousClassName="mr-auto"
+         className="w-full flex items-center p-1.5 pt-4 mt-4 border-t border-gray-400 dark:border-gray-500"
          nextClassName="ml-auto"
-         nextLinkClassName="w-8 h-8 rounded-full border border-gray-700 dark:border-gray-400 flex items-center justify-center text-sm text-zinc-500 font-semibold hover:border-zinc-600 hover:text-primary-500"
-         previousLinkClassName="w-8 h-8 rounded-full border border-gray-700 dark:border-gray-400 flex items-center justify-center text-sm text-zinc-500 font-semibold hover:border-zinc-600 hover:text-primary-500"
-         activeClassName="!bg-primary !border-primary !text-white"
-         activeLinkClassName="w-8 h-8 rounded-full border border-gray-700 dark:border-gray-400 flex items-center justify-center text-sm text-zinc-500 font-semibold hover:border-zinc-600 hover:text-primary-500"
-         breakClassName="h-9 flex items-center text-zinc-400 pb-2"
-         pageClassName="text-gray-700 dark:text-gray-400"
-         pageLinkClassName="flex items-center mx-1 p-1"
+         previousClassName="mr-auto"
+         nextLinkClassName="w-6 h-6 rounded-full shadow-lg border border-gray-900 dark:border-primary-100 flex items-center justify-center text-sm text-gray-900 dark:text-primary-100 font-semibold hover:border-primary-400 hover:text-primary-500"
+         previousLinkClassName="w-6 h-6 rounded-full shadow-lg border border-gray-900 dark:border-primary-100 flex items-center justify-center text-sm text-gray-900 font-semibold dark:text-primary-100 hover:border-secondary-400 dark:hover:border-primary-400 hover:text-primary-500"
+         activeClassName="w-7 h-7 border border-gray-900 dark:border-primary-100 rounded-full flex items-center justify-center hover:border-secondary-400"
+         pageLinkClassName="w-7 h-7 mx-1 flex items-center justify-center text-sm text-gray-900 dark:text-primary-500 font-semibold hover:text-secondary-700 dark:hover:text-primary-100"
          breakLabel="..."
+         breakClassName="w-7 h-7 flex items-center text-gray-400 pb-2"
          nextLabel={<MdOutlineKeyboardArrowRight size={18} />}
-         // onPageChange={handlePageClick}
-         pageRangeDisplayed={range}
-         marginPagesDisplayed={1}
-         pageCount={count}
+         onPageChange={handlePageChange}
+         pageRangeDisplayed={3}
+         marginPagesDisplayed={2}
+         pageCount={pageCount}
          previousLabel={<MdOutlineKeyboardArrowLeft size={18} />}
       />
    );

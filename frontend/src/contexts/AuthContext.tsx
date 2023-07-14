@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }: ReactChildrenProps) => {
       setCsrfToken(xcsrfToken);
       setUser(_user);
 
-      if (state) {
+      if (state && state.path) {
          navigate(state.path);
       } else if (searchParams.has('registered')) {
          navigate('/auth/verify');

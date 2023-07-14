@@ -60,7 +60,7 @@ export type FriendsProps = {
    friendship_at: string;
 }[];
 
-export type TopicTagProps = {
+export type QuestionTagProps = {
    id: number;
    name: string;
    description: string;

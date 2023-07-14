@@ -1,30 +1,41 @@
 import { AxiosError } from 'axios';
-import { TopicTagProps } from 'types';
+import { QuestionTagProps } from 'types';
 import { useState } from 'react';
 import { axiosService } from 'api/axios';
 import { useAxiosPrivate } from './useAxiosPrivate';
 
-type addTopicTagProps = {
+type addQuestionTagProps = {
    name: string;
    description: string;
 };
 
-// type getTopicTagsProps = {
-//    count: number;
-//    next: string | null;
-//    previous: string | null;
-//    results: TopicTagProps[];
-// };
+type getQuestionTagsProps = {
+   count: number;
+   next: string | null;
+   previous: string | null;
+   results: QuestionTagProps[];
+};
 
-export const useTopicTags = () => {
+export const useQuestionTags = () => {
    const axiosPrivate = useAxiosPrivate();
    const [errors, setErrors] = useState<null | string[]>(null);
    const [isLoading, setIsLoading] = useState<boolean>(false);
 
-   const getTopicTags = async (): Promise<TopicTagProps[] | undefined> => {
+   /**
+    * API isteği ile etiketleri döner, DRF sayfalama kullanır !
+    * @param {number} limit - limit
+    * @param {number} offset - offset
+    * @return etiketler
+    */
+   const getQuestionTags = async (
+      limit: number,
+      offset: number,
+   ): Promise<getQuestionTagsProps | undefined> => {
       try {
          setIsLoading(true);
-         const { data, status } = await axiosService.get('/topic-tags/');
+         const { data, status } = await axiosService.get(
+            `/question-tags/?limit=${limit}&offset=${offset}`,
+         );
          setErrors(null);
          return status === 200 ? data : [];
       } catch (error) {
@@ -37,10 +48,12 @@ export const useTopicTags = () => {
       }
    };
 
-   const addTopicTag = async (values: addTopicTagProps): Promise<TopicTagProps | boolean> => {
+   const addQuestionTag = async (
+      values: addQuestionTagProps,
+   ): Promise<QuestionTagProps | boolean> => {
       try {
          setIsLoading(true);
-         const { data, status } = await axiosPrivate.post('/topic-tags/', {
+         const { data, status } = await axiosPrivate.post('/question-tags/', {
             name: values.name,
             description: values.description,
          });
@@ -56,10 +69,10 @@ export const useTopicTags = () => {
       }
    };
 
-   const destroyTopicTag = async (tag: TopicTagProps): Promise<boolean> => {
+   const destroyQuestionTag = async (tag: QuestionTagProps): Promise<boolean> => {
       try {
          setIsLoading(true);
-         const { status } = await axiosPrivate.delete(`/topic-tags/${tag.id}/`);
+         const { status } = await axiosPrivate.delete(`/question-tags/${tag.id}/`);
          setErrors(null);
          return status === 204 ? true : false;
       } catch (error) {
@@ -72,10 +85,10 @@ export const useTopicTags = () => {
       }
    };
 
-   const getTopicTag = async (id: string): Promise<TopicTagProps | undefined> => {
+   const getQuestionTag = async (id: string): Promise<QuestionTagProps | undefined> => {
       try {
          setIsLoading(true);
-         const { data, status } = await axiosPrivate.get(`/topic-tags/${id}/`);
+         const { data, status } = await axiosPrivate.get(`/question-tags/${id}/`);
          setErrors(null);
          return status === 200 ? data : undefined;
       } catch (error) {
@@ -88,16 +101,16 @@ export const useTopicTags = () => {
       }
    };
 
-   const editTopicTag = async (
+   const editQuestionTag = async (
       id: number,
       updatedData: {
          name: string | undefined;
          description: string | undefined;
       },
-   ): Promise<TopicTagProps | boolean> => {
+   ): Promise<QuestionTagProps | boolean> => {
       try {
          setIsLoading(true);
-         const { data, status } = await axiosPrivate.patch(`/topic-tags/${id}/`, updatedData);
+         const { data, status } = await axiosPrivate.patch(`/question-tags/${id}/`, updatedData);
          setErrors(null);
          setIsLoading(false);
          return status === 200 ? data : false;
@@ -114,10 +127,10 @@ export const useTopicTags = () => {
    return {
       errors,
       isLoading,
-      getTopicTags,
-      addTopicTag,
-      destroyTopicTag,
-      getTopicTag,
-      editTopicTag,
+      getQuestionTags,
+      addQuestionTag,
+      destroyQuestionTag,
+      getQuestionTag,
+      editQuestionTag,
    };
 };

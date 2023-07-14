@@ -4,7 +4,7 @@ import { PageLoading } from 'components/PageLoading';
 import { GuestRoute, PrivateRoute } from 'routes/GuardRoutes';
 import Layout from 'layouts/Layout';
 import { admin_routes } from './AdminRouter';
-import { TopicTags } from 'pages/TopicTags';
+import { QuestionTags } from 'pages/QuestionTags';
 
 const Login = lazy(() => import('pages/Login'));
 const Register = lazy(() => import('pages/Register'));
@@ -96,7 +96,7 @@ const routes: RouteProps[] = [
    },
    {
       path: 'etiketler/',
-      element: getRouteElement(TopicTags),
+      element: getRouteElement(QuestionTags),
    },
    ...admin_routes,
    { path: '*', element: getRouteElement(PageNotFound) },

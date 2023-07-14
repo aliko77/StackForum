@@ -18,7 +18,7 @@ export const HeaderBottom: FC = () => {
                         className="text-secondary-500 dark:text-primary-500"
                         size="20px"
                      />
-                     <span className="mx-1.5 hover:text-secondary-600 dark:hover:text-primary-500">
+                     <span className="mx-1.5 font-500 hover:text-secondary-500 dark:hover:text-primary-500">
                         Profilim
                      </span>
                   </div>
@@ -29,30 +29,30 @@ export const HeaderBottom: FC = () => {
                         className="text-secondary-500 dark:text-primary-500"
                         size="20px"
                      />
-                     <span className="mx-1.5 hover:text-secondary-600 dark:hover:text-primary-500">
+                     <span className="mx-1.5 font-500 hover:text-secondary-500 dark:hover:text-primary-500">
                         Panelim
                      </span>
                   </div>
                </NavLink>
                <div>
-                  <div className="flex items-center text-sm text-gray-800 dark:text-gray-300 hover:text-secondary-600 dark:hover:text-primary-500">
+                  <div className="flex items-center text-sm text-gray-800 dark:text-gray-300 font-500 hover:text-secondary-500 dark:hover:text-primary-500">
                      <RiQuestionnaireLine
                         className="text-secondary-500 dark:text-primary-500"
                         size="20px"
                      />
-                     <span className="mx-1.5 hover:text-secondary-600 dark:hover:text-primary-500">
+                     <span className="mx-1.5 font-500 hover:text-secondary-500 dark:hover:text-primary-500">
                         Sorular
                      </span>
                   </div>
                </div>
                <div>
                   <NavLink to={'/etiketler'}>
-                     <div className="flex items-center text-sm text-gray-800 dark:text-gray-300 hover:text-secondary-600 dark:hover:text-primary-500">
+                     <div className="flex items-center text-sm text-gray-800 dark:text-gray-300 font-500 hover:text-secondary-500 dark:hover:text-primary-500">
                         <HiOutlineChatBubbleBottomCenterText
                            className="text-secondary-500 dark:text-primary-500"
                            size="20px"
                         />
-                        <span className="mx-1.5 hover:text-secondary-600 dark:hover:text-primary-500">
+                        <span className="mx-1.5 font-500 hover:text-secondary-500 dark:hover:text-primary-500">
                            Konu Etiketleri
                         </span>
                      </div>

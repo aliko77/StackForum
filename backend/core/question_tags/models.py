@@ -19,7 +19,7 @@ class Tag(models.Model):
     class Meta:
         verbose_name = "Konu/Soru Etiketi"
         verbose_name_plural = "Konu/Soru Etiketleri"
-        db_table = "topic_tag"
+        db_table = "question_tag"
         ordering = ['-created_at']
 
     def save(self, *args, **kwargs):
@@ -40,7 +40,7 @@ class TagSynonym(models.Model):
     class Meta:
         verbose_name = "Etiket Eşanlamı"
         verbose_name_plural = "Etiket Eşanlamları"
-        db_table = "topic_tag_synonym"
+        db_table = "question_tag_synonym"
 
     def save(self, *args, **kwargs):
         self.name = self.name.lower()
