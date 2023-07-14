@@ -24,10 +24,10 @@ class UserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
-    
+
     def create_user(self, email, password, **extra_fields):
         return self._create_user(email, password, False, **extra_fields)
-    
+
     def create_superuser(self, email, password, **extra_fields):
         user = self._create_user(
             email, password, True, verified=True, **extra_fields
@@ -50,22 +50,22 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_verified = models.BooleanField(default=False)
     last_login = models.DateTimeField(null=True, blank=True)
     date_joined = models.DateTimeField(auto_now_add=True)
-    
+
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
-    
+
     objects = UserManager()
-    
+
     def __str__(self):
         return f"{self.email}"
-    
-    
+
     class Meta:
         verbose_name = "User"
         verbose_name_plural = "Users"
         db_table = "user"
 
-#Profil
+# Profil
+
 
 def get_upload_path(instance, filename):
     # Dosya adını kullanıcı username'i ve zaman damgasıyla birleştirerek oluşturun
@@ -73,10 +73,11 @@ def get_upload_path(instance, filename):
     timestamp = timezone.now().strftime('%Y%m%d%H%M%S')
     _, ext = os.path.splitext(filename)
     new_filename = f"{username}_{timestamp}{ext}"
-    
+
     # Profil resimlerinin yükleneceği dosya yolunu belirleyin
     # Örneğin: media/profile_pictures/userID_20230101153000.jpg
     return f"profile_pictures/{new_filename}"
+
 
 class Profile(models.Model):
     user = models.OneToOneField(
@@ -84,7 +85,7 @@ class Profile(models.Model):
     )
     dob = models.DateField(null=True, blank=True)
     dob_privacy = models.CharField(
-        max_length=20, 
+        max_length=20,
         choices=[
             ('none', 'Hiçbir Şeyi Gösterme'),
             ('age', 'Sadece Yaş'),
@@ -101,11 +102,11 @@ class Profile(models.Model):
     email_secondary = models.EmailField(max_length=254, blank=True, null=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     status = models.CharField(
-        max_length=20, 
+        max_length=20,
         choices=[
             ('ONLINE', 'Çevrimiçi'),
-            ('OFFLINE', 'Çevrimdışı'),    
-        ], 
+            ('OFFLINE', 'Çevrimdışı'),
+        ],
         default='OFFLINE',
         blank=True
     )
@@ -135,11 +136,10 @@ class Profile(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     class Meta:
         db_table = "user_profile"
-    
-    
+
     def __str__(self):
         return f"{self.user.username} 's profile"
 
@@ -151,41 +151,41 @@ class UserLoginRecords(models.Model):
     device = models.CharField(max_length=100, null=True)
     ip_address = models.GenericIPAddressField(null=True)
     login_time = models.DateTimeField(auto_now_add=True)
-    
-    
+
     class Meta:
         db_table = "user_login_records"
-    
-    
+
     def __str__(self):
         return f"{self.user.username} - {self.device}"
 
 
 class BlockedUser(models.Model):
-    blocked_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blocked_users')
-    blocked_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blocked_by')
+    blocked_by = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='blocked_users')
+    blocked_user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='blocked_by')
     blocked_at = models.DateTimeField(auto_now_add=True)
-    
-    
+
     class Meta:
         db_table = 'user_blockeduser'
         unique_together = ('blocked_by', 'blocked_user')
         ordering = ["-blocked_at"]
-    
-    
+
     def __str__(self):
         return f'{self.blocked_by} blocked {self.blocked_user}'
 
 
 class Friend(models.Model):
-    user = models.ForeignKey(User, related_name='friends', on_delete=models.CASCADE)
-    friend = models.ForeignKey(User, related_name='friend_of', on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User, related_name='friends', on_delete=models.CASCADE)
+    friend = models.ForeignKey(
+        User, related_name='friend_of', on_delete=models.CASCADE)
     friendship_at = models.DateTimeField(auto_now_add=True)
-    
+
     class Meta:
         db_table = 'user_friend'
         unique_together = ('friend', 'user')
         ordering = ["-friendship_at"]
-    
+
     def __str__(self):
         return f'{self.user.username} is friends with {self.friend.username}'
