@@ -2,16 +2,15 @@ import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
 import classNames from 'classnames';
 import { QuestionTagProps } from 'types';
-import { LoadSpinner } from 'components/LoadSpinner';
 import useDebounce from 'hooks/useDebounce';
 import { useQuestionTags } from 'hooks/useQuestionTags';
 import Pagination from 'components/Pagination';
 
 type sortingTypes = 'popular' | 'new';
 
-export const QuestionTags: FC = () => {
+const QuestionTags: FC = () => {
    const { debounce } = useDebounce();
-   const { getQuestionTags, isLoading } = useQuestionTags();
+   const { getQuestionTags } = useQuestionTags();
    const [searchString, setSearchString] = useState<string>('');
    const [sorting, setSorting] = useState<sortingTypes>('popular');
    const [orgResponse, setOrgResponse] = useState<{
@@ -20,7 +19,7 @@ export const QuestionTags: FC = () => {
       previous: string | null;
       results: QuestionTagProps[];
    }>();
-   const [records, setRecords] = useState<QuestionTagProps[] | undefined>([]);
+   const [records, setRecords] = useState<QuestionTagProps[] | undefined>(undefined);
    const [itemOffset, setItemOffset] = useState<number>(0);
    const [pageCount, setPageCount] = useState<number>(0);
    const itemsPerPage = 10;
@@ -153,13 +152,6 @@ export const QuestionTags: FC = () => {
                </div>
             </div>
             <div className="my-4">
-               {isLoading && (
-                  <div className="relative">
-                     <div className="absolute left-1/2">
-                        <LoadSpinner />
-                     </div>
-                  </div>
-               )}
                {records && records.length == 0 && (
                   <p className="text-center text-xl text-gray-600 dark:text-primary-100">
                      Böyle bir etiket bulunamadı.
@@ -191,11 +183,15 @@ export const QuestionTags: FC = () => {
                         </div>
                      ))}
                </div>
-               <div className="w-1/2 mx-auto">
-                  <Pagination pageCount={pageCount} handlePageChange={handlePageChange} />
-               </div>
+               {records && (
+                  <div className="w-1/2 mx-auto">
+                     <Pagination pageCount={pageCount} handlePageChange={handlePageChange} />
+                  </div>
+               )}
             </div>
          </div>
       </div>
    );
 };
+
+export default QuestionTags;

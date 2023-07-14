@@ -35,15 +35,17 @@ export const HeaderBottom: FC = () => {
                   </div>
                </NavLink>
                <div>
-                  <div className="flex items-center text-sm text-gray-800 dark:text-gray-300 font-500 hover:text-secondary-500 dark:hover:text-primary-500">
-                     <RiQuestionnaireLine
-                        className="text-secondary-500 dark:text-primary-500"
-                        size="20px"
-                     />
-                     <span className="mx-1.5 font-500 hover:text-secondary-500 dark:hover:text-primary-500">
-                        Sorular
-                     </span>
-                  </div>
+                  <NavLink to={'/sorular'}>
+                     <div className="flex items-center text-sm text-gray-800 dark:text-gray-300 font-500 hover:text-secondary-500 dark:hover:text-primary-500">
+                        <RiQuestionnaireLine
+                           className="text-secondary-500 dark:text-primary-500"
+                           size="20px"
+                        />
+                        <span className="mx-1.5 font-500 hover:text-secondary-500 dark:hover:text-primary-500">
+                           Sorular
+                        </span>
+                     </div>
+                  </NavLink>
                </div>
                <div>
                   <NavLink to={'/etiketler'}>

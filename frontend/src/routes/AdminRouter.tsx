@@ -22,17 +22,17 @@ const getAdminRouteElement = (Component: ElementType, permissions: string[] = []
 export const admin_routes: RouteProps[] = [
    {
       path: 'admin/dashboard/',
-      element: getAdminRouteElement(() => <AdminHome />, [PERMISSIONS.COMA]),
+      element: getAdminRouteElement(() => <AdminHome />),
    },
    {
       path: 'admin/konu-etiketleri/',
-      element: getAdminRouteElement(() => <QuestionTags />, [PERMISSIONS.COMA, PERMISSIONS.MOD]),
+      element: getAdminRouteElement(() => <QuestionTags />, [PERMISSIONS.MOD]),
    },
    {
       path: 'admin/konu-etiketleri/:id',
       element: getAdminRouteElement(
          () => <QuestionTagDetail />,
-         [PERMISSIONS.COMA, PERMISSIONS.MOD],
+         [PERMISSIONS.MOD],
       ),
    },
 ];

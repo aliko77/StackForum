@@ -68,7 +68,7 @@ export default function useUser() {
 
    const getUser = async (): Promise<UserProps | boolean> => {
       try {
-         const { data } = await axiosPrivate.get('/user/@me');
+         const { data } = await axiosPrivate.get('/user/@me/');
          setErrors(null);
          setUser(data);
          return data;

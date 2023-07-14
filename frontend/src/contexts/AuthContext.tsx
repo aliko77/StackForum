@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }: ReactChildrenProps) => {
       if (state && state.path) {
          navigate(state.path);
       } else if (searchParams.has('registered')) {
-         navigate('/auth/verify');
+         navigate('/auth/verify/');
       } else {
          navigate('/');
       }

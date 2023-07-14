@@ -71,7 +71,7 @@ export const QuestionTagDetail = () => {
          const status = await destroyQuestionTag(tag);
 
          if (status) {
-            navigate('/admin/konu-etiketleri');
+            navigate('/admin/konu-etiketleri/');
             Toast.fire({
                title: `Etiket Kaldırıldı`,
                icon: 'success',

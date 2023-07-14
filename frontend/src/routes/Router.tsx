@@ -4,7 +4,6 @@ import { PageLoading } from 'components/PageLoading';
 import { GuestRoute, PrivateRoute } from 'routes/GuardRoutes';
 import Layout from 'layouts/Layout';
 import { admin_routes } from './AdminRouter';
-import { QuestionTags } from 'pages/QuestionTags';
 
 const Login = lazy(() => import('pages/Login'));
 const Register = lazy(() => import('pages/Register'));
@@ -22,6 +21,8 @@ const SettingsEmail = lazy(() => import('pages/Settings/Email'));
 const SettingsLoginLogs = lazy(() => import('pages/Settings/LoginRecords'));
 const SocialBlocked = lazy(() => import('pages/Social/Blocked'));
 const SocialFriends = lazy(() => import('pages/Social/Friends'));
+const QuestionTags = lazy(() => import('pages/QuestionTags'));
+const Questions = lazy(() => import('pages/Questions'));
 //404
 const PageNotFound = lazy(() => import('pages/PageNotFound'));
 
@@ -97,6 +98,10 @@ const routes: RouteProps[] = [
    {
       path: 'etiketler/',
       element: getRouteElement(QuestionTags),
+   },
+   {
+      path: 'sorular/',
+      element: getRouteElement(Questions),
    },
    ...admin_routes,
    { path: '*', element: getRouteElement(PageNotFound) },
