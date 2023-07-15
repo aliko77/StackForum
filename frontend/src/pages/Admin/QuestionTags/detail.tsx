@@ -17,7 +17,8 @@ import { object, string } from 'yup';
 export const QuestionTagDetail = () => {
    const navigate = useNavigate();
    const { id } = useParams();
-   const { getQuestionTag, editQuestionTag, destroyQuestionTag, errors, isLoading } = useQuestionTags();
+   const { getQuestionTag, editQuestionTag, destroyQuestionTag, errors, isLoading } =
+      useQuestionTags();
    const [tagDetail, setTagDetail] = useState<QuestionTagProps | undefined | null>(null);
    const [initialValues, setInitialValues] = useState<{
       id: number | undefined;

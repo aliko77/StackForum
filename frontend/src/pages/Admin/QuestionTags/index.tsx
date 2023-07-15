@@ -172,7 +172,7 @@ const QuestionTags: FC = () => {
                         </tr>
                      </thead>
                      <tbody>
-                        {records?.length == 0 && (
+                        {records && records.length == 0 && (
                            <tr className="border-b bg-gray-200 dark:bg-night-900 dark:border-gray-700">
                               <td className="p-3">#</td>
                               <th
@@ -186,61 +186,64 @@ const QuestionTags: FC = () => {
                               <td className="p-3">#</td>
                            </tr>
                         )}
-                        {records?.map((record, index) => (
-                           <tr
-                              key={index}
-                              className={classNames('border-b', 'dark:border-b-gray-700', {
-                                 'bg-gray-100 dark:bg-night-900': index % 2 == 0,
-                                 'bg-gray-50 dark:bg-night-700': index % 2 != 0,
-                              })}
-                           >
-                              <td
-                                 scope="row"
-                                 className="p-3 font-medium text-gray-900 dark:text-gray-100"
+                        {records &&
+                           records.map((record, index) => (
+                              <tr
+                                 key={index}
+                                 className={classNames('border-b', 'dark:border-b-gray-700', {
+                                    'bg-gray-100 dark:bg-night-900': index % 2 == 0,
+                                    'bg-gray-50 dark:bg-night-700': index % 2 != 0,
+                                 })}
                               >
-                                 <div className="max-w-xs overflow-hidden text-ellipsis">
-                                    <span>{record.id}</span>
-                                 </div>
-                              </td>
-                              <td
-                                 scope="row"
-                                 className="p-3 font-medium text-gray-900 dark:text-gray-100"
-                              >
-                                 <div className="max-w-xs overflow-hidden text-ellipsis">
-                                    <span>{record.name}</span>
-                                 </div>
-                              </td>
-                              <td
-                                 scope="row"
-                                 className="p-3 font-medium text-gray-900 dark:text-gray-100"
-                              >
-                                 <div className="max-w-xs overflow-hidden text-ellipsis">
-                                    <span>{record.description}</span>
-                                 </div>
-                              </td>
-                              <td
-                                 scope="row"
-                                 className="p-3 font-medium text-gray-900 dark:text-gray-100"
-                              >
-                                 <div className="max-w-xs overflow-hidden text-ellipsis">
-                                    <span>{record.creator}</span>
-                                 </div>
-                              </td>
-                              <td className="p-3">
-                                 <NavLink to={`/admin/konu-etiketleri/${record.id}`}>
-                                    <button
-                                       title="Düzenle"
-                                       className="bg-white dark:bg-night-800 border border-gray-400 dark:border-gray-600 shadow p-1 rounded cursor-pointer font-medium text-secondary-600 dark:text-primary-500 hover:underline"
-                                    >
-                                       <AiOutlineEdit size="20px" />
-                                    </button>
-                                 </NavLink>
-                              </td>
-                           </tr>
-                        ))}
+                                 <td
+                                    scope="row"
+                                    className="p-3 font-medium text-gray-900 dark:text-gray-100"
+                                 >
+                                    <div className="max-w-xs overflow-hidden text-ellipsis">
+                                       <span>{record.id}</span>
+                                    </div>
+                                 </td>
+                                 <td
+                                    scope="row"
+                                    className="p-3 font-medium text-gray-900 dark:text-gray-100"
+                                 >
+                                    <div className="max-w-xs overflow-hidden text-ellipsis">
+                                       <span>{record.name}</span>
+                                    </div>
+                                 </td>
+                                 <td
+                                    scope="row"
+                                    className="p-3 font-medium text-gray-900 dark:text-gray-100"
+                                 >
+                                    <div className="max-w-xs overflow-hidden text-ellipsis">
+                                       <span>{record.description}</span>
+                                    </div>
+                                 </td>
+                                 <td
+                                    scope="row"
+                                    className="p-3 font-medium text-gray-900 dark:text-gray-100"
+                                 >
+                                    <div className="max-w-xs overflow-hidden text-ellipsis">
+                                       <span>{record.creator}</span>
+                                    </div>
+                                 </td>
+                                 <td className="p-3">
+                                    <NavLink to={`/admin/konu-etiketleri/${record.id}`}>
+                                       <button
+                                          title="Düzenle"
+                                          className="bg-white dark:bg-night-800 border border-gray-400 dark:border-gray-600 shadow p-1 rounded cursor-pointer font-medium text-secondary-600 dark:text-primary-500 hover:underline"
+                                       >
+                                          <AiOutlineEdit size="20px" />
+                                       </button>
+                                    </NavLink>
+                                 </td>
+                              </tr>
+                           ))}
                      </tbody>
                   </table>
-                  <Pagination pageCount={pageCount} handlePageChange={handlePageChange} />
+                  {records && records.length > 0 && (
+                     <Pagination pageCount={pageCount} handlePageChange={handlePageChange} />
+                  )}
                </div>
             </div>
          </div>

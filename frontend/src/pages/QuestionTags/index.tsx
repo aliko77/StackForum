@@ -151,15 +151,15 @@ const QuestionTags: FC = () => {
                   </div>
                </div>
             </div>
-            <div className="my-4">
-               {records && records.length == 0 && (
-                  <p className="text-center text-xl text-gray-600 dark:text-primary-100">
-                     Böyle bir etiket bulunamadı.
-                  </p>
-               )}
-               <div className="w-full grid gap-2.5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                  {records &&
-                     records.map((tag, key) => (
+            {records && (
+               <div className="my-4">
+                  {records.length == 0 && (
+                     <p className="text-center text-xl text-gray-600 dark:text-primary-100">
+                        Herhangi bir etiket bulunamadı.
+                     </p>
+                  )}
+                  <div className="w-full grid gap-2.5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                     {records.map((tag, key) => (
                         <div
                            key={key}
                            className="bg-white dark:bg-night-700 border rounded border-gray-300 dark:border-gray-500 p-2.5 flex flex-col justify-between"
@@ -182,13 +182,12 @@ const QuestionTags: FC = () => {
                            </div>
                         </div>
                      ))}
-               </div>
-               {records && (
-                  <div className="w-1/2 mx-auto">
-                     <Pagination pageCount={pageCount} handlePageChange={handlePageChange} />
                   </div>
-               )}
-            </div>
+                  {records.length > 0 && (
+                     <Pagination pageCount={pageCount} handlePageChange={handlePageChange} />
+                  )}
+               </div>
+            )}
          </div>
       </div>
    );
