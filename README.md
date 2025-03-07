@@ -1,1 +1,3 @@
 - react-TS + Tailwind + Django Rest ile geliştirilen bir Forum sitesi
+- ![image](https://github.com/user-attachments/assets/a4c1d8ee-5a06-4a2d-a814-fa5fc4bb6c3a)
+- ![image](https://github.com/user-attachments/assets/7ea9fe88-6e89-4dbc-8176-ade700aba4b8)
